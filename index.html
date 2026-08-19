@@ -3,6 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1.0"
@@ -15,35 +16,36 @@
   content="Myanmar Elite Connect - Cars, Property & Gems Marketplace"
 >
 
+<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<link rel="stylesheet" href="./css/style.css">
+<!-- IMPORTANT:
+     style.css is in the ROOT folder -->
+<link rel="stylesheet" href="./style.css">
 
 </head>
 
 <body>
 
 
-<!-- ==================================================
+<!-- =====================================================
      HEADER
-================================================== -->
+===================================================== -->
 
 <header class="site-header">
 
-  <div class="container header-inner">
+  <div class="header-inner">
+
+    <!-- LOGO -->
 
     <a
       href="./index.html"
       class="site-logo"
     >
-
-      <div class="logo-mark">
-        M
-      </div>
+      <span class="logo-mark">M</span>
 
       Myanmar
       <span>Elite Connect</span>
-
     </a>
 
 
@@ -92,12 +94,13 @@
     </nav>
 
 
-    <!-- MOBILE MENU BUTTON -->
+    <!-- MOBILE MENU -->
 
     <button
       class="menu-button"
-      onclick="toggleMobileMenu()"
-      aria-label="Menu"
+      id="menuButton"
+      type="button"
+      aria-label="Open Menu"
     >
       ☰
     </button>
@@ -105,73 +108,46 @@
   </div>
 
 
-  <!-- MOBILE NAV -->
+  <!-- MOBILE NAVIGATION -->
 
   <div
     id="mobileNav"
     class="mobile-nav"
   >
 
-    <a
-      href="./index.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./index.html">
       🏠 Home
     </a>
 
-    <a
-      href="./car.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./car.html">
       🚗 Cars
     </a>
 
-    <a
-      href="./property.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./property.html">
       🏠 Property
     </a>
 
-    <a
-      href="./gem.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./gem.html">
       💎 Gems
     </a>
 
-    <a
-      href="./buy.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./buy.html">
       🛒 Buy
     </a>
 
-    <a
-      href="./sell.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./sell.html">
       🏷️ Sell
     </a>
 
-    <a
-      href="./chat.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./chat.html">
       💬 Chat
     </a>
 
-    <a
-      href="./profile.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./profile.html">
       👤 Profile
     </a>
 
-    <a
-      href="./auth.html"
-      onclick="closeMobileMenu()"
-    >
+    <a href="./auth.html">
       🔐 Login
     </a>
 
@@ -180,13 +156,14 @@
 </header>
 
 
-<!-- ==================================================
+
+<!-- =====================================================
      HERO
-================================================== -->
+===================================================== -->
 
 <section class="hero">
 
-  <div class="container">
+  <div class="hero-content">
 
     <div class="hero-badge">
       🛡️ Trusted Myanmar Marketplace
@@ -200,36 +177,36 @@
 
 
     <p>
-
       မြန်မာနိုင်ငံအတွင်း
-      ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်များကို
+      ကား၊ အိမ်ခြံမြေ နှင့်
+      ကျောက်မျက်များကို
       ရှာဖွေ၊ ဝယ်ယူ၊ ရောင်းချနိုင်သော
       Marketplace
+    </p>
 
-      <br>
 
-      Find.
-      Connect.
-      Trade.
-
+    <p class="hero-subtitle">
+      Find. Connect. Trade.
     </p>
 
 
     <!-- SEARCH -->
 
     <form
+      id="searchForm"
       class="search-box"
-      onsubmit="searchMarketplace(event)"
     >
 
       <input
-        id="homeSearch"
+        id="searchInput"
         type="search"
         placeholder="ကား၊ အိမ်၊ ကျောက်မျက်၊ Yangon..."
         autocomplete="off"
       >
 
-      <button type="submit">
+      <button
+        type="submit"
+      >
         🔎 Search
       </button>
 
@@ -240,137 +217,154 @@
 </section>
 
 
-<!-- ==================================================
-     CATEGORIES
-================================================== -->
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <main>
 
-<section class="section">
 
-  <div class="container">
+<!-- =====================================================
+     CATEGORIES
+===================================================== -->
 
-    <div class="section-title">
+<section class="home-section">
 
-      <h2>
-        Browse Categories
-      </h2>
+  <div class="section-title">
+
+    <h2>
+      Browse Categories
+    </h2>
+
+    <p>
+      သင်ရှာဖွေလိုသော အမျိုးအစားကို ရွေးချယ်ပါ
+    </p>
+
+  </div>
+
+
+  <div class="category-grid">
+
+
+    <!-- CAR -->
+
+    <a
+      href="./car.html"
+      class="category-card"
+    >
+
+      <div class="category-icon">
+        🚗
+      </div>
+
+      <h3>
+        Cars
+      </h3>
 
       <p>
-        သင်ရှာဖွေလိုသော အမျိုးအစားကို ရွေးချယ်ပါ
+        ကားများ ရောင်းဝယ်ရန်
       </p>
 
-    </div>
+      <span class="category-link">
+        View Cars →
+      </span>
+
+    </a>
 
 
-    <div class="category-grid">
+    <!-- PROPERTY -->
+
+    <a
+      href="./property.html"
+      class="category-card"
+    >
+
+      <div class="category-icon">
+        🏠
+      </div>
+
+      <h3>
+        Property
+      </h3>
+
+      <p>
+        အိမ်၊ ခြံ၊ မြေ၊ Condo
+      </p>
+
+      <span class="category-link">
+        View Property →
+      </span>
+
+    </a>
 
 
-      <!-- CAR -->
+    <!-- GEMS -->
 
-      <a
-        href="./car.html"
-        class="category-card"
-      >
+    <a
+      href="./gem.html"
+      class="category-card"
+    >
 
-        <div class="category-icon">
-          🚗
-        </div>
+      <div class="category-icon">
+        💎
+      </div>
 
-        <h3>
-          Cars
-        </h3>
+      <h3>
+        Gems
+      </h3>
 
-        <p>
-          ကားများ ရောင်းဝယ်ရန်
-        </p>
+      <p>
+        ကျောက်မျက်နှင့် အဖိုးတန်ပစ္စည်းများ
+      </p>
 
-      </a>
+      <span class="category-link">
+        View Gems →
+      </span>
 
+    </a>
 
-      <!-- PROPERTY -->
-
-      <a
-        href="./property.html"
-        class="category-card"
-      >
-
-        <div class="category-icon">
-          🏠
-        </div>
-
-        <h3>
-          Property
-        </h3>
-
-        <p>
-          အိမ်၊ ခြံ၊ မြေ၊ Condo
-        </p>
-
-      </a>
-
-
-      <!-- GEM -->
-
-      <a
-        href="./gem.html"
-        class="category-card"
-      >
-
-        <div class="category-icon">
-          💎
-        </div>
-
-        <h3>
-          Gems
-        </h3>
-
-        <p>
-          ကျောက်မျက်နှင့် အဖိုးတန်ပစ္စည်းများ
-        </p>
-
-      </a>
-
-
-    </div>
 
   </div>
 
 </section>
 
 
-<!-- ==================================================
-     QUICK ACTIONS
-================================================== -->
 
-<section class="section">
+<!-- =====================================================
+     BUY / SELL / CHAT
+===================================================== -->
 
-  <div class="container">
+<section class="home-section">
 
-    <div class="section-title">
+  <div class="section-title">
 
-      <h2>
-        What do you want to do?
-      </h2>
+    <h2>
+      What do you want to do?
+    </h2>
 
-      <p>
-        သင့်လိုအပ်ချက်အလိုက် ရွေးချယ်ပါ
-      </p>
+    <p>
+      သင့်လိုအပ်ချက်အလိုက် ရွေးချယ်ပါ
+    </p>
 
-    </div>
-
-
-    <div class="category-grid">
+  </div>
 
 
-      <a
-        href="./buy.html"
-        class="category-card"
-      >
+  <div class="action-grid">
 
-        <div class="category-icon">
-          🛒
-        </div>
+
+    <!-- BUY -->
+
+    <a
+      href="./buy.html"
+      class="action-card"
+    >
+
+      <div class="action-icon">
+        🛒
+      </div>
+
+      <div>
 
         <h3>
           Buy
@@ -380,17 +374,27 @@
           ပစ္စည်းများ ရှာဖွေဝယ်ယူရန်
         </p>
 
-      </a>
+      </div>
+
+      <strong>
+        →
+      </strong>
+
+    </a>
 
 
-      <a
-        href="./sell.html"
-        class="category-card"
-      >
+    <!-- SELL -->
 
-        <div class="category-icon">
-          🏷️
-        </div>
+    <a
+      href="./sell.html"
+      class="action-card"
+    >
+
+      <div class="action-icon">
+        🏷️
+      </div>
+
+      <div>
 
         <h3>
           Sell
@@ -400,124 +404,262 @@
           သင့်ပစ္စည်းကို Listing တင်ရန်
         </p>
 
-      </a>
+      </div>
+
+      <strong>
+        →
+      </strong>
+
+    </a>
 
 
-      <a
-        href="./chat.html"
-        class="category-card"
-      >
+    <!-- CHAT -->
 
-        <div class="category-icon">
-          💬
-        </div>
+    <a
+      href="./chat.html"
+      class="action-card"
+    >
+
+      <div class="action-icon">
+        💬
+      </div>
+
+      <div>
 
         <h3>
           Chat
         </h3>
 
         <p>
-          Seller / Buyer များနှင့် ဆက်သွယ်ရန်
+          Buyer / Seller များနှင့် ဆက်သွယ်ရန်
         </p>
 
-      </a>
+      </div>
+
+      <strong>
+        →
+      </strong>
+
+    </a>
 
 
-    </div>
+    <!-- PROFILE -->
+
+    <a
+      href="./profile.html"
+      class="action-card"
+    >
+
+      <div class="action-icon">
+        👤
+      </div>
+
+      <div>
+
+        <h3>
+          Profile
+        </h3>
+
+        <p>
+          သင့် Account နှင့် Listings များ
+        </p>
+
+      </div>
+
+      <strong>
+        →
+      </strong>
+
+    </a>
+
 
   </div>
 
 </section>
 
 
-<!-- ==================================================
-     FEATURES
-================================================== -->
 
-<section class="section">
+<!-- =====================================================
+     MARKETPLACE FEATURES
+===================================================== -->
 
-  <div class="container">
+<section class="home-section">
 
-    <div class="section-title">
+  <div class="section-title">
 
-      <h2>
-        Why Myanmar Elite Connect?
-      </h2>
+    <h2>
+      Myanmar Elite Connect
+    </h2>
+
+    <p>
+      အလွယ်တကူ ရှာဖွေ၊ ဆက်သွယ်၊ ရောင်းဝယ်နိုင်ပါသည်
+    </p>
+
+  </div>
+
+
+  <div class="feature-grid">
+
+
+    <div class="feature-card">
+
+      <div class="feature-icon">
+        🔎
+      </div>
+
+      <h3>
+        Easy Search
+      </h3>
+
+      <p>
+        ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်များကို
+        လွယ်ကူစွာ ရှာဖွေနိုင်ပါသည်။
+      </p>
 
     </div>
 
 
-    <div class="category-grid">
+    <div class="feature-card">
 
-
-      <div class="card">
-
-        <h3>
-          🔎 Easy Search
-        </h3>
-
-        <p style="margin-top:8px;color:var(--muted);line-height:1.7;font-size:13px;">
-          ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်များကို
-          လွယ်ကူစွာ ရှာဖွေနိုင်ပါသည်။
-        </p>
-
+      <div class="feature-icon">
+        📱
       </div>
 
+      <h3>
+        Easy Contact
+      </h3>
 
-      <div class="card">
-
-        <h3>
-          📱 Direct Contact
-        </h3>
-
-        <p style="margin-top:8px;color:var(--muted);line-height:1.7;font-size:13px;">
-          Buyer နှင့် Seller များ
-          တိုက်ရိုက်ဆက်သွယ်နိုင်ပါသည်။
-        </p>
-
-      </div>
-
-
-      <div class="card">
-
-        <h3>
-          🛡️ Trusted Marketplace
-        </h3>
-
-        <p style="margin-top:8px;color:var(--muted);line-height:1.7;font-size:13px;">
-          Approved Listing များကို
-          Marketplace တွင် ပြသပေးပါသည်။
-        </p>
-
-      </div>
-
+      <p>
+        Buyer နှင့် Seller များကို
+        တိုက်ရိုက်ဆက်သွယ်နိုင်ပါသည်။
+      </p>
 
     </div>
+
+
+    <div class="feature-card">
+
+      <div class="feature-icon">
+        🛡️
+      </div>
+
+      <h3>
+        Trusted Marketplace
+      </h3>
+
+      <p>
+        Approved Listing များကိုသာ
+        Marketplace တွင် ပြသပေးပါသည်။
+      </p>
+
+    </div>
+
 
   </div>
 
 </section>
+
+
+
+<!-- =====================================================
+     SELL CTA
+===================================================== -->
+
+<section class="sell-banner">
+
+  <div>
+
+    <span>
+      Have something to sell?
+    </span>
+
+    <h2>
+      သင့်ပစ္စည်းကို
+      Myanmar Elite Connect မှာ
+      ရောင်းချပါ
+    </h2>
+
+    <p>
+      Car • Property • Gem
+    </p>
+
+  </div>
+
+
+  <a
+    href="./sell.html"
+    class="sell-banner-button"
+  >
+    + Create Listing
+  </a>
+
+</section>
+
 
 </main>
 
 
-<!-- ==================================================
+
+<!-- =====================================================
      FOOTER
-================================================== -->
+===================================================== -->
 
 <footer class="site-footer">
 
-  <div class="container footer-inner">
+  <div class="footer-content">
 
-    <strong>
-      Myanmar Elite Connect
-    </strong>
 
-    <p>
-      Cars • Property • Gems
-    </p>
+    <div class="footer-brand">
 
-    <p>
+      <strong>
+        Myanmar Elite Connect
+      </strong>
+
+      <p>
+        Cars • Property • Gems
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="./index.html">
+        Home
+      </a>
+
+      <a href="./car.html">
+        Cars
+      </a>
+
+      <a href="./property.html">
+        Property
+      </a>
+
+      <a href="./gem.html">
+        Gems
+      </a>
+
+      <a href="./buy.html">
+        Buy
+      </a>
+
+      <a href="./sell.html">
+        Sell
+      </a>
+
+      <a href="./chat.html">
+        Chat
+      </a>
+
+      <a href="./profile.html">
+        Profile
+      </a>
+
+    </div>
+
+
+    <p class="copyright">
       © 2026 Myanmar Elite Connect
     </p>
 
@@ -526,46 +668,142 @@
 </footer>
 
 
-<!-- ==================================================
-     JAVASCRIPT
-================================================== -->
 
-<script src="./js/supabase.js"></script>
-<script src="./js/common.js"></script>
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="./supabase.js"></script>
+
+
+<!-- =====================================================
+     COMMON.JS
+=====================================================
+
+     If you rename common.ja → common.js,
+     this file will be loaded.
+
+===================================================== -->
+
+<script src="./common.js"></script>
+
 
 
 <script>
 
-function searchMarketplace(event){
+/* =====================================================
+   MOBILE MENU
+===================================================== */
 
-  event.preventDefault();
+const menuButton =
+  document.getElementById(
+    "menuButton"
+  );
 
-  const input =
-    document.getElementById(
-      "homeSearch"
-    );
-
-  const keyword =
-    input.value.trim();
-
-
-  if(!keyword){
-
-    input.focus();
-
-    return;
-
-  }
+const mobileNav =
+  document.getElementById(
+    "mobileNav"
+  );
 
 
-  window.location.href =
-    "./buy.html?search="
-    + encodeURIComponent(keyword);
+if(menuButton && mobileNav){
+
+  menuButton.addEventListener(
+    "click",
+    function(){
+
+      mobileNav.classList.toggle(
+        "open"
+      );
+
+    }
+  );
 
 }
 
-</script>
 
+/* =====================================================
+   SEARCH
+===================================================== */
+
+const searchForm =
+  document.getElementById(
+    "searchForm"
+  );
+
+
+if(searchForm){
+
+  searchForm.addEventListener(
+    "submit",
+    function(event){
+
+      event.preventDefault();
+
+
+      const input =
+        document.getElementById(
+          "searchInput"
+        );
+
+
+      const keyword =
+        input.value.trim();
+
+
+      if(!keyword){
+
+        input.focus();
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "./buy.html?search="
+        +
+        encodeURIComponent(
+          keyword
+        );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CLOSE MOBILE MENU
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".mobile-nav a"
+  )
+  .forEach(
+    function(link){
+
+      link.addEventListener(
+        "click",
+        function(){
+
+          if(mobileNav){
+
+            mobileNav.classList.remove(
+              "open"
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+</script>
 
 </body>
 </html>
