@@ -1,1085 +1,682 @@
 <!DOCTYPE html>
 <html lang="my">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Myanmar Elite Connect - Chat</title>
+<title>Chat - Myanmar Elite Connect</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 :root{
-    --navy:#071b3a;
-    --navy2:#102d59;
-    --green:#19a974;
-    --green2:#0f8f60;
-    --gold:#d9a441;
-    --bg:#f3f6fa;
-    --white:#ffffff;
-    --text:#172033;
-    --muted:#697386;
-    --border:#e1e6ee;
-    --danger:#b42318;
-    --shadow:0 8px 25px rgba(7,27,58,.08);
+  --navy:#071b3a;
+  --navy2:#102d59;
+  --green:#19a974;
+  --bg:#f4f7fb;
+  --white:#fff;
+  --text:#172033;
+  --muted:#697386;
+  --border:#e1e6ef;
+  --danger:#c62828;
 }
 
 body{
-    font-family:Arial,"Noto Sans Myanmar",sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
+  font-family:Arial,"Noto Sans Myanmar",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
 }
 
-
-/* =========================
+/* ==============================
    HEADER
-========================= */
+============================== */
 
 header{
-    height:64px;
-    background:var(--navy);
-    color:white;
-    display:flex;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.header-inner{
-    width:100%;
-    max-width:1400px;
-    margin:auto;
-    padding:0 25px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+  height:64px;
+  background:var(--navy);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
 }
 
 .logo{
-    color:white;
-    text-decoration:none;
-    font-size:20px;
-    font-weight:900;
+  color:white;
+  text-decoration:none;
+  font-size:20px;
+  font-weight:900;
 }
 
 .logo span{
-    color:#65d6a7;
+  color:#65d6a7;
 }
 
-.header-actions{
-    display:flex;
-    align-items:center;
-    gap:8px;
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.header-button{
-    border:0;
-    background:rgba(255,255,255,.1);
-    color:white;
-    padding:9px 12px;
-    border-radius:9px;
-    cursor:pointer;
-    font-size:14px;
+.header-btn{
+  border:0;
+  background:rgba(255,255,255,.1);
+  color:white;
+  padding:9px 12px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
+/* ==============================
+   APP
+============================== */
 
-/* =========================
-   CHAT APP
-========================= */
-
-.chat-wrapper{
-    max-width:1400px;
-    height:calc(100vh - 64px);
-    margin:auto;
-
-    display:grid;
-    grid-template-columns:330px 1fr;
-
-    background:white;
+.chat-app{
+  height:calc(100vh - 64px);
+  display:grid;
+  grid-template-columns:330px 1fr;
 }
 
+/* ==============================
+   SIDEBAR
+============================== */
 
-/* =========================
-   CHAT SIDEBAR
-========================= */
-
-.chat-sidebar{
-    border-right:1px solid var(--border);
-    background:#fff;
-
-    display:flex;
-    flex-direction:column;
-    min-width:0;
+.sidebar{
+  background:white;
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  min-width:0;
 }
 
-.sidebar-header{
-    padding:20px;
-    border-bottom:1px solid var(--border);
+.sidebar-top{
+  padding:18px;
+  border-bottom:1px solid var(--border);
 }
 
 .sidebar-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:15px;
-}
-
-.sidebar-title h2{
-    color:var(--navy);
-    font-size:22px;
-}
-
-.online-dot{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#19a974;
-    display:inline-block;
+  font-size:22px;
+  font-weight:900;
+  color:var(--navy);
+  margin-bottom:13px;
 }
 
 .search-users{
-    width:100%;
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:11px 13px;
-    outline:none;
-    font-family:inherit;
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px 13px;
+  outline:none;
+  font-size:14px;
 }
 
 .search-users:focus{
-    border-color:var(--navy);
+  border-color:var(--navy);
 }
 
-
-/* USER LIST */
-
 .user-list{
-    flex:1;
-    overflow-y:auto;
+  flex:1;
+  overflow-y:auto;
 }
 
 .user-item{
-    padding:14px 17px;
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    cursor:pointer;
-    border-bottom:1px solid #f0f2f5;
-    transition:.2s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 16px;
+  border-bottom:1px solid #f0f2f6;
+  cursor:pointer;
+  transition:.15s;
 }
 
 .user-item:hover{
-    background:#f5f8fc;
+  background:#f5f8fc;
 }
 
 .user-item.active{
-    background:#edf6f2;
+  background:#eaf5ff;
 }
 
 .avatar{
-    width:48px;
-    height:48px;
+  width:45px;
+  height:45px;
+  flex-shrink:0;
+  border-radius:50%;
+  overflow:hidden;
+  background:var(--navy);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
 
-    border-radius:50%;
-
-    background:linear-gradient(
-        135deg,
-        var(--navy),
-        var(--green)
-    );
-
-    color:white;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-weight:900;
-    font-size:18px;
-
-    flex-shrink:0;
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .user-info{
-    min-width:0;
-    flex:1;
-}
-
-.user-name-row{
-    display:flex;
-    justify-content:space-between;
-    gap:8px;
+  min-width:0;
+  flex:1;
 }
 
 .user-name{
-    font-weight:800;
-    color:var(--text);
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+  font-weight:800;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-.chat-time{
-    color:#9aa3b2;
-    font-size:11px;
+.user-role{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
 }
 
-.last-message{
-    color:var(--muted);
-    font-size:13px;
-
-    margin-top:5px;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+.empty-users{
+  padding:40px 20px;
+  text-align:center;
+  color:var(--muted);
+  line-height:1.7;
 }
 
-.unread{
-    min-width:20px;
-    height:20px;
-    padding:0 5px;
-
-    border-radius:20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:var(--green);
-    color:white;
-
-    font-size:10px;
-    font-weight:900;
-}
-
-
-/* =========================
+/* ==============================
    CHAT AREA
-========================= */
+============================== */
 
-.chat-main{
-    display:flex;
-    flex-direction:column;
-    min-width:0;
-    background:#f7f9fc;
+.chat-area{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  background:#eef2f7;
 }
 
-
-/* EMPTY */
-
-.chat-empty{
-    flex:1;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-    padding:30px;
+.chat-header{
+  min-height:70px;
+  background:white;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  padding:10px 18px;
+  gap:12px;
 }
 
-.empty-icon{
-    font-size:65px;
-    margin-bottom:15px;
+.chat-user-name{
+  font-weight:900;
+  color:var(--navy);
+  font-size:17px;
 }
 
-.chat-empty h2{
-    color:var(--navy);
-    margin-bottom:8px;
+.chat-user-status{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
 }
-
-.chat-empty p{
-    color:var(--muted);
-    line-height:1.7;
-}
-
-
-/* CHAT HEADER */
-
-.conversation-header{
-    height:72px;
-
-    background:white;
-    border-bottom:1px solid var(--border);
-
-    display:none;
-
-    align-items:center;
-    padding:12px 20px;
-
-    gap:12px;
-}
-
-.conversation-header.show{
-    display:flex;
-}
-
-.conversation-user{
-    flex:1;
-}
-
-.conversation-user strong{
-    display:block;
-    color:var(--navy);
-}
-
-.conversation-user small{
-    color:var(--green);
-}
-
-
-/* MESSAGES */
 
 .messages{
-    flex:1;
-    overflow-y:auto;
-    padding:25px;
-
-    display:none;
-    flex-direction:column;
-    gap:10px;
+  flex:1;
+  overflow-y:auto;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
 }
 
-.messages.show{
-    display:flex;
+.select-chat{
+  margin:auto;
+  text-align:center;
+  color:var(--muted);
+}
+
+.select-chat-icon{
+  font-size:60px;
+  margin-bottom:10px;
 }
 
 .message-row{
-    display:flex;
-    width:100%;
+  display:flex;
+  width:100%;
 }
 
-.message-row.me{
-    justify-content:flex-end;
+.message-row.mine{
+  justify-content:flex-end;
 }
 
-.message{
-    max-width:70%;
-
-    padding:10px 13px;
-
-    border-radius:15px;
-
-    line-height:1.55;
-    font-size:14px;
+.message-row.theirs{
+  justify-content:flex-start;
 }
 
-.message.them{
-    background:white;
-    border:1px solid var(--border);
-    border-bottom-left-radius:4px;
+.message-bubble{
+  max-width:min(70%,600px);
+  padding:10px 13px;
+  border-radius:15px;
+  position:relative;
+  word-break:break-word;
+  line-height:1.55;
 }
 
-.message.me{
-    background:var(--navy);
-    color:white;
-    border-bottom-right-radius:4px;
+.mine .message-bubble{
+  background:var(--navy);
+  color:white;
+  border-bottom-right-radius:4px;
+}
+
+.theirs .message-bubble{
+  background:white;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-bottom-left-radius:4px;
+}
+
+.message-text{
+  white-space:pre-wrap;
 }
 
 .message-time{
-    display:block;
-    margin-top:4px;
-    font-size:9px;
-    opacity:.6;
-    text-align:right;
+  font-size:10px;
+  opacity:.65;
+  margin-top:4px;
+  text-align:right;
 }
 
-
-/* =========================
-   INPUT AREA
-========================= */
-
-.message-input-area{
-    display:none;
-
-    background:white;
-    border-top:1px solid var(--border);
-
-    padding:12px;
+.delete-message{
+  margin-left:7px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  font-size:12px;
+  opacity:.6;
 }
 
-.message-input-area.show{
-    display:block;
+.delete-message:hover{
+  opacity:1;
 }
 
-.input-row{
-    display:flex;
-    align-items:center;
-    gap:7px;
+/* ==============================
+   INPUT
+============================== */
+
+.message-form{
+  background:white;
+  border-top:1px solid var(--border);
+  padding:12px;
+  display:flex;
+  gap:8px;
+  align-items:flex-end;
 }
 
-.icon-button{
-    width:40px;
-    height:40px;
-
-    border:0;
-    background:#f1f4f8;
-
-    border-radius:10px;
-
-    cursor:pointer;
-    font-size:18px;
-
-    flex-shrink:0;
-}
-
-.icon-button:hover{
-    background:#e6ebf2;
+.emoji-btn{
+  width:44px;
+  height:44px;
+  border:1px solid var(--border);
+  background:#f7f9fc;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:21px;
 }
 
 .message-input{
-    flex:1;
-
-    min-width:0;
-
-    border:1px solid var(--border);
-    border-radius:12px;
-
-    padding:11px 13px;
-
-    outline:none;
-    font-family:inherit;
-    font-size:14px;
+  flex:1;
+  min-height:44px;
+  max-height:130px;
+  resize:none;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:11px 13px;
+  outline:none;
+  font-family:inherit;
+  font-size:14px;
 }
 
 .message-input:focus{
-    border-color:var(--navy);
+  border-color:var(--navy);
 }
 
-.send-button{
-    width:43px;
-    height:43px;
-
-    border:0;
-    border-radius:12px;
-
-    background:var(--green);
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:18px;
+.send-btn{
+  height:44px;
+  border:0;
+  background:var(--green);
+  color:white;
+  padding:0 18px;
+  border-radius:10px;
+  font-weight:900;
+  cursor:pointer;
 }
 
-.send-button:hover{
-    background:var(--green2);
+.send-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
 
-
-/* =========================
+/* ==============================
    EMOJI PANEL
-========================= */
+============================== */
 
 .emoji-panel{
-    display:none;
-
-    background:white;
-    border:1px solid var(--border);
-    border-radius:12px;
-
-    padding:10px;
-
-    margin-bottom:8px;
-
-    box-shadow:var(--shadow);
-
-    grid-template-columns:
-        repeat(8,1fr);
-
-    gap:5px;
+  position:absolute;
+  bottom:70px;
+  left:12px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 12px 35px rgba(0,0,0,.15);
+  padding:10px;
+  width:280px;
+  display:none;
+  z-index:20;
 }
 
 .emoji-panel.show{
-    display:grid;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:5px;
 }
 
 .emoji{
-    border:0;
-    background:none;
-    cursor:pointer;
-
-    font-size:21px;
-
-    padding:5px;
-    border-radius:6px;
+  border:0;
+  background:transparent;
+  font-size:23px;
+  padding:5px;
+  border-radius:7px;
+  cursor:pointer;
 }
 
 .emoji:hover{
-    background:#f1f4f8;
+  background:#f0f3f8;
 }
 
+/* ==============================
+   STATES
+============================== */
 
-/* =========================
-   LOGIN
-========================= */
-
-.login-required{
-    max-width:450px;
-    margin:80px auto;
-
-    background:white;
-
-    border-radius:20px;
-
-    padding:40px 25px;
-
-    text-align:center;
-
-    box-shadow:var(--shadow);
+.loading{
+  margin:auto;
+  color:var(--muted);
+  text-align:center;
 }
 
-.login-required .icon{
-    font-size:55px;
-    margin-bottom:15px;
+.spinner{
+  width:35px;
+  height:35px;
+  border:4px solid #e3e8ef;
+  border-top-color:var(--navy);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
 }
 
-.login-required h2{
-    color:var(--navy);
-    margin-bottom:10px;
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
 }
 
-.login-required p{
-    color:var(--muted);
-    line-height:1.7;
+.error-box{
+  margin:20px;
+  padding:18px;
+  border-radius:12px;
+  background:#fff0f0;
+  border:1px solid #ffd0d0;
+  color:var(--danger);
+  line-height:1.7;
 }
 
-.login-button{
-    display:inline-block;
-
-    margin-top:20px;
-
-    padding:12px 22px;
-
-    border-radius:10px;
-
-    background:var(--navy);
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:800;
-}
-
-
-/* =========================
-   BOTTOM NAV
-========================= */
-
-.bottom-nav{
-    display:none;
-}
-
-
-/* =========================
+/* ==============================
    MOBILE
-========================= */
+============================== */
 
-@media(max-width:800px){
-
-    header{
-        height:58px;
-    }
-
-    .header-inner{
-        padding:0 15px;
-    }
-
-    .logo{
-        font-size:16px;
-    }
-
-    .header-actions{
-        display:none;
-    }
-
-    .chat-wrapper{
-        height:calc(100vh - 58px);
-        display:block;
-        position:relative;
-    }
-
-    .chat-sidebar{
-        width:100%;
-        height:100%;
-        border:0;
-    }
-
-    .chat-sidebar.hidden{
-        display:none;
-    }
-
-    .chat-main{
-        position:absolute;
-
-        inset:0;
-
-        z-index:20;
-
-        display:none;
-    }
-
-    .chat-main.mobile-show{
-        display:flex;
-    }
-
-    .conversation-header{
-        height:64px;
-    }
-
-    .messages{
-        padding:18px 13px 90px;
-    }
-
-    .message{
-        max-width:82%;
-    }
-
-    .message-input-area{
-        position:absolute;
-        bottom:0;
-        left:0;
-        right:0;
-        z-index:30;
-    }
-
-    .back-mobile{
-        display:block;
-        border:0;
-        background:none;
-        font-size:20px;
-        cursor:pointer;
-    }
-
-    .bottom-nav{
-        position:fixed;
-        bottom:0;
-        left:0;
-        right:0;
-
-        height:62px;
-
-        background:white;
-
-        border-top:1px solid var(--border);
-
-        display:flex;
-
-        justify-content:space-around;
-
-        z-index:2000;
-    }
-
-    .bottom-nav a{
-        flex:1;
-
-        text-decoration:none;
-
-        color:var(--muted);
-
-        display:flex;
-
-        flex-direction:column;
-
-        align-items:center;
-        justify-content:center;
-
-        gap:3px;
-
-        font-size:11px;
-        font-weight:700;
-    }
-
-    .bottom-nav a.active{
-        color:var(--navy);
-    }
-
-    .bottom-nav .nav-icon{
-        font-size:20px;
-    }
-
-    .sidebar-header{
-        padding-bottom:12px;
-    }
-
-    .user-list{
-        padding-bottom:65px;
-    }
-
+.mobile-back{
+  display:none;
+  border:0;
+  background:transparent;
+  font-size:22px;
+  cursor:pointer;
+  color:var(--navy);
 }
 
+@media(max-width:750px){
 
-/* =========================
-   DARK MODE
-========================= */
+  body{
+    overflow:hidden;
+  }
 
-body.dark{
-    --bg:#101722;
-    --white:#172130;
-    --text:#edf2f7;
-    --muted:#a6b0bf;
-    --border:#293546;
+  .chat-app{
+    display:block;
+    height:calc(100vh - 64px);
+    position:relative;
+  }
 
-    background:var(--bg);
+  .sidebar{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    width:100%;
+  }
+
+  .chat-area{
+    position:absolute;
+    inset:0;
+    z-index:6;
+    display:none;
+  }
+
+  .chat-area.mobile-show{
+    display:flex;
+  }
+
+  .mobile-back{
+    display:block;
+  }
+
+  .message-bubble{
+    max-width:82%;
+  }
+
+  .logo{
+    font-size:16px;
+  }
+
+  .header-right .header-btn{
+    font-size:12px;
+  }
+
+  .messages{
+    padding:15px;
+  }
 }
-
-body.dark .chat-sidebar,
-body.dark .conversation-header,
-body.dark .message-input-area,
-body.dark .login-required{
-    background:#172130;
-}
-
-body.dark .user-item:hover{
-    background:#202c3c;
-}
-
-body.dark .user-item.active{
-    background:#1b3a32;
-}
-
-body.dark .chat-main{
-    background:#111a27;
-}
-
-body.dark .message.them{
-    background:#1b2635;
-}
-
-body.dark .search-users,
-body.dark .message-input{
-    background:#101722;
-    color:white;
-    border-color:#344255;
-}
-
-body.dark .bottom-nav{
-    background:#172130;
-}
-
 </style>
 </head>
 
-
 <body>
-
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <header>
 
-<div class="header-inner">
+  <a href="./index.html" class="logo">
+    Myanmar <span>Elite Connect</span>
+  </a>
 
-<a href="./index.html" class="logo">
-Myanmar <span>Elite Connect</span>
-</a>
+  <div class="header-right">
+    <button
+      class="header-btn"
+      onclick="location.href='./profile.html'"
+    >
+      👤 Profile
+    </button>
 
-<div class="header-actions">
-
-<button
-class="header-button"
-onclick="toggleDarkMode()">
-🌙
-</button>
-
-<a
-href="./profile.html"
-class="header-button"
-style="text-decoration:none;color:white">
-👤
-</a>
-
-</div>
-
-</div>
+    <button
+      class="header-btn"
+      onclick="location.href='./index.html'"
+    >
+      Home
+    </button>
+  </div>
 
 </header>
 
 
-<!-- =========================
-     APP
-========================= -->
+<div class="chat-app">
 
-<div id="app">
+  <!-- ============================
+       SIDEBAR
+  ============================= -->
 
+  <aside class="sidebar">
 
-<!-- LOGIN STATE -->
+    <div class="sidebar-top">
 
-<div
-id="loginRequired"
-class="login-required"
-style="display:none">
+      <div class="sidebar-title">
+        💬 Chats
+      </div>
 
-<div class="icon">
-🔐
-</div>
+      <input
+        id="userSearch"
+        class="search-users"
+        type="text"
+        placeholder="User ရှာရန်..."
+      >
 
-<h2>
-Login လိုအပ်ပါတယ်
-</h2>
+    </div>
 
-<p>
-Chat အသုံးပြုရန်
-အကောင့်ဝင်ထားရန် လိုအပ်ပါသည်။
-</p>
+    <div
+      id="userList"
+      class="user-list"
+    >
 
-<a
-href="./auth.html"
-class="login-button">
-Login / Register
-</a>
+      <div class="loading">
+        <div class="spinner"></div>
+        Users များကို ရယူနေပါသည်...
+      </div>
 
-</div>
+    </div>
 
-
-<!-- CHAT WRAPPER -->
-
-<div
-id="chatWrapper"
-class="chat-wrapper"
-style="display:none">
+  </aside>
 
 
-<!-- SIDEBAR -->
+  <!-- ============================
+       CHAT AREA
+  ============================= -->
 
-<aside
-id="chatSidebar"
-class="chat-sidebar">
+  <section
+    id="chatArea"
+    class="chat-area"
+  >
 
-<div class="sidebar-header">
+    <div
+      id="chatHeader"
+      class="chat-header"
+    >
 
-<div class="sidebar-title">
+      <button
+        class="mobile-back"
+        onclick="closeMobileChat()"
+      >
+        ←
+      </button>
 
-<h2>
-💬 Chats
-</h2>
+      <div class="avatar" id="headerAvatar">
+        👤
+      </div>
 
-<span
-class="online-dot"
-title="Online">
-</span>
+      <div>
 
-</div>
+        <div
+          id="chatUserName"
+          class="chat-user-name"
+        >
+          Chat
+        </div>
 
-<input
-id="userSearch"
-class="search-users"
-type="text"
-placeholder="🔎 User ရှာရန်..."
-autocomplete="off">
+        <div
+          id="chatUserStatus"
+          class="chat-user-status"
+        >
+          User တစ်ယောက်ရွေးပါ
+        </div>
 
-</div>
+      </div>
 
-
-<div
-id="userList"
-class="user-list">
-
-</div>
-
-</aside>
-
-
-<!-- CHAT MAIN -->
-
-<section
-id="chatMain"
-class="chat-main">
-
-
-<!-- EMPTY -->
-
-<div
-id="chatEmpty"
-class="chat-empty">
-
-<div>
-
-<div class="empty-icon">
-💬
-</div>
-
-<h2>
-Chat တစ်ခုရွေးပါ
-</h2>
-
-<p>
-ဘယ်ဘက်မှ User တစ်ယောက်ကိုရွေးပြီး
-<br>
-စကားပြောနိုင်ပါတယ်။
-</p>
-
-</div>
-
-</div>
+    </div>
 
 
-<!-- CONVERSATION HEADER -->
+    <div
+      id="messages"
+      class="messages"
+    >
 
-<div
-id="conversationHeader"
-class="conversation-header">
+      <div class="select-chat">
 
-<button
-class="back-mobile"
-onclick="backToUsers()">
-←
-</button>
+        <div class="select-chat-icon">
+          💬
+        </div>
 
-<div
-id="conversationAvatar"
-class="avatar">
-?
-</div>
+        <h3>
+          Chat စတင်ရန်
+        </h3>
 
-<div class="conversation-user">
+        <p>
+          ဘယ်ဘက်က User တစ်ယောက်ကို ရွေးပါ။
+        </p>
 
-<strong id="conversationName">
-User
-</strong>
+      </div>
 
-<small>
-● Online
-</small>
+    </div>
 
-</div>
 
-<button
-class="header-button"
-style="color:#172033;background:#f1f4f8"
-onclick="clearConversation()">
-🗑️
-</button>
+    <div
+      id="emojiPanel"
+      class="emoji-panel"
+    ></div>
+
+
+    <form
+      id="messageForm"
+      class="message-form"
+    >
+
+      <button
+        type="button"
+        id="emojiButton"
+        class="emoji-btn"
+      >
+        😊
+      </button>
+
+      <textarea
+        id="messageInput"
+        class="message-input"
+        rows="1"
+        placeholder="Message ရေးပါ..."
+        disabled
+      ></textarea>
+
+      <button
+        id="sendButton"
+        class="send-btn"
+        type="submit"
+        disabled
+      >
+        Send
+      </button>
+
+    </form>
+
+  </section>
 
 </div>
-
-
-<!-- MESSAGES -->
-
-<div
-id="messages"
-class="messages">
-
-</div>
-
-
-<!-- INPUT -->
-
-<div
-id="messageInputArea"
-class="message-input-area">
-
-
-<!-- EMOJI -->
-
-<div
-id="emojiPanel"
-class="emoji-panel">
-
-<button class="emoji" onclick="addEmoji('😀')">😀</button>
-<button class="emoji" onclick="addEmoji('😂')">😂</button>
-<button class="emoji" onclick="addEmoji('😍')">😍</button>
-<button class="emoji" onclick="addEmoji('🥰')">🥰</button>
-<button class="emoji" onclick="addEmoji('😎')">😎</button>
-<button class="emoji" onclick="addEmoji('😭')">😭</button>
-<button class="emoji" onclick="addEmoji('👍')">👍</button>
-<button class="emoji" onclick="addEmoji('❤️')">❤️</button>
-<button class="emoji" onclick="addEmoji('🔥')">🔥</button>
-<button class="emoji" onclick="addEmoji('🙏')">🙏</button>
-<button class="emoji" onclick="addEmoji('😊')">😊</button>
-<button class="emoji" onclick="addEmoji('🎉')">🎉</button>
-<button class="emoji" onclick="addEmoji('💎')">💎</button>
-<button class="emoji" onclick="addEmoji('🚗')">🚗</button>
-<button class="emoji" onclick="addEmoji('🏠')">🏠</button>
-<button class="emoji" onclick="addEmoji('❤️')">❤️</button>
-
-</div>
-
-
-<div class="input-row">
-
-<button
-class="icon-button"
-onclick="toggleEmoji()">
-😊
-</button>
-
-<button
-class="icon-button"
-onclick="selectAttachment()">
-📎
-</button>
-
-<input
-id="messageInput"
-class="message-input"
-type="text"
-placeholder="စာရေးပါ..."
-autocomplete="off">
-
-<button
-class="send-button"
-onclick="sendMessage()">
-➤
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     BOTTOM NAV
-========================= -->
-
-<nav class="bottom-nav">
-
-<a href="./index.html">
-<span class="nav-icon">📋</span>
-General
-</a>
-
-<a
-href="./chat.html"
-class="active">
-<span class="nav-icon">💬</span>
-Chat
-</a>
-
-<a href="./profile.html">
-<span class="nav-icon">👤</span>
-Profile
-</a>
-
-</nav>
 
 
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -1093,8 +690,8 @@ const SUPABASE_KEY =
 
 const supabaseClient =
 window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
@@ -1103,12 +700,121 @@ window.supabase.createClient(
 ========================================= */
 
 let currentUser = null;
-
 let selectedUser = null;
+let currentRoom = null;
+let allUsers = [];
+let realtimeChannel = null;
 
-let messagesData = [];
 
-let demoUsers = [];
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const userList =
+document.getElementById("userList");
+
+const userSearch =
+document.getElementById("userSearch");
+
+const chatArea =
+document.getElementById("chatArea");
+
+const chatUserName =
+document.getElementById("chatUserName");
+
+const chatUserStatus =
+document.getElementById("chatUserStatus");
+
+const headerAvatar =
+document.getElementById("headerAvatar");
+
+const messages =
+document.getElementById("messages");
+
+const messageForm =
+document.getElementById("messageForm");
+
+const messageInput =
+document.getElementById("messageInput");
+
+const sendButton =
+document.getElementById("sendButton");
+
+const emojiButton =
+document.getElementById("emojiButton");
+
+const emojiPanel =
+document.getElementById("emojiPanel");
+
+
+/* =========================================
+   EMOJIS
+========================================= */
+
+const emojis = [
+"😀","😂","🤣","😊","😍","🥰","😘","😎",
+"🤔","😮","😢","😭","😡","👍","👎","👏",
+"🙏","❤️","💚","💙","💛","🔥","🎉","✨",
+"💯","🚗","🏠","💎","📱","💰","🤝","👑",
+"🛡️","✅","❌","⭐","😂","😅","😉","😇"
+];
+
+emojiPanel.innerHTML =
+emojis.map(
+emoji =>
+`<button type="button" class="emoji">${emoji}</button>`
+).join("");
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHtml(value){
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function getInitial(name){
+
+  if(!name){
+    return "👤";
+  }
+
+  return name
+    .trim()
+    .charAt(0)
+    .toUpperCase();
+}
+
+
+function formatTime(date){
+
+  const d =
+  new Date(date);
+
+  return d.toLocaleTimeString(
+    "en-US",
+    {
+      hour:"numeric",
+      minute:"2-digit"
+    }
+  );
+
+}
 
 
 /* =========================================
@@ -1117,74 +823,24 @@ let demoUsers = [];
 
 async function getCurrentUser(){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .auth
-    .getSession();
+  const {
+    data,
+    error
+  } =
+  await supabaseClient.auth.getSession();
 
-    if(error){
-        throw error;
-    }
+  if(error){
+    throw error;
+  }
 
-    if(
-        !data ||
-        !data.session ||
-        !data.session.user
-    ){
-        return null;
-    }
+  if(
+    !data ||
+    !data.session
+  ){
+    return null;
+  }
 
-    return data.session.user;
-}
-
-
-/* =========================================
-   INITIALIZE
-========================================= */
-
-async function initialize(){
-
-    try{
-
-        currentUser =
-        await getCurrentUser();
-
-        if(!currentUser){
-
-            document
-            .getElementById(
-                "loginRequired"
-            )
-            .style.display="block";
-
-            return;
-
-        }
-
-
-        document
-        .getElementById(
-            "chatWrapper"
-        )
-        .style.display="grid";
-
-
-        await loadUsers();
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-            "Chat စတင်ရာတွင် ပြဿနာရှိပါသည်။"
-        );
-
-    }
-
+  return data.session.user;
 }
 
 
@@ -1194,88 +850,98 @@ async function initialize(){
 
 async function loadUsers(){
 
-    const list =
-    document.getElementById(
-        "userList"
+  try{
+
+    currentUser =
+    await getCurrentUser();
+
+    if(!currentUser){
+
+      userList.innerHTML = `
+        <div class="empty-users">
+          🔐<br><br>
+          Chat အသုံးပြုရန်<br>
+          Login ဝင်ထားရပါမည်။
+          <br><br>
+          <button
+            onclick="location.href='./auth.html'"
+            style="
+              border:0;
+              background:#071b3a;
+              color:white;
+              padding:10px 15px;
+              border-radius:8px;
+              cursor:pointer;
+              font-weight:bold;
+            "
+          >
+            Login
+          </button>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from("profiles")
+      .select(`
+        id,
+        full_name,
+        phone,
+        avatar_url,
+        city,
+        role
+      `)
+      .neq(
+        "id",
+        currentUser.id
+      )
+      .order(
+        "full_name",
+        {
+          ascending:true
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    allUsers =
+    Array.isArray(data)
+    ? data
+    : [];
+
+
+    renderUsers(
+      allUsers
     );
 
-    list.innerHTML=`
-        <div style="
-            padding:30px;
-            text-align:center;
-            color:#697386">
-            Users များကို ရှာနေပါသည်...
-        </div>
+  }
+  catch(error){
+
+    console.error(
+      "User loading error:",
+      error
+    );
+
+    userList.innerHTML = `
+      <div class="error-box">
+        ❌ User များကို ရယူမရပါ။
+        <br><br>
+        ${escapeHtml(error.message)}
+      </div>
     `;
 
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .from("profiles")
-        .select(
-            "id,full_name,avatar_url,role,bio"
-        )
-        .neq(
-            "id",
-            currentUser.id
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-        if(error){
-            throw error;
-        }
-
-
-        demoUsers =
-        Array.isArray(data)
-        ? data
-        : [];
-
-
-        renderUsers();
-
-    }
-    catch(error){
-
-        console.error(
-            "User loading error:",
-            error
-        );
-
-
-        list.innerHTML=`
-
-        <div style="
-            padding:30px;
-            text-align:center;
-            color:#b42318;
-            line-height:1.7">
-
-            ❌ User များကို
-            ရယူ၍မရပါ။
-
-            <br><br>
-
-            ${escapeHtml(
-                error.message
-            )}
-
-        </div>
-
-        `;
-
-    }
+  }
 
 }
 
@@ -1284,159 +950,249 @@ async function loadUsers(){
    RENDER USERS
 ========================================= */
 
-function renderUsers(){
+function renderUsers(users){
 
-    const list =
-    document.getElementById(
-        "userList"
-    );
+  if(!users.length){
 
-    const keyword =
-    document
-    .getElementById(
-        "userSearch"
-    )
-    .value
-    .trim()
-    .toLowerCase();
+    userList.innerHTML = `
+      <div class="empty-users">
+        👥<br><br>
+        Chat လုပ်နိုင်မယ့်<br>
+        အခြား User မရှိသေးပါ။
+      </div>
+    `;
 
-
-    let users =
-    demoUsers;
+    return;
+  }
 
 
-    if(keyword){
+  userList.innerHTML =
+  users.map(
+    user => {
 
-        users =
-        users.filter(
-            user => {
+      const name =
+      escapeHtml(
+        user.full_name ||
+        "Unknown User"
+      );
 
-                const text =
-                [
-                    user.full_name,
-                    user.role,
-                    user.bio
-                ]
-                .filter(Boolean)
-                .join(" ")
-                .toLowerCase();
-
-                return text.includes(
-                    keyword
-                );
-
-            }
+      const avatar =
+      user.avatar_url
+      ? `
+        <img
+          src="${escapeHtml(user.avatar_url)}"
+          alt=""
+        >
+      `
+      : getInitial(
+          user.full_name
         );
 
-    }
 
+      return `
+        <div
+          class="user-item ${
+            selectedUser &&
+            selectedUser.id === user.id
+            ? "active"
+            : ""
+          }"
+          data-user-id="${user.id}"
+        >
 
-    if(!users.length){
+          <div class="avatar">
+            ${avatar}
+          </div>
 
-        list.innerHTML=`
+          <div class="user-info">
 
-        <div style="
-            padding:35px 20px;
-            text-align:center;
-            color:#697386">
-
-            👤
-
-            <br><br>
-
-            User မတွေ့ပါ။
-
-        </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    list.innerHTML =
-    users
-    .map(
-        user => {
-
-            const name =
-            escapeHtml(
-                user.full_name ||
-                "Unknown User"
-            );
-
-
-            const initial =
-            escapeHtml(
-                (
-                    user.full_name ||
-                    "U"
-                )
-                .charAt(0)
-                .toUpperCase()
-            );
-
-
-            const avatar =
-            user.avatar_url
-            ?
-            `<img
-                src="${escapeHtml(
-                    user.avatar_url
-                )}"
-                style="
-                    width:100%;
-                    height:100%;
-                    object-fit:cover;
-                    border-radius:50%">
-            `
-            :
-            initial;
-
-
-            return `
-
-            <div
-                class="user-item ${
-                    selectedUser &&
-                    selectedUser.id === user.id
-                    ? "active"
-                    : ""
-                }"
-                onclick="openChat('${user.id}')">
-
-                <div class="avatar">
-                    ${avatar}
-                </div>
-
-                <div class="user-info">
-
-                    <div class="user-name-row">
-
-                        <span class="user-name">
-                            ${name}
-                        </span>
-
-                        <span class="chat-time">
-                            —
-                        </span>
-
-                    </div>
-
-                    <div class="last-message">
-                        Start a conversation
-                    </div>
-
-                </div>
-
+            <div class="user-name">
+              ${name}
             </div>
 
-            `;
+            <div class="user-role">
+              ${escapeHtml(
+                user.role || "user"
+              )}
+            </div>
 
-        }
-    )
-    .join("");
+          </div>
+
+        </div>
+      `;
+
+    }
+  ).join("");
+
+
+  document
+    .querySelectorAll(".user-item")
+    .forEach(
+      item => {
+
+        item.addEventListener(
+          "click",
+          () => {
+
+            const id =
+            item.dataset.userId;
+
+            const user =
+            allUsers.find(
+              u => u.id === id
+            );
+
+            if(user){
+              openChat(user);
+            }
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================
+   SEARCH USERS
+========================================= */
+
+userSearch.addEventListener(
+  "input",
+  function(){
+
+    const keyword =
+    this.value
+      .trim()
+      .toLowerCase();
+
+    if(!keyword){
+
+      renderUsers(
+        allUsers
+      );
+
+      return;
+    }
+
+
+    const filtered =
+    allUsers.filter(
+      user => {
+
+        const text = [
+          user.full_name,
+          user.phone,
+          user.city,
+          user.role
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+        return text.includes(
+          keyword
+        );
+
+      }
+    );
+
+
+    renderUsers(
+      filtered
+    );
+
+  }
+);
+
+
+/* =========================================
+   FIND / CREATE ROOM
+========================================= */
+
+async function getOrCreateRoom(
+  otherUserId
+){
+
+  const first =
+  currentUser.id <
+  otherUserId
+  ? currentUser.id
+  : otherUserId;
+
+  const second =
+  currentUser.id <
+  otherUserId
+  ? otherUserId
+  : currentUser.id;
+
+
+  let {
+    data: room,
+    error
+  } =
+  await supabaseClient
+    .from("chat_rooms")
+    .select("*")
+    .eq("user_one",first)
+    .eq("user_two",second)
+    .maybeSingle();
+
+
+  if(error){
+    throw error;
+  }
+
+
+  if(room){
+    return room;
+  }
+
+
+  const result =
+  await supabaseClient
+    .from("chat_rooms")
+    .insert({
+      user_one:first,
+      user_two:second
+    })
+    .select()
+    .single();
+
+
+  if(result.error){
+
+    /*
+      Another request may have created
+      the room at the same time.
+    */
+
+    if(
+      result.error.code === "23505"
+    ){
+
+      const retry =
+      await supabaseClient
+        .from("chat_rooms")
+        .select("*")
+        .eq("user_one",first)
+        .eq("user_two",second)
+        .single();
+
+      if(retry.error){
+        throw retry.error;
+      }
+
+      return retry.data;
+    }
+
+    throw result.error;
+  }
+
+
+  return result.data;
 
 }
 
@@ -1445,207 +1201,308 @@ function renderUsers(){
    OPEN CHAT
 ========================================= */
 
-async function openChat(userId){
+async function openChat(user){
 
-    selectedUser =
-    demoUsers.find(
-        user => user.id === userId
+  selectedUser =
+  user;
+
+
+  chatArea.classList.add(
+    "mobile-show"
+  );
+
+
+  chatUserName.textContent =
+  user.full_name ||
+  "Unknown User";
+
+
+  chatUserStatus.textContent =
+  user.city
+  ? user.city
+  : "Myanmar Elite Connect User";
+
+
+  if(user.avatar_url){
+
+    headerAvatar.innerHTML =
+    `
+      <img
+        src="${escapeHtml(user.avatar_url)}"
+        alt=""
+      >
+    `;
+
+  }else{
+
+    headerAvatar.textContent =
+    getInitial(
+      user.full_name
+    );
+
+  }
+
+
+  messages.innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div>
+      Chat ကို ဖွင့်နေပါသည်...
+    </div>
+  `;
+
+
+  messageInput.disabled =
+  true;
+
+  sendButton.disabled =
+  true;
+
+
+  try{
+
+    currentRoom =
+    await getOrCreateRoom(
+      user.id
     );
 
 
-    if(!selectedUser){
-        return;
-    }
+    await loadMessages();
 
 
-    document
-    .getElementById(
-        "chatEmpty"
-    )
-    .style.display="none";
+    subscribeRealtime();
 
 
-    const header =
-    document.getElementById(
-        "conversationHeader"
+    messageInput.disabled =
+    false;
+
+    sendButton.disabled =
+    false;
+
+    messageInput.focus();
+
+
+    renderUsers(
+      allUsers
     );
 
-    header.classList.add(
-        "show"
+  }
+  catch(error){
+
+    console.error(
+      "Open chat error:",
+      error
     );
 
+    messages.innerHTML = `
+      <div class="error-box">
+        ❌ Chat ဖွင့်၍မရပါ။
+        <br><br>
+        ${escapeHtml(error.message)}
+      </div>
+    `;
 
-    const messages =
-    document.getElementById(
-        "messages"
-    );
-
-    messages.classList.add(
-        "show"
-    );
-
-
-    document
-    .getElementById(
-        "messageInputArea"
-    )
-    .classList.add(
-        "show"
-    );
-
-
-    document
-    .getElementById(
-        "conversationName"
-    )
-    .textContent =
-    selectedUser.full_name ||
-    "User";
-
-
-    document
-    .getElementById(
-        "conversationAvatar"
-    )
-    .textContent =
-    (
-        selectedUser.full_name ||
-        "U"
-    )
-    .charAt(0)
-    .toUpperCase();
-
-
-    renderUsers();
-
-
-    /* MOBILE */
-
-    document
-    .getElementById(
-        "chatSidebar"
-    )
-    .classList.add(
-        "hidden"
-    );
-
-
-    document
-    .getElementById(
-        "chatMain"
-    )
-    .classList.add(
-        "mobile-show"
-    );
-
-
-    /*
-        Database message loading
-        will be connected when
-        chat_messages table is created.
-    */
-
-    renderMessages();
+  }
 
 }
 
 
 /* =========================================
-   RENDER MESSAGES
+   LOAD MESSAGES
 ========================================= */
 
-function renderMessages(){
+async function loadMessages(){
 
-    const container =
-    document.getElementById(
-        "messages"
+  if(!currentRoom){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("chat_messages")
+    .select("*")
+    .eq(
+      "room_id",
+      currentRoom.id
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
     );
 
 
-    if(!messagesData.length){
+  if(error){
+    throw error;
+  }
 
-        container.innerHTML=`
 
-        <div style="
-            margin:auto;
-            text-align:center;
-            color:#8a94a6">
+  messages.innerHTML = "";
 
-            <div style="
-                font-size:45px;
-                margin-bottom:10px">
-                👋
-            </div>
 
-            <strong>
-                စကားစတင်ပြောလိုက်ပါ
-            </strong>
+  if(!data || !data.length){
 
-            <br>
-
-            <small>
-                ပထမဆုံး Message ကို
-                ပို့လိုက်ပါ။
-            </small>
-
+    messages.innerHTML = `
+      <div class="select-chat">
+        <div class="select-chat-icon">
+          👋
         </div>
+        <h3>
+          စကားစပြောလိုက်ပါ
+        </h3>
+        <p>
+          ပထမဆုံး Message ပို့လိုက်ပါ။
+        </p>
+      </div>
+    `;
 
-        `;
+    return;
+  }
 
-        return;
+
+  data.forEach(
+    message => {
+
+      renderMessage(
+        message
+      );
 
     }
+  );
 
 
-    container.innerHTML =
-    messagesData
-    .map(
-        message => {
+  scrollToBottom();
 
-            const mine =
-            message.sender_id ===
-            currentUser.id;
+}
 
 
-            return `
+/* =========================================
+   RENDER MESSAGE
+========================================= */
 
-            <div class="
-                message-row
-                ${mine ? "me" : ""}
-            ">
+function renderMessage(message){
 
-                <div class="
-                    message
-                    ${mine ? "me" : "them"}
-                ">
+  const emptyState =
+  messages.querySelector(
+    ".select-chat"
+  );
 
-                    ${escapeHtml(
-                        message.text
-                    )}
-
-                    <span
-                        class="message-time">
-
-                        ${escapeHtml(
-                            message.time ||
-                            ""
-                        )}
-
-                    </span>
-
-                </div>
-
-            </div>
-
-            `;
-
-        }
-    )
-    .join("");
+  if(emptyState){
+    emptyState.remove();
+  }
 
 
-    container.scrollTop =
-    container.scrollHeight;
+  const mine =
+  message.sender_id ===
+  currentUser.id;
+
+
+  const row =
+  document.createElement(
+    "div"
+  );
+
+  row.className =
+  "message-row " +
+  (
+    mine
+    ? "mine"
+    : "theirs"
+  );
+
+
+  const bubble =
+  document.createElement(
+    "div"
+  );
+
+  bubble.className =
+  "message-bubble";
+
+
+  const text =
+  document.createElement(
+    "div"
+  );
+
+  text.className =
+  "message-text";
+
+  text.textContent =
+  message.message || "";
+
+
+  const time =
+  document.createElement(
+    "div"
+  );
+
+  time.className =
+  "message-time";
+
+  time.textContent =
+  formatTime(
+    message.created_at
+  );
+
+
+  bubble.appendChild(
+    text
+  );
+
+  bubble.appendChild(
+    time
+  );
+
+
+  if(mine){
+
+    const deleteButton =
+    document.createElement(
+      "button"
+    );
+
+    deleteButton.type =
+    "button";
+
+    deleteButton.className =
+    "delete-message";
+
+    deleteButton.textContent =
+    "🗑️";
+
+    deleteButton.title =
+    "Delete message";
+
+    deleteButton.addEventListener(
+      "click",
+      () => {
+
+        deleteMessage(
+          message.id
+        );
+
+      }
+    );
+
+    bubble.appendChild(
+      deleteButton
+    );
+
+  }
+
+
+  row.appendChild(
+    bubble
+  );
+
+  messages.appendChild(
+    row
+  );
 
 }
 
@@ -1654,293 +1511,407 @@ function renderMessages(){
    SEND MESSAGE
 ========================================= */
 
-async function sendMessage(){
+messageForm.addEventListener(
+  "submit",
+  async function(event){
 
-    if(!selectedUser){
-        return;
+    event.preventDefault();
+
+
+    if(
+      !currentUser ||
+      !currentRoom
+    ){
+      return;
     }
-
-
-    const input =
-    document.getElementById(
-        "messageInput"
-    );
 
 
     const text =
-    input.value.trim();
+    messageInput.value.trim();
 
 
     if(!text){
-        return;
+      return;
     }
 
 
-    /*
-        Temporary local message.
-
-        Real Supabase insert will be
-        connected after chat_messages
-        table is created.
-    */
-
-    messagesData.push({
-
-        sender_id:
-        currentUser.id,
-
-        receiver_id:
-        selectedUser.id,
-
-        text:
-        text,
-
-        time:
-        new Date()
-        .toLocaleTimeString(
-            [],
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        )
-
-    });
+    sendButton.disabled =
+    true;
 
 
-    input.value="";
+    try{
 
-
-    renderMessages();
-
-
-    /*
-        Future:
-        await supabaseClient
+      const {
+        error
+      } =
+      await supabaseClient
         .from("chat_messages")
-        .insert(...)
-    */
+        .insert({
+
+          room_id:
+          currentRoom.id,
+
+          sender_id:
+          currentUser.id,
+
+          message:
+          text,
+
+          message_type:
+          "text"
+
+        });
+
+
+      if(error){
+        throw error;
+      }
+
+
+      messageInput.value =
+      "";
+
+      messageInput.style.height =
+      "44px";
+
+    }
+    catch(error){
+
+      console.error(
+        "Send message error:",
+        error
+      );
+
+      alert(
+        "Message ပို့မရပါ။\n" +
+        error.message
+      );
+
+    }
+    finally{
+
+      sendButton.disabled =
+      false;
+
+      messageInput.focus();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   REALTIME
+========================================= */
+
+function subscribeRealtime(){
+
+  if(
+    realtimeChannel
+  ){
+
+    supabaseClient
+      .removeChannel(
+        realtimeChannel
+      );
+
+  }
+
+
+  if(!currentRoom){
+    return;
+  }
+
+
+  realtimeChannel =
+  supabaseClient
+    .channel(
+      "chat-room-" +
+      currentRoom.id
+    )
+    .on(
+      "postgres_changes",
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"chat_messages",
+        filter:
+        "room_id=eq." +
+        currentRoom.id
+      },
+      payload => {
+
+        /*
+          Avoid duplicate display because
+          the sender may receive realtime too.
+        */
+
+        const existing =
+        messages.querySelector(
+          `[data-message-id="${payload.new.id}"]`
+        );
+
+        if(existing){
+          return;
+        }
+
+
+        renderMessage(
+          payload.new
+        );
+
+        scrollToBottom();
+
+      }
+    )
+    .on(
+      "postgres_changes",
+      {
+        event:"DELETE",
+        schema:"public",
+        table:"chat_messages",
+        filter:
+        "room_id=eq." +
+        currentRoom.id
+      },
+      payload => {
+
+        const rows =
+        messages.children;
+
+        /*
+          Reloading is safer for delete events.
+        */
+
+        loadMessages()
+        .catch(
+          console.error
+        );
+
+      }
+    )
+    .subscribe(
+      status => {
+
+        console.log(
+          "Realtime status:",
+          status
+        );
+
+      }
+    );
 
 }
 
 
 /* =========================================
-   ENTER SEND
+   DELETE MESSAGE
 ========================================= */
 
-document
-.getElementById(
-    "messageInput"
-)
-.addEventListener(
-    "keydown",
-    function(event){
+async function deleteMessage(
+  messageId
+){
 
-        if(
-            event.key === "Enter" &&
-            !event.shiftKey
-        ){
+  const confirmed =
+  confirm(
+    "ဒီ Message ကို ဖျက်မှာသေချာပါသလား?"
+  );
 
-            event.preventDefault();
 
-            sendMessage();
+  if(!confirmed){
+    return;
+  }
 
-        }
 
+  try{
+
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("chat_messages")
+      .delete()
+      .eq(
+        "id",
+        messageId
+      )
+      .eq(
+        "sender_id",
+        currentUser.id
+      );
+
+
+    if(error){
+      throw error;
     }
-);
 
+  }
+  catch(error){
 
-/* =========================================
-   SEARCH USER
-========================================= */
+    console.error(
+      "Delete message error:",
+      error
+    );
 
-document
-.getElementById(
-    "userSearch"
-)
-.addEventListener(
-    "input",
-    renderUsers
-);
+    alert(
+      "Message ဖျက်မရပါ။\n" +
+      error.message
+    );
+
+  }
+
+}
 
 
 /* =========================================
    EMOJI
 ========================================= */
 
-function toggleEmoji(){
+emojiButton.addEventListener(
+  "click",
+  function(){
 
-    document
-    .getElementById(
-        "emojiPanel"
-    )
-    .classList.toggle(
+    emojiPanel.classList.toggle(
+      "show"
+    );
+
+  }
+);
+
+
+document
+  .querySelectorAll(".emoji")
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          messageInput.value +=
+          this.textContent;
+
+          messageInput.focus();
+
+        }
+      );
+
+    }
+  );
+
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      !emojiPanel.contains(event.target) &&
+      event.target !== emojiButton
+    ){
+
+      emojiPanel.classList.remove(
         "show"
-    );
+      );
 
-}
+    }
 
-
-function addEmoji(emoji){
-
-    const input =
-    document.getElementById(
-        "messageInput"
-    );
-
-
-    input.value += emoji;
-
-    input.focus();
-
-}
+  }
+);
 
 
 /* =========================================
-   ATTACHMENT
+   TEXTAREA AUTO HEIGHT
 ========================================= */
 
-function selectAttachment(){
+messageInput.addEventListener(
+  "input",
+  function(){
 
-    alert(
-        "📎 Image / File Chat ကို Database Storage နဲ့ ချိတ်ပြီးနောက် ထည့်သွင်းပေးမယ်။"
-    );
+    this.style.height =
+    "44px";
 
-}
+    this.style.height =
+    Math.min(
+      this.scrollHeight,
+      130
+    ) + "px";
+
+  }
+);
 
 
 /* =========================================
-   CLEAR CONVERSATION
+   ENTER TO SEND
 ========================================= */
 
-function clearConversation(){
+messageInput.addEventListener(
+  "keydown",
+  function(event){
 
-    if(!selectedUser){
-        return;
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
+
+      event.preventDefault();
+
+      messageForm.requestSubmit();
+
     }
 
-
-    const confirmClear =
-    confirm(
-        "ဒီ Conversation ကို ရှင်းလင်းမလား?"
-    );
-
-
-    if(!confirmClear){
-        return;
-    }
-
-
-    messagesData=[];
-
-    renderMessages();
-
-}
+  }
+);
 
 
 /* =========================================
    MOBILE BACK
 ========================================= */
 
-function backToUsers(){
+function closeMobileChat(){
 
-    document
-    .getElementById(
-        "chatSidebar"
-    )
-    .classList.remove(
-        "hidden"
-    );
-
-
-    document
-    .getElementById(
-        "chatMain"
-    )
-    .classList.remove(
-        "mobile-show"
-    );
-
-
-    selectedUser=null;
+  chatArea.classList.remove(
+    "mobile-show"
+  );
 
 }
 
 
 /* =========================================
-   DARK MODE
+   CLEANUP
 ========================================= */
 
-function toggleDarkMode(){
-
-    document
-    .body
-    .classList
-    .toggle("dark");
-
-
-    localStorage.setItem(
-        "mec_dark_mode",
-        document.body.classList.contains(
-            "dark"
-        )
-        ? "1"
-        : "0"
-    );
-
-}
-
-
-function loadTheme(){
+window.addEventListener(
+  "beforeunload",
+  function(){
 
     if(
-        localStorage.getItem(
-            "mec_dark_mode"
-        ) === "1"
+      realtimeChannel
     ){
 
-        document
-        .body
-        .classList
-        .add("dark");
+      supabaseClient
+        .removeChannel(
+          realtimeChannel
+        );
 
     }
 
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHtml(value){
-
-    if(
-        value === null ||
-        value === undefined
-    ){
-        return "";
-    }
-
-
-    return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
+  }
+);
 
 
 /* =========================================
    START
 ========================================= */
 
-loadTheme();
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
 
-initialize();
+    loadUsers();
+
+  }
+);
 
 </script>
 
