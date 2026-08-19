@@ -1,1718 +1,2658 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Buy — Myanmar Elite Connect</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --navy:#071b3a;
-  --navy2:#102d59;
-  --green:#19a974;
-  --gold:#d9a441;
-  --bg:#f4f7fb;
-  --white:#fff;
-  --text:#172033;
-  --muted:#697386;
-  --border:#e3e8f0;
-  --danger:#b42318;
-  --shadow:0 10px 30px rgba(7,27,58,.08);
-}
-
-body{
-  font-family:Arial,"Noto Sans Myanmar",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-}
-
-/* ================= HEADER ================= */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(7,27,58,.97);
-  backdrop-filter:blur(12px);
-  color:white;
-  box-shadow:0 3px 15px rgba(0,0,0,.15);
-}
-
-.header-inner{
-  max-width:1350px;
-  margin:auto;
-  padding:13px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
-
-.logo{
-  color:white;
-  text-decoration:none;
-  font-size:20px;
-  font-weight:900;
-}
-
-.logo span{
-  color:#65d6a7;
-}
-
-nav{
-  display:flex;
-  gap:6px;
-}
-
-nav a{
-  color:white;
-  text-decoration:none;
-  padding:9px 12px;
-  border-radius:8px;
-  font-size:13px;
-}
-
-nav a:hover{
-  background:rgba(255,255,255,.1);
-}
-
-.sell-btn{
-  background:var(--green);
-  font-weight:800;
-}
-
-.profile-btn{
-  background:white;
-  color:var(--navy);
-  font-weight:800;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-  background:
-  radial-gradient(
-    circle at 85% 10%,
-    #17467e 0,
-    #071b3a 45%,
-    #041126 100%
-  );
-
-  color:white;
-  padding:55px 5%;
-  text-align:center;
-}
-
-.hero h1{
-  font-size:clamp(32px,5vw,50px);
-  margin-bottom:10px;
-}
-
-.hero h1 span{
-  color:#65d6a7;
-}
-
-.hero p{
-  color:rgba(255,255,255,.8);
-  line-height:1.8;
-  font-size:14px;
-}
-
-/* ================= MAIN ================= */
-
-main{
-  max-width:1350px;
-  margin:auto;
-  padding:35px 5% 80px;
-}
-
-/* ================= FILTER PANEL ================= */
-
-.filter-panel{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:20px;
-  box-shadow:var(--shadow);
-  margin-bottom:30px;
-}
-
-.filter-title{
-  color:var(--navy);
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:15px;
-}
-
-.category-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:15px;
-}
-
-.category-btn{
-  border:1px solid var(--border);
-  background:white;
-  color:var(--text);
-  padding:10px 15px;
-  border-radius:9px;
-  cursor:pointer;
-  font-weight:800;
-}
-
-.category-btn.active{
-  background:var(--navy);
-  border-color:var(--navy);
-  color:white;
-}
-
-.filters{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr auto;
-  gap:10px;
-}
-
-input,
-select{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  outline:none;
-  background:white;
-  color:var(--text);
-  font-family:inherit;
-}
-
-input:focus,
-select:focus{
-  border-color:var(--navy);
-  box-shadow:0 0 0 3px rgba(7,27,58,.08);
-}
-
-.reset-btn{
-  border:0;
-  background:#eef2f7;
-  color:var(--navy);
-  padding:0 17px;
-  border-radius:9px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-/* ================= RESULTS ================= */
-
-.results-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:18px;
-}
-
-.results-head h2{
-  color:var(--navy);
-  font-size:25px;
-}
-
-.count{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:4px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-
-/* ================= CARD ================= */
-
-.card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:17px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  transition:.2s;
-}
-
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 40px rgba(7,27,58,.13);
-}
-
-.card-image{
-  height:220px;
-  position:relative;
-  background:linear-gradient(135deg,#071b3a,#24548d);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.card-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-.no-image{
-  font-size:65px;
-}
-
-.category-label{
-  position:absolute;
-  left:10px;
-  top:10px;
-  background:rgba(7,27,58,.88);
-  color:white;
-  padding:6px 9px;
-  border-radius:7px;
-  font-size:11px;
-  font-weight:900;
-}
-
-.image-count{
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  background:rgba(0,0,0,.7);
-  color:white;
-  padding:5px 8px;
-  border-radius:7px;
-  font-size:11px;
-}
-
-.card-body{
-  padding:17px;
-}
-
-.type{
-  display:inline-block;
-  background:#e8f7ef;
-  color:#167344;
-  padding:5px 9px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.title{
-  color:var(--navy);
-  font-size:18px;
-  font-weight:900;
-  line-height:1.4;
-  margin-bottom:8px;
-}
-
-.price{
-  color:var(--navy);
-  font-size:19px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.location{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-  margin-bottom:9px;
-}
-
-.description{
-  color:#596476;
-  font-size:13px;
-  line-height:1.6;
-  margin-bottom:14px;
-
-  display:-webkit-box;
-  -webkit-line-clamp:3;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-
-.card-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.contact-btn,
-.favorite-btn{
-  text-align:center;
-  text-decoration:none;
-  padding:11px 8px;
-  border-radius:8px;
-  font-size:13px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.contact-btn{
-  background:var(--navy);
-  color:white;
-}
-
-.favorite-btn{
-  border:1px solid var(--border);
-  background:white;
-  color:var(--navy);
-}
-
-/* ================= STATES ================= */
-
-.state{
-  grid-column:1/-1;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:55px 20px;
-  text-align:center;
-  color:var(--muted);
-}
-
-.state-icon{
-  font-size:48px;
-  margin-bottom:10px;
-}
-
-.state h3{
-  color:var(--navy);
-  margin-bottom:7px;
-}
-
-.spinner{
-  width:38px;
-  height:38px;
-  border:4px solid #e5eaf2;
-  border-top-color:var(--navy);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 15px;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.error{
-  grid-column:1/-1;
-  background:#fff1f1;
-  color:var(--danger);
-  border:1px solid #ffd2d2;
-  border-radius:14px;
-  padding:22px;
-  line-height:1.7;
-}
-
-.retry{
-  margin-top:12px;
-  border:0;
-  background:var(--navy);
-  color:white;
-  padding:10px 17px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:800;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  background:var(--navy);
-  color:white;
-  text-align:center;
-  padding:30px 5%;
-}
-
-footer strong{
-  font-size:17px;
-}
-
-footer p{
-  margin-top:7px;
-  color:rgba(255,255,255,.7);
-  font-size:13px;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:1050px){
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .filters{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .search-filter{
-    grid-column:1/-1;
-  }
-
-}
-
-@media(max-width:700px){
-
-  nav a{
-    display:none;
-  }
-
-  nav .sell-btn,
-  nav .profile-btn{
-    display:block;
-  }
-
-  .hero{
-    padding:45px 5%;
-  }
-
-  main{
-    padding:25px 4% 60px;
-  }
-
-  .filters{
-    grid-template-columns:1fr;
-  }
-
-  .search-filter{
-    grid-column:auto;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .card-image{
-    height:230px;
-  }
-
-  .results-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Buy — Myanmar Elite Connect</title>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-2: #f0f3f7;
+      --text: #10233f;
+      --muted: #738096;
+      --navy: #071a34;
+      --gold: #d7b35a;
+      --border: rgba(16,35,63,.09);
+      --danger: #c94a4a;
+      --shadow: 0 15px 45px rgba(16,35,63,.07);
+    }
+
+    body.dark {
+      --bg: #071321;
+      --surface: #0d1d31;
+      --surface-2: #12263d;
+      --text: #f4f7fb;
+      --muted: #9aa8ba;
+      --navy: #f4f7fb;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 15px 45px rgba(0,0,0,.22);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+
+      font-family:
+        Inter,
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      transition: background .2s ease, color .2s ease;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      height: 74px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: rgba(255,255,255,.86);
+
+      backdrop-filter: blur(18px);
+    }
+
+    body.dark .header {
+      background: rgba(13,29,49,.90);
+    }
+
+    .header-inner {
+      width: min(1200px, calc(100% - 32px));
+
+      height: 100%;
+
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      flex-shrink: 0;
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      overflow: hidden;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      background: var(--surface);
+    }
+
+    .logo img {
+      width: 82%;
+      height: 82%;
+
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 14px;
+      font-weight: 900;
+
+      letter-spacing: -.35px;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav a {
+      padding: 9px 12px;
+
+      border-radius: 9px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      font-weight: 850;
+
+      transition: .2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .icon-btn {
+      width: 39px;
+      height: 39px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+
+      border-radius: 11px;
+
+      background: var(--surface);
+
+      color: var(--text);
+
+      font-size: 12px;
+      font-weight: 900;
+
+      transition: .2s ease;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(215,179,90,.45);
+    }
+
+    .profile-link {
+      width: 39px;
+      height: 39px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+      border-radius: 50%;
+
+      overflow: hidden;
+
+      background: var(--surface);
+
+      color: var(--text);
+
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      width: min(1200px, calc(100% - 32px));
+
+      margin: auto;
+
+      padding: 38px 0 70px;
+    }
+
+    .page-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 25px;
+
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 10px;
+
+      color: var(--gold);
+
+      font-size: 9px;
+      font-weight: 900;
+
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .eyebrow::before {
+      content: "";
+
+      width: 21px;
+      height: 1px;
+
+      background: var(--gold);
+    }
+
+    h1 {
+      font-size: clamp(29px, 4vw, 42px);
+
+      line-height: 1.05;
+
+      letter-spacing: -1.5px;
+    }
+
+    .page-description {
+      margin-top: 9px;
+
+      max-width: 580px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .sell-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      min-width: 145px;
+      height: 44px;
+
+      padding: 0 17px;
+
+      border: 0;
+
+      border-radius: 11px;
+
+      background: var(--navy);
+
+      color:
+        var(--bg);
+
+      font-size: 11px;
+      font-weight: 900;
+
+      transition: .2s ease;
+    }
+
+    body.dark .sell-button {
+      background: var(--gold);
+      color: #071a34;
+    }
+
+    .sell-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-panel {
+      padding: 13px;
+
+      margin-bottom: 19px;
+
+      background: var(--surface);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 17px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 9px;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+
+      height: 46px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 9px;
+
+      padding: 0 13px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 11px;
+
+      background: var(--surface-2);
+    }
+
+    .search-icon {
+      color: var(--muted);
+
+      font-size: 18px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 100%;
+
+      outline: 0;
+      border: 0;
+
+      background: transparent;
+
+      color: var(--text);
+
+      font-size: 12px;
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-button {
+      height: 46px;
+
+      min-width: 90px;
+
+      padding: 0 16px;
+
+      border: 0;
+
+      border-radius: 11px;
+
+      background: var(--navy);
+
+      color: var(--bg);
+
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    body.dark .search-button {
+      color: #071a34;
+      background: var(--gold);
+    }
+
+    /* =========================
+       FILTERS
+    ========================= */
+
+    .filter-row {
+      display: grid;
+
+      grid-template-columns:
+        1.1fr
+        1fr
+        1fr
+        1fr
+        auto;
+
+      gap: 8px;
+
+      margin-top: 10px;
+    }
+
+    .filter,
+    .sort-select {
+      width: 100%;
+      height: 40px;
+
+      padding: 0 11px;
+
+      outline: 0;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      background: var(--surface);
+
+      color: var(--text);
+
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .filter:focus,
+    .sort-select:focus {
+      border-color: rgba(215,179,90,.65);
+    }
+
+    .clear-button {
+      height: 40px;
+
+      padding: 0 13px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      background: transparent;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .clear-button:hover {
+      color: var(--danger);
+      border-color: rgba(201,74,74,.3);
+    }
+
+    /* =========================
+       TYPE TABS
+    ========================= */
+
+    .market-tabs {
+      display: flex;
+
+      gap: 7px;
+
+      margin-bottom: 21px;
+
+      overflow-x: auto;
+
+      scrollbar-width: none;
+    }
+
+    .market-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .market-tab {
+      flex-shrink: 0;
+
+      height: 36px;
+
+      padding: 0 14px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      background: var(--surface);
+
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 850;
+
+      transition: .2s ease;
+    }
+
+    .market-tab.active {
+      background: var(--navy);
+
+      color: var(--bg);
+
+      border-color: var(--navy);
+    }
+
+    body.dark .market-tab.active {
+      background: var(--gold);
+
+      color: #071a34;
+
+      border-color: var(--gold);
+    }
+
+    /* =========================
+       RESULTS HEADER
+    ========================= */
+
+    .results-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 14px;
+    }
+
+    .result-count {
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .result-count strong {
+      color: var(--text);
+    }
+
+    /* =========================
+       LISTING GRID
+    ========================= */
+
+    .listing-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 14px;
+    }
+
+    .listing-card {
+      overflow: hidden;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 16px;
+
+      background: var(--surface);
+
+      transition: .22s ease;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-4px);
+
+      box-shadow: var(--shadow);
+
+      border-color:
+        rgba(215,179,90,.35);
+    }
+
+    .listing-photo {
+      position: relative;
+
+      height: 175px;
+
+      display: grid;
+      place-items: center;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+          var(--surface-2),
+          var(--surface)
+        );
+    }
+
+    .listing-photo img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: transform .3s ease;
+    }
+
+    .listing-card:hover .listing-photo img {
+      transform: scale(1.035);
+    }
+
+    .no-image {
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .badge {
+      position: absolute;
+
+      top: 10px;
+      left: 10px;
+
+      padding: 5px 7px;
+
+      border-radius: 7px;
+
+      background: rgba(7,26,52,.86);
+
+      color: #fff;
+
+      font-size: 8px;
+      font-weight: 900;
+
+      text-transform: uppercase;
+    }
+
+    .heart {
+      position: absolute;
+
+      top: 9px;
+      right: 9px;
+
+      width: 30px;
+      height: 30px;
+
+      display: grid;
+      place-items: center;
+
+      border: 0;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.9);
+
+      color: #27344a;
+
+      font-size: 14px;
+    }
+
+    .listing-content {
+      padding: 14px;
+    }
+
+    .listing-category {
+      color: var(--gold);
+
+      font-size: 8px;
+      font-weight: 900;
+
+      letter-spacing: .8px;
+
+      text-transform: uppercase;
+    }
+
+    .listing-title {
+      margin-top: 6px;
+
+      min-height: 34px;
+
+      color: var(--text);
+
+      font-size: 12px;
+      font-weight: 900;
+
+      line-height: 1.45;
+    }
+
+    .listing-price {
+      margin-top: 9px;
+
+      color: var(--text);
+
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .listing-meta {
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      margin-top: 8px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    .listing-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding-top: 11px;
+
+      margin-top: 11px;
+
+      border-top:
+        1px solid var(--border);
+    }
+
+    .seller {
+      overflow: hidden;
+
+      max-width: 70%;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    .contact {
+      color: var(--gold);
+
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       STATES
+    ========================= */
+
+    .state {
+      grid-column: 1 / -1;
+
+      min-height: 270px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      text-align: center;
+
+      border:
+        1px dashed var(--border);
+
+      border-radius: 17px;
+
+      background: var(--surface);
+    }
+
+    .state-icon {
+      width: 50px;
+      height: 50px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 13px;
+
+      border-radius: 15px;
+
+      background: var(--surface-2);
+
+      color: var(--gold);
+
+      font-size: 20px;
+    }
+
+    .state strong {
+      font-size: 13px;
+    }
+
+    .state span {
+      max-width: 350px;
+
+      margin-top: 6px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .retry {
+      margin-top: 14px;
+
+      height: 36px;
+
+      padding: 0 14px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 9px;
+
+      background: var(--surface);
+
+      color: var(--text);
+
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    /* =========================
+       MOBILE NAV
+    ========================= */
+
+    .bottom-nav {
+      display: none;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1050px) {
+
+      .listing-grid {
+        grid-template-columns:
+          repeat(3, 1fr);
+      }
+
+      .filter-row {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .clear-button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 800px) {
+
+      .nav {
+        display: none;
+      }
+
+      .listing-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .header {
+        height: 68px;
+      }
+
+      .header-inner {
+        width: calc(100% - 22px);
+      }
+
+      .brand-name {
+        display: none;
+      }
+
+      .main {
+        width: calc(100% - 22px);
+
+        padding-top: 27px;
+      }
+
+      .page-top {
+        display: block;
+      }
+
+      .page-description {
+        font-size: 11px;
+      }
+
+      .sell-button {
+        width: 100%;
+
+        margin-top: 16px;
+      }
+
+      .search-row {
+        display: block;
+      }
+
+      .search-button {
+        width: 100%;
+
+        margin-top: 8px;
+      }
+
+      .filter-row {
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .listing-grid {
+        grid-template-columns:
+          1fr 1fr;
+
+        gap: 9px;
+      }
+
+      .listing-photo {
+        height: 135px;
+      }
+
+      .listing-content {
+        padding: 11px;
+      }
+
+      .listing-title {
+        font-size: 11px;
+      }
+
+      .listing-price {
+        font-size: 12px;
+      }
+
+      .listing-meta {
+        font-size: 7px;
+      }
+
+      .bottom-nav {
+        position: fixed;
+
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        z-index: 200;
+
+        height: 62px;
+
+        display: grid;
+
+        grid-template-columns:
+          repeat(4, 1fr);
+
+        padding: 6px;
+
+        border:
+          1px solid var(--border);
+
+        border-radius: 17px;
+
+        background:
+          rgba(255,255,255,.94);
+
+        backdrop-filter: blur(18px);
+
+        box-shadow:
+          0 15px 40px rgba(0,0,0,.12);
+      }
+
+      body.dark .bottom-nav {
+        background:
+          rgba(13,29,49,.95);
+      }
+
+      .bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 3px;
+
+        border-radius: 11px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        font-weight: 850;
+      }
+
+      .bottom-nav a.active {
+        color: var(--gold);
+
+        background: var(--surface-2);
+      }
+
+      .bottom-nav b {
+        font-size: 17px;
+        font-weight: 500;
+      }
+
+      .footer-space {
+        height: 70px;
+      }
+    }
+
+    @media (max-width: 380px) {
+
+      .listing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .listing-photo {
+        height: 190px;
+      }
+
+      .filter-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-<div class="header-inner">
+  <header class="header">
 
-<a href="./index.html" class="logo">
-Myanmar <span>Elite Connect</span>
-</a>
-
-<nav>
-
-<a href="./index.html">
-General
-</a>
-
-<a href="./car.html">
-🚗 Car
-</a>
-
-<a href="./property.html">
-🏠 Property
-</a>
-
-<a href="./gem.html">
-💎 Gem
-</a>
-
-<a href="./sell.html" class="sell-btn">
-+ Sell
-</a>
-
-<a href="./profile.html" class="profile-btn">
-👤 Profile
-</a>
-
-</nav>
-
-</div>
-
-</header>
-
-
-<section class="hero">
-
-<h1>
-🛒 <span>Buy</span> Marketplace
-</h1>
-
-<p>
-ကား၊ အိမ်ခြံမြေ နှင့် ကျောက်မျက်များကို
-ရှာဖွေပြီး ရောင်းသူများနှင့် ဆက်သွယ်နိုင်ပါသည်။
-</p>
-
-</section>
-
-
-<main>
-
-<section class="filter-panel">
-
-<div class="filter-title">
-🔎 ရှာဖွေပြီး စစ်ထုတ်ရန်
-</div>
-
-
-<div class="category-buttons">
-
-<button
-class="category-btn active"
-data-category="all"
-onclick="setCategory('all')"
->
-All
-</button>
-
-<button
-class="category-btn"
-data-category="car"
-onclick="setCategory('car')"
->
-🚗 Cars
-</button>
-
-<button
-class="category-btn"
-data-category="property"
-onclick="setCategory('property')"
->
-🏠 Property
-</button>
-
-<button
-class="category-btn"
-data-category="gem"
-onclick="setCategory('gem')"
->
-💎 Gems
-</button>
-
-</div>
-
-
-<div class="filters">
-
-<input
-id="searchInput"
-class="search-filter"
-type="text"
-placeholder="🔎 ကား၊ အိမ်၊ ကျောက်မျက်၊ Yangon..."
->
-
-<input
-id="minPrice"
-type="number"
-min="0"
-placeholder="အနည်းဆုံးဈေး"
->
-
-<input
-id="maxPrice"
-type="number"
-min="0"
-placeholder="အများဆုံးဈေး"
->
-
-<input
-id="locationInput"
-type="text"
-placeholder="📍 City / Township"
->
-
-<button
-class="reset-btn"
-onclick="resetFilters()"
->
-Reset
-</button>
-
-</div>
-
-</section>
-
-
-<section>
-
-<div class="results-head">
-
-<div>
-
-<h2>
-Latest Buy Listings
-</h2>
-
-<div id="listingCount" class="count">
-Listings များကို ရယူနေပါသည်...
-</div>
-
-</div>
-
-</div>
-
-
-<div
-id="listingsGrid"
-class="grid"
->
-
-<div class="state">
-
-<div class="spinner"></div>
-
-Listings များကို ရယူနေပါသည်...
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-
-<footer>
-
-<strong>
-Myanmar Elite Connect
-</strong>
-
-<p>
-Cars • Property • Gems
-</p>
-
-<p>
-© 2026 Myanmar Elite Connect
-</p>
-
-</footer>
-
-
-<script>
-
-/* =====================================================
-   SUPABASE
-===================================================== */
-
-const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* =====================================================
-   GLOBAL
-===================================================== */
-
-let allListings = [];
-
-let currentCategory = "all";
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value){
-
-  if(
-    value === null ||
-    value === undefined
-  ){
-    return "";
-  }
-
-  return String(value)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-}
-
-
-/* =====================================================
-   ICON
-===================================================== */
-
-function getIcon(category){
-
-  if(category === "car"){
-    return "🚗";
-  }
-
-  if(category === "property"){
-    return "🏠";
-  }
-
-  if(category === "gem"){
-    return "💎";
-  }
-
-  return "📦";
-}
-
-
-/* =====================================================
-   CATEGORY NAME
-===================================================== */
-
-function getCategoryName(category){
-
-  if(category === "car"){
-    return "Car";
-  }
-
-  if(category === "property"){
-    return "Property";
-  }
-
-  if(category === "gem"){
-    return "Gem";
-  }
-
-  return "Listing";
-}
-
-
-/* =====================================================
-   PRICE
-===================================================== */
-
-function formatPrice(
-  price,
-  currency
-){
-
-  if(
-    price === null ||
-    price === undefined ||
-    price === ""
-  ){
-    return "ဈေးနှုန်း မဖော်ပြပါ";
-  }
-
-  const number =
-    Number(price);
-
-  if(
-    !Number.isFinite(number)
-  ){
-    return escapeHtml(price);
-  }
-
-  return (
-    number.toLocaleString("en-US") +
-    " " +
-    (
-      currency ||
-      "MMK"
-    )
-  );
-}
-
-
-/* =====================================================
-   LOCATION
-===================================================== */
-
-function getLocation(item){
-
-  const parts = [];
-
-  if(item.city){
-    parts.push(item.city);
-  }
-
-  if(item.township){
-    parts.push(item.township);
-  }
-
-  if(
-    item.location &&
-    item.location !== item.township
-  ){
-    parts.push(item.location);
-  }
-
-  const unique =
-    [...new Set(parts)];
-
-  if(!unique.length){
-    return "တည်နေရာ မဖော်ပြပါ";
-  }
-
-  return unique.join(" • ");
-}
-
-
-/* =====================================================
-   IMAGE PARSER
-===================================================== */
-
-function getImages(item){
-
-  if(!item.images){
-    return [];
-  }
-
-
-  if(Array.isArray(item.images)){
-
-    return item.images
-    .filter(Boolean);
-
-  }
-
-
-  if(typeof item.images === "string"){
-
-    try{
-
-      const parsed =
-        JSON.parse(item.images);
-
-      if(
-        Array.isArray(parsed)
-      ){
-        return parsed
-        .filter(Boolean);
-      }
-
-    }
-    catch(error){
-
-      if(
-        item.images
-        .startsWith("http")
-      ){
-        return [
-          item.images
-        ];
-      }
-
-    }
-
-  }
-
-
-  return [];
-}
-
-
-/* =====================================================
-   CREATE CARD
-===================================================== */
-
-function createCard(item){
-
-  const images =
-    getImages(item);
-
-  const image =
-    images.length
-    ? images[0]
-    : "";
-
-  const icon =
-    getIcon(item.category);
-
-  const title =
-    escapeHtml(
-      item.title ||
-      "Untitled Listing"
-    );
-
-  const description =
-    escapeHtml(
-      item.description ||
-      ""
-    );
-
-  const location =
-    escapeHtml(
-      getLocation(item)
-    );
-
-  const price =
-    escapeHtml(
-      formatPrice(
-        item.price,
-        item.currency
-      )
-    );
-
-
-  let imageHTML = "";
-
-
-  if(image){
-
-    imageHTML = `
-
-      <img
-        src="${escapeHtml(image)}"
-        alt="${title}"
-        loading="lazy"
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-      <div
-        class="no-image"
-        style="display:none"
-      >
-        ${icon}
-      </div>
-
-    `;
-
-  }
-  else{
-
-    imageHTML = `
-
-      <div class="no-image">
-        ${icon}
-      </div>
-
-    `;
-
-  }
-
-
-  const imageCount =
-    images.length > 1
-    ? `
-
-      <div class="image-count">
-        🖼️ ${images.length}
-      </div>
-
-    `
-    : "";
-
-
-  const phone =
-    item.phone
-    ? escapeHtml(item.phone)
-    : "";
-
-
-  const contact =
-    phone
-    ? `
+    <div class="header-inner">
 
       <a
-        href="tel:${encodeURIComponent(item.phone)}"
-        class="contact-btn"
-      >
-        📞 Contact
+        class="brand"
+        href="./general.html">
+
+        <div class="logo">
+
+          <img
+            src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+            alt="Myanmar Elite Connect">
+
+        </div>
+
+        <div class="brand-name">
+          Myanmar <span>Elite</span> Connect
+        </div>
+
       </a>
 
-    `
-    : `
 
-      <button
-        class="contact-btn"
-        onclick="loginContact()"
-      >
-        📞 Contact
-      </button>
+      <nav class="nav">
 
-    `;
+        <a href="./general.html">
+          Home
+        </a>
 
+        <a
+          href="./buy.html"
+          class="active">
+          Buy
+        </a>
 
-  return `
+        <a href="./sell.html">
+          Sell
+        </a>
 
-    <article class="card">
+        <a href="./car.html">
+          Cars
+        </a>
 
-      <div class="card-image">
+        <a href="./property.html">
+          Property
+        </a>
 
-        ${imageHTML}
+        <a href="./chat.html">
+          Chat
+        </a>
 
-        <div class="category-label">
-          ${icon}
-          ${escapeHtml(
-            getCategoryName(
-              item.category
-            )
-          )}
-        </div>
-
-        ${imageCount}
-
-      </div>
+      </nav>
 
 
-      <div class="card-body">
+      <div class="header-actions">
 
-        <span class="type">
-          BUY · ${escapeHtml(
-            getCategoryName(
-              item.category
-            )
-          )}
-        </span>
+        <button
+          class="icon-btn"
+          id="languageBtn">
+          MM
+        </button>
 
+        <button
+          class="icon-btn"
+          id="themeBtn">
+          ☾
+        </button>
 
-        <div class="title">
-          ${title}
-        </div>
-
-
-        <div class="price">
-          ${price}
-        </div>
-
-
-        <div class="location">
-          📍 ${location}
-        </div>
-
-
-        ${
-          description
-          ? `
-            <div class="description">
-              ${description}
-            </div>
-          `
-          : ""
-        }
-
-
-        <div class="card-actions">
-
-          ${contact}
-
-          <button
-            class="favorite-btn"
-            onclick="addFavorite('${item.id}')"
-          >
-            ❤️ Favorite
-          </button>
-
-        </div>
+        <a
+          class="profile-link"
+          href="./profile.html"
+          id="profileLink">
+          U
+        </a>
 
       </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =====================================================
-   LOAD LISTINGS
-===================================================== */
-
-async function loadListings(){
-
-  const grid =
-    document.getElementById(
-      "listingsGrid"
-    );
-
-  const count =
-    document.getElementById(
-      "listingCount"
-    );
-
-
-  grid.innerHTML = `
-
-    <div class="state">
-
-      <div class="spinner"></div>
-
-      Listings များကို
-      ရယူနေပါသည်...
 
     </div>
 
-  `;
+  </header>
 
 
-  try{
+  <!-- =========================
+       MAIN
+  ========================= -->
 
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-    .from("listings")
-    .select("*")
-    .eq(
-      "status",
-      "approved"
-    )
-    .order(
-      "created_at",
-      {
-        ascending:false
-      }
-    );
+  <main class="main">
 
 
-    if(error){
-      throw error;
-    }
+    <section class="page-top">
 
+      <div>
 
-    allListings =
-      Array.isArray(data)
-      ? data
-      : [];
-
-
-    count.textContent =
-      `${allListings.length} listings ရှိပါသည်`;
-
-
-    renderListings();
-
-  }
-  catch(error){
-
-    console.error(
-      error
-    );
-
-
-    count.textContent =
-      "Database Error";
-
-
-    grid.innerHTML = `
-
-      <div class="error">
-
-        <strong>
-          ❌ Listing များကို ရယူ၍မရပါ။
-        </strong>
-
-        <br><br>
-
-        ${escapeHtml(
-          error.message ||
-          "Unknown error"
-        )}
-
-        <br>
-
-        <button
-          class="retry"
-          onclick="loadListings()"
-        >
-          ↻ ပြန်စမ်းမည်
-        </button>
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =====================================================
-   RENDER LISTINGS
-===================================================== */
-
-function renderListings(){
-
-  const grid =
-    document.getElementById(
-      "listingsGrid"
-    );
-
-
-  const search =
-    document.getElementById(
-      "searchInput"
-    )
-    .value
-    .trim()
-    .toLowerCase();
-
-
-  const minPriceText =
-    document.getElementById(
-      "minPrice"
-    ).value;
-
-
-  const maxPriceText =
-    document.getElementById(
-      "maxPrice"
-    ).value;
-
-
-  const location =
-    document.getElementById(
-      "locationInput"
-    )
-    .value
-    .trim()
-    .toLowerCase();
-
-
-  const minPrice =
-    minPriceText
-    ? Number(minPriceText)
-    : null;
-
-
-  const maxPrice =
-    maxPriceText
-    ? Number(maxPriceText)
-    : null;
-
-
-  let filtered =
-    [...allListings];
-
-
-  /* CATEGORY */
-
-  if(
-    currentCategory !== "all"
-  ){
-
-    filtered =
-      filtered.filter(
-        item =>
-        item.category ===
-        currentCategory
-      );
-
-  }
-
-
-  /* SEARCH */
-
-  if(search){
-
-    filtered =
-      filtered.filter(
-        item => {
-
-          const searchable = [
-
-            item.title,
-            item.description,
-            item.category,
-            item.city,
-            item.township,
-            item.location
-
-          ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-
-          return searchable
-          .includes(search);
-
-        }
-      );
-
-  }
-
-
-  /* LOCATION */
-
-  if(location){
-
-    filtered =
-      filtered.filter(
-        item => {
-
-          const searchable = [
-
-            item.city,
-            item.township,
-            item.location,
-            item.address
-
-          ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-
-          return searchable
-          .includes(location);
-
-        }
-      );
-
-  }
-
-
-  /* MIN PRICE */
-
-  if(
-    minPrice !== null &&
-    Number.isFinite(minPrice)
-  ){
-
-    filtered =
-      filtered.filter(
-        item =>
-        Number(item.price || 0)
-        >=
-        minPrice
-      );
-
-  }
-
-
-  /* MAX PRICE */
-
-  if(
-    maxPrice !== null &&
-    Number.isFinite(maxPrice)
-  ){
-
-    filtered =
-      filtered.filter(
-        item =>
-        Number(item.price || 0)
-        <=
-        maxPrice
-      );
-
-  }
-
-
-  /* EMPTY */
-
-  if(!filtered.length){
-
-    grid.innerHTML = `
-
-      <div class="state">
-
-        <div class="state-icon">
-          🔍
+        <div class="eyebrow">
+          Myanmar Elite Marketplace
         </div>
 
-        <h3>
-          Listing မတွေ့ပါ
-        </h3>
+        <h1>
+          Find what you need.
+        </h1>
 
-        <p>
-          Filter သို့မဟုတ် Search
-          ကို ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။
+        <p class="page-description">
+          Explore available listings from buyers and sellers.
+          Search by category, location and price.
         </p>
 
       </div>
 
-    `;
 
-    return;
+      <a
+        href="./sell.html"
+        class="sell-button">
 
-  }
+        ＋
+        Post a Listing
 
+      </a>
 
-  /* CARDS */
-
-  grid.innerHTML =
-    filtered
-    .map(createCard)
-    .join("");
-
-}
+    </section>
 
 
-/* =====================================================
-   CATEGORY
-===================================================== */
+    <!-- =========================
+         SEARCH + FILTER
+    ========================= -->
 
-function setCategory(category){
+    <section class="search-panel">
 
-  currentCategory =
-    category;
+      <div class="search-row">
 
+        <div class="search-input-wrap">
 
-  document
-  .querySelectorAll(
-    ".category-btn"
-  )
-  .forEach(
-    button => {
+          <span class="search-icon">
+            ⌕
+          </span>
 
-      button.classList.toggle(
-        "active",
-        button.dataset.category ===
-        category
-      );
+          <input
+            id="searchInput"
+            class="search-input"
+            type="search"
+            placeholder="Search listings...">
 
-    }
-  );
+        </div>
 
 
-  renderListings();
+        <button
+          id="searchButton"
+          class="search-button">
 
-}
+          Search
 
+        </button>
 
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetFilters(){
-
-  currentCategory =
-    "all";
+      </div>
 
 
-  document
-  .getElementById(
-    "searchInput"
-  )
-  .value = "";
+      <div class="filter-row">
+
+        <select
+          id="categoryFilter"
+          class="filter">
+
+          <option value="all">
+            All Categories
+          </option>
+
+          <option value="car">
+            Cars
+          </option>
+
+          <option value="property">
+            Property
+          </option>
+
+          <option value="gem">
+            Gems
+          </option>
+
+          <option value="product">
+            Products
+          </option>
+
+          <option value="service">
+            Services
+          </option>
+
+        </select>
 
 
-  document
-  .getElementById(
-    "minPrice"
-  )
-  .value = "";
+        <select
+          id="roleFilter"
+          class="filter">
+
+          <option value="all">
+            Buyer & Seller
+          </option>
+
+          <option value="seller">
+            Seller
+          </option>
+
+          <option value="buyer">
+            Buyer
+          </option>
+
+        </select>
 
 
-  document
-  .getElementById(
-    "maxPrice"
-  )
-  .value = "";
+        <select
+          id="locationFilter"
+          class="filter">
+
+          <option value="all">
+            All Locations
+          </option>
+
+          <option value="yangon">
+            Yangon
+          </option>
+
+          <option value="mandalay">
+            Mandalay
+          </option>
+
+          <option value="naypyitaw">
+            Nay Pyi Taw
+          </option>
+
+          <option value="other">
+            Other
+          </option>
+
+        </select>
 
 
-  document
-  .getElementById(
-    "locationInput"
-  )
-  .value = "";
+        <select
+          id="priceFilter"
+          class="filter">
+
+          <option value="all">
+            Any Price
+          </option>
+
+          <option value="0-100000">
+            Under 100,000
+          </option>
+
+          <option value="100000-500000">
+            100,000 – 500,000
+          </option>
+
+          <option value="500000-1000000">
+            500,000 – 1,000,000
+          </option>
+
+          <option value="1000000+">
+            1,000,000+
+          </option>
+
+        </select>
 
 
-  document
-  .querySelectorAll(
-    ".category-btn"
-  )
-  .forEach(
-    button => {
+        <button
+          id="clearButton"
+          class="clear-button">
 
-      button.classList.toggle(
-        "active",
-        button.dataset.category ===
-        "all"
-      );
+          Clear
 
-    }
-  );
+        </button>
+
+      </div>
+
+    </section>
 
 
-  renderListings();
+    <!-- =========================
+         CATEGORY TABS
+    ========================= -->
 
-}
+    <div class="market-tabs">
 
+      <button
+        class="market-tab active"
+        data-category="all">
 
-/* =====================================================
-   FAVORITE
-===================================================== */
+        All
 
-async function addFavorite(
-  listingId
-){
+      </button>
 
-  try{
+      <button
+        class="market-tab"
+        data-category="car">
 
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-    .auth
-    .getUser();
+        🚗 Cars
 
+      </button>
 
-    if(
-      error ||
-      !data ||
-      !data.user
-    ){
+      <button
+        class="market-tab"
+        data-category="property">
 
-      alert(
-        "❤️ Favorite အသုံးပြုရန် Login ဝင်ပါ။"
-      );
+        ⌂ Property
 
-      window.location.href =
-        "./auth.html";
+      </button>
 
-      return;
+      <button
+        class="market-tab"
+        data-category="gem">
 
-    }
+        ◈ Gems
 
+      </button>
 
-    const user =
-      data.user;
+      <button
+        class="market-tab"
+        data-category="product">
 
+        ◉ Products
 
-    const {
-      error: favoriteError
-    } =
-    await supabaseClient
-    .from("favorites")
-    .insert({
+      </button>
 
-      user_id:
-        user.id,
+      <button
+        class="market-tab"
+        data-category="service">
 
-      listing_id:
-        listingId
+        ✦ Services
 
-    });
+      </button>
+
+    </div>
 
 
-    if(favoriteError){
+    <!-- =========================
+         RESULT HEADER
+    ========================= -->
 
-      if(
-        favoriteError.code ===
-        "23505"
-      ){
+    <div class="results-head">
 
-        alert(
-          "❤️ ဒီ Listing ကို Favorite ထဲမှာ ရှိပြီးသားပါ။"
+      <div
+        class="result-count"
+        id="resultCount">
+
+        Showing
+        <strong>0</strong>
+        listings
+
+      </div>
+
+
+      <select
+        id="sortSelect"
+        class="sort-select"
+        style="width:auto; min-width:130px;">
+
+        <option value="newest">
+          Newest
+        </option>
+
+        <option value="oldest">
+          Oldest
+        </option>
+
+        <option value="low">
+          Price: Low
+        </option>
+
+        <option value="high">
+          Price: High
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- =========================
+         LISTINGS
+    ========================= -->
+
+    <section
+      id="listingGrid"
+      class="listing-grid">
+
+      <div class="state">
+
+        <div class="state-icon">
+          ◌
+        </div>
+
+        <strong>
+          Loading listings
+        </strong>
+
+        <span>
+          Please wait while we load the marketplace.
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <div class="footer-space"></div>
+
+  </main>
+
+
+  <!-- =========================
+       MOBILE NAV
+  ========================= -->
+
+  <nav class="bottom-nav">
+
+    <a href="./general.html">
+
+      <b>⌂</b>
+
+      Home
+
+    </a>
+
+    <a
+      href="./buy.html"
+      class="active">
+
+      <b>⌕</b>
+
+      Buy
+
+    </a>
+
+    <a href="./chat.html">
+
+      <b>◌</b>
+
+      Chat
+
+    </a>
+
+    <a href="./profile.html">
+
+      <b>◯</b>
+
+      Profile
+
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let allListings = [];
+
+    let currentCategory = "all";
+
+    let currentLanguage =
+      localStorage.getItem("mec_language") || "en";
+
+
+    /* =====================================================
+       AUTH
+    ===================================================== */
+
+    async function checkAuth() {
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        if (!data?.session) {
+
+          window.location.replace(
+            "./auth.html"
+          );
+
+          return false;
+
+        }
+
+
+        const user =
+          data.session.user;
+
+
+        const name =
+          user.user_metadata?.full_name ||
+          user.user_metadata?.name ||
+          user.email?.charAt(0) ||
+          "U";
+
+
+        document.getElementById(
+          "profileLink"
+        ).textContent =
+          name
+            .toString()
+            .charAt(0)
+            .toUpperCase();
+
+
+        return true;
+
+      } catch (error) {
+
+        console.error(error);
+
+        window.location.replace(
+          "./auth.html"
         );
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       LOAD LISTINGS
+       
+       IMPORTANT:
+       This supports a common "listings" table.
+       If your database uses another table/columns,
+       change ONLY the QUERY section.
+    ===================================================== */
+
+    async function loadListings() {
+
+      renderLoading();
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("listings")
+            .select("*")
+            .eq("status", "approved")
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        allListings =
+          Array.isArray(data)
+            ? data
+            : [];
+
+
+        renderListings();
+
+      } catch (error) {
+
+        console.error(
+          "Listings error:",
+          error
+        );
+
+
+        /*
+          Do not show fake marketplace data.
+          If the database table is not ready,
+          clearly show the empty state instead.
+        */
+
+        allListings = [];
+
+        renderDatabaseState(
+          "Marketplace is ready",
+          "No approved listings are available yet. Add an approved listing and it will appear here."
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       RENDER LOADING
+    ===================================================== */
+
+    function renderLoading() {
+
+      document.getElementById(
+        "listingGrid"
+      ).innerHTML = `
+
+        <div class="state">
+
+          <div class="state-icon">
+            ◌
+          </div>
+
+          <strong>
+            Loading listings
+          </strong>
+
+          <span>
+            Please wait while we load the marketplace.
+          </span>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =====================================================
+       DATABASE EMPTY / ERROR STATE
+    ===================================================== */
+
+    function renderDatabaseState(
+      title,
+      text
+    ) {
+
+      document.getElementById(
+        "listingGrid"
+      ).innerHTML = `
+
+        <div class="state">
+
+          <div class="state-icon">
+            ◈
+          </div>
+
+          <strong>
+            ${escapeHTML(title)}
+          </strong>
+
+          <span>
+            ${escapeHTML(text)}
+          </span>
+
+          <button
+            class="retry"
+            onclick="loadListings()">
+
+            Refresh
+
+          </button>
+
+        </div>
+
+      `;
+
+
+      updateCount(0);
+
+    }
+
+
+    /* =====================================================
+       FILTER
+    ===================================================== */
+
+    function getFilteredListings() {
+
+      const search =
+        document.getElementById(
+          "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+      const category =
+        document.getElementById(
+          "categoryFilter"
+        ).value;
+
+
+      const role =
+        document.getElementById(
+          "roleFilter"
+        ).value;
+
+
+      const location =
+        document.getElementById(
+          "locationFilter"
+        ).value;
+
+
+      const price =
+        document.getElementById(
+          "priceFilter"
+        ).value;
+
+
+      let result =
+        [...allListings];
+
+
+      if (currentCategory !== "all") {
+
+        result =
+          result.filter(
+            item =>
+              normalize(
+                item.category
+              ) === currentCategory
+          );
+
+      }
+
+
+      if (category !== "all") {
+
+        result =
+          result.filter(
+            item =>
+              normalize(
+                item.category
+              ) === category
+          );
+
+      }
+
+
+      if (role !== "all") {
+
+        result =
+          result.filter(
+            item =>
+              normalize(
+                item.role
+              ) === role
+          );
+
+      }
+
+
+      if (location !== "all") {
+
+        result =
+          result.filter(
+            item => {
+
+              const value =
+                [
+                  item.region,
+                  item.state,
+                  item.city,
+                  item.district,
+                  item.location
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+
+              return value.includes(
+                location === "yangon"
+                  ? "yangon"
+                  : location === "mandalay"
+                    ? "mandalay"
+                    : location === "naypyitaw"
+                      ? "nay"
+                      : ""
+              );
+
+            }
+          );
+
+      }
+
+
+      if (search) {
+
+        result =
+          result.filter(
+            item => {
+
+              const searchable =
+                [
+                  item.title,
+                  item.name,
+                  item.caption,
+                  item.description,
+                  item.category,
+                  item.region,
+                  item.state,
+                  item.city,
+                  item.district
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+
+              return searchable.includes(
+                search
+              );
+
+            }
+          );
+
+      }
+
+
+      if (price !== "all") {
+
+        result =
+          result.filter(
+            item => {
+
+              const value =
+                Number(
+                  item.price || 0
+                );
+
+
+              if (
+                price === "0-100000"
+              ) {
+
+                return value < 100000;
+
+              }
+
+
+              if (
+                price === "100000-500000"
+              ) {
+
+                return (
+                  value >= 100000 &&
+                  value <= 500000
+                );
+
+              }
+
+
+              if (
+                price === "500000-1000000"
+              ) {
+
+                return (
+                  value > 500000 &&
+                  value <= 1000000
+                );
+
+              }
+
+
+              if (
+                price === "1000000+"
+              ) {
+
+                return value > 1000000;
+
+              }
+
+
+              return true;
+
+            }
+          );
+
+      }
+
+
+      return sortListings(
+        result
+      );
+
+    }
+
+
+    /* =====================================================
+       SORT
+    ===================================================== */
+
+    function sortListings(
+      listings
+    ) {
+
+      const sort =
+        document.getElementById(
+          "sortSelect"
+        ).value;
+
+
+      return listings.sort(
+        (a, b) => {
+
+          if (
+            sort === "low"
+          ) {
+
+            return (
+              Number(a.price || 0) -
+              Number(b.price || 0)
+            );
+
+          }
+
+
+          if (
+            sort === "high"
+          ) {
+
+            return (
+              Number(b.price || 0) -
+              Number(a.price || 0)
+            );
+
+          }
+
+
+          const aDate =
+            new Date(
+              a.created_at || 0
+            ).getTime();
+
+
+          const bDate =
+            new Date(
+              b.created_at || 0
+            ).getTime();
+
+
+          return sort === "oldest"
+            ? aDate - bDate
+            : bDate - aDate;
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       RENDER LISTINGS
+    ===================================================== */
+
+    function renderListings() {
+
+      const listings =
+        getFilteredListings();
+
+
+      updateCount(
+        listings.length
+      );
+
+
+      const grid =
+        document.getElementById(
+          "listingGrid"
+        );
+
+
+      if (!listings.length) {
+
+        grid.innerHTML = `
+
+          <div class="state">
+
+            <div class="state-icon">
+              ⌕
+            </div>
+
+            <strong>
+              No listings found
+            </strong>
+
+            <span>
+              Try another keyword or change your filters.
+            </span>
+
+            <button
+              class="retry"
+              onclick="clearFilters()">
+
+              Clear Filters
+
+            </button>
+
+          </div>
+
+        `;
 
         return;
 
       }
 
-      throw favoriteError;
+
+      grid.innerHTML =
+        listings
+          .map(
+            createListingCard
+          )
+          .join("");
 
     }
 
 
-    alert(
-      "❤️ Favorite ထဲသို့ ထည့်ပြီးပါပြီ။"
-    );
+    /* =====================================================
+       CARD
+    ===================================================== */
 
-  }
-  catch(error){
+    function createListingCard(
+      item
+    ) {
 
-    console.error(error);
-
-    alert(
-      "Favorite ထည့်၍မရပါ။"
-    );
-
-  }
-
-}
+      const title =
+        item.title ||
+        item.name ||
+        "Untitled listing";
 
 
-/* =====================================================
-   CONTACT WITHOUT PHONE
-===================================================== */
-
-function loginContact(){
-
-  const answer =
-    confirm(
-      "📞 Contact လုပ်ရန် Login ဝင်ရန်လိုအပ်ပါသည်။\n\nLogin သို့သွားမလား?"
-    );
+      const category =
+        item.category ||
+        "Marketplace";
 
 
-  if(answer){
-
-    window.location.href =
-      "./auth.html";
-
-  }
-
-}
+      const price =
+        formatPrice(
+          item.price
+        );
 
 
-/* =====================================================
-   LIVE SEARCH
-===================================================== */
+      const location =
+        [
+          item.city ||
+          item.district,
 
-[
-  "searchInput",
-  "minPrice",
-  "maxPrice",
-  "locationInput"
-]
-.forEach(
-  id => {
+          item.region ||
+          item.state
+        ]
+        .filter(Boolean)
+        .join(", ");
 
-    document
-    .getElementById(id)
-    .addEventListener(
-      "input",
+
+      const seller =
+        item.username ||
+        item.seller_name ||
+        item.owner_name ||
+        "Member";
+
+
+      const image =
+        item.image_url ||
+        item.main_image ||
+        item.thumbnail ||
+        "";
+
+
+      const role =
+        item.role ||
+        "seller";
+
+
+      const id =
+        item.id ||
+        "";
+
+
+      return `
+
+        <article
+          class="listing-card"
+          data-id="${escapeHTML(id)}">
+
+          <div class="listing-photo">
+
+            ${
+              image
+                ? `
+                  <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(title)}"
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+                  <span
+                    class="no-image"
+                    style="display:none;">
+                    No image
+                  </span>
+                `
+                : `
+                  <span class="no-image">
+                    No image
+                  </span>
+                `
+            }
+
+            <span class="badge">
+              ${escapeHTML(role)}
+            </span>
+
+            <button
+              class="heart"
+              type="button"
+              onclick="toggleFavorite(this)">
+
+              ♡
+
+            </button>
+
+          </div>
+
+
+          <div class="listing-content">
+
+            <div class="listing-category">
+              ${escapeHTML(category)}
+            </div>
+
+            <div class="listing-title">
+              ${escapeHTML(title)}
+            </div>
+
+            <div class="listing-price">
+              ${escapeHTML(price)}
+            </div>
+
+            <div class="listing-meta">
+
+              <span>
+                ${location
+                  ? escapeHTML(location)
+                  : "Myanmar"}
+              </span>
+
+            </div>
+
+
+            <div class="listing-footer">
+
+              <span class="seller">
+                ${escapeHTML(seller)}
+              </span>
+
+              <a
+                href="./chat.html"
+                class="contact">
+
+                Contact →
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =====================================================
+       HELPERS
+    ===================================================== */
+
+    function normalize(
+      value
+    ) {
+
+      return String(
+        value || ""
+      )
+      .trim()
+      .toLowerCase();
+
+    }
+
+
+    function formatPrice(
+      value
+    ) {
+
+      const number =
+        Number(value);
+
+
+      if (
+        !Number.isFinite(number) ||
+        number <= 0
+      ) {
+
+        return "Price on request";
+
+      }
+
+
+      return (
+        new Intl.NumberFormat(
+          "en-US"
+        )
+        .format(number)
+        + " MMK"
+      );
+
+    }
+
+
+    function escapeHTML(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+    }
+
+
+    function updateCount(
+      count
+    ) {
+
+      document.getElementById(
+        "resultCount"
+      ).innerHTML =
+        `Showing <strong>${count}</strong> listings`;
+
+    }
+
+
+    function toggleFavorite(
+      button
+    ) {
+
+      button.textContent =
+        button.textContent === "♡"
+          ? "♥"
+          : "♡";
+
+    }
+
+
+    function clearFilters() {
+
+      document.getElementById(
+        "searchInput"
+      ).value = "";
+
+
+      document.getElementById(
+        "categoryFilter"
+      ).value = "all";
+
+
+      document.getElementById(
+        "roleFilter"
+      ).value = "all";
+
+
+      document.getElementById(
+        "locationFilter"
+      ).value = "all";
+
+
+      document.getElementById(
+        "priceFilter"
+      ).value = "all";
+
+
+      currentCategory = "all";
+
+
+      document
+        .querySelectorAll(
+          ".market-tab"
+        )
+        .forEach(
+          button =>
+            button.classList.toggle(
+              "active",
+              button.dataset.category === "all"
+            )
+        );
+
+
+      renderListings();
+
+    }
+
+
+    /* =====================================================
+       FILTER EVENTS
+    ===================================================== */
+
+    document.getElementById(
+      "searchButton"
+    ).addEventListener(
+      "click",
       renderListings
     );
 
-  }
-);
+
+    document.getElementById(
+      "searchInput"
+    ).addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          renderListings();
+
+        }
+
+      }
+    );
 
 
-/* =====================================================
-   START
-===================================================== */
+    [
+      "categoryFilter",
+      "roleFilter",
+      "locationFilter",
+      "priceFilter",
+      "sortSelect"
+    ]
+    .forEach(
+      id => {
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
+        document.getElementById(
+          id
+        ).addEventListener(
+          "change",
+          renderListings
+        );
 
-    loadListings();
+      }
+    );
 
-  }
-);
 
-</script>
+    document.getElementById(
+      "clearButton"
+    ).addEventListener(
+      "click",
+      clearFilters
+    );
+
+
+    document
+      .querySelectorAll(
+        ".market-tab"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            function() {
+
+              currentCategory =
+                this.dataset.category;
+
+
+              document
+                .querySelectorAll(
+                  ".market-tab"
+                )
+                .forEach(
+                  tab =>
+                    tab.classList.remove(
+                      "active"
+                    )
+                );
+
+
+              this.classList.add(
+                "active"
+              );
+
+
+              document.getElementById(
+                "categoryFilter"
+              ).value =
+                currentCategory;
+
+
+              renderListings();
+
+            }
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       THEME
+    ===================================================== */
+
+    function applyTheme(
+      theme
+    ) {
+
+      document.body.classList.toggle(
+        "dark",
+        theme === "dark"
+      );
+
+
+      document.getElementById(
+        "themeBtn"
+      ).textContent =
+        theme === "dark"
+          ? "☀"
+          : "☾";
+
+
+      localStorage.setItem(
+        "mec_theme",
+        theme
+      );
+
+    }
+
+
+    document.getElementById(
+      "themeBtn"
+    ).addEventListener(
+      "click",
+      function() {
+
+        const isDark =
+          document.body.classList.contains(
+            "dark"
+          );
+
+
+        applyTheme(
+          isDark
+            ? "light"
+            : "dark"
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       LANGUAGE BUTTON
+       
+       Full translations will be centralized later
+       so every page uses the same language system.
+    ===================================================== */
+
+    document.getElementById(
+      "languageBtn"
+    ).textContent =
+      currentLanguage === "en"
+        ? "MM"
+        : "EN";
+
+
+    document.getElementById(
+      "languageBtn"
+    ).addEventListener(
+      "click",
+      function() {
+
+        currentLanguage =
+          currentLanguage === "en"
+            ? "mm"
+            : "en";
+
+
+        localStorage.setItem(
+          "mec_language",
+          currentLanguage
+        );
+
+
+        this.textContent =
+          currentLanguage === "en"
+            ? "MM"
+            : "EN";
+
+      }
+    );
+
+
+    /* =====================================================
+       AUTH STATE
+    ===================================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      function(
+        event,
+        session
+      ) {
+
+        if (
+          event === "SIGNED_OUT" ||
+          !session
+        ) {
+
+          window.location.replace(
+            "./auth.html"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    async function init() {
+
+      applyTheme(
+        localStorage.getItem(
+          "mec_theme"
+        ) || "light"
+      );
+
+
+      const authenticated =
+        await checkAuth();
+
+
+      if (!authenticated) {
+        return;
+      }
+
+
+      await loadListings();
+
+    }
+
+
+    init();
+
+  </script>
 
 </body>
 </html>
