@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Myanmar Elite Connect — Admin Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Myanmar", sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #071b3a;
+      color: white;
+      padding: 16px 5%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand {
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .header-actions a,
+    .header-actions button {
+      border: 0;
+      text-decoration: none;
+      cursor: pointer;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .home-btn {
+      background: white;
+      color: #071b3a;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 35px 5%;
+    }
+
+    .page-title {
+      margin-bottom: 25px;
+    }
+
+    .page-title h1 {
+      margin: 0 0 8px;
+      color: #071b3a;
+    }
+
+    .page-title p {
+      margin: 0;
+      color: #697386;
+    }
+
+    #message {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    #message.success {
+      display: block;
+      background: #e9f8ef;
+      color: #176b38;
+    }
+
+    #message.error {
+      display: block;
+      background: #fff0f0;
+      color: #b42318;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 15px;
+      padding: 22px;
+      box-shadow: 0 6px 20px rgba(7, 27, 58, .06);
+    }
+
+    .stat-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: #697386;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    .stat-number {
+      color: #071b3a;
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .toolbar {
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 15px;
+      padding: 18px;
+      margin-bottom: 22px;
+
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search input,
+    .toolbar select {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d8dee8;
+      border-radius: 9px;
+      outline: none;
+      background: white;
+      font-family: inherit;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .filter-buttons button {
+      border: 1px solid #d8dee8;
+      background: white;
+      padding: 10px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .filter-buttons button.active {
+      background: #071b3a;
+      color: white;
+      border-color: #071b3a;
+    }
+
+    .table-card {
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(7, 27, 58, .06);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1050px;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #071b3a;
+      color: white;
+      text-align: left;
+      padding: 14px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #edf0f5;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    tr:hover td {
+      background: #fafbfd;
+    }
+
+    .title {
+      font-weight: 800;
+      color: #071b3a;
+      margin-bottom: 5px;
+    }
+
+    .seller {
+      color: #697386;
+      font-size: 13px;
+    }
+
+    .price {
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge.pending {
+      background: #fff4d6;
+      color: #8a5b00;
+    }
+
+    .badge.approved {
+      background: #e9f8ef;
+      color: #176b38;
+    }
+
+    .badge.rejected {
+      background: #fff0f0;
+      color: #b42318;
+    }
+
+    .badge.category {
+      background: #eef3ff;
+      color: #294b91;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 230px;
+    }
+
+    .action-btn {
+      border: 0;
+      border-radius: 7px;
+      padding: 8px 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .approve {
+      background: #198754;
+    }
+
+    .reject {
+      background: #dc3545;
+    }
+
+    .delete {
+      background: #6c757d;
+    }
+
+    .view {
+      background: #071b3a;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #697386;
+    }
+
+    .empty-icon {
+      font-size: 45px;
+      margin-bottom: 10px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #697386;
+    }
+
+    .login-box {
+      max-width: 500px;
+      margin: 70px auto;
+      background: white;
+      border-radius: 18px;
+      padding: 35px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(7,27,58,.08);
+    }
+
+    .login-box h2 {
+      color: #071b3a;
+    }
+
+    .login-box a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 25px;
+      border-radius: 8px;
+      background: #071b3a;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 1000;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 650px;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: #071b3a;
+    }
+
+    .close {
+      border: 0;
+      background: #f0f2f5;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .detail-row {
+      padding: 12px 0;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .detail-label {
+      color: #697386;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .detail-value {
+      font-weight: 600;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .brand {
+        font-size: 17px;
+      }
+
+      .header-actions a,
+      .header-actions button {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+
+      main {
+        padding: 25px 4%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat {
+        padding: 16px;
+      }
+
+      .stat-number {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">Myanmar Elite Connect — Admin</div>
+
+    <div class="header-actions">
+      <a class="home-btn" href="./index.html">Home</a>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+
+  <div class="page-title">
+    <h1>Admin Dashboard</h1>
+    <p>Listings များကို စစ်ဆေးပြီး Approve / Reject / Delete ပြုလုပ်နိုင်ပါသည်။</p>
+  </div>
+
+  <div id="message"></div>
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">📋</div>
+      <div class="stat-label">Total Listings</div>
+      <div id="totalCount" class="stat-number">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-label">Pending</div>
+      <div id="pendingCount" class="stat-number">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">✅</div>
+      <div class="stat-label">Approved</div>
+      <div id="approvedCount" class="stat-number">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">❌</div>
+      <div class="stat-label">Rejected</div>
+      <div id="rejectedCount" class="stat-number">0</div>
+    </div>
+
+  </section>
+
+  <section class="toolbar">
+
+    <div class="search">
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="🔎 Title, seller, city ရှာရန်..."
+        oninput="renderListings()"
+      >
+    </div>
+
+    <div class="filter-buttons">
+      <button id="filterAll" class="active" onclick="setFilter('all')">
+        All
+      </button>
+
+      <button id="filterPending" onclick="setFilter('pending')">
+        ⏳ Pending
+      </button>
+
+      <button id="filterApproved" onclick="setFilter('approved')">
+        ✅ Approved
+      </button>
+
+      <button id="filterRejected" onclick="setFilter('rejected')">
+        ❌ Rejected
+      </button>
+    </div>
+
+    <select id="categoryFilter" onchange="renderListings()">
+      <option value="all">All Categories</option>
+      <option value="car">🚗 Cars</option>
+      <option value="property">🏠 Property</option>
+      <option value="gem">💎 Gems</option>
+    </select>
+
+  </section>
+
+  <section class="table-card">
+
+    <div id="loading" class="loading">
+      ⏳ Listings များကို ရယူနေပါသည်...
+    </div>
+
+    <div class="table-wrap">
+      <table id="listingTable" style="display:none">
+
+        <thead>
+          <tr>
+            <th>Listing</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="listingBody"></tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+</main>
+
+<div id="loginRequired" style="display:none">
+  <div class="login-box">
+    <h2>🔐 Login လိုအပ်ပါတယ်</h2>
+    <p>Admin Dashboard အသုံးပြုရန် Login ဝင်ထားရပါမည်။</p>
+    <a href="./auth.html">Login / Register</a>
+  </div>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2>Listing Details</h2>
+      <button class="close" onclick="hideModal()">×</button>
+    </div>
+
+    <div id="modalContent"></div>
+
+  </div>
+</div>
+
+<script>
+
+let allListings = [];
+let currentFilter = "all";
+
+function escapeHtml(value) {
+  if (value === null || value === undefined) return "";
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function showMessage(text, type) {
+  const box = document.getElementById("message");
+
+  box.textContent = text;
+  box.className = type;
+}
+
+function clearMessage() {
+  const box = document.getElementById("message");
+
+  box.textContent = "";
+  box.className = "";
+}
+
+function categoryIcon(category) {
+  if (category === "car") return "🚗";
+  if (category === "property") return "🏠";
+  if (category === "gem") return "💎";
+  return "📦";
+}
+
+function categoryName(category) {
+  if (category === "car") return "Car";
+  if (category === "property") return "Property";
+  if (category === "gem") return "Gem";
+  return category || "-";
+}
+
+function listingTypeName(type) {
+  if (type === "sale") return "ရောင်းရန်";
+  if (type === "rent") return "ငှားရန်";
+  return type || "-";
+}
+
+function formatPrice(price, currency) {
+  if (price === null || price === undefined || price === "") {
+    return "မဖော်ပြပါ";
+  }
+
+  const number = Number(price);
+
+  if (!Number.isFinite(number)) {
+    return String(price);
+  }
+
+  return number.toLocaleString("en-US") + " " + (currency || "MMK");
+}
+
+function formatDate(date) {
+  if (!date) return "-";
+
+  try {
+    return new Date(date).toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  } catch {
+    return date;
+  }
+}
+
+function locationText(item) {
+  return [
+    item.city,
+    item.township,
+    item.location
+  ]
+    .filter(Boolean)
+    .join(" • ") || "-";
+}
+
+function setFilter(filter) {
+  currentFilter = filter;
+
+  document
+    .querySelectorAll(".filter-buttons button")
+    .forEach(button => button.classList.remove("active"));
+
+  const buttonMap = {
+    all: "filterAll",
+    pending: "filterPending",
+    approved: "filterApproved",
+    rejected: "filterRejected"
+  };
+
+  document
+    .getElementById(buttonMap[filter])
+    .classList.add("active");
+
+  renderListings();
+}
+
+async function getCurrentUser() {
+
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.getSession();
+
+  if (error) throw error;
+
+  return data?.session?.user || null;
+}
+
+async function checkAdmin() {
+
+  try {
+
+    const user = await getCurrentUser();
+
+    if (!user) {
+      document.getElementById("app").style.display = "none";
+      document.getElementById("loginRequired").style.display = "block";
+      return false;
+    }
+
+    /*
+      IMPORTANT:
+      This first version checks that the logged-in user
+      has a profile.
+
+      Admin authorization should be enforced by Supabase RLS
+      before using this dashboard in production.
+    */
+
+    const {
+      data: profile,
+      error
+    } = await supabaseClient
+      .from("profiles")
+      .select("id, full_name, role")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (!profile) {
+      throw new Error("Profile မတွေ့ပါ။");
+    }
+
+    if (profile.role !== "admin") {
+
+      document.getElementById("app").innerHTML = `
+        <div class="login-box">
+          <h2>⛔ Admin Access Required</h2>
+          <p>
+            ဒီစာမျက်နှာကို Admin account သာ အသုံးပြုနိုင်ပါသည်။
+          </p>
+          <p style="color:#697386">
+            Current role: ${escapeHtml(profile.role || "unknown")}
+          </p>
+          <a href="./index.html">Marketplace သို့ပြန်ရန်</a>
+        </div>
+      `;
+
+      return false;
+    }
+
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "❌ " + (error.message || "Admin စစ်ဆေးမရပါ။"),
+      "error"
+    );
+
+    return false;
+  }
+}
+
+async function loadListings() {
+
+  const loading = document.getElementById("loading");
+  const table = document.getElementById("listingTable");
+
+  loading.style.display = "block";
+  table.style.display = "none";
+
+  try {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("listings")
+      .select(`
+        id,
+        user_id,
+        seller_id,
+        category,
+        listing_type,
+        title,
+        description,
+        price,
+        currency,
+        city,
+        township,
+        address,
+        location,
+        phone,
+        images,
+        status,
+        featured,
+        created_at,
+        updated_at
+      `)
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) throw error;
+
+    allListings = data || [];
+
+    updateStats();
+    renderListings();
+
+  } catch (error) {
+
+    console.error("ADMIN LISTINGS ERROR:", error);
+
+    loading.innerHTML = `
+      ❌ Listings ရယူမရပါ။
+      <br><br>
+      ${escapeHtml(error.message)}
+    `;
+
+  } finally {
+
+    loading.style.display = "none";
+    table.style.display = "table";
+
+  }
+}
+
+function updateStats() {
+
+  const total = allListings.length;
+
+  const pending =
+    allListings.filter(x => x.status === "pending").length;
+
+  const approved =
+    allListings.filter(x => x.status === "approved").length;
+
+  const rejected =
+    allListings.filter(x => x.status === "rejected").length;
+
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("pendingCount").textContent = pending;
+  document.getElementById("approvedCount").textContent = approved;
+  document.getElementById("rejectedCount").textContent = rejected;
+}
+
+function renderListings() {
+
+  const body = document.getElementById("listingBody");
+
+  const keyword =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const category =
+    document.getElementById("categoryFilter").value;
+
+  let filtered = [...allListings];
+
+  if (currentFilter !== "all") {
+    filtered = filtered.filter(
+      item => item.status === currentFilter
+    );
+  }
+
+  if (category !== "all") {
+    filtered = filtered.filter(
+      item => item.category === category
+    );
+  }
+
+  if (keyword) {
+
+    filtered = filtered.filter(item => {
+
+      const text = [
+        item.title,
+        item.description,
+        item.category,
+        item.city,
+        item.township,
+        item.location,
+        item.address,
+        item.phone
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return text.includes(keyword);
+
+    });
+
+  }
+
+  if (!filtered.length) {
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="8">
+          <div class="empty">
+            <div class="empty-icon">🔍</div>
+            <strong>Listing မတွေ့ပါ</strong>
+            <p>Filter သို့မဟုတ် Search ကို ပြောင်းကြည့်ပါ။</p>
+          </div>
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  body.innerHTML = filtered
+    .map(createRow)
+    .join("");
+}
+
+function createRow(item) {
+
+  const sellerId =
+    item.seller_id || item.user_id || "-";
+
+  return `
+    <tr>
+
+      <td>
+        <div class="title">
+          ${categoryIcon(item.category)}
+          ${escapeHtml(item.title || "Untitled")}
+        </div>
+
+        <div class="seller">
+          Seller ID:
+          ${escapeHtml(sellerId)}
+        </div>
+      </td>
+
+      <td>
+        <span class="badge category">
+          ${escapeHtml(categoryName(item.category))}
+        </span>
+      </td>
+
+      <td>
+        ${escapeHtml(listingTypeName(item.listing_type))}
+      </td>
+
+      <td>
+        <span class="price">
+          ${escapeHtml(
+            formatPrice(item.price, item.currency)
+          )}
+        </span>
+      </td>
+
+      <td>
+        📍 ${escapeHtml(locationText(item))}
+      </td>
+
+      <td>
+        <span class="badge ${escapeHtml(item.status || "")}">
+          ${escapeHtml(item.status || "unknown")}
+        </span>
+      </td>
+
+      <td>
+        ${escapeHtml(formatDate(item.created_at))}
+      </td>
+
+      <td>
+
+        <div class="actions">
+
+          <button
+            class="action-btn view"
+            onclick="viewListing('${item.id}')"
+          >
+            👁 View
+          </button>
+
+          ${
+            item.status !== "approved"
+            ? `
+              <button
+                class="action-btn approve"
+                onclick="changeStatus('${item.id}', 'approved')"
+              >
+                ✓ Approve
+              </button>
+            `
+            : ""
+          }
+
+          ${
+            item.status !== "rejected"
+            ? `
+              <button
+                class="action-btn reject"
+                onclick="changeStatus('${item.id}', 'rejected')"
+              >
+                ✕ Reject
+              </button>
+            `
+            : ""
+          }
+
+          <button
+            class="action-btn delete"
+            onclick="deleteListing('${item.id}')"
+          >
+            🗑 Delete
+          </button>
+
+        </div>
+
+      </td>
+
+    </tr>
+  `;
+}
+
+async function changeStatus(id, status) {
+
+  const item =
+    allListings.find(x => x.id === id);
+
+  if (!item) return;
+
+  const actionName =
+    status === "approved"
+      ? "Approve"
+      : "Reject";
+
+  const confirmed =
+    confirm(
+      `${item.title || "ဒီ Listing"} ကို ${actionName} လုပ်မလား?`
+    );
+
+  if (!confirmed) return;
+
+  try {
+
+    clearMessage();
+
+    const {
+      error
+    } = await supabaseClient
+      .from("listings")
+      .update({
+        status: status,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id);
+
+    if (error) throw error;
+
+    showMessage(
+      `✅ Listing ကို ${status} အဖြစ် ပြောင်းပြီးပါပြီ။`,
+      "success"
+    );
+
+    await loadListings();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "❌ Status ပြောင်းမရပါ — " + error.message,
+      "error"
+    );
+  }
+}
+
+async function deleteListing(id) {
+
+  const item =
+    allListings.find(x => x.id === id);
+
+  if (!item) return;
+
+  const confirmed =
+    confirm(
+      `"${item.title || "ဒီ Listing"}" ကို အပြီးဖျက်မလား?\n\nဒီလုပ်ဆောင်ချက်ကို ပြန်ပြင်လို့မရပါ။`
+    );
+
+  if (!confirmed) return;
+
+  try {
+
+    clearMessage();
+
+    const {
+      error
+    } = await supabaseClient
+      .from("listings")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    showMessage(
+      "✅ Listing ဖျက်ပြီးပါပြီ။",
+      "success"
+    );
+
+    hideModal();
+
+    await loadListings();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "❌ Listing ဖျက်မရပါ — " + error.message,
+      "error"
+    );
+  }
+}
+
+function viewListing(id) {
+
+  const item =
+    allListings.find(x => x.id === id);
+
+  if (!item) return;
+
+  const content = document.getElementById("modalContent");
+
+  content.innerHTML = `
+
+    <div class="detail-row">
+      <div class="detail-label">Title</div>
+      <div class="detail-value">
+        ${categoryIcon(item.category)}
+        ${escapeHtml(item.title || "-")}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Category</div>
+      <div class="detail-value">
+        ${escapeHtml(categoryName(item.category))}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Listing Type</div>
+      <div class="detail-value">
+        ${escapeHtml(listingTypeName(item.listing_type))}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Price</div>
+      <div class="detail-value">
+        ${escapeHtml(formatPrice(item.price, item.currency))}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Location</div>
+      <div class="detail-value">
+        ${escapeHtml(locationText(item))}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Address</div>
+      <div class="detail-value">
+        ${escapeHtml(item.address || "-")}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Phone</div>
+      <div class="detail-value">
+        ${escapeHtml(item.phone || "-")}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Description</div>
+      <div class="detail-value">
+        ${escapeHtml(item.description || "-")}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Status</div>
+      <div class="detail-value">
+        <span class="badge ${escapeHtml(item.status || "")}">
+          ${escapeHtml(item.status || "-")}
+        </span>
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Seller ID</div>
+      <div class="detail-value">
+        ${escapeHtml(item.seller_id || item.user_id || "-")}
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Created</div>
+      <div class="detail-value">
+        ${escapeHtml(formatDate(item.created_at))}
+      </div>
+    </div>
+
+  `;
+
+  document.getElementById("modal").classList.add("show");
+}
+
+function hideModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+function closeModal(event) {
+  if (event.target.id === "modal") {
+    hideModal();
+  }
+}
+
+async function logout() {
+
+  const confirmed =
+    confirm("Logout လုပ်မလား?");
+
+  if (!confirmed) return;
+
+  await supabaseClient.auth.signOut();
+
+  window.location.href = "./auth.html";
+}
+
+async function start() {
+
+  const allowed =
+    await checkAdmin();
+
+  if (!allowed) return;
+
+  await loadListings();
+}
+
+start();
+
+</script>
+
+</body>
+</html>
