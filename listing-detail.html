@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Listing Details • Myanmar Elite Connect</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --soft:#f1f4f8;
+  --text:#10233f;
+  --muted:#758198;
+  --border:rgba(16,35,63,.1);
+  --gold:#d8b45c;
+  --gold2:#f3db91;
+  --green:#2d8a61;
+  --red:#c94b4b;
+  --shadow:0 20px 55px rgba(16,35,63,.08);
+}
+body.dark{
+  --bg:#071321;
+  --card:#0e1e32;
+  --soft:#10243c;
+  --text:#f4f7fb;
+  --muted:#91a0b4;
+  --border:rgba(255,255,255,.09);
+  --shadow:0 20px 55px rgba(0,0,0,.3);
+}
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,"Noto Sans Myanmar","Myanmar Text",system-ui,sans-serif;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+
+/* HEADER */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:70px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.93);
+  backdrop-filter:blur(18px);
+}
+body.dark .topbar{background:rgba(7,19,33,.96)}
+.topbar-inner{
+  width:min(1200px,94%);
+  height:100%;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.brand img{
+  width:40px;height:40px;
+  border-radius:11px;
+  object-fit:contain;
+  background:var(--card);
+}
+.brand-name{
+  font-size:14px;
+  font-weight:950;
+}
+.brand-name span{color:var(--gold)}
+.actions{display:flex;gap:7px}
+.icon-btn{
+  width:40px;height:40px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--card);
+  color:var(--text);
+}
+
+/* MAIN */
+.container{
+  width:min(1180px,94%);
+  margin:auto;
+  padding:28px 0 100px;
+}
+.back{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:850;
+}
+.back:hover{color:var(--gold)}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);
+  gap:20px;
+  margin-top:15px;
+}
+
+/* GALLERY */
+.gallery{
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+}
+.main-image{
+  position:relative;
+  aspect-ratio:4/3;
+  background:var(--soft);
+}
+.main-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.image-counter{
+  position:absolute;
+  right:12px;
+  top:12px;
+  padding:6px 9px;
+  border-radius:999px;
+  color:#fff;
+  background:rgba(7,26,52,.72);
+  font-size:8px;
+  font-weight:900;
+}
+.thumbs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:10px;
+  scrollbar-width:none;
+}
+.thumbs::-webkit-scrollbar{display:none}
+.thumb{
+  width:72px;
+  height:58px;
+  flex:none;
+  overflow:hidden;
+  border:2px solid transparent;
+  border-radius:9px;
+  background:var(--soft);
+  cursor:pointer;
+}
+.thumb.active{
+  border-color:var(--gold);
+}
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* DETAILS */
+.details{
+  min-width:0;
+}
+.card{
+  padding:21px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+}
+.category{
+  color:var(--gold);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.title{
+  margin-top:7px;
+  font-size:clamp(24px,4vw,38px);
+  line-height:1.15;
+  letter-spacing:-1px;
+  font-weight:950;
+}
+.price{
+  margin-top:12px;
+  font-size:22px;
+  font-weight:950;
+}
+.meta{
+  margin-top:11px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.7;
+}
+.description{
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+  color:var(--text);
+  font-size:12px;
+  line-height:1.85;
+  white-space:pre-wrap;
+}
+.status{
+  display:inline-flex;
+  margin-top:12px;
+  padding:5px 8px;
+  border-radius:999px;
+  color:#fff;
+  background:var(--green);
+  font-size:8px;
+  font-weight:950;
+}
+
+/* ACTIONS */
+.actions-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:18px;
+}
+.action{
+  min-height:43px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  background:var(--soft);
+  font-size:9px;
+  font-weight:900;
+}
+.action.primary{
+  border:0;
+  color:#071a34;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+}
+.action.danger{
+  color:var(--red);
+  border-color:rgba(201,75,75,.2);
+}
+
+/* SELLER */
+.seller{
+  margin-top:14px;
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+}
+.seller-title{
+  color:var(--muted);
+  font-size:9px;
+  font-weight:900;
+}
+.seller-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:11px;
+}
+.seller-avatar{
+  width:48px;height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  background:var(--soft);
+}
+.seller-name{
+  font-size:12px;
+  font-weight:950;
+}
+.verified{
+  margin-top:3px;
+  color:var(--green);
+  font-size:8px;
+  font-weight:900;
+}
+.seller-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:12px;
+}
+.seller-buttons a{
+  min-height:38px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--border);
+  border-radius:9px;
+  font-size:9px;
+  font-weight:900;
+}
+
+/* REPORT MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.55);
+}
+.modal.show{display:flex}
+.modal-card{
+  width:min(460px,100%);
+  padding:20px;
+  border-radius:18px;
+  background:var(--card);
+}
+.modal-card h3{
+  font-size:17px;
+  font-weight:950;
+}
+.modal-card p{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:9px;
+}
+.modal-card select,
+.modal-card textarea{
+  width:100%;
+  margin-top:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+  color:var(--text);
+  background:var(--soft);
+}
+.modal-card select{
+  height:42px;
+  padding:0 10px;
+}
+.modal-card textarea{
+  min-height:100px;
+  padding:10px;
+  resize:vertical;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:7px;
+  margin-top:12px;
+}
+.modal-actions button{
+  min-height:38px;
+  padding:0 14px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--soft);
+  color:var(--text);
+  font-size:9px;
+  font-weight:900;
+}
+.modal-actions .submit{
+  border:0;
+  color:#071a34;
+  background:var(--gold);
+}
+
+.state{
+  padding:70px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+.state strong{
+  display:block;
+  margin-top:8px;
+  color:var(--text);
+  font-size:15px;
+}
+.state span{
+  display:block;
+  margin-top:5px;
+  font-size:9px;
+}
+
+.toast{
+  position:fixed;
+  right:16px;
+  bottom:18px;
+  z-index:700;
+  padding:12px 15px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  color:var(--text);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  font-size:10px;
+  font-weight:800;
+  opacity:0;
+  transform:translateY(15px);
+  pointer-events:none;
+  transition:.2s;
+}
+.toast.show{
+  opacity:1;
+  transform:none;
+}
+
+@media(max-width:850px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+}
+@media(max-width:500px){
+  .brand-name{display:none}
+  .container{width:calc(100% - 24px)}
+  .card{padding:15px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+
+    <a href="./posts.html" class="brand">
+      <img
+        src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+        alt="Myanmar Elite Connect">
+      <div class="brand-name">
+        Myanmar <span>Elite</span> Connect
+      </div>
+    </a>
+
+    <div class="actions">
+      <button id="themeButton" class="icon-btn">☾</button>
+      <a href="./profile.html" class="icon-btn">♙</a>
+    </div>
+
+  </div>
+</header>
+
+<main class="container">
+
+  <a href="./posts.html" class="back">
+    ← Back to Posts
+  </a>
+
+  <div id="pageState" class="state">
+    Loading listing...
+  </div>
+
+  <div id="content" style="display:none">
+
+    <div class="layout">
+
+      <section class="gallery">
+
+        <div class="main-image">
+          <img id="mainImage" alt="Listing image">
+          <div id="imageCounter" class="image-counter"></div>
+        </div>
+
+        <div id="thumbs" class="thumbs"></div>
+
+      </section>
+
+      <section class="details">
+
+        <div class="card">
+
+          <div id="category" class="category"></div>
+
+          <h1 id="title" class="title"></h1>
+
+          <div id="price" class="price"></div>
+
+          <div id="meta" class="meta"></div>
+
+          <div id="status" class="status"></div>
+
+          <div id="description" class="description"></div>
+
+          <div class="actions-grid">
+
+            <button
+              id="favoriteButton"
+              class="action"
+              type="button">
+              ♡ Favorite
+            </button>
+
+            <button
+              id="reportButton"
+              class="action danger"
+              type="button">
+              ⚑ Report
+            </button>
+
+            <button
+              id="chatButton"
+              class="action primary"
+              type="button">
+              💬 Chat Seller
+            </button>
+
+            <a
+              id="callButton"
+              class="action primary"
+              style="display:grid;place-items:center;"
+              href="#">
+              ☎ Contact
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="seller">
+
+          <div class="seller-title">
+            SELLER
+          </div>
+
+          <div class="seller-row">
+
+            <img
+              id="sellerAvatar"
+              class="seller-avatar"
+              alt="Seller">
+
+            <div>
+              <div id="sellerName" class="seller-name">
+                Member
+              </div>
+              <div id="sellerVerified" class="verified"></div>
+            </div>
+
+          </div>
+
+          <div class="seller-buttons">
+
+            <a id="profileButton" href="#">
+              View Profile
+            </a>
+
+            <a id="sellerChatButton" href="#">
+              Message Seller
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</main>
+
+<div id="reportModal" class="modal">
+
+  <div class="modal-card">
+
+    <h3>Report this listing</h3>
+
+    <p>
+      Your report will be sent to the Myanmar Elite Connect admin team.
+    </p>
+
+    <select id="reportReason">
+      <option value="scam">Scam / Fraud</option>
+      <option value="fake">Fake listing</option>
+      <option value="wrong_information">Wrong information</option>
+      <option value="prohibited">Prohibited item</option>
+      <option value="harassment">Harassment</option>
+      <option value="other">Other</option>
+    </select>
+
+    <textarea
+      id="reportDetails"
+      placeholder="Additional details..."></textarea>
+
+    <div class="modal-actions">
+
+      <button id="cancelReport">
+        Cancel
+      </button>
+
+      <button id="submitReport" class="submit">
+        Submit Report
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const supabase = supabaseClient;
+
+const params =
+  new URLSearchParams(location.search);
+
+const listingId =
+  params.get("id");
+
+let listing = null;
+let seller = null;
+let images = [];
+let currentUser = null;
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function normalize(value){
+  return String(value || "").trim().toLowerCase();
+}
+
+function toast(message){
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.className = "toast show";
+  clearTimeout(window.__toast);
+  window.__toast =
+    setTimeout(()=>{
+      el.className = "toast";
+    },2800);
+}
+
+function applyTheme(theme){
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
+  document.getElementById("themeButton")
+    .textContent =
+      theme === "dark" ? "☀" : "☾";
+
+  localStorage.setItem(
+    "mec_theme",
+    theme
+  );
+}
+
+document.getElementById("themeButton").onclick = ()=>{
+  applyTheme(
+    document.body.classList.contains("dark")
+      ? "light"
+      : "dark"
+  );
+};
+
+function formatPrice(item){
+  const n = Number(item.price);
+
+  if(!Number.isFinite(n) || n <= 0){
+    return "Price on request";
+  }
+
+  return `${escapeHTML(
+    item.currency || "MMK"
+  )} ${n.toLocaleString()}`;
+}
+
+function formatLocation(item){
+  return [
+    item.city,
+    item.township,
+    item.address
+  ].filter(Boolean).join(" · ") || "Myanmar";
+}
+
+async function getCurrentUser(){
+  const {data} =
+    await supabase.auth.getUser();
+
+  return data?.user || null;
+}
+
+async function loadListing(){
+
+  if(!listingId){
+    showError("Listing ID is missing.");
+    return;
+  }
+
+  const {data,error} =
+    await supabase
+      .from("listings")
+      .select(`
+        id,
+        user_id,
+        category,
+        listing_type,
+        title,
+        description,
+        price,
+        currency,
+        city,
+        township,
+        address,
+        status,
+        featured,
+        created_at,
+        updated_at,
+        images,
+        seller_id,
+        post_role,
+        phone
+      `)
+      .eq("id",listingId)
+      .maybeSingle();
+
+  if(error){
+    showError(error.message);
+    return;
+  }
+
+  if(!data){
+    showError("This listing does not exist.");
+    return;
+  }
+
+  listing = data;
+
+  /*
+   * Public detail page only exposes approved listings.
+   * Owners/admins can still see their own pending posts
+   * if they enter the direct URL.
+   */
+  if(
+    normalize(listing.status) !== "approved"
+  ){
+
+    const user =
+      await getCurrentUser();
+
+    const isOwner =
+      user &&
+      user.id === listing.user_id;
+
+    let isAdmin = false;
+
+    if(user){
+      const result =
+        await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id",user.id)
+          .maybeSingle();
+
+      isAdmin =
+        result.data?.role === "admin";
+    }
+
+    if(!isOwner && !isAdmin){
+      showError(
+        "This listing is not available publicly."
+      );
+      return;
+    }
+  }
+
+  currentUser =
+    await getCurrentUser();
+
+  await loadSeller();
+  await loadImages();
+
+  render();
+}
+
+async function loadSeller(){
+
+  const sellerId =
+    listing.seller_id ||
+    listing.user_id;
+
+  if(!sellerId){
+    return;
+  }
+
+  const {data} =
+    await supabase
+      .from("profiles")
+      .select(
+        "id,full_name,avatar_url,city,role"
+      )
+      .eq("id",sellerId)
+      .maybeSingle();
+
+  seller = data || null;
+}
+
+async function loadImages(){
+
+  const {data} =
+    await supabase
+      .from("listing_images")
+      .select("image_url,sort_order")
+      .eq("listing_id",listing.id)
+      .order("sort_order",{ascending:true});
+
+  if(data?.length){
+    images =
+      data
+        .map(x=>x.image_url)
+        .filter(Boolean);
+  }else{
+    images =
+      Array.isArray(listing.images)
+        ? listing.images.filter(Boolean)
+        : [];
+  }
+}
+
+function render(){
+
+  document.getElementById("pageState")
+    .style.display = "none";
+
+  document.getElementById("content")
+    .style.display = "block";
+
+  document.getElementById("category")
+    .textContent =
+      String(listing.category || "Listing")
+        .toUpperCase();
+
+  document.getElementById("title")
+    .textContent =
+      listing.title || "Untitled listing";
+
+  document.getElementById("price")
+    .innerHTML =
+      formatPrice(listing);
+
+  document.getElementById("meta")
+    .innerHTML = `
+      ⌖ ${escapeHTML(formatLocation(listing))}
+      <br>
+      ${escapeHTML(
+        listing.listing_type || "Listing"
+      )}
+      · Posted ${
+        listing.created_at
+          ? new Date(listing.created_at)
+              .toLocaleDateString(
+                "en-GB",
+                {
+                  day:"2-digit",
+                  month:"short",
+                  year:"numeric"
+                }
+              )
+          : ""
+      }
+    `;
+
+  document.getElementById("status")
+    .textContent =
+      String(
+        listing.status || "pending"
+      ).toUpperCase();
+
+  document.getElementById("description")
+    .textContent =
+      listing.description ||
+      "No description provided.";
+
+  renderGallery();
+  renderSeller();
+}
+
+function renderGallery(){
+
+  const main =
+    document.getElementById("mainImage");
+
+  const thumbs =
+    document.getElementById("thumbs");
+
+  if(!images.length){
+
+    main.style.display = "none";
+
+    document.getElementById("imageCounter")
+      .textContent = "No images";
+
+    thumbs.innerHTML = "";
+
+    return;
+  }
+
+  main.src = images[0];
+
+  document.getElementById("imageCounter")
+    .textContent =
+      `1 / ${images.length}`;
+
+  thumbs.innerHTML =
+    images.map((src,index)=>`
+      <button
+        class="thumb ${index === 0 ? "active" : ""}"
+        type="button"
+        onclick="changeImage(${index})">
+        <img
+          src="${escapeHTML(src)}"
+          alt="Image ${index+1}">
+      </button>
+    `).join("");
+}
+
+function changeImage(index){
+
+  if(!images[index]){
+    return;
+  }
+
+  document.getElementById("mainImage")
+    .src = images[index];
+
+  document.getElementById("imageCounter")
+    .textContent =
+      `${index+1} / ${images.length}`;
+
+  document.querySelectorAll(".thumb")
+    .forEach((el,i)=>{
+      el.classList.toggle(
+        "active",
+        i === index
+      );
+    });
+}
+
+window.changeImage = changeImage;
+
+function renderSeller(){
+
+  const name =
+    seller?.full_name || "Member";
+
+  document.getElementById("sellerName")
+    .textContent = name;
+
+  document.getElementById("sellerAvatar")
+    .src =
+      seller?.avatar_url || "";
+
+  if(
+    listing.post_role === "verified" ||
+    seller?.role === "admin"
+  ){
+    document.getElementById("sellerVerified")
+      .textContent = "✓ Verified";
+  }
+
+  if(seller?.id){
+
+    document.getElementById("profileButton")
+      .href =
+        `./public-profile.html?id=${encodeURIComponent(
+          seller.id
+        )}`;
+
+  }else{
+
+    document.getElementById("profileButton")
+      .style.display = "none";
+  }
+
+  const phone =
+    listing.phone;
+
+  if(phone){
+
+    document.getElementById("callButton")
+      .href =
+        `tel:${encodeURIComponent(phone)}`;
+
+  }else{
+
+    document.getElementById("callButton")
+      .style.display = "none";
+  }
+
+  document.getElementById("sellerChatButton")
+    .onclick = event=>{
+      event.preventDefault();
+      startChat();
+    };
+
+  document.getElementById("chatButton")
+    .onclick = startChat;
+}
+
+async function startChat(){
+
+  if(!currentUser){
+    window.location.href =
+      "./auth.html";
+    return;
+  }
+
+  const sellerId =
+    listing.seller_id ||
+    listing.user_id;
+
+  if(!sellerId){
+    toast("Seller account not found.");
+    return;
+  }
+
+  if(sellerId === currentUser.id){
+    toast("This is your own listing.");
+    return;
+  }
+
+  /*
+   * chat.html can read seller through query parameter.
+   * The chat page can then create/find the room.
+   */
+  window.location.href =
+    `./chat.html?user=${encodeURIComponent(
+      sellerId
+    )}`;
+}
+
+async function loadFavorite(){
+
+  if(!currentUser){
+    return;
+  }
+
+  const {data} =
+    await supabase
+      .from("favorites")
+      .select("id")
+      .eq("user_id",currentUser.id)
+      .eq("listing_id",listing.id)
+      .maybeSingle();
+
+  const button =
+    document.getElementById("favoriteButton");
+
+  if(data){
+    button.textContent =
+      "♥ Favorited";
+  }else{
+    button.textContent =
+      "♡ Favorite";
+  }
+}
+
+document.getElementById("favoriteButton")
+  .onclick = async ()=>{
+
+    if(!currentUser){
+      window.location.href =
+        "./auth.html";
+      return;
+    }
+
+    const {data} =
+      await supabase
+        .from("favorites")
+        .select("id")
+        .eq("user_id",currentUser.id)
+        .eq("listing_id",listing.id)
+        .maybeSingle();
+
+    if(data){
+
+      const {error} =
+        await supabase
+          .from("favorites")
+          .delete()
+          .eq("id",data.id);
+
+      if(error){
+        toast(error.message);
+        return;
+      }
+
+      toast("Removed from favorites.");
+
+    }else{
+
+      const {error} =
+        await supabase
+          .from("favorites")
+          .insert({
+            user_id:currentUser.id,
+            listing_id:listing.id
+          });
+
+      if(error){
+        toast(error.message);
+        return;
+      }
+
+      toast("Added to favorites.");
+    }
+
+    await loadFavorite();
+  };
+
+/* REPORT */
+
+document.getElementById("reportButton")
+  .onclick = async ()=>{
+
+    if(!currentUser){
+      window.location.href =
+        "./auth.html";
+      return;
+    }
+
+    if(
+      currentUser.id ===
+      listing.user_id
+    ){
+      toast("You cannot report your own listing.");
+      return;
+    }
+
+    document.getElementById("reportModal")
+      .classList.add("show");
+  };
+
+document.getElementById("cancelReport")
+  .onclick = ()=>{
+    document.getElementById("reportModal")
+      .classList.remove("show");
+  };
+
+document.getElementById("submitReport")
+  .onclick = async ()=>{
+
+    const reason =
+      document.getElementById("reportReason")
+        .value;
+
+    const details =
+      document.getElementById("reportDetails")
+        .value.trim();
+
+    const button =
+      document.getElementById("submitReport");
+
+    button.disabled = true;
+    button.textContent = "Sending...";
+
+    try{
+
+      const {error} =
+        await supabase
+          .from("reports")
+          .insert({
+            user_id:currentUser.id,
+            listing_id:listing.id,
+            reason,
+            details,
+            status:"pending"
+          });
+
+      if(error){
+        throw error;
+      }
+
+      document.getElementById("reportModal")
+        .classList.remove("show");
+
+      document.getElementById("reportDetails")
+        .value = "";
+
+      toast(
+        "Report submitted to admin."
+      );
+
+    }catch(error){
+
+      console.error(error);
+      toast(
+        error.message ||
+        "Could not submit report."
+      );
+
+    }finally{
+
+      button.disabled = false;
+      button.textContent = "Submit Report";
+    }
+  };
+
+function showError(message){
+
+  document.getElementById("pageState")
+    .innerHTML = `
+      <div style="font-size:34px;color:var(--gold)">
+        !
+      </div>
+      <strong>Listing unavailable</strong>
+      <span>${escapeHTML(message)}</span>
+    `;
+}
+
+async function init(){
+
+  applyTheme(
+    localStorage.getItem("mec_theme") ||
+    "light"
+  );
+
+  await loadListing();
+
+  if(listing){
+    await loadFavorite();
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>
