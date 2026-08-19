@@ -1,0 +1,2979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MEC Certified Partner (MCP) | Myanmar Elite Connect</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#f6f8fc;
+  --surface:#ffffff;
+  --soft:#f0f3f8;
+
+  --navy:#071a34;
+  --navy2:#173b62;
+
+  --gold:#d7b35a;
+  --gold-light:#f1d487;
+
+  --green:#198754;
+
+  --text:#10233f;
+  --muted:#728096;
+
+  --border:rgba(16,35,63,.10);
+
+  --danger:#c94a4a;
+  --success:#198754;
+
+  --shadow:
+    0 20px 60px rgba(16,35,63,.10);
+}
+
+body.dark{
+  --bg:#071321;
+  --surface:#0d1d31;
+  --soft:#12263d;
+
+  --text:#f4f7fb;
+  --muted:#94a3b7;
+
+  --border:rgba(255,255,255,.09);
+
+  --shadow:
+    0 20px 60px rgba(0,0,0,.30);
+}
+
+body{
+  min-height:100vh;
+
+  font-family:
+    Inter,
+    "Noto Sans Myanmar",
+    "Myanmar Text",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color:var(--text);
+  background:var(--bg);
+
+  transition:
+    background .25s ease,
+    color .25s ease;
+
+  padding-bottom:35px;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  height:72px;
+
+  background:
+    rgba(255,255,255,.90);
+
+  border-bottom:
+    1px solid var(--border);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+body.dark .header{
+  background:
+    rgba(13,29,49,.90);
+}
+
+.header-inner{
+  width:min(
+    1180px,
+    calc(100% - 30px)
+  );
+
+  height:100%;
+
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+
+  min-width:0;
+}
+
+.brand-logo{
+  width:42px;
+  height:42px;
+
+  flex:0 0 42px;
+
+  display:grid;
+  place-items:center;
+
+  overflow:hidden;
+
+  border-radius:11px;
+
+  background:var(--surface);
+
+  border:
+    1px solid var(--border);
+}
+
+.brand-logo img{
+  width:82%;
+  height:82%;
+
+  object-fit:contain;
+}
+
+.brand-name{
+  font-size:15px;
+  font-weight:900;
+
+  letter-spacing:-.3px;
+
+  white-space:nowrap;
+}
+
+.brand-name span{
+  color:var(--gold);
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.control{
+  height:39px;
+  min-width:39px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:0 11px;
+
+  border-radius:10px;
+
+  color:var(--text);
+  background:var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  font-size:11px;
+  font-weight:850;
+}
+
+.language-button{
+  gap:5px;
+}
+
+.language-button .active{
+  color:var(--gold);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(215,179,90,.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #071a34,
+      #102b4d
+    );
+
+  color:#fff;
+
+  padding:
+    62px 18px 72px;
+}
+
+.hero::after{
+  content:"";
+
+  position:absolute;
+
+  width:380px;
+  height:380px;
+
+  right:-180px;
+  bottom:-240px;
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(215,179,90,.16);
+}
+
+.hero-inner{
+  position:relative;
+  z-index:2;
+
+  width:min(
+    1050px,
+    100%
+  );
+
+  margin:auto;
+}
+
+.back{
+  display:inline-flex;
+  align-items:center;
+
+  gap:7px;
+
+  color:
+    rgba(255,255,255,.72);
+
+  font-size:12px;
+  font-weight:700;
+
+  margin-bottom:22px;
+}
+
+.back:hover{
+  color:#fff;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+
+  gap:8px;
+
+  color:var(--gold-light);
+
+  font-size:11px;
+  font-weight:900;
+
+  letter-spacing:1.5px;
+
+  margin-bottom:15px;
+}
+
+.eyebrow::before{
+  content:"";
+
+  width:28px;
+  height:1px;
+
+  background:var(--gold);
+}
+
+.hero h1{
+  max-width:850px;
+
+  font-size:
+    clamp(34px,6vw,58px);
+
+  line-height:1.04;
+
+  letter-spacing:-2.5px;
+
+  margin-bottom:17px;
+}
+
+.hero h1 span{
+  color:var(--gold-light);
+}
+
+.hero-description{
+  max-width:690px;
+
+  color:
+    rgba(255,255,255,.76);
+
+  font-size:14px;
+
+  line-height:1.8;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+  width:min(
+    1050px,
+    calc(100% - 30px)
+  );
+
+  margin:-30px auto 0;
+
+  position:relative;
+  z-index:5;
+}
+
+
+/* =====================================================
+   LOGIN NOTICE
+===================================================== */
+
+.auth-notice{
+  padding:18px 20px;
+
+  margin-bottom:18px;
+
+  border-radius:15px;
+
+  background:var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  box-shadow:var(--shadow);
+
+  font-size:12px;
+
+  color:var(--muted);
+}
+
+.auth-notice strong{
+  color:var(--text);
+}
+
+
+/* =====================================================
+   FORM CARD
+===================================================== */
+
+.card{
+  background:var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:24px;
+
+  box-shadow:var(--shadow);
+
+  padding:32px;
+}
+
+.section{
+  padding-bottom:30px;
+
+  margin-bottom:30px;
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+.section:last-of-type{
+  border-bottom:0;
+
+  margin-bottom:0;
+
+  padding-bottom:5px;
+}
+
+.section-head{
+  display:flex;
+  align-items:flex-start;
+
+  gap:13px;
+
+  margin-bottom:22px;
+}
+
+.section-number{
+  width:34px;
+  height:34px;
+
+  flex:0 0 34px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:10px;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--navy),
+      var(--navy2)
+    );
+
+  font-size:12px;
+  font-weight:900;
+}
+
+body.dark .section-number{
+  color:var(--navy);
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
+}
+
+.section-title{
+  font-size:20px;
+  font-weight:900;
+
+  letter-spacing:-.5px;
+
+  margin-bottom:3px;
+}
+
+.section-subtitle{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.6;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.fields{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:18px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+
+/* =====================================================
+   FIELD
+===================================================== */
+
+.field{
+  min-width:0;
+}
+
+.label{
+  display:block;
+
+  margin-bottom:8px;
+
+  font-size:11px;
+  font-weight:850;
+}
+
+.required{
+  color:var(--danger);
+}
+
+.hint{
+  color:var(--muted);
+
+  font-size:10px;
+
+  line-height:1.55;
+
+  margin-top:6px;
+}
+
+.input,
+.textarea{
+  width:100%;
+
+  border:
+    1px solid transparent;
+
+  outline:none;
+
+  border-radius:11px;
+
+  background:var(--soft);
+
+  color:var(--text);
+
+  font-size:13px;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease;
+}
+
+.input{
+  height:48px;
+
+  padding:0 13px;
+}
+
+.textarea{
+  min-height:105px;
+
+  resize:vertical;
+
+  padding:13px;
+}
+
+.input:focus,
+.textarea:focus{
+  background:var(--surface);
+
+  border-color:
+    rgba(215,179,90,.70);
+}
+
+.input::placeholder,
+.textarea::placeholder{
+  color:var(--muted);
+}
+
+
+/* =====================================================
+   FILE
+===================================================== */
+
+.file-box{
+  position:relative;
+
+  width:100%;
+}
+
+.file-input{
+  position:absolute;
+
+  width:1px;
+  height:1px;
+
+  opacity:0;
+
+  pointer-events:none;
+}
+
+.file-label{
+  min-height:90px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  flex-direction:column;
+
+  gap:6px;
+
+  padding:15px;
+
+  text-align:center;
+
+  border:
+    1px dashed
+    rgba(16,35,63,.20);
+
+  border-radius:12px;
+
+  background:var(--soft);
+
+  color:var(--muted);
+
+  cursor:pointer;
+}
+
+body.dark .file-label{
+  border-color:
+    rgba(255,255,255,.16);
+}
+
+.file-label:hover{
+  border-color:
+    var(--gold);
+}
+
+.file-icon{
+  font-size:25px;
+}
+
+.file-name{
+  color:var(--text);
+
+  font-size:11px;
+  font-weight:750;
+
+  word-break:break-word;
+}
+
+.file-preview{
+  width:78px;
+  height:78px;
+
+  object-fit:cover;
+
+  border-radius:12px;
+
+  margin-bottom:5px;
+
+  display:none;
+}
+
+
+/* =====================================================
+   CHECKBOXES
+===================================================== */
+
+.specializations{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:10px;
+}
+
+.check-option{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  min-height:48px;
+
+  padding:11px 13px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:11px;
+
+  background:var(--soft);
+
+  cursor:pointer;
+
+  font-size:12px;
+  font-weight:750;
+}
+
+.check-option:hover{
+  border-color:
+    rgba(215,179,90,.55);
+}
+
+.check-option input{
+  width:17px;
+  height:17px;
+
+  accent-color:
+    var(--gold);
+
+  flex:0 0 17px;
+}
+
+.check-option:has(input:checked){
+  border-color:
+    rgba(215,179,90,.70);
+
+  background:
+    rgba(215,179,90,.08);
+}
+
+
+/* =====================================================
+   AGREEMENT
+===================================================== */
+
+.agreement{
+  padding:18px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:14px;
+
+  background:var(--soft);
+}
+
+.agreement-label{
+  display:flex;
+  align-items:flex-start;
+
+  gap:11px;
+
+  cursor:pointer;
+
+  font-size:12px;
+
+  line-height:1.75;
+}
+
+.agreement-label input{
+  width:18px;
+  height:18px;
+
+  margin-top:2px;
+
+  flex:0 0 18px;
+
+  accent-color:var(--gold);
+}
+
+.agreement a{
+  color:var(--gold);
+
+  font-weight:850;
+
+  text-decoration:underline;
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+.submit-area{
+  margin-top:25px;
+}
+
+.submit{
+  width:100%;
+
+  min-height:53px;
+
+  border:0;
+
+  border-radius:13px;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #071a34,
+      #173b62
+    );
+
+  font-size:13px;
+  font-weight:900;
+
+  box-shadow:
+    0 12px 28px
+    rgba(7,26,52,.18);
+
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+}
+
+body.dark .submit{
+  color:#071a34;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
+}
+
+.submit:hover{
+  transform:translateY(-2px);
+}
+
+.submit:disabled{
+  opacity:.60;
+  cursor:not-allowed;
+  transform:none;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message{
+  min-height:20px;
+
+  margin-top:13px;
+
+  text-align:center;
+
+  font-size:11px;
+  font-weight:750;
+
+  line-height:1.6;
+}
+
+.message.error{
+  color:var(--danger);
+}
+
+.message.success{
+  color:var(--success);
+}
+
+
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+.success-box{
+  display:none;
+
+  text-align:center;
+
+  padding:55px 20px;
+}
+
+.success-icon{
+  width:70px;
+  height:70px;
+
+  margin:0 auto 18px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  color:#fff;
+
+  background:var(--success);
+
+  font-size:30px;
+}
+
+.success-box h2{
+  font-size:25px;
+
+  margin-bottom:10px;
+}
+
+.success-box p{
+  max-width:550px;
+
+  margin:auto;
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  line-height:1.8;
+}
+
+.home-button{
+  display:inline-flex;
+
+  margin-top:22px;
+
+  padding:12px 20px;
+
+  border-radius:10px;
+
+  color:#fff;
+
+  background:var(--navy);
+
+  font-size:12px;
+  font-weight:850;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+  width:min(
+    1050px,
+    calc(100% - 30px)
+  );
+
+  margin:28px auto 0;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+  line-height:1.7;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+  .header{
+    height:66px;
+  }
+
+  .brand-name{
+    display:none;
+  }
+
+  .hero{
+    padding:
+      45px 15px 60px;
+  }
+
+  .hero h1{
+    font-size:35px;
+
+    letter-spacing:-1.7px;
+  }
+
+  .main{
+    width:calc(100% - 20px);
+
+    margin-top:-25px;
+  }
+
+  .card{
+    padding:20px 16px;
+
+    border-radius:19px;
+  }
+
+  .fields{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .specializations{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    font-size:18px;
+  }
+
+  .control{
+    height:37px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+  <div class="header-inner">
+
+    <a
+      href="./index.html"
+      class="brand"
+    >
+
+      <div class="brand-logo">
+
+        <img
+          src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+          alt="Myanmar Elite Connect"
+        >
+
+      </div>
+
+      <div class="brand-name">
+        Myanmar <span>Elite</span> Connect
+      </div>
+
+    </a>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="control language-button"
+        id="languageButton"
+      >
+
+        <span
+          id="langEN"
+          class="active"
+        >
+          EN
+        </span>
+
+        <span>/</span>
+
+        <span id="langMM">
+          မြန်မာ
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="control"
+        id="themeButton"
+      >
+        ☾
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <a
+      href="./general.html"
+      class="back"
+      id="backButton"
+    >
+      ← Back to MEC
+    </a>
+
+
+    <div
+      class="eyebrow"
+      id="eyebrow"
+    >
+      MEC CERTIFIED PARTNER
+    </div>
+
+
+    <h1 id="heroTitle">
+      Join as a
+      <span>MEC Certified Partner (MCP)</span>
+    </h1>
+
+
+    <p
+      class="hero-description"
+      id="heroDescription"
+    >
+      Become a trusted field partner of Myanmar Elite Connect
+      and help buyers and sellers through real-world verification
+      and local assistance.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+  <div
+    class="auth-notice"
+    id="authNotice"
+  >
+    Please log in to your MEC account before submitting an MCP application.
+  </div>
+
+
+  <section class="card">
+
+
+    <!-- =================================================
+         FORM
+    ================================================== -->
+
+    <form
+      id="mcpForm"
+      autocomplete="on"
+      enctype="multipart/form-data"
+    >
+
+
+      <!-- ===============================================
+           SECTION 1
+      ================================================ -->
+
+      <div class="section">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            01
+          </div>
+
+          <div>
+
+            <div
+              class="section-title"
+              id="section1Title"
+            >
+              Personal Information
+            </div>
+
+            <div
+              class="section-subtitle"
+              id="section1Subtitle"
+            >
+              Your basic identity and contact information
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="fields">
+
+
+          <!-- NAME -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="fullName"
+              id="fullNameLabel"
+            >
+              Full Name (As per NRC)
+              <span class="required">*</span>
+            </label>
+
+            <input
+              class="input"
+              id="fullName"
+              type="text"
+              required
+              placeholder="Enter your full name"
+            >
+
+          </div>
+
+
+          <!-- NRC -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="nrcNumber"
+              id="nrcNumberLabel"
+            >
+              NRC Number
+              <span class="required">*</span>
+            </label>
+
+            <input
+              class="input"
+              id="nrcNumber"
+              type="text"
+              required
+              placeholder="Enter your NRC number"
+            >
+
+          </div>
+
+
+          <!-- NRC COPY -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              id="nrcCopyLabel"
+            >
+              NRC Copy
+              <span class="required">*</span>
+            </label>
+
+            <div class="file-box">
+
+              <input
+                class="file-input"
+                id="nrcFile"
+                type="file"
+                accept="image/*,.pdf"
+                required
+              >
+
+              <label
+                class="file-label"
+                for="nrcFile"
+              >
+
+                <span class="file-icon">
+                  🪪
+                </span>
+
+                <span id="nrcFileText">
+                  Attach NRC copy
+                </span>
+
+              </label>
+
+            </div>
+
+            <div
+              class="hint"
+              id="nrcHint"
+            >
+              JPG, PNG or PDF. Maximum 5MB.
+            </div>
+
+          </div>
+
+
+          <!-- PROFILE -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              id="profileLabel"
+            >
+              Profile Picture
+              <span class="required">*</span>
+            </label>
+
+            <div class="file-box">
+
+              <input
+                class="file-input"
+                id="profileFile"
+                type="file"
+                accept="image/*"
+                required
+              >
+
+              <label
+                class="file-label"
+                for="profileFile"
+              >
+
+                <img
+                  id="profilePreview"
+                  class="file-preview"
+                  alt="Profile preview"
+                >
+
+                <span
+                  class="file-icon"
+                  id="profileIcon"
+                >
+                  📷
+                </span>
+
+                <span id="profileFileText">
+                  Upload passport-size photo
+                </span>
+
+              </label>
+
+            </div>
+
+            <div
+              class="hint"
+              id="profileHint"
+            >
+              JPG or PNG. Maximum 5MB.
+            </div>
+
+          </div>
+
+
+          <!-- ADDRESS -->
+
+          <div class="field full">
+
+            <label
+              class="label"
+              for="currentAddress"
+              id="addressLabel"
+            >
+              Current Address
+              <span class="required">*</span>
+            </label>
+
+            <textarea
+              class="textarea"
+              id="currentAddress"
+              required
+              placeholder="Enter your current address"
+            ></textarea>
+
+          </div>
+
+
+          <!-- CITY -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="operatingCity"
+              id="operatingCityLabel"
+            >
+              Operating City / Township
+              <span class="required">*</span>
+            </label>
+
+            <input
+              class="input"
+              id="operatingCity"
+              type="text"
+              required
+              placeholder="e.g. Yangon, Mayangone"
+            >
+
+          </div>
+
+
+          <!-- PHONE -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="phone"
+              id="phoneLabel"
+            >
+              Contact Phone
+              <span class="required">*</span>
+            </label>
+
+            <input
+              class="input"
+              id="phone"
+              type="tel"
+              required
+              placeholder="Viber / Telegram enabled phone"
+            >
+
+            <div
+              class="hint"
+              id="phoneHint"
+            >
+              Please provide a number reachable by Viber or Telegram.
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===============================================
+           SECTION 2
+      ================================================ -->
+
+      <div class="section">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            02
+          </div>
+
+          <div>
+
+            <div
+              class="section-title"
+              id="section2Title"
+            >
+              Expertise & Experience
+            </div>
+
+            <div
+              class="section-subtitle"
+              id="section2Subtitle"
+            >
+              Tell us where you can provide professional assistance
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="fields">
+
+
+          <!-- SPECIALIZATION -->
+
+          <div class="field full">
+
+            <label
+              class="label"
+              id="specializationLabel"
+            >
+              Areas of Specialization
+              <span class="required">*</span>
+            </label>
+
+
+            <div class="specializations">
+
+              <label class="check-option">
+
+                <input
+                  type="checkbox"
+                  name="specialization"
+                  value="real_estate"
+                >
+
+                <span id="realEstateText">
+                  🏠 Real Estate
+                </span>
+
+              </label>
+
+
+              <label class="check-option">
+
+                <input
+                  type="checkbox"
+                  name="specialization"
+                  value="automobiles"
+                >
+
+                <span id="automobilesText">
+                  🚗 Automobiles
+                </span>
+
+              </label>
+
+
+              <label class="check-option">
+
+                <input
+                  type="checkbox"
+                  name="specialization"
+                  value="gems_jewelry"
+                >
+
+                <span id="gemsText">
+                  💎 Gems / Jewelry
+                </span>
+
+              </label>
+
+
+              <label class="check-option">
+
+                <input
+                  type="checkbox"
+                  name="specialization"
+                  value="others"
+                >
+
+                <span id="othersText">
+                  ✨ Others
+                </span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- EXPERIENCE -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="experienceYears"
+              id="experienceLabel"
+            >
+              Years of Experience in Brokerage
+              <span class="required">*</span>
+            </label>
+
+            <input
+              class="input"
+              id="experienceYears"
+              type="number"
+              min="0"
+              max="80"
+              required
+              placeholder="e.g. 5"
+            >
+
+          </div>
+
+
+          <!-- OPERATING AREA -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="operatingArea"
+              id="operatingAreaLabel"
+            >
+              Current Operating Area
+              <span class="required">*</span>
+            </label>
+
+            <input
+              class="input"
+              id="operatingArea"
+              type="text"
+              required
+              placeholder="e.g. Hlaing, Kamayut, Insein"
+            >
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- ===============================================
+           SECTION 3
+      ================================================ -->
+
+      <div class="section">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            03
+          </div>
+
+          <div>
+
+            <div
+              class="section-title"
+              id="section3Title"
+            >
+              Verification
+            </div>
+
+            <div
+              class="section-subtitle"
+              id="section3Subtitle"
+            >
+              Additional information that can help build trust
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="fields">
+
+
+          <!-- REFERENCE -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="referenceName"
+              id="referenceNameLabel"
+            >
+              Reference / Guarantor Name
+            </label>
+
+            <input
+              class="input"
+              id="referenceName"
+              type="text"
+              placeholder="Optional but recommended"
+            >
+
+          </div>
+
+
+          <!-- REFERENCE PHONE -->
+
+          <div class="field">
+
+            <label
+              class="label"
+              for="referencePhone"
+              id="referencePhoneLabel"
+            >
+              Reference / Guarantor Phone
+            </label>
+
+            <input
+              class="input"
+              id="referencePhone"
+              type="tel"
+              placeholder="Optional"
+            >
+
+          </div>
+
+
+          <!-- PORTFOLIO -->
+
+          <div class="field full">
+
+            <label
+              class="label"
+              for="portfolioLinks"
+              id="portfolioLabel"
+            >
+              Portfolio Links
+            </label>
+
+            <textarea
+              class="textarea"
+              id="portfolioLinks"
+              placeholder="Facebook Page, public listings, website, etc."
+            ></textarea>
+
+            <div
+              class="hint"
+              id="portfolioHint"
+            >
+              You may provide one or more public links.
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- ===============================================
+           SECTION 4
+      ================================================ -->
+
+      <div class="section">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            04
+          </div>
+
+          <div>
+
+            <div
+              class="section-title"
+              id="section4Title"
+            >
+              Agreement
+            </div>
+
+            <div
+              class="section-subtitle"
+              id="section4Subtitle"
+            >
+              Please read and accept the MCP requirements
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="agreement">
+
+          <label class="agreement-label">
+
+            <input
+              id="agreement"
+              type="checkbox"
+              required
+            >
+
+            <span id="agreementText">
+
+              I acknowledge that I have read and agree to the
+
+              <a
+                href="./terms.html#mcp-terms"
+                target="_blank"
+                rel="noopener"
+              >
+                MCP Code of Conduct
+              </a>
+
+              and
+
+              <a
+                href="./terms.html#mcp-terms"
+                target="_blank"
+                rel="noopener"
+              >
+                Partner Terms & Conditions
+              </a>.
+
+            </span>
+
+          </label>
+
+        </div>
+
+
+        <div class="submit-area">
+
+          <button
+            type="submit"
+            class="submit"
+            id="submitButton"
+          >
+            Submit MCP Application
+          </button>
+
+          <div
+            class="message"
+            id="formMessage"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+    </form>
+
+
+    <!-- =================================================
+         SUCCESS
+    ================================================== -->
+
+    <div
+      class="success-box"
+      id="successBox"
+    >
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2 id="successTitle">
+        Application Submitted
+      </h2>
+
+      <p id="successText">
+        Your MCP application has been submitted successfully.
+        MEC will review your information and contact you when
+        the verification process is complete.
+      </p>
+
+      <a
+        href="./general.html"
+        class="home-button"
+        id="homeButton"
+      >
+        Back to MEC
+      </a>
+
+    </div>
+
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+  <span id="footerText">
+    Myanmar Elite Connect · MCP Application
+  </span>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+  "https://ikjwisfsdcupibgjiuvp.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+const translations = {
+
+  en: {
+
+    back:
+      "← Back to MEC",
+
+    eyebrow:
+      "MEC CERTIFIED PARTNER",
+
+    heroTitle:
+      'Join as a <span>MEC Certified Partner (MCP)</span>',
+
+    heroDescription:
+      "Become a trusted field partner of Myanmar Elite Connect and help buyers and sellers through real-world verification and local assistance.",
+
+    authNotice:
+      "Please log in to your MEC account before submitting an MCP application.",
+
+    section1Title:
+      "Personal Information",
+
+    section1Subtitle:
+      "Your basic identity and contact information",
+
+    fullName:
+      "Full Name (As per NRC)",
+
+    nrcNumber:
+      "NRC Number",
+
+    nrcCopy:
+      "NRC Copy",
+
+    nrcFile:
+      "Attach NRC copy",
+
+    nrcHint:
+      "JPG, PNG or PDF. Maximum 5MB.",
+
+    profile:
+      "Profile Picture",
+
+    profileFile:
+      "Upload passport-size photo",
+
+    profileHint:
+      "JPG or PNG. Maximum 5MB.",
+
+    address:
+      "Current Address",
+
+    operatingCity:
+      "Operating City / Township",
+
+    phone:
+      "Contact Phone",
+
+    phoneHint:
+      "Please provide a number reachable by Viber or Telegram.",
+
+    section2Title:
+      "Expertise & Experience",
+
+    section2Subtitle:
+      "Tell us where you can provide professional assistance",
+
+    specialization:
+      "Areas of Specialization",
+
+    realEstate:
+      "🏠 Real Estate",
+
+    automobiles:
+      "🚗 Automobiles",
+
+    gems:
+      "💎 Gems / Jewelry",
+
+    others:
+      "✨ Others",
+
+    experience:
+      "Years of Experience in Brokerage",
+
+    operatingArea:
+      "Current Operating Area",
+
+    section3Title:
+      "Verification",
+
+    section3Subtitle:
+      "Additional information that can help build trust",
+
+    referenceName:
+      "Reference / Guarantor Name",
+
+    referencePhone:
+      "Reference / Guarantor Phone",
+
+    portfolio:
+      "Portfolio Links",
+
+    portfolioHint:
+      "You may provide one or more public links.",
+
+    section4Title:
+      "Agreement",
+
+    section4Subtitle:
+      "Please read and accept the MCP requirements",
+
+    agreement:
+      'I acknowledge that I have read and agree to the <a href="./terms.html#mcp-terms" target="_blank" rel="noopener">MCP Code of Conduct</a> and <a href="./terms.html#mcp-terms" target="_blank" rel="noopener">Partner Terms & Conditions</a>.',
+
+    submit:
+      "Submit MCP Application",
+
+    submitting:
+      "Submitting application...",
+
+    successTitle:
+      "Application Submitted",
+
+    successText:
+      "Your MCP application has been submitted successfully. MEC will review your information and contact you when the verification process is complete.",
+
+    home:
+      "Back to MEC",
+
+    specializationRequired:
+      "Please select at least one area of specialization.",
+
+    loginRequired:
+      "Please log in to your MEC account before submitting an MCP application.",
+
+    uploadError:
+      "File upload failed. Please try again.",
+
+    generic:
+      "Something went wrong. Please try again.",
+
+    submitted:
+      "Your MCP application has been submitted successfully."
+
+  },
+
+
+  mm: {
+
+    back:
+      "← MEC သို့ပြန်သွားရန်",
+
+    eyebrow:
+      "MEC CERTIFIED PARTNER",
+
+    heroTitle:
+      'MEC Certified Partner <span>(MCP)</span> အဖြစ် လျှောက်ထားရန်',
+
+    heroDescription:
+      "Myanmar Elite Connect ၏ ယုံကြည်စိတ်ချရသော မြေပြင်ကွင်းဆင်းအကျိုးဆောင်အဖြစ် ပါဝင်ပြီး ဝယ်သူနှင့် ရောင်းသူများအတွက် ပိုင်ဆိုင်မှုစစ်ဆေးခြင်းနှင့် ဒေသတွင်းအကူအညီများ ပေးနိုင်ပါသည်။",
+
+    authNotice:
+      "MCP လျှောက်လွှာတင်ရန် MEC အကောင့်သို့ အရင်ဝင်ထားရန် လိုအပ်ပါသည်။",
+
+    section1Title:
+      "ကိုယ်ရေးအချက်အလက်",
+
+    section1Subtitle:
+      "သင်၏ အခြေခံအထောက်အထားနှင့် ဆက်သွယ်ရန်အချက်အလက်များ",
+
+    fullName:
+      "NRC အတိုင်း အမည်အပြည့်အစုံ",
+
+    nrcNumber:
+      "NRC နံပါတ်",
+
+    nrcCopy:
+      "NRC မိတ္တူ",
+
+    nrcFile:
+      "NRC မိတ္တူ ပူးတွဲရန်",
+
+    nrcHint:
+      "JPG, PNG သို့မဟုတ် PDF။ အများဆုံး 5MB။",
+
+    profile:
+      "ကိုယ်ရေးအကျဉ်းဓာတ်ပုံ",
+
+    profileFile:
+      "Passport Size ဓာတ်ပုံ တင်ရန်",
+
+    profileHint:
+      "JPG သို့မဟုတ် PNG။ အများဆုံး 5MB။",
+
+    address:
+      "လက်ရှိနေရပ်လိပ်စာ",
+
+    operatingCity:
+      "လုပ်ကိုင်မည့် မြို့ / မြို့နယ်",
+
+    phone:
+      "ဆက်သွယ်ရန် ဖုန်းနံပါတ်",
+
+    phoneHint:
+      "Viber သို့မဟုတ် Telegram အသုံးပြုနိုင်သော ဖုန်းနံပါတ် ဖြစ်ရပါမည်။",
+
+    section2Title:
+      "ကျွမ်းကျင်မှုနှင့် အတွေ့အကြုံ",
+
+    section2Subtitle:
+      "သင်က မည်သည့်ကဏ္ဍများတွင် အကျိုးဆောင်ပေးနိုင်သည်ကို ဖော်ပြပါ",
+
+    specialization:
+      "ကျွမ်းကျင်သည့် ကဏ္ဍများ",
+
+    realEstate:
+      "🏠 အိမ်ခြံမြေ",
+
+    automobiles:
+      "🚗 မော်တော်ယာဉ်",
+
+    gems:
+      "💎 ကျောက်မျက် / လက်ဝတ်ရတနာ",
+
+    others:
+      "✨ အခြား",
+
+    experience:
+      "အကျိုးဆောင်လုပ်ငန်း အတွေ့အကြုံနှစ်",
+
+    operatingArea:
+      "လက်ရှိလုပ်ကိုင်သည့် နယ်မြေ",
+
+    section3Title:
+      "အတည်ပြုခြင်း",
+
+    section3Subtitle:
+      "ယုံကြည်စိတ်ချရမှုကို အထောက်အကူပြုနိုင်မည့် အချက်အလက်များ",
+
+    referenceName:
+      "အကိုးအကား / အာမခံပေးသူ အမည်",
+
+    referencePhone:
+      "အကိုးအကား / အာမခံပေးသူ ဖုန်း",
+
+    portfolio:
+      "Portfolio Link များ",
+
+    portfolioHint:
+      "Facebook Page၊ Public Listing၊ Website စသည့် Link များ ထည့်နိုင်ပါသည်။",
+
+    section4Title:
+      "သဘောတူညီချက်",
+
+    section4Subtitle:
+      "MCP သတ်မှတ်ချက်များကို ဖတ်ရှုပြီး သဘောတူပါ",
+
+    agreement:
+      'MCP <a href="./terms.html#mcp-terms" target="_blank" rel="noopener">Code of Conduct</a> နှင့် <a href="./terms.html#mcp-terms" target="_blank" rel="noopener">Partner Terms & Conditions</a> များကို ဖတ်ရှုပြီး သဘောတူပါသည်။',
+
+    submit:
+      "MCP လျှောက်လွှာတင်ရန်",
+
+    submitting:
+      "လျှောက်လွှာ တင်နေပါသည်...",
+
+    successTitle:
+      "လျှောက်လွှာ တင်ပြီးပါပြီ",
+
+    successText:
+      "သင်၏ MCP လျှောက်လွှာကို အောင်မြင်စွာ လက်ခံရရှိပါပြီ။ MEC မှ သင့်အချက်အလက်များကို စစ်ဆေးပြီး Verification လုပ်ငန်းစဉ်ပြီးဆုံးပါက ဆက်သွယ်ပေးပါမည်။",
+
+    home:
+      "MEC သို့ပြန်သွားရန်",
+
+    specializationRequired:
+      "အနည်းဆုံး ကျွမ်းကျင်သည့် ကဏ္ဍတစ်ခုကို ရွေးချယ်ပေးပါ။",
+
+    loginRequired:
+      "MCP လျှောက်လွှာတင်ရန် MEC အကောင့်သို့ အရင်ဝင်ထားရန် လိုအပ်ပါသည်။",
+
+    uploadError:
+      "ဖိုင်တင်ရာတွင် အမှားဖြစ်နေပါသည်။ ထပ်မံကြိုးစားပါ။",
+
+    generic:
+      "တစ်စုံတစ်ခု မှားယွင်းနေပါသည်။ ထပ်မံကြိုးစားပါ။",
+
+    submitted:
+      "MCP လျှောက်လွှာကို အောင်မြင်စွာ တင်ပြီးပါပြီ။"
+
+  }
+
+};
+
+
+let language =
+  localStorage.getItem(
+    "mec_language"
+  ) || "en";
+
+
+function t(){
+  return translations[language];
+}
+
+
+/* =====================================================
+   LANGUAGE UPDATE
+===================================================== */
+
+function updateLanguage(){
+
+  const text = t();
+
+  document.getElementById("backButton").textContent =
+    text.back;
+
+  document.getElementById("eyebrow").textContent =
+    text.eyebrow;
+
+  document.getElementById("heroTitle").innerHTML =
+    text.heroTitle;
+
+  document.getElementById("heroDescription").textContent =
+    text.heroDescription;
+
+  document.getElementById("authNotice").textContent =
+    text.authNotice;
+
+  document.getElementById("section1Title").textContent =
+    text.section1Title;
+
+  document.getElementById("section1Subtitle").textContent =
+    text.section1Subtitle;
+
+  document.getElementById("fullNameLabel").innerHTML =
+    text.fullName + ' <span class="required">*</span>';
+
+  document.getElementById("nrcNumberLabel").innerHTML =
+    text.nrcNumber + ' <span class="required">*</span>';
+
+  document.getElementById("nrcCopyLabel").innerHTML =
+    text.nrcCopy + ' <span class="required">*</span>';
+
+  if(
+    !document.getElementById("nrcFile").files.length
+  ){
+    document.getElementById("nrcFileText").textContent =
+      text.nrcFile;
+  }
+
+  document.getElementById("nrcHint").textContent =
+    text.nrcHint;
+
+  document.getElementById("profileLabel").innerHTML =
+    text.profile + ' <span class="required">*</span>';
+
+  if(
+    !document.getElementById("profileFile").files.length
+  ){
+    document.getElementById("profileFileText").textContent =
+      text.profileFile;
+  }
+
+  document.getElementById("profileHint").textContent =
+    text.profileHint;
+
+  document.getElementById("addressLabel").innerHTML =
+    text.address + ' <span class="required">*</span>';
+
+  document.getElementById("operatingCityLabel").innerHTML =
+    text.operatingCity + ' <span class="required">*</span>';
+
+  document.getElementById("phoneLabel").innerHTML =
+    text.phone + ' <span class="required">*</span>';
+
+  document.getElementById("phoneHint").textContent =
+    text.phoneHint;
+
+  document.getElementById("section2Title").textContent =
+    text.section2Title;
+
+  document.getElementById("section2Subtitle").textContent =
+    text.section2Subtitle;
+
+  document.getElementById("specializationLabel").innerHTML =
+    text.specialization + ' <span class="required">*</span>';
+
+  document.getElementById("realEstateText").textContent =
+    text.realEstate;
+
+  document.getElementById("automobilesText").textContent =
+    text.automobiles;
+
+  document.getElementById("gemsText").textContent =
+    text.gems;
+
+  document.getElementById("othersText").textContent =
+    text.others;
+
+  document.getElementById("experienceLabel").innerHTML =
+    text.experience + ' <span class="required">*</span>';
+
+  document.getElementById("operatingAreaLabel").innerHTML =
+    text.operatingArea + ' <span class="required">*</span>';
+
+  document.getElementById("section3Title").textContent =
+    text.section3Title;
+
+  document.getElementById("section3Subtitle").textContent =
+    text.section3Subtitle;
+
+  document.getElementById("referenceNameLabel").textContent =
+    text.referenceName;
+
+  document.getElementById("referencePhoneLabel").textContent =
+    text.referencePhone;
+
+  document.getElementById("portfolioLabel").textContent =
+    text.portfolio;
+
+  document.getElementById("portfolioHint").textContent =
+    text.portfolioHint;
+
+  document.getElementById("section4Title").textContent =
+    text.section4Title;
+
+  document.getElementById("section4Subtitle").textContent =
+    text.section4Subtitle;
+
+  document.getElementById("agreementText").innerHTML =
+    text.agreement;
+
+  if(
+    !document.getElementById("submitButton").disabled
+  ){
+    document.getElementById("submitButton").textContent =
+      text.submit;
+  }
+
+  document.getElementById("successTitle").textContent =
+    text.successTitle;
+
+  document.getElementById("successText").textContent =
+    text.successText;
+
+  document.getElementById("homeButton").textContent =
+    text.home;
+
+  document.getElementById("langEN").classList.toggle(
+    "active",
+    language === "en"
+  );
+
+  document.getElementById("langMM").classList.toggle(
+    "active",
+    language === "mm"
+  );
+
+  document.documentElement.lang =
+    language === "mm"
+      ? "my"
+      : "en";
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applyTheme(theme){
+
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
+  document.getElementById("themeButton").textContent =
+    theme === "dark"
+      ? "☀"
+      : "☾";
+
+  localStorage.setItem(
+    "mec_theme",
+    theme
+  );
+
+}
+
+
+document.getElementById(
+  "themeButton"
+).addEventListener(
+  "click",
+  () => {
+
+    const dark =
+      document.body.classList.contains("dark");
+
+    applyTheme(
+      dark
+        ? "light"
+        : "dark"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   LANGUAGE BUTTON
+===================================================== */
+
+document.getElementById(
+  "languageButton"
+).addEventListener(
+  "click",
+  () => {
+
+    language =
+      language === "en"
+        ? "mm"
+        : "en";
+
+    localStorage.setItem(
+      "mec_language",
+      language
+    );
+
+    updateLanguage();
+
+  }
+);
+
+
+/* =====================================================
+   FILE DISPLAY
+===================================================== */
+
+function setupFileDisplay(){
+
+  const nrcFile =
+    document.getElementById("nrcFile");
+
+  const profileFile =
+    document.getElementById("profileFile");
+
+
+  nrcFile.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        nrcFile.files[0];
+
+      if(!file){
+        return;
+      }
+
+      if(file.size > 5 * 1024 * 1024){
+
+        nrcFile.value = "";
+
+        alert(
+          language === "mm"
+            ? "NRC ဖိုင်သည် 5MB ထက် မကျော်ရပါ။"
+            : "NRC file must be 5MB or smaller."
+        );
+
+        return;
+      }
+
+      document.getElementById(
+        "nrcFileText"
+      ).textContent =
+        file.name;
+
+    }
+  );
+
+
+  profileFile.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        profileFile.files[0];
+
+      if(!file){
+        return;
+      }
+
+      if(file.size > 5 * 1024 * 1024){
+
+        profileFile.value = "";
+
+        alert(
+          language === "mm"
+            ? "ဓာတ်ပုံသည် 5MB ထက် မကျော်ရပါ။"
+            : "Profile picture must be 5MB or smaller."
+        );
+
+        return;
+      }
+
+
+      document.getElementById(
+        "profileFileText"
+      ).textContent =
+        file.name;
+
+
+      if(
+        file.type.startsWith("image/")
+      ){
+
+        const preview =
+          document.getElementById(
+            "profilePreview"
+          );
+
+        preview.src =
+          URL.createObjectURL(file);
+
+        preview.style.display =
+          "block";
+
+        document.getElementById(
+          "profileIcon"
+        ).style.display =
+          "none";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SUPABASE STORAGE UPLOAD
+===================================================== */
+
+async function uploadFile(
+  file,
+  userId,
+  type
+){
+
+  const extension =
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+
+  const fileName =
+    `${userId}/${Date.now()}_${type}.${extension}`;
+
+
+  const {
+    error
+  } =
+    await supabaseClient.storage
+      .from("mcp-applications")
+      .upload(
+        fileName,
+        file,
+        {
+          upsert:false
+        }
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  /*
+    Get a URL for internal/admin use.
+    The bucket should preferably be PRIVATE.
+  */
+
+  return fileName;
+
+}
+
+
+/* =====================================================
+   AUTH CHECK
+===================================================== */
+
+async function getCurrentUser(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getUser();
+
+  if(error){
+    return null;
+  }
+
+  return data?.user || null;
+
+}
+
+
+/* =====================================================
+   VALIDATE SPECIALIZATION
+===================================================== */
+
+function getSpecializations(){
+
+  return [
+    ...document.querySelectorAll(
+      'input[name="specialization"]:checked'
+    )
+  ].map(
+    input =>
+      input.value
+  );
+
+}
+
+
+/* =====================================================
+   FORM SUBMIT
+===================================================== */
+
+document.getElementById(
+  "mcpForm"
+).addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    const text =
+      t();
+
+
+    const button =
+      document.getElementById(
+        "submitButton"
+      );
+
+    const message =
+      document.getElementById(
+        "formMessage"
+      );
+
+
+    message.textContent = "";
+    message.className = "message";
+
+
+    /* -----------------------------------------------
+       AUTH
+    ------------------------------------------------ */
+
+    const user =
+      await getCurrentUser();
+
+
+    if(!user){
+
+      message.textContent =
+        text.loginRequired;
+
+      message.className =
+        "message error";
+
+      return;
+
+    }
+
+
+    /* -----------------------------------------------
+       SPECIALIZATION
+    ------------------------------------------------ */
+
+    const specializations =
+      getSpecializations();
+
+
+    if(
+      !specializations.length
+    ){
+
+      message.textContent =
+        text.specializationRequired;
+
+      message.className =
+        "message error";
+
+      return;
+
+    }
+
+
+    /* -----------------------------------------------
+       AGREEMENT
+    ------------------------------------------------ */
+
+    const agreement =
+      document.getElementById(
+        "agreement"
+      );
+
+
+    if(!agreement.checked){
+
+      message.textContent =
+        language === "mm"
+          ? "MCP စည်းကမ်းချက်များကို သဘောတူကြောင်း အမှန်ခြစ်ပေးပါ။"
+          : "Please accept the MCP terms before submitting.";
+
+      message.className =
+        "message error";
+
+      return;
+
+    }
+
+
+    /* -----------------------------------------------
+       FILES
+    ------------------------------------------------ */
+
+    const nrcFile =
+      document.getElementById(
+        "nrcFile"
+      ).files[0];
+
+    const profileFile =
+      document.getElementById(
+        "profileFile"
+      ).files[0];
+
+
+    if(!nrcFile || !profileFile){
+
+      message.textContent =
+        language === "mm"
+          ? "NRC မိတ္တူနှင့် Profile Picture နှစ်ခုလုံး ထည့်ပေးပါ။"
+          : "Please attach both your NRC copy and profile picture.";
+
+      message.className =
+        "message error";
+
+      return;
+
+    }
+
+
+    /* -----------------------------------------------
+       DISABLE
+    ------------------------------------------------ */
+
+    button.disabled = true;
+
+    button.textContent =
+      text.submitting;
+
+
+    try{
+
+
+      /* ---------------------------------------------
+         UPLOAD NRC
+      ---------------------------------------------- */
+
+      const nrcPath =
+        await uploadFile(
+          nrcFile,
+          user.id,
+          "nrc"
+        );
+
+
+      /* ---------------------------------------------
+         UPLOAD PROFILE
+      ---------------------------------------------- */
+
+      const profilePath =
+        await uploadFile(
+          profileFile,
+          user.id,
+          "profile"
+        );
+
+
+      /* ---------------------------------------------
+         DATA
+      ---------------------------------------------- */
+
+      const application = {
+
+        user_id:
+          user.id,
+
+        full_name:
+          document
+            .getElementById(
+              "fullName"
+            )
+            .value
+            .trim(),
+
+        nrc_number:
+          document
+            .getElementById(
+              "nrcNumber"
+            )
+            .value
+            .trim(),
+
+        nrc_file_path:
+          nrcPath,
+
+        profile_file_path:
+          profilePath,
+
+        current_address:
+          document
+            .getElementById(
+              "currentAddress"
+            )
+            .value
+            .trim(),
+
+        operating_city:
+          document
+            .getElementById(
+              "operatingCity"
+            )
+            .value
+            .trim(),
+
+        phone:
+          document
+            .getElementById(
+              "phone"
+            )
+            .value
+            .trim(),
+
+        specializations:
+          specializations,
+
+        experience_years:
+          Number(
+            document
+              .getElementById(
+                "experienceYears"
+              )
+              .value
+          ),
+
+        operating_area:
+          document
+            .getElementById(
+              "operatingArea"
+            )
+            .value
+            .trim(),
+
+        reference_name:
+          document
+            .getElementById(
+              "referenceName"
+            )
+            .value
+            .trim() || null,
+
+        reference_phone:
+          document
+            .getElementById(
+              "referencePhone"
+            )
+            .value
+            .trim() || null,
+
+        portfolio_links:
+          document
+            .getElementById(
+              "portfolioLinks"
+            )
+            .value
+            .trim() || null,
+
+        agreement_accepted:
+          true,
+
+        status:
+          "pending"
+
+      };
+
+
+      /* ---------------------------------------------
+         INSERT APPLICATION
+      ---------------------------------------------- */
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("mcp_applications")
+          .insert(
+            application
+          );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      /* ---------------------------------------------
+         SUCCESS
+      ---------------------------------------------- */
+
+      document.getElementById(
+        "mcpForm"
+      ).style.display =
+        "none";
+
+      document.getElementById(
+        "successBox"
+      ).style.display =
+        "block";
+
+
+    }
+    catch(error){
+
+      console.error(
+        "MCP application error:",
+        error
+      );
+
+
+      message.textContent =
+        error?.message ||
+        text.generic;
+
+      message.className =
+        "message error";
+
+
+      button.disabled = false;
+
+      button.textContent =
+        text.submit;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+applyTheme(
+  localStorage.getItem(
+    "mec_theme"
+  ) || "light"
+);
+
+updateLanguage();
+
+setupFileDisplay();
+
+</script>
+
+</body>
+</html>
