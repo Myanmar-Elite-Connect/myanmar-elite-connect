@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Profile • Myanmar Elite Connect</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./supabase.js"></script>
+
   <style>
     *{
       box-sizing:border-box;
       margin:0;
       padding:0;
     }
+
     :root{
       --bg:#f5f7fb;
       --card:#ffffff;
       --soft:#f7f9fc;
+      --soft2:#eef2f7;
       --text:#10233f;
       --muted:#748197;
       --border:rgba(16,35,63,.10);
@@ -27,15 +32,18 @@
       --shadow:0 16px 45px rgba(16,35,63,.07);
       --radius:18px;
     }
+
     body.dark{
       --bg:#071321;
       --card:#0e1e32;
       --soft:#10243c;
+      --soft2:#142b45;
       --text:#f4f7fb;
       --muted:#92a0b3;
       --border:rgba(255,255,255,.09);
       --shadow:0 18px 50px rgba(0,0,0,.28);
     }
+
     body{
       min-height:100vh;
       color:var(--text);
@@ -45,30 +53,44 @@
         "Noto Sans Myanmar",
         "Myanmar Text",
         system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         sans-serif;
       transition:.2s ease;
     }
+
     button,
     input,
     textarea,
     select{
       font:inherit;
     }
+
     button,
     select{
       cursor:pointer;
     }
+
+    button:disabled{
+      cursor:not-allowed;
+      opacity:.55;
+    }
+
     a{
       color:inherit;
       text-decoration:none;
     }
+
     img{
       display:block;
       max-width:100%;
     }
-    /* =========================
+
+    /* =====================================================
        HEADER
-    ========================= */
+    ===================================================== */
+
     .topbar{
       position:sticky;
       top:0;
@@ -77,10 +99,13 @@
       border-bottom:1px solid var(--border);
       background:rgba(255,255,255,.92);
       backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
+
     body.dark .topbar{
       background:rgba(7,19,33,.94);
     }
+
     .topbar-inner{
       width:min(1200px,94%);
       height:100%;
@@ -90,11 +115,14 @@
       justify-content:space-between;
       gap:18px;
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
+      flex:none;
     }
+
     .brand img{
       width:39px;
       height:39px;
@@ -102,19 +130,23 @@
       object-fit:contain;
       background:var(--card);
     }
+
     .brand-name{
       font-size:14px;
       font-weight:950;
       white-space:nowrap;
     }
+
     .brand-name span{
       color:var(--gold);
     }
+
     .nav{
       display:flex;
       align-items:center;
       gap:3px;
     }
+
     .nav a{
       padding:9px 12px;
       border-radius:10px;
@@ -122,16 +154,19 @@
       font-size:12px;
       font-weight:850;
     }
+
     .nav a:hover,
     .nav a.active{
       background:var(--soft);
       color:var(--gold);
     }
+
     .header-actions{
       display:flex;
       align-items:center;
       gap:7px;
     }
+
     .icon-btn{
       width:40px;
       height:40px;
@@ -142,6 +177,7 @@
       background:var(--card);
       color:var(--text);
     }
+
     .profile-mini{
       width:40px;
       height:40px;
@@ -150,22 +186,27 @@
       border-radius:12px;
       background:var(--soft);
     }
+
     .profile-mini img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
-    /* =========================
+
+    /* =====================================================
        MAIN
-    ========================= */
+    ===================================================== */
+
     .container{
       width:min(1200px,94%);
       margin:auto;
       padding:28px 0 100px;
     }
+
     .page-heading{
       margin-bottom:18px;
     }
+
     .eyebrow{
       color:var(--gold);
       font-size:9px;
@@ -173,6 +214,7 @@
       letter-spacing:1.3px;
       text-transform:uppercase;
     }
+
     h1{
       margin-top:5px;
       font-size:clamp(27px,4vw,38px);
@@ -180,14 +222,18 @@
       font-weight:950;
       letter-spacing:-1px;
     }
+
     .subtitle{
       margin-top:7px;
       color:var(--muted);
       font-size:11px;
+      line-height:1.6;
     }
-    /* =========================
+
+    /* =====================================================
        PROFILE HERO
-    ========================= */
+    ===================================================== */
+
     .profile-hero{
       display:grid;
       grid-template-columns:auto 1fr auto;
@@ -199,12 +245,14 @@
       background:var(--card);
       box-shadow:var(--shadow);
     }
+
     .avatar-wrap{
       position:relative;
       width:112px;
       height:112px;
       flex:none;
     }
+
     .avatar{
       width:112px;
       height:112px;
@@ -213,11 +261,13 @@
       border-radius:50%;
       background:var(--soft);
     }
+
     .avatar img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
+
     .avatar-upload{
       position:absolute;
       right:0;
@@ -232,12 +282,15 @@
       background:var(--gold);
       font-weight:950;
     }
+
     .avatar-upload input{
       display:none;
     }
+
     .profile-info{
       min-width:0;
     }
+
     .profile-name{
       display:flex;
       align-items:center;
@@ -246,6 +299,7 @@
       font-size:23px;
       font-weight:950;
     }
+
     .verified{
       display:inline-flex;
       align-items:center;
@@ -257,23 +311,27 @@
       font-size:8px;
       font-weight:950;
     }
+
     .profile-email{
       margin-top:6px;
       color:var(--muted);
       font-size:10px;
       word-break:break-word;
     }
+
     .profile-location{
       margin-top:9px;
       color:var(--muted);
       font-size:10px;
     }
+
     .hero-actions{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
       justify-content:flex-end;
     }
+
     .primary-btn,
     .secondary-btn,
     .danger-btn{
@@ -283,34 +341,98 @@
       font-size:10px;
       font-weight:900;
     }
+
     .primary-btn{
       border:0;
       color:#071a34;
       background:linear-gradient(135deg,var(--gold2),var(--gold));
     }
+
     .secondary-btn{
       border:1px solid var(--border);
       color:var(--text);
       background:var(--soft);
     }
+
     .danger-btn{
       border:1px solid rgba(201,75,75,.2);
       color:var(--red);
       background:rgba(201,75,75,.07);
     }
-    button:disabled{
-      cursor:not-allowed;
-      opacity:.55;
+
+    /* =====================================================
+       SOCIAL REACTIONS
+    ===================================================== */
+
+    .social-card{
+      margin-top:12px;
+      padding:15px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:var(--card);
+      box-shadow:var(--shadow);
     }
-    /* =========================
+
+    .social-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .reaction-btn{
+      min-height:39px;
+      padding:0 15px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      color:var(--text);
+      background:var(--soft);
+      font-size:11px;
+      font-weight:900;
+      transition:.18s ease;
+    }
+
+    .reaction-btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(216,180,92,.5);
+    }
+
+    .reaction-btn.active.like{
+      color:#fff;
+      background:var(--green);
+      border-color:var(--green);
+    }
+
+    .reaction-btn.active.dislike{
+      color:#fff;
+      background:var(--red);
+      border-color:var(--red);
+    }
+
+    .reaction-count{
+      margin-left:auto;
+      color:var(--muted);
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .social-note{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    /* =====================================================
        STATS
-    ========================= */
+    ===================================================== */
+
     .stats{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(4,1fr);
       gap:10px;
       margin-top:12px;
     }
+
     .stat{
       padding:15px;
       border:1px solid var(--border);
@@ -318,11 +440,13 @@
       background:var(--card);
       text-align:center;
     }
+
     .stat strong{
       display:block;
       font-size:19px;
       font-weight:950;
     }
+
     .stat span{
       display:block;
       margin-top:4px;
@@ -330,9 +454,11 @@
       font-size:9px;
       font-weight:800;
     }
-    /* =========================
+
+    /* =====================================================
        TABS
-    ========================= */
+    ===================================================== */
+
     .tabs{
       display:flex;
       gap:6px;
@@ -341,9 +467,11 @@
       padding-bottom:2px;
       scrollbar-width:none;
     }
+
     .tabs::-webkit-scrollbar{
       display:none;
     }
+
     .tab{
       flex:none;
       height:40px;
@@ -355,11 +483,13 @@
       font-size:10px;
       font-weight:900;
     }
+
     .tab.active{
       border-color:transparent;
       color:#071a34;
       background:linear-gradient(135deg,var(--gold2),var(--gold));
     }
+
     .panel{
       display:none;
       margin-top:12px;
@@ -369,176 +499,27 @@
       background:var(--card);
       box-shadow:var(--shadow);
     }
+
     .panel.active{
       display:block;
     }
+
     .panel-title{
       font-size:16px;
       font-weight:950;
     }
+
     .panel-description{
       margin-top:5px;
       color:var(--muted);
       font-size:10px;
       line-height:1.6;
     }
-    /* =========================
-       FORM
-    ========================= */
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:17px;
-    }
-    .form-group{
-      min-width:0;
-    }
-    .form-group.full{
-      grid-column:1/-1;
-    }
-    label{
-      display:block;
-      margin-bottom:6px;
-      color:var(--muted);
-      font-size:9px;
-      font-weight:900;
-    }
-    input,
-    textarea,
-    select{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius:11px;
-      outline:none;
-      color:var(--text);
-      background:var(--soft);
-    }
-    input,
-    select{
-      height:43px;
-      padding:0 12px;
-    }
-    textarea{
-      min-height:100px;
-      padding:11px 12px;
-      resize:vertical;
-    }
-    input:focus,
-    textarea:focus,
-    select:focus{
-      border-color:rgba(216,180,92,.7);
-    }
-    .form-actions{
-      display:flex;
-      justify-content:flex-end;
-      gap:8px;
-      margin-top:15px;
-    }
-    /* =========================
-       KYC
-    ========================= */
-    .kyc-status{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-top:15px;
-      padding:13px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:var(--soft);
-    }
-    .status-dot{
-      width:10px;
-      height:10px;
-      flex:none;
-      border-radius:50%;
-      background:var(--muted);
-    }
-    .status-dot.pending{
-      background:#d5a832;
-    }
-    .status-dot.approved{
-      background:var(--green);
-    }
-    .status-dot.rejected{
-      background:var(--red);
-    }
-    .kyc-status strong{
-      display:block;
-      font-size:11px;
-      font-weight:950;
-    }
-    .kyc-status span{
-      display:block;
-      margin-top:3px;
-      color:var(--muted);
-      font-size:9px;
-    }
-    .kyc-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:15px;
-    }
-    .upload-box{
-      position:relative;
-      min-height:170px;
-      overflow:hidden;
-      border:1px dashed rgba(216,180,92,.55);
-      border-radius:14px;
-      background:var(--soft);
-    }
-    .upload-box input{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      cursor:pointer;
-      opacity:0;
-      z-index:2;
-    }
-    .upload-placeholder{
-      min-height:170px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:15px;
-      text-align:center;
-    }
-    .upload-icon{
-      font-size:28px;
-      color:var(--gold);
-    }
-    .upload-placeholder strong{
-      margin-top:8px;
-      font-size:11px;
-    }
-    .upload-placeholder span{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:9px;
-    }
-    .upload-preview{
-      display:none;
-      width:100%;
-      height:170px;
-      object-fit:cover;
-    }
-    .rejection{
-      display:none;
-      margin-top:10px;
-      padding:11px;
-      border-radius:10px;
-      color:var(--red);
-      background:rgba(201,75,75,.07);
-      font-size:9px;
-      line-height:1.6;
-    }
-    /* =========================
+
+    /* =====================================================
        POSTS
-    ========================= */
+    ===================================================== */
+
     .post-filter{
       display:flex;
       gap:7px;
@@ -546,9 +527,11 @@
       overflow-x:auto;
       scrollbar-width:none;
     }
+
     .post-filter::-webkit-scrollbar{
       display:none;
     }
+
     .post-filter button{
       flex:none;
       height:34px;
@@ -560,38 +543,51 @@
       font-size:9px;
       font-weight:900;
     }
+
     .post-filter button.active{
       color:#071a34;
       background:var(--gold);
       border-color:transparent;
     }
+
     .posts-grid{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:13px;
       margin-top:14px;
     }
+
     .post-card{
       overflow:hidden;
       border:1px solid var(--border);
       border-radius:15px;
       background:var(--soft);
+      transition:.18s ease;
     }
+
+    .post-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 30px rgba(16,35,63,.08);
+    }
+
     .post-image{
       width:100%;
       aspect-ratio:4/3;
       object-fit:cover;
       background:linear-gradient(135deg,#dce3ec,#c8d2df);
     }
+
     .post-content{
       padding:12px;
     }
+
     .post-category{
       color:var(--gold);
       font-size:8px;
       font-weight:950;
       text-transform:uppercase;
     }
+
     .post-title{
       margin-top:5px;
       min-height:30px;
@@ -599,26 +595,56 @@
       line-height:1.4;
       font-weight:950;
     }
+
     .post-price{
       margin-top:7px;
       font-size:12px;
       font-weight:950;
     }
+
     .post-location{
       margin-top:5px;
       color:var(--muted);
       font-size:8px;
       line-height:1.4;
     }
+
+    .post-status{
+      display:inline-flex;
+      margin-top:7px;
+      padding:4px 7px;
+      border-radius:999px;
+      color:var(--muted);
+      background:var(--soft2);
+      font-size:7px;
+      font-weight:950;
+      text-transform:uppercase;
+    }
+
+    .post-status.approved{
+      color:var(--green);
+    }
+
+    .post-status.pending{
+      color:#b07d00;
+    }
+
+    .post-status.rejected{
+      color:var(--red);
+    }
+
     .post-actions{
       display:flex;
       gap:6px;
       margin-top:10px;
     }
+
     .post-actions a,
     .post-actions button{
       flex:1;
       min-height:32px;
+      display:grid;
+      place-items:center;
       border:1px solid var(--border);
       border-radius:8px;
       color:var(--text);
@@ -626,43 +652,431 @@
       font-size:8px;
       font-weight:900;
     }
+
     .post-actions .delete{
       color:var(--red);
     }
-    /* =========================
+
+    /* =====================================================
+       PROFILE FORM
+    ===================================================== */
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:17px;
+    }
+
+    .form-group{
+      min-width:0;
+    }
+
+    .form-group.full{
+      grid-column:1/-1;
+    }
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    input,
+    textarea,
+    select{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:11px;
+      outline:none;
+      color:var(--text);
+      background:var(--soft);
+    }
+
+    input,
+    select{
+      height:43px;
+      padding:0 12px;
+    }
+
+    textarea{
+      min-height:100px;
+      padding:11px 12px;
+      resize:vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus{
+      border-color:rgba(216,180,92,.7);
+    }
+
+    .form-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      margin-top:15px;
+    }
+
+    /* =====================================================
+       KYC
+    ===================================================== */
+
+    .kyc-status{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:15px;
+      padding:13px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:var(--soft);
+    }
+
+    .status-dot{
+      width:10px;
+      height:10px;
+      flex:none;
+      border-radius:50%;
+      background:var(--muted);
+    }
+
+    .status-dot.pending{
+      background:#d5a832;
+    }
+
+    .status-dot.approved{
+      background:var(--green);
+    }
+
+    .status-dot.rejected{
+      background:var(--red);
+    }
+
+    .kyc-status strong{
+      display:block;
+      font-size:11px;
+      font-weight:950;
+    }
+
+    .kyc-status span{
+      display:block;
+      margin-top:3px;
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    .kyc-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:15px;
+    }
+
+    .upload-box{
+      position:relative;
+      min-height:170px;
+      overflow:hidden;
+      border:1px dashed rgba(216,180,92,.55);
+      border-radius:14px;
+      background:var(--soft);
+    }
+
+    .upload-box input{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      cursor:pointer;
+      opacity:0;
+      z-index:2;
+    }
+
+    .upload-placeholder{
+      min-height:170px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:15px;
+      text-align:center;
+    }
+
+    .upload-icon{
+      font-size:28px;
+      color:var(--gold);
+    }
+
+    .upload-placeholder strong{
+      margin-top:8px;
+      font-size:11px;
+    }
+
+    .upload-placeholder span{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    .upload-preview{
+      display:none;
+      width:100%;
+      height:170px;
+      object-fit:cover;
+    }
+
+    .rejection{
+      display:none;
+      margin-top:10px;
+      padding:11px;
+      border-radius:10px;
+      color:var(--red);
+      background:rgba(201,75,75,.07);
+      font-size:9px;
+      line-height:1.6;
+    }
+
+    /* =====================================================
+       COMMENTS
+    ===================================================== */
+
+    .comments-panel{
+      margin-top:12px;
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      background:var(--card);
+      box-shadow:var(--shadow);
+    }
+
+    .comment-form{
+      display:flex;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .comment-form textarea{
+      min-height:45px;
+      height:45px;
+      resize:none;
+      flex:1;
+    }
+
+    .comment-submit{
+      flex:none;
+      height:45px;
+      padding:0 15px;
+      border:0;
+      border-radius:11px;
+      color:#071a34;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      font-size:10px;
+      font-weight:950;
+    }
+
+    .comments-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .comment{
+      display:flex;
+      gap:10px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:13px;
+      background:var(--soft);
+    }
+
+    .comment-avatar{
+      width:36px;
+      height:36px;
+      flex:none;
+      overflow:hidden;
+      border-radius:50%;
+      background:var(--soft2);
+    }
+
+    .comment-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .comment-main{
+      min-width:0;
+      flex:1;
+    }
+
+    .comment-head{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      flex-wrap:wrap;
+    }
+
+    .comment-author{
+      font-size:10px;
+      font-weight:950;
+    }
+
+    .comment-date{
+      color:var(--muted);
+      font-size:8px;
+    }
+
+    .comment-text{
+      margin-top:5px;
+      color:var(--text);
+      font-size:10px;
+      line-height:1.6;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .comment-delete{
+      margin-left:auto;
+      border:0;
+      color:var(--red);
+      background:transparent;
+      font-size:8px;
+      font-weight:900;
+    }
+
+    /* =====================================================
+       REPORT
+    ===================================================== */
+
+    .report-link{
+      margin-top:13px;
+      border:0;
+      color:var(--red);
+      background:transparent;
+      font-size:9px;
+      font-weight:900;
+    }
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(4,13,25,.62);
+      backdrop-filter:blur(8px);
+    }
+
+    .modal.open{
+      display:flex;
+    }
+
+    .modal-card{
+      width:min(470px,100%);
+      max-height:90vh;
+      overflow:auto;
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:var(--card);
+      box-shadow:0 30px 80px rgba(0,0,0,.25);
+    }
+
+    .modal-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .modal-title{
+      font-size:17px;
+      font-weight:950;
+    }
+
+    .modal-close{
+      width:34px;
+      height:34px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--border);
+      border-radius:10px;
+      color:var(--text);
+      background:var(--soft);
+    }
+
+    .modal-description{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:9px;
+      line-height:1.6;
+    }
+
+    .report-form{
+      margin-top:17px;
+    }
+
+    .report-submit{
+      width:100%;
+      min-height:44px;
+      margin-top:14px;
+      border:0;
+      border-radius:11px;
+      color:#fff;
+      background:var(--red);
+      font-size:10px;
+      font-weight:950;
+    }
+
+    /* =====================================================
        STATES
-    ========================= */
+    ===================================================== */
+
     .empty{
       padding:45px 15px;
       text-align:center;
       color:var(--muted);
     }
+
     .empty-icon{
       font-size:30px;
       color:var(--gold);
     }
+
     .empty strong{
       display:block;
       margin-top:9px;
       color:var(--text);
       font-size:13px;
     }
+
     .empty span{
       display:block;
       margin-top:5px;
       font-size:9px;
     }
+
     .loading{
       padding:30px;
       text-align:center;
       color:var(--muted);
       font-size:10px;
     }
+
     .toast{
       position:fixed;
       right:18px;
       bottom:18px;
-      z-index:999;
+      z-index:1200;
       max-width:340px;
       padding:12px 15px;
       border:1px solid var(--border);
@@ -677,19 +1091,24 @@
       pointer-events:none;
       transition:.2s ease;
     }
+
     .toast.show{
       transform:translateY(0);
       opacity:1;
     }
+
     .toast.success{
       border-color:rgba(45,138,97,.3);
     }
+
     .toast.error{
       border-color:rgba(201,75,75,.3);
     }
-    /* =========================
+
+    /* =====================================================
        MOBILE NAV
-    ========================= */
+    ===================================================== */
+
     .mobile-nav{
       display:none;
       position:fixed;
@@ -701,15 +1120,19 @@
       border-top:1px solid var(--border);
       background:rgba(255,255,255,.95);
       backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
+
     body.dark .mobile-nav{
       background:rgba(7,19,33,.96);
     }
+
     .mobile-nav-inner{
       height:100%;
       display:grid;
       grid-template-columns:repeat(5,1fr);
     }
+
     .mobile-nav a{
       display:flex;
       flex-direction:column;
@@ -720,98 +1143,138 @@
       font-size:9px;
       font-weight:800;
     }
+
     .mobile-nav a.active{
       color:var(--gold);
     }
+
     .mobile-icon{
       font-size:17px;
     }
-    /* =========================
+
+    /* =====================================================
        RESPONSIVE
-    ========================= */
+    ===================================================== */
+
     @media(max-width:1000px){
+
       .nav{
         display:none;
       }
+
       .mobile-nav{
         display:block;
       }
+
       .container{
         padding-bottom:90px;
       }
+
       .posts-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
       }
     }
+
     @media(max-width:700px){
+
       .profile-hero{
         grid-template-columns:auto 1fr;
         gap:15px;
       }
+
       .hero-actions{
         grid-column:1/-1;
         justify-content:flex-start;
       }
+
       .avatar-wrap,
       .avatar{
         width:86px;
         height:86px;
       }
+
       .form-grid,
       .kyc-grid{
         grid-template-columns:1fr;
       }
+
       .form-group.full{
         grid-column:auto;
       }
+
       .posts-grid{
         grid-template-columns:1fr 1fr;
         gap:9px;
       }
-      .panel{
+
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .panel,
+      .comments-panel{
         padding:14px;
       }
+
+      .comment-form{
+        flex-direction:column;
+      }
+
+      .comment-submit{
+        width:100%;
+      }
     }
+
     @media(max-width:420px){
+
       .brand-name{
         display:none;
       }
+
       .profile-hero{
         grid-template-columns:1fr;
         text-align:center;
       }
+
       .avatar-wrap{
         margin:auto;
       }
+
       .profile-name{
         justify-content:center;
       }
+
       .hero-actions{
         justify-content:center;
       }
+
       .posts-grid{
         grid-template-columns:1fr;
       }
-      .stats{
-        gap:6px;
-      }
-      .stat{
-        padding:12px 5px;
+
+      .reaction-count{
+        width:100%;
+        margin-left:0;
       }
     }
   </style>
 </head>
+
 <body>
+
 <header class="topbar">
   <div class="topbar-inner">
+
     <a href="./general.html" class="brand">
       <img
         src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
         alt="Myanmar Elite Connect">
+
       <div class="brand-name">
         Myanmar <span>Elite</span> Connect
       </div>
     </a>
+
     <nav class="nav">
       <a href="./general.html">Home</a>
       <a href="./buy.html">Buy</a>
@@ -821,197 +1284,429 @@
       <a href="./chat.html">Chat</a>
       <a href="./profile.html" class="active">Profile</a>
     </nav>
+
     <div class="header-actions">
+
       <button
         id="themeButton"
         class="icon-btn"
-        type="button"
-        aria-label="Toggle theme">
+        type="button">
         ☾
       </button>
-      <a href="./gem.html" class="icon-btn" aria-label="Gems">
+
+      <a
+        href="./gem.html"
+        class="icon-btn"
+        aria-label="Gems">
         ◆
       </a>
-      <a href="./profile.html" class="profile-mini">
+
+      <a
+        href="./profile.html"
+        class="profile-mini">
         <img
           id="miniAvatar"
           src=""
           alt="Profile">
       </a>
+
     </div>
+
   </div>
 </header>
+
+
 <main class="container">
+
   <section class="page-heading">
+
     <div class="eyebrow">
       Myanmar Elite Connect
     </div>
-    <h1>My Profile</h1>
-    <p class="subtitle">
-      Manage your profile, KYC verification and your Car, Property and Gem listings.
+
+    <h1 id="pageTitle">
+      My Profile
+    </h1>
+
+    <p
+      id="pageSubtitle"
+      class="subtitle">
+      Manage your profile, listings and verification.
     </p>
+
   </section>
-  <!-- PROFILE HERO -->
+
+
+  <!-- ===================================================
+       PROFILE HERO
+  ==================================================== -->
+
   <section class="profile-hero">
+
     <div class="avatar-wrap">
+
       <div class="avatar">
-        <img id="avatar" src="" alt="Profile photo">
+        <img
+          id="avatar"
+          src=""
+          alt="Profile photo">
       </div>
-      <label class="avatar-upload" title="Change profile photo">
+
+      <label
+        id="avatarUploadLabel"
+        class="avatar-upload"
+        title="Change profile photo">
+
         +
+
         <input
           id="avatarInput"
           type="file"
           accept="image/*">
+
       </label>
+
     </div>
+
+
     <div class="profile-info">
+
       <div class="profile-name">
+
         <span id="profileName">
           Loading...
         </span>
+
         <span
           id="verifiedBadge"
           class="verified"
           style="display:none;">
           ✓ Verified
         </span>
+
       </div>
-      <div id="profileEmail" class="profile-email"></div>
-      <div id="profileLocation" class="profile-location"></div>
+
+      <div
+        id="profileEmail"
+        class="profile-email">
+      </div>
+
+      <div
+        id="profileLocation"
+        class="profile-location">
+      </div>
+
     </div>
+
+
     <div class="hero-actions">
+
       <button
         id="editProfileButton"
         class="primary-btn"
         type="button">
         Edit Profile
       </button>
+
       <a
+        id="postListingButton"
         href="./add-listing.html"
         class="secondary-btn"
         style="display:grid;place-items:center;">
         + Post Listing
       </a>
+
+      <button
+        id="reportButton"
+        class="danger-btn"
+        type="button">
+        Report Profile
+      </button>
+
     </div>
+
   </section>
-  <!-- STATS -->
+
+
+  <!-- ===================================================
+       SOCIAL
+  ==================================================== -->
+
+  <section
+    id="socialCard"
+    class="social-card">
+
+    <div class="social-actions">
+
+      <button
+        id="likeButton"
+        class="reaction-btn like"
+        type="button">
+        👍 Like
+        <span id="likeCount">0</span>
+      </button>
+
+      <button
+        id="dislikeButton"
+        class="reaction-btn dislike"
+        type="button">
+        👎 Dislike
+        <span id="dislikeCount">0</span>
+      </button>
+
+      <span
+        id="reactionSummary"
+        class="reaction-count">
+        Be the first to react.
+      </span>
+
+    </div>
+
+    <div class="social-note">
+      Your reaction is saved securely to your account.
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       STATS
+  ==================================================== -->
+
   <section class="stats">
+
     <div class="stat">
       <strong id="totalPosts">0</strong>
       <span>Total Posts</span>
     </div>
+
     <div class="stat">
       <strong id="approvedPosts">0</strong>
       <span>Approved</span>
     </div>
+
     <div class="stat">
-      <strong id="kycStatusShort">—</strong>
-      <span>KYC</span>
+      <strong id="likeStat">0</strong>
+      <span>Likes</span>
     </div>
+
+    <div class="stat">
+      <strong id="commentStat">0</strong>
+      <span>Comments</span>
+    </div>
+
   </section>
-  <!-- TABS -->
+
+
+  <!-- ===================================================
+       TABS
+  ==================================================== -->
+
   <div class="tabs">
+
     <button
       class="tab active"
       data-tab="posts"
       type="button">
-      My Posts
+      Posts
     </button>
+
     <button
+      class="tab"
+      data-tab="comments"
+      type="button">
+      Comments
+    </button>
+
+    <button
+      id="profileTab"
       class="tab"
       data-tab="profile"
       type="button">
       Profile
     </button>
+
     <button
+      id="kycTab"
       class="tab"
       data-tab="kyc"
       type="button">
       KYC Verification
     </button>
+
   </div>
-  <!-- POSTS -->
+
+
+  <!-- ===================================================
+       POSTS
+  ==================================================== -->
+
   <section
     id="postsPanel"
     class="panel active">
+
     <div class="panel-title">
-      My Listings
+      Listings
     </div>
+
     <p class="panel-description">
-      Your Car, Property and Gem posts are shown here.
+      Car, Property and Gem listings posted by this member.
     </p>
+
     <div class="post-filter">
+
       <button
         class="post-category active"
         data-category="all"
         type="button">
         All
       </button>
+
       <button
         class="post-category"
         data-category="car"
         type="button">
         Cars
       </button>
+
       <button
         class="post-category"
         data-category="property"
         type="button">
         Property
       </button>
+
       <button
         class="post-category"
         data-category="gem"
         type="button">
         Gems
       </button>
+
     </div>
-    <div id="postsGrid" class="posts-grid">
+
+    <div
+      id="postsGrid"
+      class="posts-grid">
+
       <div class="loading">
-        Loading your listings...
+        Loading listings...
       </div>
+
     </div>
+
   </section>
-  <!-- PROFILE EDIT -->
+
+
+  <!-- ===================================================
+       COMMENTS
+  ==================================================== -->
+
+  <section
+    id="commentsPanel"
+    class="panel">
+
+    <div class="panel-title">
+      Comments
+    </div>
+
+    <p class="panel-description">
+      Leave a comment on this profile.
+    </p>
+
+    <form
+      id="commentForm"
+      class="comment-form">
+
+      <textarea
+        id="commentInput"
+        maxlength="1000"
+        placeholder="Write a comment..."
+        required></textarea>
+
+      <button
+        id="commentSubmit"
+        class="comment-submit"
+        type="submit">
+        Comment
+      </button>
+
+    </form>
+
+    <div
+      id="commentsList"
+      class="comments-list">
+
+      <div class="loading">
+        Loading comments...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       PROFILE EDIT
+  ==================================================== -->
+
   <section
     id="profilePanel"
     class="panel">
+
     <div class="panel-title">
       Profile Information
     </div>
+
     <p class="panel-description">
-      Update the information shown on your Myanmar Elite Connect profile.
+      Update the information shown on your profile.
     </p>
+
     <form id="profileForm">
+
       <div class="form-grid">
+
         <div class="form-group">
+
           <label for="fullName">
             Full Name
           </label>
+
           <input
             id="fullName"
             type="text"
             maxlength="120"
             required>
+
         </div>
+
+
         <div class="form-group">
+
           <label for="phone">
             Phone Number
           </label>
+
           <input
             id="phone"
             type="tel"
             maxlength="30">
+
         </div>
+
+
         <div class="form-group">
+
           <label for="city">
             Region / State
           </label>
+
           <select id="city">
+
             <option value="">
               Select Region / State
             </option>
+
             <option>Ayeyarwady Region</option>
             <option>Bago Region</option>
             <option>Chin State</option>
@@ -1026,1286 +1721,3208 @@
             <option>Sagaing Region</option>
             <option>Shan State</option>
             <option>Tanintharyi Region</option>
+
           </select>
+
         </div>
+
+
         <div class="form-group full">
+
           <label for="bio">
             Bio
           </label>
+
           <textarea
             id="bio"
             maxlength="500"
             placeholder="Tell other members about yourself..."></textarea>
+
         </div>
+
       </div>
+
+
       <div class="form-actions">
+
         <button
           type="button"
           class="secondary-btn"
           id="cancelProfileButton">
           Cancel
         </button>
+
         <button
           type="submit"
           class="primary-btn"
           id="saveProfileButton">
           Save Changes
         </button>
+
       </div>
+
     </form>
+
   </section>
-  <!-- KYC -->
+
+
+  <!-- ===================================================
+       KYC
+  ==================================================== -->
+
   <section
     id="kycPanel"
     class="panel">
+
     <div class="panel-title">
       KYC Verification
     </div>
+
     <p class="panel-description">
-      Submit your identity documents for verification. Your documents are private and are not shown publicly.
+      Submit your identity documents for private admin review.
     </p>
+
+
     <div class="kyc-status">
+
       <div
         id="kycStatusDot"
         class="status-dot">
       </div>
+
       <div>
+
         <strong id="kycStatusTitle">
           Not submitted
         </strong>
+
         <span id="kycStatusText">
           Submit your documents to request verification.
         </span>
+
       </div>
+
     </div>
+
+
     <div
       id="kycRejection"
       class="rejection">
     </div>
+
+
     <form id="kycForm">
+
       <div class="form-grid">
+
         <div class="form-group">
+
           <label for="documentType">
             Document Type
           </label>
+
           <select id="documentType">
+
             <option value="national_id">
               National ID
             </option>
+
             <option value="passport">
               Passport
             </option>
+
             <option value="driving_license">
               Driving License
             </option>
+
           </select>
+
         </div>
-        <div></div>
+
       </div>
+
+
       <div class="kyc-grid">
+
         <div class="upload-box">
+
           <input
             id="kycFront"
             type="file"
             accept="image/jpeg,image/png,image/webp"
             required>
+
           <div class="upload-placeholder">
+
             <div class="upload-icon">
               ▣
             </div>
+
             <strong>
               Document Front
             </strong>
+
             <span>
               JPG, PNG or WebP
             </span>
+
           </div>
+
           <img
             id="kycFrontPreview"
             class="upload-preview"
             alt="Document front preview">
+
         </div>
+
+
         <div class="upload-box">
+
           <input
             id="kycBack"
             type="file"
             accept="image/jpeg,image/png,image/webp"
             required>
+
           <div class="upload-placeholder">
+
             <div class="upload-icon">
               ▣
             </div>
+
             <strong>
               Document Back
             </strong>
+
             <span>
               JPG, PNG or WebP
             </span>
+
           </div>
+
           <img
             id="kycBackPreview"
             class="upload-preview"
             alt="Document back preview">
+
         </div>
+
       </div>
+
+
       <div class="form-actions">
+
         <button
           id="submitKycButton"
           class="primary-btn"
           type="submit">
           Submit for Verification
         </button>
+
       </div>
+
     </form>
+
   </section>
+
 </main>
-<!-- MOBILE NAV -->
+
+
+<!-- =====================================================
+     MOBILE NAV
+===================================================== -->
+
 <nav class="mobile-nav">
+
   <div class="mobile-nav-inner">
+
     <a href="./general.html">
       <div class="mobile-icon">⌂</div>
       Home
     </a>
+
     <a href="./buy.html">
       <div class="mobile-icon">◈</div>
       Buy
     </a>
+
     <a href="./add-listing.html">
       <div class="mobile-icon">＋</div>
       Sell
     </a>
+
     <a href="./chat.html">
       <div class="mobile-icon">◌</div>
       Chat
     </a>
-    <a href="./profile.html" class="active">
+
+    <a
+      href="./profile.html"
+      class="active">
       <div class="mobile-icon">♙</div>
       Profile
     </a>
+
   </div>
+
 </nav>
-<div id="toast" class="toast"></div>
+
+
+<!-- =====================================================
+     REPORT MODAL
+===================================================== -->
+
+<div
+  id="reportModal"
+  class="modal">
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <div class="modal-title">
+        Report Profile
+      </div>
+
+      <button
+        id="closeReportButton"
+        class="modal-close"
+        type="button">
+        ×
+      </button>
+
+    </div>
+
+    <p class="modal-description">
+      Report this profile to Myanmar Elite Connect administrators.
+      Please select the reason carefully.
+    </p>
+
+
+    <form
+      id="reportForm"
+      class="report-form">
+
+      <label for="reportReason">
+        Reason
+      </label>
+
+      <select id="reportReason" required>
+
+        <option value="">
+          Select a reason
+        </option>
+
+        <option value="spam">
+          Spam
+        </option>
+
+        <option value="scam">
+          Scam / Fraud
+        </option>
+
+        <option value="fake_profile">
+          Fake Profile
+        </option>
+
+        <option value="harassment">
+          Harassment
+        </option>
+
+        <option value="inappropriate_content">
+          Inappropriate Content
+        </option>
+
+        <option value="impersonation">
+          Impersonation
+        </option>
+
+        <option value="other">
+          Other
+        </option>
+
+      </select>
+
+
+      <label
+        for="reportDetails"
+        style="margin-top:12px;">
+        Details
+      </label>
+
+      <textarea
+        id="reportDetails"
+        maxlength="2000"
+        placeholder="Explain what happened..."></textarea>
+
+
+      <button
+        id="reportSubmit"
+        class="report-submit"
+        type="submit">
+        Submit Report
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
 <script>
-  /* =====================================================
-     CONFIG
-  ===================================================== */
-  const LISTING_BUCKET = "listing-images";
-  const KYC_BUCKET = "kyc-documents";
-  let currentUser = null;
-  let profileData = null;
-  let allPosts = [];
-  let activePostCategory = "all";
-  /* =====================================================
-     HELPERS
-  ===================================================== */
-  function escapeHTML(value){
-    return String(value ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-  }
-  function normalize(value){
-    return String(value || "")
-      .trim()
-      .toLowerCase();
-  }
-  function toast(message,type="success"){
-    const element =
-      document.getElementById("toast");
-    element.textContent = message;
-    element.className =
-      `toast show ${type}`;
-    clearTimeout(
-      window.__toastTimer
+/* =====================================================
+   CONFIG
+===================================================== */
+
+const PROFILE_AVATAR_BUCKET = "profile-avatars";
+const KYC_BUCKET = "kyc-documents";
+
+let currentUser = null;
+let viewedProfileId = null;
+let profileData = null;
+let allPosts = [];
+let currentKyc = null;
+
+let activePostCategory = "all";
+
+let currentReaction = null;
+
+let reactionChannel = null;
+let commentChannel = null;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function normalize(value){
+  return String(value || "")
+    .trim()
+    .toLowerCase();
+}
+
+
+function toast(message,type="success"){
+
+  const element =
+    document.getElementById("toast");
+
+  element.textContent =
+    message;
+
+  element.className =
+    `toast show ${type}`;
+
+  clearTimeout(
+    window.__toastTimer
+  );
+
+  window.__toastTimer =
+    setTimeout(
+      () => {
+        element.className =
+          "toast";
+      },
+      3200
     );
-    window.__toastTimer =
-      setTimeout(
-        () => {
-          element.className = "toast";
-        },
-        3000
-      );
-  }
-  function formatPrice(item){
-    const price =
-      Number(item.price);
-    if(
-      !Number.isFinite(price) ||
-      price <= 0
-    ){
-      return "Price on request";
-    }
-    return `${escapeHTML(item.currency || "MMK")} ${price.toLocaleString()}`;
-  }
-  function formatLocation(item){
-    const values = [
-      item.city,
-      item.township,
-      item.address
-    ]
-    .map(value => String(value || "").trim())
-    .filter(Boolean);
-    const unique = [];
-    values.forEach(value => {
-      if(
-        !unique.some(
-          x => normalize(x) === normalize(value)
-        )
-      ){
-        unique.push(value);
-      }
-    });
-    return unique.length
-      ? unique.join(" · ")
-      : "Myanmar";
-  }
-  function getCover(item){
-    if(
-      Array.isArray(item.images) &&
-      item.images.length
-    ){
-      return item.images[0];
-    }
+}
+
+
+function formatDate(value){
+
+  if(!value){
     return "";
   }
-  function formatDate(value){
-    if(!value){
-      return "";
+
+  const date =
+    new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "";
+  }
+
+  return date.toLocaleDateString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
     }
-    const date = new Date(value);
-    if(Number.isNaN(date.getTime())){
-      return "";
+  );
+}
+
+
+function formatDateTime(value){
+
+  if(!value){
+    return "";
+  }
+
+  const date =
+    new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "";
+  }
+
+  return date.toLocaleString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
     }
-    return date.toLocaleDateString(
-      "en-GB",
-      {
-        day:"2-digit",
-        month:"short",
-        year:"numeric"
-      }
-    );
+  );
+}
+
+
+function formatPrice(item){
+
+  const price =
+    Number(item.price);
+
+  if(
+    !Number.isFinite(price) ||
+    price <= 0
+  ){
+    return "Price on request";
   }
-  /* =====================================================
-     THEME
-  ===================================================== */
-  function applyTheme(theme){
-    document.body.classList.toggle(
-      "dark",
-      theme === "dark"
-    );
-    document.getElementById(
-      "themeButton"
-    ).textContent =
-      theme === "dark"
-        ? "☀"
-        : "☾";
-    localStorage.setItem(
-      "mec_theme",
-      theme
-    );
+
+  return `${escapeHTML(
+    item.currency || "MMK"
+  )} ${price.toLocaleString()}`;
+}
+
+
+function formatLocation(item){
+
+  const values = [
+    item.city,
+    item.township,
+    item.address
+  ]
+    .map(value =>
+      String(value || "").trim()
+    )
+    .filter(Boolean);
+
+  const unique = [];
+
+  values.forEach(value => {
+
+    if(
+      !unique.some(
+        x =>
+          normalize(x) ===
+          normalize(value)
+      )
+    ){
+      unique.push(value);
+    }
+
+  });
+
+  return unique.length
+    ? unique.join(" · ")
+    : "Myanmar";
+}
+
+
+function getCover(item){
+
+  if(
+    Array.isArray(item.images) &&
+    item.images.length
+  ){
+    return item.images[0];
   }
-  function toggleTheme(){
-    const dark =
-      document.body.classList.contains("dark");
-    applyTheme(
-      dark ? "light" : "dark"
+
+  return "";
+}
+
+
+function getProfileIdFromURL(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
     );
-  }
+
+  return (
+    params.get("id") ||
+    params.get("user") ||
+    ""
+  ).trim();
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applyTheme(theme){
+
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
   document.getElementById(
     "themeButton"
-  ).addEventListener(
-    "click",
-    toggleTheme
+  ).textContent =
+    theme === "dark"
+      ? "☀"
+      : "☾";
+
+  localStorage.setItem(
+    "mec_theme",
+    theme
   );
-  /* =====================================================
-     AUTH
-  ===================================================== */
-  async function requireUser(){
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth.getUser();
-    if(error){
-      throw error;
-    }
-    if(!data?.user){
-      window.location.href =
-        "./auth.html";
-      return null;
-    }
-    return data.user;
+}
+
+
+document.getElementById(
+  "themeButton"
+).addEventListener(
+  "click",
+  () => {
+
+    const dark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+    applyTheme(
+      dark
+        ? "light"
+        : "dark"
+    );
+
   }
-  /* =====================================================
-     PROFILE
-  ===================================================== */
-  async function loadProfile(){
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,full_name,phone,avatar_url,city,bio,role,created_at"
-        )
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .maybeSingle();
-    if(error){
-      throw error;
-    }
-    profileData =
-      data || {
-        id:currentUser.id,
-        full_name:"",
-        phone:"",
-        avatar_url:"",
-        city:"",
-        bio:"",
-        role:"user"
-      };
-    renderProfile();
+);
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+async function requireUser(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getUser();
+
+  if(error){
+    throw error;
   }
-  function renderProfile(){
-    const name =
-      profileData.full_name ||
-      currentUser.user_metadata?.full_name ||
-      "Member";
+
+  if(!data?.user){
+
+    window.location.href =
+      "./auth.html";
+
+    return null;
+  }
+
+  return data.user;
+}
+
+
+/* =====================================================
+   PROFILE LOAD
+===================================================== */
+
+async function loadProfile(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,full_name,phone,avatar_url,city,bio,role,created_at"
+      )
+      .eq(
+        "id",
+        viewedProfileId
+      )
+      .maybeSingle();
+
+  if(error){
+    throw error;
+  }
+
+  if(!data){
+
+    throw new Error(
+      "This profile could not be found."
+    );
+  }
+
+  profileData =
+    data;
+
+  renderProfile();
+}
+
+
+function renderProfile(){
+
+  const isOwner =
+    currentUser &&
+    currentUser.id ===
+    viewedProfileId;
+
+  const name =
+    profileData.full_name ||
+    "Member";
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    name;
+
+  document.getElementById(
+    "profileLocation"
+  ).textContent =
+    profileData.city
+      ? `⌖ ${profileData.city}`
+      : "Location not set";
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent =
+    isOwner
+      ? currentUser.email || ""
+      : "Myanmar Elite Connect member";
+
+  document.getElementById(
+    "pageTitle"
+  ).textContent =
+    isOwner
+      ? "My Profile"
+      : name;
+
+  document.getElementById(
+    "pageSubtitle"
+  ).textContent =
+    isOwner
+      ? "Manage your profile, listings and verification."
+      : `View ${name}'s profile, listings and activity.`;
+
+  const avatar =
+    profileData.avatar_url ||
+    createAvatarPlaceholder(
+      name
+    );
+
+  document.getElementById(
+    "avatar"
+  ).src =
+    avatar;
+
+  if(
+    currentUser &&
+    currentUser.id ===
+    viewedProfileId
+  ){
+
     document.getElementById(
-      "profileName"
-    ).textContent = name;
-    document.getElementById(
-      "profileEmail"
-    ).textContent =
-      currentUser.email || "";
-    document.getElementById(
-      "profileLocation"
-    ).textContent =
-      profileData.city
-        ? `⌖ ${profileData.city}`
-        : "Location not set";
-    document.getElementById(
-      "fullName"
-    ).value =
-      profileData.full_name || "";
-    document.getElementById(
-      "phone"
-    ).value =
-      profileData.phone || "";
-    document.getElementById(
-      "city"
-    ).value =
-      profileData.city || "";
-    document.getElementById(
-      "bio"
-    ).value =
-      profileData.bio || "";
-    const avatar =
-      profileData.avatar_url ||
-      "";
-    if(avatar){
-      document.getElementById(
-        "avatar"
-      ).src = avatar;
+      "miniAvatar"
+    ).src =
+      avatar;
+
+  }
+
+  document.getElementById(
+    "fullName"
+  ).value =
+    profileData.full_name || "";
+
+  document.getElementById(
+    "phone"
+  ).value =
+    profileData.phone || "";
+
+  document.getElementById(
+    "city"
+  ).value =
+    profileData.city || "";
+
+  document.getElementById(
+    "bio"
+  ).value =
+    profileData.bio || "";
+
+  document.getElementById(
+    "editProfileButton"
+  ).style.display =
+    isOwner
+      ? ""
+      : "none";
+
+  document.getElementById(
+    "postListingButton"
+  ).style.display =
+    isOwner
+      ? "grid"
+      : "none";
+
+  document.getElementById(
+    "avatarUploadLabel"
+  ).style.display =
+    isOwner
+      ? "grid"
+      : "none";
+
+  document.getElementById(
+    "profileTab"
+  ).style.display =
+    isOwner
+      ? ""
+      : "none";
+
+  document.getElementById(
+    "kycTab"
+  ).style.display =
+    isOwner
+      ? ""
+      : "none";
+
+  document.getElementById(
+    "verifiedBadge"
+  ).style.display =
+    "none";
+}
+
+
+function createAvatarPlaceholder(name){
+
+  const letter =
+    String(name || "M")
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+  return (
+    "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="200"
+        height="200">
+
+        <rect
+          width="200"
+          height="200"
+          fill="#d8b45c"/>
+
+        <text
+          x="100"
+          y="122"
+          text-anchor="middle"
+          font-family="Arial"
+          font-size="90"
+          font-weight="700"
+          fill="#071a34">
+          ${letter}
+        </text>
+
+      </svg>
+    `)
+  );
+}
+
+
+/* =====================================================
+   PROFILE PHOTO
+===================================================== */
+
+document.getElementById(
+  "avatarInput"
+).addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      this.files?.[0];
+
+    if(!file){
+      return;
+    }
+
+    if(
+      !file.type.startsWith("image/")
+    ){
+
+      toast(
+        "Please select an image file.",
+        "error"
+      );
+
+      this.value = "";
+
+      return;
+    }
+
+    if(
+      file.size >
+      5 * 1024 * 1024
+    ){
+
+      toast(
+        "Profile photo must be 5MB or smaller.",
+        "error"
+      );
+
+      this.value = "";
+
+      return;
+    }
+
+    try{
+
+      toast(
+        "Uploading profile photo..."
+      );
+
+      const extension =
+        file.name
+          .split(".")
+          .pop()
+          .toLowerCase();
+
+      const path =
+        `${currentUser.id}/avatar-${Date.now()}.${extension}`;
+
+      const {
+        error:uploadError
+      } =
+        await supabaseClient.storage
+          .from(
+            PROFILE_AVATAR_BUCKET
+          )
+          .upload(
+            path,
+            file,
+            {
+              upsert:false,
+              contentType:file.type
+            }
+          );
+
+      if(uploadError){
+        throw uploadError;
+      }
+
+      const {
+        data:urlData
+      } =
+        supabaseClient.storage
+          .from(
+            PROFILE_AVATAR_BUCKET
+          )
+          .getPublicUrl(
+            path
+          );
+
+      const avatarUrl =
+        urlData.publicUrl;
+
+      const {
+        error:updateError
+      } =
+        await supabaseClient
+          .from("profiles")
+          .update({
+            avatar_url:
+              avatarUrl
+          })
+          .eq(
+            "id",
+            currentUser.id
+          );
+
+      if(updateError){
+        throw updateError;
+      }
+
+      profileData.avatar_url =
+        avatarUrl;
+
+      renderProfile();
+
       document.getElementById(
         "miniAvatar"
-      ).src = avatar;
-    }
-  }
-  /* =====================================================
-     PROFILE PHOTO
-  ===================================================== */
-  document.getElementById(
-    "avatarInput"
-  ).addEventListener(
-    "change",
-    async function(){
-      const file =
-        this.files?.[0];
-      if(!file){
-        return;
-      }
-      if(
-        !file.type.startsWith("image/")
-      ){
-        toast(
-          "Please select an image file.",
-          "error"
-        );
-        return;
-      }
-      if(file.size > 5 * 1024 * 1024){
-        toast(
-          "Profile photo must be 5MB or smaller.",
-          "error"
-        );
-        return;
-      }
-      try{
-        toast(
-          "Uploading profile photo..."
-        );
-        const extension =
-          file.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-        const path =
-          `profiles/${currentUser.id}/avatar-${Date.now()}.${extension}`;
-        const {
-          error:uploadError
-        } =
-          await supabaseClient.storage
-            .from(LISTING_BUCKET)
-            .upload(
-              path,
-              file,
-              {
-                upsert:true,
-                contentType:file.type
-              }
-            );
-        if(uploadError){
-          throw uploadError;
-        }
-        const {
-          data:urlData
-        } =
-          supabaseClient.storage
-            .from(LISTING_BUCKET)
-            .getPublicUrl(path);
-        const avatarUrl =
-          urlData.publicUrl;
-        const {
-          error:updateError
-        } =
-          await supabaseClient
-            .from("profiles")
-            .update({
-              avatar_url:avatarUrl
-            })
-            .eq(
-              "id",
-              currentUser.id
-            );
-        if(updateError){
-          throw updateError;
-        }
-        profileData.avatar_url =
-          avatarUrl;
-        renderProfile();
-        toast(
-          "Profile photo updated."
-        );
-      }
-      catch(error){
-        console.error(error);
-        toast(
-          error.message ||
-          "Could not upload profile photo.",
-          "error"
-        );
-      }
-      this.value = "";
-    }
-  );
-  /* =====================================================
-     PROFILE UPDATE
-  ===================================================== */
-  document.getElementById(
-    "profileForm"
-  ).addEventListener(
-    "submit",
-    async function(event){
-      event.preventDefault();
-      const button =
-        document.getElementById(
-          "saveProfileButton"
-        );
-      const payload = {
-        full_name:
-          document.getElementById(
-            "fullName"
-          ).value.trim(),
-        phone:
-          document.getElementById(
-            "phone"
-          ).value.trim(),
-        city:
-          document.getElementById(
-            "city"
-          ).value,
-        bio:
-          document.getElementById(
-            "bio"
-          ).value.trim()
-      };
-      if(!payload.full_name){
-        toast(
-          "Please enter your name.",
-          "error"
-        );
-        return;
-      }
-      button.disabled = true;
-      button.textContent = "Saving...";
-      try{
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("profiles")
-            .upsert(
-              {
-                id:currentUser.id,
-                ...payload
-              },
-              {
-                onConflict:"id"
-              }
-            );
-        if(error){
-          throw error;
-        }
-        profileData = {
-          ...profileData,
-          ...payload
-        };
-        renderProfile();
-        toast(
-          "Profile saved successfully."
-        );
-      }
-      catch(error){
-        console.error(error);
-        toast(
-          error.message ||
-          "Could not save profile.",
-          "error"
-        );
-      }
-      finally{
-        button.disabled = false;
-        button.textContent = "Save Changes";
-      }
-    }
-  );
-  document.getElementById(
-    "cancelProfileButton"
-  ).addEventListener(
-    "click",
-    renderProfile
-  );
-  /* =====================================================
-     POSTS
-  ===================================================== */
-  async function loadPosts(){
-    const grid =
-      document.getElementById(
-        "postsGrid"
+      ).src =
+        avatarUrl;
+
+      toast(
+        "Profile photo updated successfully."
       );
-    grid.innerHTML =
-      `<div class="loading">Loading your listings...</div>`;
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("listings")
-        .select(
-          [
-            "id",
-            "user_id",
-            "category",
-            "listing_type",
-            "title",
-            "description",
-            "price",
-            "currency",
-            "city",
-            "township",
-            "address",
-            "status",
-            "featured",
-            "created_at",
-            "updated_at",
-            "location",
-            "phone",
-            "images",
-            "seller_id",
-            "post_role"
-          ].join(",")
-        )
-        .eq(
-          "user_id",
-          currentUser.id
-        )
-        .in(
-          "category",
-          [
-            "car",
-            "property",
-            "gem"
-          ]
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-    if(error){
+
+    }
+    catch(error){
+
       console.error(error);
-      grid.innerHTML = `
-        <div class="empty" style="grid-column:1/-1;">
-          <div class="empty-icon">!</div>
-          <strong>Could not load your posts</strong>
-          <span>${escapeHTML(error.message)}</span>
-        </div>
-      `;
+
+      toast(
+        error.message ||
+        "Could not upload profile photo.",
+        "error"
+      );
+
+    }
+
+    this.value = "";
+
+  }
+);
+
+
+/* =====================================================
+   PROFILE EDIT
+===================================================== */
+
+document.getElementById(
+  "editProfileButton"
+).addEventListener(
+  "click",
+  () => {
+
+    activateTab(
+      "profile"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "profileForm"
+).addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    if(
+      currentUser.id !==
+      viewedProfileId
+    ){
       return;
     }
-    allPosts =
-      Array.isArray(data)
-        ? data
-        : [];
-    updateStats();
-    renderPosts();
-  }
-  function updateStats(){
-    document.getElementById(
-      "totalPosts"
-    ).textContent =
-      allPosts.length;
-    document.getElementById(
-      "approvedPosts"
-    ).textContent =
-      allPosts.filter(
-        item =>
-          normalize(item.status) ===
-          "approved"
-      ).length;
-  }
-  function renderPosts(){
-    const grid =
+
+    const button =
       document.getElementById(
-        "postsGrid"
+        "saveProfileButton"
       );
-    const posts =
-      allPosts.filter(
-        item => {
-          if(
-            activePostCategory === "all"
-          ){
-            return true;
-          }
-          return normalize(
-            item.category
-          ) === activePostCategory;
-        }
+
+    const payload = {
+
+      full_name:
+        document.getElementById(
+          "fullName"
+        ).value.trim(),
+
+      phone:
+        document.getElementById(
+          "phone"
+        ).value.trim(),
+
+      city:
+        document.getElementById(
+          "city"
+        ).value,
+
+      bio:
+        document.getElementById(
+          "bio"
+        ).value.trim()
+
+    };
+
+    if(!payload.full_name){
+
+      toast(
+        "Please enter your name.",
+        "error"
       );
-    if(!posts.length){
-      grid.innerHTML = `
-        <div class="empty" style="grid-column:1/-1;">
-          <div class="empty-icon">◇</div>
-          <strong>No listings yet</strong>
-          <span>
-            Your Car, Property and Gem posts will appear here.
-          </span>
-        </div>
-      `;
+
       return;
     }
-    grid.innerHTML =
-      posts
-        .map(postCard)
-        .join("");
-  }
-  function postCard(item){
-    const cover =
-      getCover(item);
-    const category =
-      normalize(item.category)
-        .toUpperCase();
-    const image =
-      cover
-        ? `
-          <img
-            class="post-image"
-            src="${escapeHTML(cover)}"
-            alt="${escapeHTML(item.title || "Listing")}"
-            loading="lazy"
-            onerror="this.style.display='none';">
-        `
-        : `
-          <div class="post-image"></div>
-        `;
-    return `
-      <article class="post-card">
-        ${image}
-        <div class="post-content">
-          <div class="post-category">
-            ${escapeHTML(category)}
-          </div>
-          <div class="post-title">
-            ${escapeHTML(
-              item.title || "Untitled Listing"
-            )}
-          </div>
-          <div class="post-price">
-            ${formatPrice(item)}
-          </div>
-          <div class="post-location">
-            ⌖ ${escapeHTML(
-              formatLocation(item)
-            )}
-          </div>
-          <div
-            style="
-              margin-top:6px;
-              color:var(--muted);
-              font-size:8px;
-            ">
-            ${escapeHTML(
-              String(item.status || "pending").toUpperCase()
-            )}
-            ·
-            ${escapeHTML(
-              formatDate(item.created_at)
-            )}
-          </div>
-          <div class="post-actions">
-            <a
-              href="./listing-detail.html?id=${encodeURIComponent(item.id)}">
-              View
-            </a>
-            <a
-              href="./add-listing.html?id=${encodeURIComponent(item.id)}">
-              Edit
-            </a>
-            <button
-              class="delete"
-              type="button"
-              onclick="deleteListing('${escapeHTML(item.id)}')">
-              Delete
-            </button>
-          </div>
-        </div>
-      </article>
-    `;
-  }
-  async function deleteListing(id){
-    const post =
-      allPosts.find(
-        item => item.id === id
-      );
-    if(!post){
-      return;
-    }
-    const confirmed =
-      confirm(
-        `Delete "${post.title || "this listing"}"?`
-      );
-    if(!confirmed){
-      return;
-    }
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Saving...";
+
     try{
+
       const {
         error
       } =
         await supabaseClient
-          .from("listings")
-          .delete()
-          .eq(
-            "id",
-            id
-          )
-          .eq(
-            "user_id",
-            currentUser.id
+          .from("profiles")
+          .upsert(
+            {
+              id:
+                currentUser.id,
+              ...payload
+            },
+            {
+              onConflict:
+                "id"
+            }
           );
+
       if(error){
         throw error;
       }
+
+      profileData = {
+        ...profileData,
+        ...payload
+      };
+
+      renderProfile();
+
       toast(
-        "Listing deleted."
+        "Profile saved successfully."
       );
-      await loadPosts();
+
     }
     catch(error){
+
       console.error(error);
+
       toast(
         error.message ||
-        "Could not delete listing.",
+        "Could not save profile.",
         "error"
       );
+
     }
+    finally{
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Save Changes";
+
+    }
+
   }
-  window.deleteListing =
-    deleteListing;
-  document.querySelectorAll(
-    ".post-category"
-  )
-  .forEach(button => {
+);
+
+
+document.getElementById(
+  "cancelProfileButton"
+).addEventListener(
+  "click",
+  renderProfile
+);
+
+
+/* =====================================================
+   POSTS
+===================================================== */
+
+async function loadPosts(){
+
+  const grid =
+    document.getElementById(
+      "postsGrid"
+    );
+
+  grid.innerHTML =
+    `<div class="loading">
+      Loading listings...
+    </div>`;
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("listings")
+      .select(
+        [
+          "id",
+          "user_id",
+          "category",
+          "listing_type",
+          "title",
+          "description",
+          "price",
+          "currency",
+          "city",
+          "township",
+          "address",
+          "status",
+          "featured",
+          "created_at",
+          "updated_at",
+          "location",
+          "phone",
+          "images",
+          "seller_id",
+          "post_role"
+        ].join(",")
+      )
+      .eq(
+        "user_id",
+        viewedProfileId
+      )
+      .in(
+        "category",
+        [
+          "car",
+          "property",
+          "gem"
+        ]
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    console.error(error);
+
+    grid.innerHTML = `
+      <div
+        class="empty"
+        style="grid-column:1/-1;">
+
+        <div class="empty-icon">
+          !
+        </div>
+
+        <strong>
+          Could not load listings
+        </strong>
+
+        <span>
+          ${escapeHTML(error.message)}
+        </span>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  allPosts =
+    Array.isArray(data)
+      ? data
+      : [];
+
+  updateStats();
+
+  renderPosts();
+}
+
+
+function updateStats(){
+
+  document.getElementById(
+    "totalPosts"
+  ).textContent =
+    allPosts.length;
+
+  document.getElementById(
+    "approvedPosts"
+  ).textContent =
+    allPosts.filter(
+      item =>
+        normalize(
+          item.status
+        ) ===
+        "approved"
+    ).length;
+}
+
+
+function renderPosts(){
+
+  const grid =
+    document.getElementById(
+      "postsGrid"
+    );
+
+  const posts =
+    allPosts.filter(
+      item => {
+
+        if(
+          activePostCategory ===
+          "all"
+        ){
+          return true;
+        }
+
+        return normalize(
+          item.category
+        ) ===
+        activePostCategory;
+
+      }
+    );
+
+  if(!posts.length){
+
+    grid.innerHTML = `
+      <div
+        class="empty"
+        style="grid-column:1/-1;">
+
+        <div class="empty-icon">
+          ◇
+        </div>
+
+        <strong>
+          No listings yet
+        </strong>
+
+        <span>
+          Listings from this profile will appear here.
+        </span>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML =
+    posts
+      .map(
+        postCard
+      )
+      .join("");
+}
+
+
+function postCard(item){
+
+  const cover =
+    getCover(item);
+
+  const category =
+    normalize(
+      item.category
+    ).toUpperCase();
+
+  const status =
+    normalize(
+      item.status ||
+      "pending"
+    );
+
+  const image =
+    cover
+      ? `
+        <img
+          class="post-image"
+          src="${escapeHTML(cover)}"
+          alt="${escapeHTML(
+            item.title ||
+            "Listing"
+          )}"
+          loading="lazy"
+          onerror="this.style.display='none';">
+      `
+      : `
+        <div class="post-image"></div>
+      `;
+
+  const isOwner =
+    currentUser &&
+    currentUser.id ===
+    viewedProfileId;
+
+  return `
+    <article class="post-card">
+
+      ${image}
+
+      <div class="post-content">
+
+        <div class="post-category">
+          ${escapeHTML(category)}
+        </div>
+
+        <div class="post-title">
+          ${escapeHTML(
+            item.title ||
+            "Untitled Listing"
+          )}
+        </div>
+
+        <div class="post-price">
+          ${formatPrice(item)}
+        </div>
+
+        <div class="post-location">
+          ⌖ ${escapeHTML(
+            formatLocation(item)
+          )}
+        </div>
+
+        <span
+          class="post-status ${escapeHTML(status)}">
+          ${escapeHTML(
+            status
+          )}
+        </span>
+
+        <div
+          style="
+            margin-top:6px;
+            color:var(--muted);
+            font-size:8px;
+          ">
+
+          ${escapeHTML(
+            formatDate(
+              item.created_at
+            )
+          )}
+
+        </div>
+
+        <div class="post-actions">
+
+          <a
+            href="./listing-detail.html?id=${encodeURIComponent(
+              item.id
+            )}">
+            View
+          </a>
+
+          ${
+            isOwner
+              ? `
+                <a
+                  href="./add-listing.html?id=${encodeURIComponent(
+                    item.id
+                  )}">
+                  Edit
+                </a>
+
+                <button
+                  class="delete"
+                  type="button"
+                  onclick="deleteListing('${escapeHTML(
+                    item.id
+                  )}')">
+                  Delete
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+
+      </div>
+
+    </article>
+  `;
+}
+
+
+async function deleteListing(id){
+
+  if(
+    !currentUser ||
+    currentUser.id !==
+    viewedProfileId
+  ){
+    return;
+  }
+
+  const post =
+    allPosts.find(
+      item =>
+        item.id === id
+    );
+
+  if(!post){
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      `Delete "${
+        post.title ||
+        "this listing"
+      }"?`
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("listings")
+        .delete()
+        .eq(
+          "id",
+          id
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
+    if(error){
+      throw error;
+    }
+
+    toast(
+      "Listing deleted."
+    );
+
+    await loadPosts();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Could not delete listing.",
+      "error"
+    );
+
+  }
+}
+
+
+window.deleteListing =
+  deleteListing;
+
+
+document.querySelectorAll(
+  ".post-category"
+)
+.forEach(
+  button => {
+
     button.addEventListener(
       "click",
       function(){
+
         document.querySelectorAll(
           ".post-category"
         )
         .forEach(
           x =>
-            x.classList.remove("active")
+            x.classList.remove(
+              "active"
+            )
         );
-        this.classList.add("active");
+
+        this.classList.add(
+          "active"
+        );
+
         activePostCategory =
           this.dataset.category;
+
         renderPosts();
+
       }
     );
-  });
-  /* =====================================================
-     KYC
-  ===================================================== */
-  let currentKyc = null;
-  async function loadKyc(){
+
+  }
+);
+
+
+/* =====================================================
+   REACTIONS
+===================================================== */
+
+async function loadReactions(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profile_reactions")
+      .select(
+        "id,user_id,reaction"
+      )
+      .eq(
+        "profile_id",
+        viewedProfileId
+      );
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  const reactions =
+    Array.isArray(data)
+      ? data
+      : [];
+
+  const likes =
+    reactions.filter(
+      x =>
+        x.reaction ===
+        "like"
+    ).length;
+
+  const dislikes =
+    reactions.filter(
+      x =>
+        x.reaction ===
+        "dislike"
+    ).length;
+
+  document.getElementById(
+    "likeCount"
+  ).textContent =
+    likes;
+
+  document.getElementById(
+    "dislikeCount"
+  ).textContent =
+    dislikes;
+
+  document.getElementById(
+    "likeStat"
+  ).textContent =
+    likes;
+
+  currentReaction =
+    reactions.find(
+      x =>
+        currentUser &&
+        x.user_id ===
+        currentUser.id
+    )?.reaction ||
+    null;
+
+  updateReactionUI(
+    likes,
+    dislikes
+  );
+}
+
+
+function updateReactionUI(
+  likes,
+  dislikes
+){
+
+  const likeButton =
+    document.getElementById(
+      "likeButton"
+    );
+
+  const dislikeButton =
+    document.getElementById(
+      "dislikeButton"
+    );
+
+  likeButton.classList.toggle(
+    "active",
+    currentReaction ===
+    "like"
+  );
+
+  dislikeButton.classList.toggle(
+    "active",
+    currentReaction ===
+    "dislike"
+  );
+
+  document.getElementById(
+    "reactionSummary"
+  ).textContent =
+    `${likes} like${
+      likes === 1 ? "" : "s"
+    } · ${dislikes} dislike${
+      dislikes === 1 ? "" : "s"
+    }`;
+
+}
+
+
+async function setReaction(
+  reaction
+){
+
+  if(!currentUser){
+
+    toast(
+      "Please log in first.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(
+    currentUser.id ===
+    viewedProfileId
+  ){
+
+    toast(
+      "You cannot react to your own profile.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    if(
+      currentReaction ===
+      reaction
+    ){
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from(
+            "profile_reactions"
+          )
+          .delete()
+          .eq(
+            "profile_id",
+            viewedProfileId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          );
+
+      if(error){
+        throw error;
+      }
+
+      currentReaction =
+        null;
+
+    }
+    else{
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from(
+            "profile_reactions"
+          )
+          .upsert(
+            {
+              profile_id:
+                viewedProfileId,
+              user_id:
+                currentUser.id,
+              reaction
+            },
+            {
+              onConflict:
+                "profile_id,user_id"
+            }
+          );
+
+      if(error){
+        throw error;
+      }
+
+      currentReaction =
+        reaction;
+
+    }
+
+    await loadReactions();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Could not save reaction.",
+      "error"
+    );
+
+  }
+}
+
+
+document.getElementById(
+  "likeButton"
+).addEventListener(
+  "click",
+  () =>
+    setReaction("like")
+);
+
+
+document.getElementById(
+  "dislikeButton"
+).addEventListener(
+  "click",
+  () =>
+    setReaction("dislike")
+);
+
+
+/* =====================================================
+   COMMENTS
+===================================================== */
+
+async function loadComments(){
+
+  const list =
+    document.getElementById(
+      "commentsList"
+    );
+
+  list.innerHTML =
+    `<div class="loading">
+      Loading comments...
+    </div>`;
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profile_comments")
+      .select(
+        "id,profile_id,user_id,comment,created_at,updated_at"
+      )
+      .eq(
+        "profile_id",
+        viewedProfileId
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    console.error(error);
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
+          !
+        </div>
+
+        <strong>
+          Could not load comments
+        </strong>
+
+        <span>
+          ${escapeHTML(
+            error.message
+          )}
+        </span>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  const comments =
+    Array.isArray(data)
+      ? data
+      : [];
+
+  document.getElementById(
+    "commentStat"
+  ).textContent =
+    comments.length;
+
+  if(!comments.length){
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
+          💬
+        </div>
+
+        <strong>
+          No comments yet
+        </strong>
+
+        <span>
+          Be the first to leave a comment.
+        </span>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  const userIds = [
+    ...new Set(
+      comments.map(
+        item =>
+          item.user_id
+      )
+    )
+  ];
+
+  let profiles = [];
+
+  if(userIds.length){
+
     const {
-      data,
+      data:profileRows
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,avatar_url,role"
+        )
+        .in(
+          "id",
+          userIds
+        );
+
+    profiles =
+      Array.isArray(
+        profileRows
+      )
+        ? profileRows
+        : [];
+
+  }
+
+  const profileMap =
+    new Map(
+      profiles.map(
+        item => [
+          item.id,
+          item
+        ]
+      )
+    );
+
+  list.innerHTML =
+    comments
+      .map(
+        comment => {
+
+          const author =
+            profileMap.get(
+              comment.user_id
+            ) || {};
+
+          const authorName =
+            author.full_name ||
+            "Member";
+
+          const avatar =
+            author.avatar_url ||
+            createAvatarPlaceholder(
+              authorName
+            );
+
+          const ownComment =
+            currentUser &&
+            currentUser.id ===
+            comment.user_id;
+
+          return `
+            <article
+              class="comment">
+
+              <div class="comment-avatar">
+
+                <img
+                  src="${escapeHTML(
+                    avatar
+                  )}"
+                  alt="${escapeHTML(
+                    authorName
+                  )}">
+
+              </div>
+
+
+              <div class="comment-main">
+
+                <div class="comment-head">
+
+                  <span class="comment-author">
+                    ${escapeHTML(
+                      authorName
+                    )}
+                  </span>
+
+                  ${
+                    author.role ===
+                    "admin"
+                      ? `
+                        <span
+                          class="verified">
+                          Admin
+                        </span>
+                      `
+                      : ""
+                  }
+
+                  <span class="comment-date">
+                    ${escapeHTML(
+                      formatDateTime(
+                        comment.created_at
+                      )
+                    )}
+                  </span>
+
+                  ${
+                    ownComment
+                      ? `
+                        <button
+                          class="comment-delete"
+                          type="button"
+                          onclick="deleteComment('${escapeHTML(
+                            comment.id
+                          )}')">
+                          Delete
+                        </button>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+                <div class="comment-text">
+                  ${escapeHTML(
+                    comment.comment
+                  )}
+                </div>
+
+              </div>
+
+            </article>
+          `;
+
+        }
+      )
+      .join("");
+}
+
+
+document.getElementById(
+  "commentForm"
+).addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    if(!currentUser){
+
+      toast(
+        "Please log in first.",
+        "error"
+      );
+
+      return;
+    }
+
+    if(
+      currentUser.id ===
+      viewedProfileId
+    ){
+
+      toast(
+        "You cannot comment on your own profile.",
+        "error"
+      );
+
+      return;
+    }
+
+    const input =
+      document.getElementById(
+        "commentInput"
+      );
+
+    const button =
+      document.getElementById(
+        "commentSubmit"
+      );
+
+    const comment =
+      input.value.trim();
+
+    if(!comment){
+      return;
+    }
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Posting...";
+
+    try{
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from(
+            "profile_comments"
+          )
+          .insert({
+            profile_id:
+              viewedProfileId,
+            user_id:
+              currentUser.id,
+            comment
+          });
+
+      if(error){
+        throw error;
+      }
+
+      input.value = "";
+
+      toast(
+        "Comment posted."
+      );
+
+      await loadComments();
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      toast(
+        error.message ||
+        "Could not post comment.",
+        "error"
+      );
+
+    }
+    finally{
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Comment";
+
+    }
+
+  }
+);
+
+
+async function deleteComment(
+  id
+){
+
+  if(!currentUser){
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      "Delete this comment?"
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  try{
+
+    const {
       error
     } =
       await supabaseClient
-        .from("kyc_submissions")
-        .select(
-          [
-            "id",
-            "user_id",
-            "full_name",
-            "document_type",
-            "front_image_url",
-            "back_image_url",
-            "status",
-            "rejection_reason",
-            "reviewed_at",
-            "created_at",
-            "updated_at"
-          ].join(",")
+        .from(
+          "profile_comments"
+        )
+        .delete()
+        .eq(
+          "id",
+          id
         )
         .eq(
           "user_id",
           currentUser.id
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        )
-        .limit(1)
-        .maybeSingle();
-    if(error){
-      console.error(error);
-      toast(
-        "Could not load KYC status.",
-        "error"
-      );
-      return;
-    }
-    currentKyc =
-      data || null;
-    renderKyc();
-  }
-  function renderKyc(){
-    const dot =
-      document.getElementById(
-        "kycStatusDot"
-      );
-    const title =
-      document.getElementById(
-        "kycStatusTitle"
-      );
-    const text =
-      document.getElementById(
-        "kycStatusText"
-      );
-    const short =
-      document.getElementById(
-        "kycStatusShort"
-      );
-    const rejection =
-      document.getElementById(
-        "kycRejection"
-      );
-    const submit =
-      document.getElementById(
-        "submitKycButton"
-      );
-    dot.className = "status-dot";
-    rejection.style.display =
-      "none";
-    if(!currentKyc){
-      title.textContent =
-        "Not submitted";
-      text.textContent =
-        "Submit your documents to request verification.";
-      short.textContent =
-        "Not submitted";
-      submit.disabled = false;
-      return;
-    }
-    const status =
-      normalize(currentKyc.status);
-    if(status === "pending"){
-      dot.classList.add("pending");
-      title.textContent =
-        "Pending review";
-      text.textContent =
-        "Your documents have been submitted and are waiting for admin review.";
-      short.textContent =
-        "Pending";
-      submit.disabled = true;
-    }
-    else if(status === "approved"){
-      dot.classList.add("approved");
-      title.textContent =
-        "KYC Approved";
-      text.textContent =
-        "Your identity has been verified.";
-      short.textContent =
-        "Verified";
-      submit.disabled = true;
-      document.getElementById(
-        "verifiedBadge"
-      ).style.display =
-        "inline-flex";
-    }
-    else if(status === "rejected"){
-      dot.classList.add("rejected");
-      title.textContent =
-        "KYC Rejected";
-      text.textContent =
-        "Please review the reason and submit your documents again.";
-      short.textContent =
-        "Rejected";
-      submit.disabled = false;
-      if(currentKyc.rejection_reason){
-        rejection.style.display =
-          "block";
-        rejection.textContent =
-          `Reason: ${currentKyc.rejection_reason}`;
-      }
-    }
-    if(
-      status !== "approved"
-    ){
-      document.getElementById(
-        "verifiedBadge"
-      ).style.display =
-        "none";
-    }
-  }
-  function previewFile(
-    inputId,
-    previewId
-  ){
-    document.getElementById(
-      inputId
-    ).addEventListener(
-      "change",
-      function(){
-        const file =
-          this.files?.[0];
-        const preview =
-          document.getElementById(
-            previewId
-          );
-        if(!file){
-          return;
-        }
-        if(
-          !file.type.startsWith("image/")
-        ){
-          toast(
-            "Please select an image.",
-            "error"
-          );
-          this.value = "";
-          return;
-        }
-        const reader =
-          new FileReader();
-        reader.onload =
-          event => {
-            preview.src =
-              event.target.result;
-            preview.style.display =
-              "block";
-            preview
-              .previousElementSibling
-              .style.display =
-              "none";
-          };
-        reader.readAsDataURL(file);
-      }
-    );
-  }
-  previewFile(
-    "kycFront",
-    "kycFrontPreview"
-  );
-  previewFile(
-    "kycBack",
-    "kycBackPreview"
-  );
-  async function uploadKycImage(
-    file,
-    side
-  ){
-    if(!file){
-      throw new Error(
-        `Please select the document ${side} image.`
-      );
-    }
-    if(
-      ![
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-      ].includes(file.type)
-    ){
-      throw new Error(
-        "KYC images must be JPG, PNG or WebP."
-      );
-    }
-    if(
-      file.size > 8 * 1024 * 1024
-    ){
-      throw new Error(
-        "Each KYC image must be 8MB or smaller."
-      );
-    }
-    const extension =
-      file.name
-        .split(".")
-        .pop()
-        .toLowerCase();
-    const path =
-      `${currentUser.id}/${Date.now()}-${side}.${extension}`;
-    const {
-      error
-    } =
-      await supabaseClient.storage
-        .from(KYC_BUCKET)
-        .upload(
-          path,
-          file,
-          {
-            upsert:false,
-            contentType:file.type
-          }
         );
+
     if(error){
       throw error;
     }
-    /*
-     * The KYC bucket is PRIVATE.
-     * Store the object path, not a public URL.
-     */
-    return path;
+
+    toast(
+      "Comment deleted."
+    );
+
+    await loadComments();
+
   }
+  catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Could not delete comment.",
+      "error"
+    );
+
+  }
+}
+
+
+window.deleteComment =
+  deleteComment;
+
+
+/* =====================================================
+   REPORT PROFILE
+===================================================== */
+
+const reportModal =
   document.getElementById(
-    "kycForm"
+    "reportModal"
+  );
+
+
+document.getElementById(
+  "reportButton"
+).addEventListener(
+  "click",
+  () => {
+
+    if(
+      !currentUser
+    ){
+
+      toast(
+        "Please log in first.",
+        "error"
+      );
+
+      return;
+    }
+
+    if(
+      currentUser.id ===
+      viewedProfileId
+    ){
+
+      toast(
+        "You cannot report your own profile.",
+        "error"
+      );
+
+      return;
+    }
+
+    reportModal.classList.add(
+      "open"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "closeReportButton"
+).addEventListener(
+  "click",
+  closeReportModal
+);
+
+
+reportModal.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target ===
+      reportModal
+    ){
+      closeReportModal();
+    }
+
+  }
+);
+
+
+function closeReportModal(){
+
+  reportModal.classList.remove(
+    "open"
+  );
+
+}
+
+
+document.getElementById(
+  "reportForm"
+).addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    if(!currentUser){
+      return;
+    }
+
+    const reason =
+      document.getElementById(
+        "reportReason"
+      ).value;
+
+    const details =
+      document.getElementById(
+        "reportDetails"
+      ).value.trim();
+
+    const button =
+      document.getElementById(
+        "reportSubmit"
+      );
+
+    if(!reason){
+
+      toast(
+        "Please select a reason.",
+        "error"
+      );
+
+      return;
+    }
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Submitting...";
+
+    try{
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("reports")
+          .insert({
+
+            user_id:
+              currentUser.id,
+
+            profile_id:
+              viewedProfileId,
+
+            listing_id:
+              null,
+
+            reason,
+
+            details:
+              details || null,
+
+            status:
+              "pending"
+
+          });
+
+      if(error){
+        throw error;
+      }
+
+      this.reset();
+
+      closeReportModal();
+
+      toast(
+        "Report submitted to the admin."
+      );
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      toast(
+        error.message ||
+        "Could not submit report.",
+        "error"
+      );
+
+    }
+    finally{
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Submit Report";
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   KYC
+===================================================== */
+
+async function loadKyc(){
+
+  if(
+    currentUser.id !==
+    viewedProfileId
+  ){
+    return;
+  }
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("kyc_submissions")
+      .select(
+        [
+          "id",
+          "user_id",
+          "full_name",
+          "document_type",
+          "front_image_url",
+          "back_image_url",
+          "status",
+          "rejection_reason",
+          "reviewed_at",
+          "created_at",
+          "updated_at"
+        ].join(",")
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(1)
+      .maybeSingle();
+
+  if(error){
+
+    console.error(error);
+
+    toast(
+      "Could not load KYC status.",
+      "error"
+    );
+
+    return;
+  }
+
+  currentKyc =
+    data || null;
+
+  renderKyc();
+}
+
+
+function renderKyc(){
+
+  const dot =
+    document.getElementById(
+      "kycStatusDot"
+    );
+
+  const title =
+    document.getElementById(
+      "kycStatusTitle"
+    );
+
+  const text =
+    document.getElementById(
+      "kycStatusText"
+    );
+
+  const rejection =
+    document.getElementById(
+      "kycRejection"
+    );
+
+  const submit =
+    document.getElementById(
+      "submitKycButton"
+    );
+
+  dot.className =
+    "status-dot";
+
+  rejection.style.display =
+    "none";
+
+  document.getElementById(
+    "verifiedBadge"
+  ).style.display =
+    "none";
+
+  if(!currentKyc){
+
+    title.textContent =
+      "Not submitted";
+
+    text.textContent =
+      "Submit your documents to request verification.";
+
+    submit.disabled =
+      false;
+
+    return;
+  }
+
+  const status =
+    normalize(
+      currentKyc.status
+    );
+
+  if(
+    status ===
+    "pending"
+  ){
+
+    dot.classList.add(
+      "pending"
+    );
+
+    title.textContent =
+      "Pending review";
+
+    text.textContent =
+      "Your documents are waiting for admin review.";
+
+    submit.disabled =
+      true;
+
+  }
+
+  else if(
+    status ===
+    "approved"
+  ){
+
+    dot.classList.add(
+      "approved"
+    );
+
+    title.textContent =
+      "KYC Approved";
+
+    text.textContent =
+      "Your identity has been verified.";
+
+    submit.disabled =
+      true;
+
+    document.getElementById(
+      "verifiedBadge"
+    ).style.display =
+      "inline-flex";
+
+  }
+
+  else if(
+    status ===
+    "rejected"
+  ){
+
+    dot.classList.add(
+      "rejected"
+    );
+
+    title.textContent =
+      "KYC Rejected";
+
+    text.textContent =
+      "Please review the reason and submit again.";
+
+    submit.disabled =
+      false;
+
+    if(
+      currentKyc.rejection_reason
+    ){
+
+      rejection.style.display =
+        "block";
+
+      rejection.textContent =
+        `Reason: ${
+          currentKyc.rejection_reason
+        }`;
+
+    }
+
+  }
+
+}
+
+
+function previewFile(
+  inputId,
+  previewId
+){
+
+  document.getElementById(
+    inputId
   ).addEventListener(
-    "submit",
-    async function(event){
-      event.preventDefault();
-      const front =
+    "change",
+    function(){
+
+      const file =
+        this.files?.[0];
+
+      const preview =
         document.getElementById(
-          "kycFront"
-        ).files?.[0];
-      const back =
-        document.getElementById(
-          "kycBack"
-        ).files?.[0];
-      if(
-        currentKyc &&
-        normalize(currentKyc.status) === "pending"
-      ){
-        toast(
-          "Your KYC is already under review.",
-          "error"
+          previewId
         );
+
+      if(!file){
         return;
       }
-      const button =
-        document.getElementById(
-          "submitKycButton"
-        );
-      button.disabled = true;
-      button.textContent = "Uploading...";
-      try{
-        const frontPath =
-          await uploadKycImage(
-            front,
-            "front"
-          );
-        const backPath =
-          await uploadKycImage(
-            back,
-            "back"
-          );
-        const payload = {
-          user_id:
-            currentUser.id,
-          full_name:
-            profileData.full_name ||
-            "",
-          document_type:
-            document.getElementById(
-              "documentType"
-            ).value,
-          front_image_url:
-            frontPath,
-          back_image_url:
-            backPath,
-          status:
-            "pending",
-          rejection_reason:
-            null,
-          reviewed_by:
-            null,
-          reviewed_at:
-            null
-        };
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from("kyc_submissions")
-            .insert(payload)
-            .select()
-            .single();
-        if(error){
-          throw error;
-        }
-        currentKyc =
-          data;
-        document.getElementById(
-          "kycForm"
-        ).reset();
-        document.getElementById(
-          "kycFrontPreview"
-        ).style.display =
-          "none";
-        document.getElementById(
-          "kycBackPreview"
-        ).style.display =
-          "none";
-        document.querySelectorAll(
-          ".upload-placeholder"
+
+      if(
+        !file.type.startsWith(
+          "image/"
         )
-        .forEach(
-          element =>
-            element.style.display =
-              "flex"
-        );
-        renderKyc();
+      ){
+
         toast(
-          "KYC submitted successfully. Waiting for admin approval."
-        );
-      }
-      catch(error){
-        console.error(error);
-        toast(
-          error.message ||
-          "KYC submission failed.",
+          "Please select an image.",
           "error"
         );
+
+        this.value = "";
+
+        return;
       }
-      finally{
-        button.textContent =
-          "Submit for Verification";
-        renderKyc();
-      }
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        event => {
+
+          preview.src =
+            event.target.result;
+
+          preview.style.display =
+            "block";
+
+          preview
+            .previousElementSibling
+            .style.display =
+            "none";
+
+        };
+
+      reader.readAsDataURL(
+        file
+      );
+
     }
   );
-  /* =====================================================
-     TABS
-  ===================================================== */
-  const tabMap = {
-    posts:
-      document.getElementById(
-        "postsPanel"
-      ),
-    profile:
-      document.getElementById(
-        "profilePanel"
-      ),
-    kyc:
-      document.getElementById(
-        "kycPanel"
+}
+
+
+previewFile(
+  "kycFront",
+  "kycFrontPreview"
+);
+
+previewFile(
+  "kycBack",
+  "kycBackPreview"
+);
+
+
+async function uploadKycImage(
+  file,
+  side
+){
+
+  if(!file){
+
+    throw new Error(
+      `Please select the document ${side} image.`
+    );
+
+  }
+
+  if(
+    ![
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ].includes(
+      file.type
+    )
+  ){
+
+    throw new Error(
+      "KYC images must be JPG, PNG or WebP."
+    );
+
+  }
+
+  if(
+    file.size >
+    8 * 1024 * 1024
+  ){
+
+    throw new Error(
+      "Each KYC image must be 8MB or smaller."
+    );
+
+  }
+
+  const extension =
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+  const path =
+    `${currentUser.id}/${Date.now()}-${side}.${extension}`;
+
+  const {
+    error
+  } =
+    await supabaseClient.storage
+      .from(
+        KYC_BUCKET
       )
-  };
+      .upload(
+        path,
+        file,
+        {
+          upsert:false,
+          contentType:file.type
+        }
+      );
+
+  if(error){
+    throw error;
+  }
+
+  return path;
+}
+
+
+document.getElementById(
+  "kycForm"
+).addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    if(
+      currentKyc &&
+      normalize(
+        currentKyc.status
+      ) ===
+      "pending"
+    ){
+
+      toast(
+        "Your KYC is already under review.",
+        "error"
+      );
+
+      return;
+    }
+
+    const front =
+      document.getElementById(
+        "kycFront"
+      ).files?.[0];
+
+    const back =
+      document.getElementById(
+        "kycBack"
+      ).files?.[0];
+
+    const button =
+      document.getElementById(
+        "submitKycButton"
+      );
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Uploading...";
+
+    try{
+
+      const frontPath =
+        await uploadKycImage(
+          front,
+          "front"
+        );
+
+      const backPath =
+        await uploadKycImage(
+          back,
+          "back"
+        );
+
+      const payload = {
+
+        user_id:
+          currentUser.id,
+
+        full_name:
+          profileData.full_name ||
+          "",
+
+        document_type:
+          document.getElementById(
+            "documentType"
+          ).value,
+
+        front_image_url:
+          frontPath,
+
+        back_image_url:
+          backPath,
+
+        status:
+          "pending",
+
+        rejection_reason:
+          null,
+
+        reviewed_by:
+          null,
+
+        reviewed_at:
+          null
+
+      };
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from(
+            "kyc_submissions"
+          )
+          .insert(
+            payload
+          )
+          .select()
+          .single();
+
+      if(error){
+        throw error;
+      }
+
+      currentKyc =
+        data;
+
+      this.reset();
+
+      document.getElementById(
+        "kycFrontPreview"
+      ).style.display =
+        "none";
+
+      document.getElementById(
+        "kycBackPreview"
+      ).style.display =
+        "none";
+
+      document.querySelectorAll(
+        ".upload-placeholder"
+      )
+      .forEach(
+        element =>
+          element.style.display =
+            "flex"
+      );
+
+      renderKyc();
+
+      toast(
+        "KYC submitted. Waiting for admin approval."
+      );
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      toast(
+        error.message ||
+        "KYC submission failed.",
+        "error"
+      );
+
+    }
+    finally{
+
+      button.textContent =
+        "Submit for Verification";
+
+      renderKyc();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+const tabMap = {
+
+  posts:
+    document.getElementById(
+      "postsPanel"
+    ),
+
+  comments:
+    document.getElementById(
+      "commentsPanel"
+    ),
+
+  profile:
+    document.getElementById(
+      "profilePanel"
+    ),
+
+  kyc:
+    document.getElementById(
+      "kycPanel"
+    )
+
+};
+
+
+function activateTab(
+  name
+){
+
   document.querySelectorAll(
     ".tab"
   )
-  .forEach(button => {
+  .forEach(
+    button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.tab ===
+        name
+      );
+
+    }
+  );
+
+  Object.values(
+    tabMap
+  )
+  .forEach(
+    panel =>
+      panel.classList.remove(
+        "active"
+      )
+  );
+
+  if(
+    tabMap[name]
+  ){
+
+    tabMap[name]
+      .classList.add(
+        "active"
+      );
+
+  }
+
+}
+
+
+document.querySelectorAll(
+  ".tab"
+)
+.forEach(
+  button => {
+
     button.addEventListener(
       "click",
-      function(){
-        document.querySelectorAll(
-          ".tab"
+      () =>
+        activateTab(
+          button.dataset.tab
         )
-        .forEach(
-          x =>
-            x.classList.remove("active")
-        );
-        this.classList.add("active");
-        Object.values(tabMap)
-          .forEach(
-            panel =>
-              panel.classList.remove("active")
-          );
-        tabMap[
-          this.dataset.tab
-        ].classList.add("active");
-      }
     );
-  });
-  /* =====================================================
-     INIT
-  ===================================================== */
-  async function init(){
-    applyTheme(
-      localStorage.getItem(
-        "mec_theme"
-      ) || "light"
-    );
-    try{
-      currentUser =
-        await requireUser();
-      if(!currentUser){
-        return;
-      }
-      await loadProfile();
-      await loadPosts();
-      await loadKyc();
-    }
-    catch(error){
-      console.error(error);
-      toast(
-        error.message ||
-        "Could not load profile.",
-        "error"
-      );
-    }
+
   }
-  init();
+);
+
+
+/* =====================================================
+   REALTIME
+===================================================== */
+
+function subscribeRealtime(){
+
+  if(
+    reactionChannel
+  ){
+
+    supabaseClient
+      .removeChannel(
+        reactionChannel
+      );
+
+  }
+
+  if(
+    commentChannel
+  ){
+
+    supabaseClient
+      .removeChannel(
+        commentChannel
+      );
+
+  }
+
+
+  reactionChannel =
+    supabaseClient
+      .channel(
+        `profile-reactions-${viewedProfileId}`
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"profile_reactions",
+          filter:
+            `profile_id=eq.${viewedProfileId}`
+        },
+        () => {
+
+          loadReactions();
+
+        }
+      )
+      .subscribe();
+
+
+  commentChannel =
+    supabaseClient
+      .channel(
+        `profile-comments-${viewedProfileId}`
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"profile_comments",
+          filter:
+            `profile_id=eq.${viewedProfileId}`
+        },
+        () => {
+
+          loadComments();
+
+        }
+      )
+      .subscribe();
+
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+async function init(){
+
+  applyTheme(
+    localStorage.getItem(
+      "mec_theme"
+    ) || "light"
+  );
+
+  try{
+
+    currentUser =
+      await requireUser();
+
+    if(!currentUser){
+      return;
+    }
+
+    const urlProfileId =
+      getProfileIdFromURL();
+
+    viewedProfileId =
+      urlProfileId ||
+      currentUser.id;
+
+    await loadProfile();
+
+    await loadPosts();
+
+    await loadReactions();
+
+    await loadComments();
+
+    await loadKyc();
+
+    subscribeRealtime();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    document.querySelector(
+      "main.container"
+    ).innerHTML = `
+      <div
+        class="empty"
+        style="margin-top:80px;">
+
+        <div class="empty-icon">
+          !
+        </div>
+
+        <strong>
+          Could not load profile
+        </strong>
+
+        <span>
+          ${escapeHTML(
+            error.message ||
+            "Unknown error"
+          )}
+        </span>
+
+      </div>
+    `;
+
+  }
+
+}
+
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    if(
+      reactionChannel
+    ){
+
+      supabaseClient
+        .removeChannel(
+          reactionChannel
+        );
+
+    }
+
+    if(
+      commentChannel
+    ){
+
+      supabaseClient
+        .removeChannel(
+          commentChannel
+        );
+
+    }
+
+  }
+);
+
+
+init();
 </script>
+
 </body>
 </html>
