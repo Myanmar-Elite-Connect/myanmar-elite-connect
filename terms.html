@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions — Myanmar Elite Connect</title>
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --bg:#f7f9fc;
+      --surface:#fff;
+      --soft:#f1f4f8;
+      --text:#10233f;
+      --muted:#728096;
+      --gold:#d7b35a;
+      --navy:#071a34;
+      --border:rgba(16,35,63,.09);
+      --shadow:0 20px 60px rgba(16,35,63,.10);
+    }
+
+    body.dark{
+      --bg:#071321;
+      --surface:#0d1d31;
+      --soft:#12263d;
+      --text:#f4f7fb;
+      --muted:#94a3b7;
+      --border:rgba(255,255,255,.09);
+      --shadow:0 20px 60px rgba(0,0,0,.30);
+    }
+
+    body{
+      min-height:100vh;
+      font-family:Inter,"Noto Sans Myanmar","Myanmar Text",system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.8;
+    }
+
+    .page{
+      width:min(900px,calc(100% - 28px));
+      margin:auto;
+      padding:30px 0 60px;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:25px;
+    }
+
+    .brand{
+      font-weight:900;
+      color:var(--text);
+    }
+
+    .brand span{color:var(--gold)}
+
+    .actions{
+      display:flex;
+      gap:7px;
+    }
+
+    button{
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--text);
+      border-radius:10px;
+      padding:9px 12px;
+      cursor:pointer;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:34px;
+      box-shadow:var(--shadow);
+    }
+
+    h1{
+      font-size:32px;
+      line-height:1.2;
+      margin-bottom:8px;
+    }
+
+    .updated{
+      color:var(--muted);
+      font-size:11px;
+      margin-bottom:30px;
+    }
+
+    h2{
+      font-size:18px;
+      margin:27px 0 8px;
+    }
+
+    p,li{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    ul{
+      padding-left:22px;
+    }
+
+    a{
+      color:var(--gold);
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:30px;
+      color:var(--gold);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    @media(max-width:520px){
+      .card{padding:22px 18px}
+      h1{font-size:27px}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <div class="top">
+      <div class="brand">
+        Myanmar <span>Elite</span> Connect
+      </div>
+
+      <div class="actions">
+        <button id="languageButton">EN / မြန်မာ</button>
+        <button id="themeButton">☾</button>
+      </div>
+    </div>
+
+    <article class="card" id="content"></article>
+
+  </main>
+
+<script>
+const content = {
+  en: `
+    <h1>Terms & Conditions</h1>
+    <div class="updated">Last updated: August 19, 2026</div>
+
+    <p>
+      Welcome to Myanmar Elite Connect. By creating an account or using
+      our website, you agree to these Terms & Conditions.
+    </p>
+
+    <h2>1. Account</h2>
+    <p>
+      You are responsible for keeping your account information and
+      password secure. You must provide accurate information when
+      creating an account.
+    </p>
+
+    <h2>2. User Profiles</h2>
+    <p>
+      Users may create profiles and provide information such as their
+      name, photo, biography, city and other profile information.
+      You must not impersonate another person or create a fraudulent
+      identity.
+    </p>
+
+    <h2>3. Posts and Listings</h2>
+    <p>
+      Users may create posts and listings where supported. Content must
+      be accurate and must not contain illegal, fraudulent, misleading,
+      abusive or harmful material.
+    </p>
+
+    <h2>4. Buying and Selling</h2>
+    <p>
+      Myanmar Elite Connect provides a platform for users to discover
+      and communicate about listings. Users are responsible for their
+      own transactions and agreements.
+    </p>
+
+    <h2>5. Comments and Reactions</h2>
+    <p>
+      Users may like, dislike and comment on profiles or content where
+      these features are available. Comments must not contain threats,
+      harassment, hate, spam or illegal content.
+    </p>
+
+    <h2>6. Reports and Moderation</h2>
+    <p>
+      Users may report profiles, listings or other content. We may
+      review reported content and take appropriate action, including
+      removing content or restricting an account.
+    </p>
+
+    <h2>7. Prohibited Activities</h2>
+    <ul>
+      <li>Fraud, scams or deceptive activity.</li>
+      <li>Impersonation or fake accounts.</li>
+      <li>Harassment, threats or abuse.</li>
+      <li>Illegal goods or services.</li>
+      <li>Spam, malware or harmful content.</li>
+      <li>Unauthorized access to another user's account.</li>
+      <li>Any activity that violates applicable law.</li>
+    </ul>
+
+    <h2>8. KYC</h2>
+    <p>
+      Where identity verification is required, users must provide
+      truthful information and valid documents. False or fraudulent
+      KYC information may result in rejection or account restriction.
+    </p>
+
+    <h2>9. Account Suspension</h2>
+    <p>
+      We may suspend, restrict or terminate accounts that violate these
+      Terms, applicable law, or the safety of the platform.
+    </p>
+
+    <h2>10. Content</h2>
+    <p>
+      You are responsible for content you upload or publish. Do not
+      upload content that you do not have permission to use.
+    </p>
+
+    <h2>11. Changes</h2>
+    <p>
+      We may update these Terms from time to time. Continued use of
+      the service after an update means you accept the updated Terms.
+    </p>
+
+    <h2>12. Contact</h2>
+    <p>
+      For questions or reports, please use the contact or reporting
+      features provided by Myanmar Elite Connect.
+    </p>
+
+    <a class="back" href="./auth.html?mode=signup">← Back to Sign Up</a>
+  `,
+
+  mm: `
+    <h1>အသုံးပြုမှု စည်းမျဉ်းများ</h1>
+    <div class="updated">နောက်ဆုံးပြင်ဆင်သည့်ရက် — ၁၉ ဩဂုတ် ၂၀၂၆</div>
+
+    <p>
+      Myanmar Elite Connect မှ ကြိုဆိုပါတယ်။ Website ကို အသုံးပြုခြင်း
+      သို့မဟုတ် Account ဖွင့်ခြင်းဖြင့် အောက်ပါ စည်းမျဉ်းများကို
+      သဘောတူပါသည်။
+    </p>
+
+    <h2>၁။ အကောင့်</h2>
+    <p>
+      အကောင့်အချက်အလက်များနှင့် Password ကို လုံခြုံစွာ ထိန်းသိမ်းရန်
+      User ကိုယ်တိုင် တာဝန်ရှိပါသည်။ အကောင့်ဖွင့်ရာတွင် မှန်ကန်သော
+      အချက်အလက်များကို အသုံးပြုရမည်။
+    </p>
+
+    <h2>၂။ Profile</h2>
+    <p>
+      User များသည် Profile၊ အမည်၊ ဓာတ်ပုံ၊ Bio၊ မြို့နှင့် အခြား
+      အချက်အလက်များကို ထည့်သွင်းနိုင်သည်။ အခြားသူကို အယောင်ဆောင်ခြင်း
+      သို့မဟုတ် အကောင့်အတုဖန်တီးခြင်း မပြုရ။
+    </p>
+
+    <h2>၃။ Post နှင့် Listing</h2>
+    <p>
+      ခွင့်ပြုထားသောနေရာများတွင် Post နှင့် Listing တင်နိုင်သည်။
+      တရားမဝင်၊ လိမ်လည်မှု၊ အန္တရာယ်ရှိမှု သို့မဟုတ် မမှန်ကန်သော
+      အကြောင်းအရာများ မတင်ရ။
+    </p>
+
+    <h2>၄။ ဝယ်ယူခြင်းနှင့် ရောင်းချခြင်း</h2>
+    <p>
+      Myanmar Elite Connect သည် User များအတွက် Listing များကို
+      ရှာဖွေခြင်းနှင့် ဆက်သွယ်ခြင်းအတွက် Platform ပေးထားခြင်းဖြစ်သည်။
+      အရောင်းအဝယ်၏ တာဝန်သည် သက်ဆိုင်ရာ User များတွင် ရှိပါသည်။
+    </p>
+
+    <h2>၅။ Comment နှင့် Reaction</h2>
+    <p>
+      ရရှိနိုင်သော Feature များတွင် Like၊ Dislike နှင့် Comment ပြုလုပ်နိုင်သည်။
+      ခြိမ်းခြောက်မှု၊ နှောင့်ယှက်မှု၊ Spam နှင့် တရားမဝင်သော အကြောင်းအရာများ
+      မတင်ရ။
+    </p>
+
+    <h2>၆။ Report နှင့် စီမံခန့်ခွဲမှု</h2>
+    <p>
+      Profile၊ Listing သို့မဟုတ် Content များကို Report ပြုလုပ်နိုင်သည်။
+      Report ရရှိပါက Platform ဘက်မှ စစ်ဆေးပြီး သင့်လျော်သော
+      အရေးယူမှုများ ပြုလုပ်နိုင်သည်။
+    </p>
+
+    <h2>၇။ မပြုလုပ်ရမည့်အရာများ</h2>
+    <ul>
+      <li>လိမ်လည်ခြင်းနှင့် Scam ပြုလုပ်ခြင်း။</li>
+      <li>အခြားသူအယောင်ဆောင်ခြင်း။</li>
+      <li>နှောင့်ယှက်ခြင်း၊ ခြိမ်းခြောက်ခြင်း။</li>
+      <li>တရားမဝင်ကုန်ပစ္စည်း သို့မဟုတ် ဝန်ဆောင်မှုများ။</li>
+      <li>Spam သို့မဟုတ် အန္တရာယ်ရှိသော Content။</li>
+      <li>အခြားသူ၏ Account ကို ခွင့်ပြုချက်မရှိဘဲ ဝင်ရောက်ခြင်း။</li>
+      <li>သက်ဆိုင်ရာဥပဒေကို ချိုးဖောက်သည့် လုပ်ဆောင်ချက်များ။</li>
+    </ul>
+
+    <h2>၈။ KYC</h2>
+    <p>
+      Identity Verification လိုအပ်ပါက မှန်ကန်သောအချက်အလက်နှင့်
+      သက်ဆိုင်ရာစာရွက်စာတမ်းများ ပေးရမည်။ မမှန်ကန်သော KYC အချက်အလက်များ
+      ပေးပါက ငြင်းပယ်ခြင်း သို့မဟုတ် Account ကန့်သတ်ခြင်း ပြုလုပ်နိုင်သည်။
+    </p>
+
+    <h2>၉။ အကောင့်ကန့်သတ်ခြင်း</h2>
+    <p>
+      စည်းမျဉ်းများ သို့မဟုတ် Platform လုံခြုံရေးကို ချိုးဖောက်သော
+      Account များကို Suspend၊ Restrict သို့မဟုတ် Terminate ပြုလုပ်နိုင်သည်။
+    </p>
+
+    <h2>၁၀။ Content</h2>
+    <p>
+      User တင်သည့် Content အတွက် User ကိုယ်တိုင် တာဝန်ရှိသည်။
+      ခွင့်ပြုချက်မရှိသော Content မတင်ရ။
+    </p>
+
+    <h2>၁၁။ စည်းမျဉ်းပြောင်းလဲခြင်း</h2>
+    <p>
+      ဤစည်းမျဉ်းများကို အခါအားလျော်စွာ ပြင်ဆင်နိုင်သည်။
+      ပြင်ဆင်ပြီးနောက် Website ကို ဆက်လက်အသုံးပြုခြင်းသည်
+      ပြင်ဆင်ထားသော စည်းမျဉ်းများကို သဘောတူခြင်းဖြစ်သည်။
+    </p>
+
+    <h2>၁၂။ ဆက်သွယ်ရန်</h2>
+    <p>
+      မေးမြန်းလိုပါက သို့မဟုတ် Report တင်လိုပါက Myanmar Elite Connect
+      ၏ သက်ဆိုင်ရာ Contact နှင့် Report Feature များကို အသုံးပြုနိုင်သည်။
+    </p>
+
+    <a class="back" href="./auth.html?mode=signup">← အကောင့်ဖွင့်ရန် ပြန်သွားမည်</a>
+  `
+};
+
+let language = localStorage.getItem("mec_language") || "en";
+
+function render(){
+  document.getElementById("content").innerHTML = content[language];
+  document.documentElement.lang = language === "mm" ? "my" : "en";
+}
+
+document.getElementById("languageButton").onclick = () => {
+  language = language === "en" ? "mm" : "en";
+  localStorage.setItem("mec_language", language);
+  render();
+};
+
+function applyTheme(theme){
+  document.body.classList.toggle("dark", theme === "dark");
+  document.getElementById("themeButton").textContent =
+    theme === "dark" ? "☀" : "☾";
+  localStorage.setItem("mec_theme", theme);
+}
+
+document.getElementById("themeButton").onclick = () => {
+  applyTheme(
+    document.body.classList.contains("dark")
+      ? "light"
+      : "dark"
+  );
+};
+
+applyTheme(localStorage.getItem("mec_theme") || "light");
+render();
+</script>
+</body>
+</html>
