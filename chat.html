@@ -2,7 +2,7 @@
 <html lang="my">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Chat - Myanmar Elite Connect</title>
 
@@ -19,12 +19,13 @@
   --navy:#071b3a;
   --navy2:#102d59;
   --green:#19a974;
+  --green2:#0f8f60;
   --bg:#f4f7fb;
   --white:#fff;
   --text:#172033;
   --muted:#697386;
-  --border:#e1e6ef;
-  --danger:#c62828;
+  --border:#e3e8f0;
+  --danger:#b42318;
 }
 
 body{
@@ -35,9 +36,7 @@ body{
   overflow:hidden;
 }
 
-/* ==============================
-   HEADER
-============================== */
+/* HEADER */
 
 header{
   height:64px;
@@ -45,14 +44,22 @@ header{
   color:white;
   display:flex;
   align-items:center;
+  padding:0 20px;
+}
+
+.header-inner{
+  width:100%;
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  align-items:center;
   justify-content:space-between;
-  padding:0 22px;
 }
 
 .logo{
   color:white;
   text-decoration:none;
-  font-size:20px;
+  font-size:19px;
   font-weight:900;
 }
 
@@ -60,37 +67,29 @@ header{
   color:#65d6a7;
 }
 
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.header-btn{
-  border:0;
-  background:rgba(255,255,255,.1);
+.home{
   color:white;
-  padding:9px 12px;
+  text-decoration:none;
+  padding:8px 13px;
   border-radius:8px;
-  cursor:pointer;
+  background:rgba(255,255,255,.1);
+  font-size:13px;
 }
 
-/* ==============================
-   APP
-============================== */
+/* CHAT APP */
 
 .chat-app{
+  max-width:1250px;
   height:calc(100vh - 64px);
+  margin:auto;
   display:grid;
   grid-template-columns:330px 1fr;
+  background:white;
 }
 
-/* ==============================
-   SIDEBAR
-============================== */
+/* SIDEBAR */
 
 .sidebar{
-  background:white;
   border-right:1px solid var(--border);
   display:flex;
   flex-direction:column;
@@ -98,24 +97,30 @@ header{
 }
 
 .sidebar-top{
-  padding:18px;
+  padding:20px;
   border-bottom:1px solid var(--border);
 }
 
 .sidebar-title{
-  font-size:22px;
+  font-size:23px;
   font-weight:900;
   color:var(--navy);
-  margin-bottom:13px;
+  margin-bottom:4px;
+}
+
+.sidebar-subtitle{
+  color:var(--muted);
+  font-size:12px;
 }
 
 .search-users{
+  margin-top:16px;
   width:100%;
+  padding:11px 13px;
   border:1px solid var(--border);
   border-radius:10px;
-  padding:11px 13px;
   outline:none;
-  font-size:14px;
+  font-family:inherit;
 }
 
 .search-users:focus{
@@ -131,9 +136,9 @@ header{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:13px 16px;
-  border-bottom:1px solid #f0f2f6;
+  padding:14px 17px;
   cursor:pointer;
+  border-bottom:1px solid #f0f2f6;
   transition:.15s;
 }
 
@@ -142,21 +147,21 @@ header{
 }
 
 .user-item.active{
-  background:#eaf5ff;
+  background:#eaf7f1;
 }
 
 .avatar{
-  width:45px;
-  height:45px;
-  flex-shrink:0;
+  width:46px;
+  height:46px;
+  min-width:46px;
   border-radius:50%;
-  overflow:hidden;
   background:var(--navy);
   color:white;
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:900;
+  overflow:hidden;
 }
 
 .avatar img{
@@ -172,57 +177,101 @@ header{
 
 .user-name{
   font-weight:800;
-  color:var(--text);
+  color:var(--navy);
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-.user-role{
+.user-city{
   color:var(--muted);
   font-size:12px;
-  margin-top:3px;
+  margin-top:4px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .empty-users{
-  padding:40px 20px;
+  padding:35px 20px;
   text-align:center;
   color:var(--muted);
+  font-size:13px;
   line-height:1.7;
 }
 
-/* ==============================
-   CHAT AREA
-============================== */
+/* CHAT PANEL */
 
-.chat-area{
-  min-width:0;
+.chat-panel{
   display:flex;
   flex-direction:column;
-  background:#eef2f7;
+  min-width:0;
+  background:#f8fafc;
+}
+
+.chat-empty{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+}
+
+.chat-empty-icon{
+  font-size:65px;
+  margin-bottom:15px;
+}
+
+.chat-empty h2{
+  color:var(--navy);
+  margin-bottom:8px;
+}
+
+.chat-empty p{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* ACTIVE CHAT */
+
+.active-chat{
+  display:none;
+  flex-direction:column;
+  height:100%;
+  min-height:0;
 }
 
 .chat-header{
-  min-height:70px;
+  height:74px;
+  min-height:74px;
   background:white;
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
-  padding:10px 18px;
   gap:12px;
+  padding:12px 18px;
+}
+
+.chat-user-info{
+  flex:1;
+  min-width:0;
 }
 
 .chat-user-name{
-  font-weight:900;
   color:var(--navy);
-  font-size:17px;
+  font-size:16px;
+  font-weight:900;
 }
 
 .chat-user-status{
-  color:var(--muted);
+  color:var(--green2);
   font-size:12px;
-  margin-top:3px;
+  margin-top:4px;
 }
+
+/* MESSAGES */
 
 .messages{
   flex:1;
@@ -231,17 +280,6 @@ header{
   display:flex;
   flex-direction:column;
   gap:9px;
-}
-
-.select-chat{
-  margin:auto;
-  text-align:center;
-  color:var(--muted);
-}
-
-.select-chat-icon{
-  font-size:60px;
-  margin-bottom:10px;
 }
 
 .message-row{
@@ -258,12 +296,12 @@ header{
 }
 
 .message-bubble{
-  max-width:min(70%,600px);
+  max-width:min(70%,500px);
   padding:10px 13px;
   border-radius:15px;
-  position:relative;
+  line-height:1.6;
+  font-size:14px;
   word-break:break-word;
-  line-height:1.55;
 }
 
 .mine .message-bubble{
@@ -279,167 +317,144 @@ header{
   border-bottom-left-radius:4px;
 }
 
-.message-text{
-  white-space:pre-wrap;
-}
-
 .message-time{
-  font-size:10px;
-  opacity:.65;
+  display:block;
   margin-top:4px;
+  font-size:9px;
+  opacity:.65;
   text-align:right;
 }
 
-.delete-message{
-  margin-left:7px;
-  border:0;
-  background:transparent;
-  cursor:pointer;
-  font-size:12px;
-  opacity:.6;
-}
+/* COMPOSER */
 
-.delete-message:hover{
-  opacity:1;
-}
-
-/* ==============================
-   INPUT
-============================== */
-
-.message-form{
+.composer{
   background:white;
   border-top:1px solid var(--border);
   padding:12px;
   display:flex;
-  gap:8px;
-  align-items:flex-end;
-}
-
-.emoji-btn{
-  width:44px;
-  height:44px;
-  border:1px solid var(--border);
-  background:#f7f9fc;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:21px;
+  gap:9px;
 }
 
 .message-input{
   flex:1;
-  min-height:44px;
-  max-height:130px;
-  resize:none;
   border:1px solid var(--border);
   border-radius:11px;
-  padding:11px 13px;
+  padding:12px 14px;
   outline:none;
   font-family:inherit;
   font-size:14px;
+  resize:none;
+  min-height:45px;
+  max-height:120px;
 }
 
 .message-input:focus{
   border-color:var(--navy);
 }
 
-.send-btn{
-  height:44px;
+.send-button{
+  width:48px;
   border:0;
-  background:var(--green);
+  border-radius:11px;
+  background:var(--navy);
   color:white;
-  padding:0 18px;
-  border-radius:10px;
-  font-weight:900;
+  font-size:19px;
   cursor:pointer;
 }
 
-.send-btn:disabled{
+.send-button:hover{
+  background:var(--navy2);
+}
+
+.send-button:disabled{
   opacity:.5;
   cursor:not-allowed;
 }
 
-/* ==============================
-   EMOJI PANEL
-============================== */
+/* LOGIN */
 
-.emoji-panel{
-  position:absolute;
-  bottom:70px;
-  left:12px;
+.login-screen{
+  height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+}
+
+.login-card{
+  max-width:430px;
+  width:100%;
   background:white;
   border:1px solid var(--border);
-  border-radius:14px;
-  box-shadow:0 12px 35px rgba(0,0,0,.15);
-  padding:10px;
-  width:280px;
-  display:none;
-  z-index:20;
-}
-
-.emoji-panel.show{
-  display:grid;
-  grid-template-columns:repeat(8,1fr);
-  gap:5px;
-}
-
-.emoji{
-  border:0;
-  background:transparent;
-  font-size:23px;
-  padding:5px;
-  border-radius:7px;
-  cursor:pointer;
-}
-
-.emoji:hover{
-  background:#f0f3f8;
-}
-
-/* ==============================
-   STATES
-============================== */
-
-.loading{
-  margin:auto;
-  color:var(--muted);
+  border-radius:20px;
+  padding:35px;
   text-align:center;
+  box-shadow:0 12px 35px rgba(7,27,58,.08);
 }
 
-.spinner{
-  width:35px;
-  height:35px;
-  border:4px solid #e3e8ef;
-  border-top-color:var(--navy);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 12px;
+.login-icon{
+  font-size:55px;
+  margin-bottom:12px;
 }
 
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+.login-card h2{
+  color:var(--navy);
+  margin-bottom:8px;
 }
 
-.error-box{
-  margin:20px;
-  padding:18px;
-  border-radius:12px;
-  background:#fff0f0;
-  border:1px solid #ffd0d0;
-  color:var(--danger);
+.login-card p{
+  color:var(--muted);
   line-height:1.7;
+  font-size:14px;
 }
 
-/* ==============================
-   MOBILE
-============================== */
+.login-button{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--navy);
+  color:white;
+  text-decoration:none;
+  font-weight:800;
+}
+
+/* MESSAGE */
+
+.notice{
+  position:fixed;
+  top:78px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:2000;
+  max-width:90%;
+  padding:11px 17px;
+  border-radius:10px;
+  display:none;
+  font-size:13px;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+}
+
+.notice.error{
+  display:block;
+  background:#fff0f0;
+  color:var(--danger);
+  border:1px solid #ffd0d0;
+}
+
+.notice.success{
+  display:block;
+  background:#e9f8ef;
+  color:#176b38;
+  border:1px solid #bce8cb;
+}
+
+/* MOBILE */
 
 .mobile-back{
   display:none;
   border:0;
-  background:transparent;
+  background:none;
   font-size:22px;
   cursor:pointer;
   color:var(--navy);
@@ -451,27 +466,33 @@ header{
     overflow:hidden;
   }
 
+  header{
+    height:58px;
+  }
+
+  .logo{
+    font-size:16px;
+  }
+
   .chat-app{
+    height:calc(100vh - 58px);
     display:block;
-    height:calc(100vh - 64px);
     position:relative;
   }
 
   .sidebar{
-    position:absolute;
-    inset:0;
-    z-index:5;
     width:100%;
+    height:100%;
+    border:0;
   }
 
-  .chat-area{
+  .chat-panel{
     position:absolute;
     inset:0;
-    z-index:6;
     display:none;
   }
 
-  .chat-area.mobile-show{
+  .chat-panel.mobile-open{
     display:flex;
   }
 
@@ -479,20 +500,24 @@ header{
     display:block;
   }
 
+  .chat-header{
+    padding:10px 12px;
+  }
+
+  .messages{
+    padding:15px 12px;
+  }
+
   .message-bubble{
     max-width:82%;
   }
 
-  .logo{
-    font-size:16px;
+  .composer{
+    padding:9px;
   }
 
-  .header-right .header-btn{
-    font-size:12px;
-  }
-
-  .messages{
-    padding:15px;
+  .home{
+    display:none;
   }
 }
 </style>
@@ -501,180 +526,169 @@ header{
 <body>
 
 <header>
+  <div class="header-inner">
 
-  <a href="./index.html" class="logo">
-    Myanmar <span>Elite Connect</span>
-  </a>
+    <a href="./index.html" class="logo">
+      Myanmar <span>Elite Connect</span>
+    </a>
 
-  <div class="header-right">
-    <button
-      class="header-btn"
-      onclick="location.href='./profile.html'"
-    >
-      👤 Profile
-    </button>
+    <a href="./index.html" class="home">
+      ← Home
+    </a>
 
-    <button
-      class="header-btn"
-      onclick="location.href='./index.html'"
-    >
-      Home
-    </button>
   </div>
-
 </header>
 
+<div id="notice" class="notice"></div>
 
-<div class="chat-app">
+<!-- LOGIN SCREEN -->
 
-  <!-- ============================
-       SIDEBAR
-  ============================= -->
+<div id="loginScreen" class="login-screen" style="display:none">
+
+  <div class="login-card">
+
+    <div class="login-icon">💬</div>
+
+    <h2>Login လိုအပ်ပါတယ်</h2>
+
+    <p>
+      Chat အသုံးပြုရန် Login ဝင်ထားရန်လိုအပ်ပါသည်။
+    </p>
+
+    <a href="./auth.html" class="login-button">
+      Login / Register
+    </a>
+
+  </div>
+
+</div>
+
+<!-- CHAT APP -->
+
+<div id="chatApp" class="chat-app" style="display:none">
+
+  <!-- USERS -->
 
   <aside class="sidebar">
 
     <div class="sidebar-top">
 
       <div class="sidebar-title">
-        💬 Chats
+        Messages
+      </div>
+
+      <div class="sidebar-subtitle">
+        ဆက်သွယ်လိုသော User ကိုရွေးပါ
       </div>
 
       <input
         id="userSearch"
         class="search-users"
         type="text"
-        placeholder="User ရှာရန်..."
+        placeholder="🔎 User ရှာရန်..."
+        autocomplete="off"
       >
 
     </div>
 
-    <div
-      id="userList"
-      class="user-list"
-    >
+    <div id="userList" class="user-list">
 
-      <div class="loading">
-        <div class="spinner"></div>
-        Users များကို ရယူနေပါသည်...
+      <div class="empty-users">
+        User များကို ရှာဖွေနေပါသည်...
       </div>
 
     </div>
 
   </aside>
 
+  <!-- CHAT -->
 
-  <!-- ============================
-       CHAT AREA
-  ============================= -->
+  <section id="chatPanel" class="chat-panel">
 
-  <section
-    id="chatArea"
-    class="chat-area"
-  >
-
-    <div
-      id="chatHeader"
-      class="chat-header"
-    >
-
-      <button
-        class="mobile-back"
-        onclick="closeMobileChat()"
-      >
-        ←
-      </button>
-
-      <div class="avatar" id="headerAvatar">
-        👤
-      </div>
+    <div id="chatEmpty" class="chat-empty">
 
       <div>
 
-        <div
-          id="chatUserName"
-          class="chat-user-name"
-        >
-          Chat
-        </div>
-
-        <div
-          id="chatUserStatus"
-          class="chat-user-status"
-        >
-          User တစ်ယောက်ရွေးပါ
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="messages"
-      class="messages"
-    >
-
-      <div class="select-chat">
-
-        <div class="select-chat-icon">
+        <div class="chat-empty-icon">
           💬
         </div>
 
-        <h3>
-          Chat စတင်ရန်
-        </h3>
+        <h2>
+          Chat စတင်ပါ
+        </h2>
 
         <p>
-          ဘယ်ဘက်က User တစ်ယောက်ကို ရွေးပါ။
+          ဘယ်ဘက်မှ User တစ်ယောက်ကိုရွေးပြီး
+          စကားပြောနိုင်ပါသည်။
         </p>
 
       </div>
 
     </div>
 
+    <div id="activeChat" class="active-chat">
 
-    <div
-      id="emojiPanel"
-      class="emoji-panel"
-    ></div>
+      <div class="chat-header">
 
+        <button
+          id="mobileBack"
+          class="mobile-back"
+          type="button"
+        >
+          ←
+        </button>
 
-    <form
-      id="messageForm"
-      class="message-form"
-    >
+        <div id="chatAvatar" class="avatar">
+          👤
+        </div>
 
-      <button
-        type="button"
-        id="emojiButton"
-        class="emoji-btn"
+        <div class="chat-user-info">
+
+          <div id="chatUserName" class="chat-user-name">
+            User
+          </div>
+
+          <div class="chat-user-status">
+            ● Chat
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        id="messages"
+        class="messages"
+      ></div>
+
+      <form
+        id="composer"
+        class="composer"
       >
-        😊
-      </button>
 
-      <textarea
-        id="messageInput"
-        class="message-input"
-        rows="1"
-        placeholder="Message ရေးပါ..."
-        disabled
-      ></textarea>
+        <textarea
+          id="messageInput"
+          class="message-input"
+          rows="1"
+          maxlength="5000"
+          placeholder="Message ရေးပါ..."
+        ></textarea>
 
-      <button
-        id="sendButton"
-        class="send-btn"
-        type="submit"
-        disabled
-      >
-        Send
-      </button>
+        <button
+          id="sendButton"
+          class="send-button"
+          type="submit"
+        >
+          ➤
+        </button>
 
-    </form>
+      </form>
+
+    </div>
 
   </section>
 
 </div>
-
 
 <script>
 
@@ -696,13 +710,12 @@ window.supabase.createClient(
 
 
 /* =========================================
-   GLOBAL
+   STATE
 ========================================= */
 
 let currentUser = null;
 let selectedUser = null;
-let currentRoom = null;
-let allUsers = [];
+let profiles = [];
 let realtimeChannel = null;
 
 
@@ -710,29 +723,29 @@ let realtimeChannel = null;
    ELEMENTS
 ========================================= */
 
+const loginScreen =
+document.getElementById("loginScreen");
+
+const chatApp =
+document.getElementById("chatApp");
+
 const userList =
 document.getElementById("userList");
 
 const userSearch =
 document.getElementById("userSearch");
 
-const chatArea =
-document.getElementById("chatArea");
+const chatPanel =
+document.getElementById("chatPanel");
 
-const chatUserName =
-document.getElementById("chatUserName");
+const chatEmpty =
+document.getElementById("chatEmpty");
 
-const chatUserStatus =
-document.getElementById("chatUserStatus");
+const activeChat =
+document.getElementById("activeChat");
 
-const headerAvatar =
-document.getElementById("headerAvatar");
-
-const messages =
+const messagesBox =
 document.getElementById("messages");
-
-const messageForm =
-document.getElementById("messageForm");
 
 const messageInput =
 document.getElementById("messageInput");
@@ -740,34 +753,34 @@ document.getElementById("messageInput");
 const sendButton =
 document.getElementById("sendButton");
 
-const emojiButton =
-document.getElementById("emojiButton");
+const composer =
+document.getElementById("composer");
 
-const emojiPanel =
-document.getElementById("emojiPanel");
+const notice =
+document.getElementById("notice");
 
 
 /* =========================================
-   EMOJIS
+   NOTICE
 ========================================= */
 
-const emojis = [
-"😀","😂","🤣","😊","😍","🥰","😘","😎",
-"🤔","😮","😢","😭","😡","👍","👎","👏",
-"🙏","❤️","💚","💙","💛","🔥","🎉","✨",
-"💯","🚗","🏠","💎","📱","💰","🤝","👑",
-"🛡️","✅","❌","⭐","😂","😅","😉","😇"
-];
+function showNotice(text,type="success"){
 
-emojiPanel.innerHTML =
-emojis.map(
-emoji =>
-`<button type="button" class="emoji">${emoji}</button>`
-).join("");
+  notice.textContent = text;
+  notice.className =
+    "notice " + type;
+
+  setTimeout(function(){
+
+    notice.className = "notice";
+
+  },3000);
+
+}
 
 
 /* =========================================
-   HELPERS
+   ESCAPE HTML
 ========================================= */
 
 function escapeHtml(value){
@@ -785,40 +798,51 @@ function escapeHtml(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
 
+
+/* =========================================
+   AVATAR
+========================================= */
 
 function getInitial(name){
 
   if(!name){
-    return "👤";
+    return "U";
   }
 
   return name
     .trim()
     .charAt(0)
     .toUpperCase();
+
 }
 
 
-function formatTime(date){
+function avatarHtml(profile){
 
-  const d =
-  new Date(date);
+  if(profile.avatar_url){
 
-  return d.toLocaleTimeString(
-    "en-US",
-    {
-      hour:"numeric",
-      minute:"2-digit"
-    }
+    return `
+      <img
+        src="${escapeHtml(profile.avatar_url)}"
+        alt="Avatar"
+        onerror="this.style.display='none'"
+      >
+    `;
+
+  }
+
+  return escapeHtml(
+    getInitial(profile.full_name)
   );
 
 }
 
 
 /* =========================================
-   GET CURRENT USER
+   CURRENT USER
 ========================================= */
 
 async function getCurrentUser(){
@@ -835,113 +859,105 @@ async function getCurrentUser(){
 
   if(
     !data ||
-    !data.session
+    !data.session ||
+    !data.session.user
   ){
+
     return null;
+
   }
 
   return data.session.user;
+
 }
 
 
 /* =========================================
-   LOAD USERS
+   LOGIN
 ========================================= */
 
-async function loadUsers(){
+async function initialize(){
 
   try{
 
     currentUser =
-    await getCurrentUser();
+      await getCurrentUser();
 
     if(!currentUser){
 
-      userList.innerHTML = `
-        <div class="empty-users">
-          🔐<br><br>
-          Chat အသုံးပြုရန်<br>
-          Login ဝင်ထားရပါမည်။
-          <br><br>
-          <button
-            onclick="location.href='./auth.html'"
-            style="
-              border:0;
-              background:#071b3a;
-              color:white;
-              padding:10px 15px;
-              border-radius:8px;
-              cursor:pointer;
-              font-weight:bold;
-            "
-          >
-            Login
-          </button>
-        </div>
-      `;
+      loginScreen.style.display =
+        "flex";
 
       return;
+
     }
 
+    chatApp.style.display =
+      "grid";
 
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-      .from("profiles")
-      .select(`
-        id,
-        full_name,
-        phone,
-        avatar_url,
-        city,
-        role
-      `)
-      .neq(
-        "id",
-        currentUser.id
-      )
-      .order(
-        "full_name",
-        {
-          ascending:true
-        }
-      );
+    await loadProfiles();
 
-
-    if(error){
-      throw error;
-    }
-
-
-    allUsers =
-    Array.isArray(data)
-    ? data
-    : [];
-
-
-    renderUsers(
-      allUsers
-    );
+    subscribeRealtime();
 
   }
   catch(error){
 
-    console.error(
-      "User loading error:",
-      error
+    console.error(error);
+
+    showNotice(
+      error.message ||
+      "Chat စတင်၍မရပါ။",
+      "error"
     );
 
-    userList.innerHTML = `
-      <div class="error-box">
-        ❌ User များကို ရယူမရပါ။
-        <br><br>
-        ${escapeHtml(error.message)}
-      </div>
-    `;
-
   }
+
+}
+
+
+/* =========================================
+   LOAD PROFILES
+========================================= */
+
+async function loadProfiles(){
+
+  userList.innerHTML = `
+    <div class="empty-users">
+      User များကို ရယူနေပါသည်...
+    </div>
+  `;
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select(
+      "id,full_name,phone,avatar_url,city,bio,role"
+    )
+    .neq(
+      "id",
+      currentUser.id
+    )
+    .order(
+      "full_name",
+      {
+        ascending:true,
+        nullsFirst:false
+      }
+    );
+
+  if(error){
+    throw error;
+  }
+
+  profiles =
+    Array.isArray(data)
+    ? data
+    : [];
+
+  renderUsers();
 
 }
 
@@ -950,70 +966,76 @@ async function loadUsers(){
    RENDER USERS
 ========================================= */
 
-function renderUsers(users){
+function renderUsers(){
 
-  if(!users.length){
+  const keyword =
+    userSearch.value
+      .trim()
+      .toLowerCase();
+
+  const filtered =
+    profiles.filter(function(profile){
+
+      const text = [
+        profile.full_name,
+        profile.city,
+        profile.bio
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+      return text.includes(keyword);
+
+    });
+
+  if(!filtered.length){
 
     userList.innerHTML = `
       <div class="empty-users">
-        👥<br><br>
-        Chat လုပ်နိုင်မယ့်<br>
-        အခြား User မရှိသေးပါ။
+        User မတွေ့ပါ။
       </div>
     `;
 
     return;
+
   }
 
-
   userList.innerHTML =
-  users.map(
-    user => {
+    filtered.map(function(profile){
 
-      const name =
-      escapeHtml(
-        user.full_name ||
-        "Unknown User"
-      );
-
-      const avatar =
-      user.avatar_url
-      ? `
-        <img
-          src="${escapeHtml(user.avatar_url)}"
-          alt=""
-        >
-      `
-      : getInitial(
-          user.full_name
-        );
-
+      const active =
+        selectedUser &&
+        selectedUser.id === profile.id
+        ? "active"
+        : "";
 
       return `
         <div
-          class="user-item ${
-            selectedUser &&
-            selectedUser.id === user.id
-            ? "active"
-            : ""
-          }"
-          data-user-id="${user.id}"
+          class="user-item ${active}"
+          data-user-id="${escapeHtml(profile.id)}"
         >
 
           <div class="avatar">
-            ${avatar}
+            ${avatarHtml(profile)}
           </div>
 
           <div class="user-info">
 
             <div class="user-name">
-              ${name}
+              ${escapeHtml(
+                profile.full_name ||
+                "Myanmar Elite User"
+              )}
             </div>
 
-            <div class="user-role">
-              ${escapeHtml(
-                user.role || "user"
-              )}
+            <div class="user-city">
+              ${
+                escapeHtml(
+                  profile.city ||
+                  "Myanmar"
+                )
+              }
             </div>
 
           </div>
@@ -1021,178 +1043,32 @@ function renderUsers(users){
         </div>
       `;
 
-    }
-  ).join("");
-
+    }).join("");
 
   document
     .querySelectorAll(".user-item")
-    .forEach(
-      item => {
+    .forEach(function(item){
 
-        item.addEventListener(
-          "click",
-          () => {
+      item.addEventListener(
+        "click",
+        function(){
 
-            const id =
+          const id =
             item.dataset.userId;
 
-            const user =
-            allUsers.find(
-              u => u.id === id
+          const profile =
+            profiles.find(
+              p => p.id === id
             );
 
-            if(user){
-              openChat(user);
-            }
-
+          if(profile){
+            openChat(profile);
           }
-        );
 
-      }
-    );
-
-}
-
-
-/* =========================================
-   SEARCH USERS
-========================================= */
-
-userSearch.addEventListener(
-  "input",
-  function(){
-
-    const keyword =
-    this.value
-      .trim()
-      .toLowerCase();
-
-    if(!keyword){
-
-      renderUsers(
-        allUsers
+        }
       );
 
-      return;
-    }
-
-
-    const filtered =
-    allUsers.filter(
-      user => {
-
-        const text = [
-          user.full_name,
-          user.phone,
-          user.city,
-          user.role
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-        return text.includes(
-          keyword
-        );
-
-      }
-    );
-
-
-    renderUsers(
-      filtered
-    );
-
-  }
-);
-
-
-/* =========================================
-   FIND / CREATE ROOM
-========================================= */
-
-async function getOrCreateRoom(
-  otherUserId
-){
-
-  const first =
-  currentUser.id <
-  otherUserId
-  ? currentUser.id
-  : otherUserId;
-
-  const second =
-  currentUser.id <
-  otherUserId
-  ? otherUserId
-  : currentUser.id;
-
-
-  let {
-    data: room,
-    error
-  } =
-  await supabaseClient
-    .from("chat_rooms")
-    .select("*")
-    .eq("user_one",first)
-    .eq("user_two",second)
-    .maybeSingle();
-
-
-  if(error){
-    throw error;
-  }
-
-
-  if(room){
-    return room;
-  }
-
-
-  const result =
-  await supabaseClient
-    .from("chat_rooms")
-    .insert({
-      user_one:first,
-      user_two:second
-    })
-    .select()
-    .single();
-
-
-  if(result.error){
-
-    /*
-      Another request may have created
-      the room at the same time.
-    */
-
-    if(
-      result.error.code === "23505"
-    ){
-
-      const retry =
-      await supabaseClient
-        .from("chat_rooms")
-        .select("*")
-        .eq("user_one",first)
-        .eq("user_two",second)
-        .single();
-
-      if(retry.error){
-        throw retry.error;
-      }
-
-      return retry.data;
-    }
-
-    throw result.error;
-  }
-
-
-  return result.data;
+    });
 
 }
 
@@ -1201,107 +1077,37 @@ async function getOrCreateRoom(
    OPEN CHAT
 ========================================= */
 
-async function openChat(user){
+async function openChat(profile){
 
   selectedUser =
-  user;
+    profile;
 
+  renderUsers();
 
-  chatArea.classList.add(
-    "mobile-show"
+  chatEmpty.style.display =
+    "none";
+
+  activeChat.style.display =
+    "flex";
+
+  chatPanel.classList.add(
+    "mobile-open"
   );
 
+  document.getElementById(
+    "chatUserName"
+  ).textContent =
+    profile.full_name ||
+    "Myanmar Elite User";
 
-  chatUserName.textContent =
-  user.full_name ||
-  "Unknown User";
+  document.getElementById(
+    "chatAvatar"
+  ).innerHTML =
+    avatarHtml(profile);
 
+  await loadMessages();
 
-  chatUserStatus.textContent =
-  user.city
-  ? user.city
-  : "Myanmar Elite Connect User";
-
-
-  if(user.avatar_url){
-
-    headerAvatar.innerHTML =
-    `
-      <img
-        src="${escapeHtml(user.avatar_url)}"
-        alt=""
-      >
-    `;
-
-  }else{
-
-    headerAvatar.textContent =
-    getInitial(
-      user.full_name
-    );
-
-  }
-
-
-  messages.innerHTML = `
-    <div class="loading">
-      <div class="spinner"></div>
-      Chat ကို ဖွင့်နေပါသည်...
-    </div>
-  `;
-
-
-  messageInput.disabled =
-  true;
-
-  sendButton.disabled =
-  true;
-
-
-  try{
-
-    currentRoom =
-    await getOrCreateRoom(
-      user.id
-    );
-
-
-    await loadMessages();
-
-
-    subscribeRealtime();
-
-
-    messageInput.disabled =
-    false;
-
-    sendButton.disabled =
-    false;
-
-    messageInput.focus();
-
-
-    renderUsers(
-      allUsers
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Open chat error:",
-      error
-    );
-
-    messages.innerHTML = `
-      <div class="error-box">
-        ❌ Chat ဖွင့်၍မရပါ။
-        <br><br>
-        ${escapeHtml(error.message)}
-      </div>
-    `;
-
-  }
+  messageInput.focus();
 
 }
 
@@ -1312,10 +1118,20 @@ async function openChat(user){
 
 async function loadMessages(){
 
-  if(!currentRoom){
+  if(!selectedUser){
     return;
   }
 
+  messagesBox.innerHTML = `
+    <div style="
+      text-align:center;
+      color:#697386;
+      padding:30px;
+      font-size:13px;
+    ">
+      Messages ရယူနေပါသည်...
+    </div>
+  `;
 
   const {
     data,
@@ -1323,10 +1139,11 @@ async function loadMessages(){
   } =
   await supabaseClient
     .from("chat_messages")
-    .select("*")
-    .eq(
-      "room_id",
-      currentRoom.id
+    .select(
+      "id,sender_id,receiver_id,message,created_at,is_read"
+    )
+    .or(
+      `and(sender_id.eq.${currentUser.id},receiver_id.eq.${selectedUser.id}),and(sender_id.eq.${selectedUser.id},receiver_id.eq.${currentUser.id})`
     )
     .order(
       "created_at",
@@ -1335,174 +1152,139 @@ async function loadMessages(){
       }
     );
 
-
   if(error){
-    throw error;
-  }
 
+    console.error(error);
 
-  messages.innerHTML = "";
-
-
-  if(!data || !data.length){
-
-    messages.innerHTML = `
-      <div class="select-chat">
-        <div class="select-chat-icon">
-          👋
-        </div>
-        <h3>
-          စကားစပြောလိုက်ပါ
-        </h3>
-        <p>
-          ပထမဆုံး Message ပို့လိုက်ပါ။
-        </p>
+    messagesBox.innerHTML = `
+      <div style="
+        text-align:center;
+        color:#b42318;
+        padding:30px;
+        font-size:13px;
+      ">
+        ❌ Messages ရယူ၍မရပါ။
+        <br><br>
+        ${escapeHtml(error.message)}
       </div>
     `;
 
     return;
+
   }
 
-
-  data.forEach(
-    message => {
-
-      renderMessage(
-        message
-      );
-
-    }
+  renderMessages(
+    Array.isArray(data)
+    ? data
+    : []
   );
 
-
-  scrollToBottom();
+  await markMessagesRead();
 
 }
 
 
 /* =========================================
-   RENDER MESSAGE
+   RENDER MESSAGES
 ========================================= */
 
-function renderMessage(message){
+function renderMessages(list){
 
-  const emptyState =
-  messages.querySelector(
-    ".select-chat"
-  );
+  if(!list.length){
 
-  if(emptyState){
-    emptyState.remove();
-  }
+    messagesBox.innerHTML = `
+      <div style="
+        text-align:center;
+        color:#697386;
+        padding:40px 20px;
+        font-size:13px;
+      ">
+        💬<br><br>
+        ဒီ User နဲ့ Message မရှိသေးပါ။<br>
+        ပထမဆုံး Message ပို့လိုက်ပါ။
+      </div>
+    `;
 
-
-  const mine =
-  message.sender_id ===
-  currentUser.id;
-
-
-  const row =
-  document.createElement(
-    "div"
-  );
-
-  row.className =
-  "message-row " +
-  (
-    mine
-    ? "mine"
-    : "theirs"
-  );
-
-
-  const bubble =
-  document.createElement(
-    "div"
-  );
-
-  bubble.className =
-  "message-bubble";
-
-
-  const text =
-  document.createElement(
-    "div"
-  );
-
-  text.className =
-  "message-text";
-
-  text.textContent =
-  message.message || "";
-
-
-  const time =
-  document.createElement(
-    "div"
-  );
-
-  time.className =
-  "message-time";
-
-  time.textContent =
-  formatTime(
-    message.created_at
-  );
-
-
-  bubble.appendChild(
-    text
-  );
-
-  bubble.appendChild(
-    time
-  );
-
-
-  if(mine){
-
-    const deleteButton =
-    document.createElement(
-      "button"
-    );
-
-    deleteButton.type =
-    "button";
-
-    deleteButton.className =
-    "delete-message";
-
-    deleteButton.textContent =
-    "🗑️";
-
-    deleteButton.title =
-    "Delete message";
-
-    deleteButton.addEventListener(
-      "click",
-      () => {
-
-        deleteMessage(
-          message.id
-        );
-
-      }
-    );
-
-    bubble.appendChild(
-      deleteButton
-    );
+    return;
 
   }
 
+  messagesBox.innerHTML =
+    list.map(function(item){
 
-  row.appendChild(
-    bubble
+      const mine =
+        item.sender_id === currentUser.id;
+
+      const time =
+        formatTime(item.created_at);
+
+      return `
+        <div class="
+          message-row
+          ${mine ? "mine" : "theirs"}
+        ">
+
+          <div class="message-bubble">
+
+            ${escapeHtml(item.message)}
+
+            <span class="message-time">
+              ${time}
+              ${
+                mine
+                ? (
+                  item.is_read
+                  ? " · ✓✓"
+                  : " · ✓"
+                )
+                : ""
+              }
+            </span>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+  scrollMessages();
+
+}
+
+
+/* =========================================
+   TIME
+========================================= */
+
+function formatTime(value){
+
+  if(!value){
+    return "";
+  }
+
+  const date =
+    new Date(value);
+
+  return date.toLocaleTimeString(
+    "en-US",
+    {
+      hour:"numeric",
+      minute:"2-digit"
+    }
   );
 
-  messages.appendChild(
-    row
-  );
+}
+
+
+/* =========================================
+   SCROLL
+========================================= */
+
+function scrollMessages(){
+
+  messagesBox.scrollTop =
+    messagesBox.scrollHeight;
 
 }
 
@@ -1511,33 +1293,29 @@ function renderMessage(message){
    SEND MESSAGE
 ========================================= */
 
-messageForm.addEventListener(
+composer.addEventListener(
   "submit",
   async function(event){
 
     event.preventDefault();
 
-
-    if(
-      !currentUser ||
-      !currentRoom
-    ){
+    if(!currentUser){
       return;
     }
 
+    if(!selectedUser){
+      return;
+    }
 
     const text =
-    messageInput.value.trim();
-
+      messageInput.value.trim();
 
     if(!text){
       return;
     }
 
-
     sendButton.disabled =
-    true;
-
+      true;
 
     try{
 
@@ -1547,51 +1325,43 @@ messageForm.addEventListener(
       await supabaseClient
         .from("chat_messages")
         .insert({
-
-          room_id:
-          currentRoom.id,
-
           sender_id:
-          currentUser.id,
+            currentUser.id,
+
+          receiver_id:
+            selectedUser.id,
 
           message:
-          text,
+            text,
 
-          message_type:
-          "text"
-
+          is_read:
+            false
         });
-
 
       if(error){
         throw error;
       }
 
+      messageInput.value = "";
 
-      messageInput.value =
-      "";
-
-      messageInput.style.height =
-      "44px";
+      autoResize();
 
     }
     catch(error){
 
-      console.error(
-        "Send message error:",
-        error
-      );
+      console.error(error);
 
-      alert(
-        "Message ပို့မရပါ။\n" +
-        error.message
+      showNotice(
+        "Message ပို့၍မရပါ: " +
+        error.message,
+        "error"
       );
 
     }
     finally{
 
       sendButton.disabled =
-      false;
+        false;
 
       messageInput.focus();
 
@@ -1607,9 +1377,7 @@ messageForm.addEventListener(
 
 function subscribeRealtime(){
 
-  if(
-    realtimeChannel
-  ){
+  if(realtimeChannel){
 
     supabaseClient
       .removeChannel(
@@ -1618,144 +1386,133 @@ function subscribeRealtime(){
 
   }
 
-
-  if(!currentRoom){
-    return;
-  }
-
-
   realtimeChannel =
-  supabaseClient
-    .channel(
-      "chat-room-" +
-      currentRoom.id
-    )
-    .on(
-      "postgres_changes",
-      {
-        event:"INSERT",
-        schema:"public",
-        table:"chat_messages",
-        filter:
-        "room_id=eq." +
-        currentRoom.id
-      },
-      payload => {
+    supabaseClient
+      .channel(
+        "chat-messages-" +
+        currentUser.id
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"INSERT",
+          schema:"public",
+          table:"chat_messages"
+        },
+        async function(payload){
 
-        /*
-          Avoid duplicate display because
-          the sender may receive realtime too.
-        */
+          const message =
+            payload.new;
 
-        const existing =
-        messages.querySelector(
-          `[data-message-id="${payload.new.id}"]`
-        );
+          if(
+            !message ||
+            !selectedUser
+          ){
+            return;
+          }
 
-        if(existing){
-          return;
+          const belongsToCurrentChat =
+            (
+              message.sender_id === currentUser.id &&
+              message.receiver_id === selectedUser.id
+            ) ||
+            (
+              message.sender_id === selectedUser.id &&
+              message.receiver_id === currentUser.id
+            );
+
+          if(
+            !belongsToCurrentChat
+          ){
+            return;
+          }
+
+          await loadMessages();
+
         }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"UPDATE",
+          schema:"public",
+          table:"chat_messages"
+        },
+        async function(payload){
 
+          if(!selectedUser){
+            return;
+          }
 
-        renderMessage(
-          payload.new
-        );
+          const message =
+            payload.new;
 
-        scrollToBottom();
+          const belongs =
+            (
+              message.sender_id === currentUser.id &&
+              message.receiver_id === selectedUser.id
+            ) ||
+            (
+              message.sender_id === selectedUser.id &&
+              message.receiver_id === currentUser.id
+            );
 
-      }
-    )
-    .on(
-      "postgres_changes",
-      {
-        event:"DELETE",
-        schema:"public",
-        table:"chat_messages",
-        filter:
-        "room_id=eq." +
-        currentRoom.id
-      },
-      payload => {
+          if(belongs){
+            await loadMessages();
+          }
 
-        const rows =
-        messages.children;
-
-        /*
-          Reloading is safer for delete events.
-        */
-
-        loadMessages()
-        .catch(
-          console.error
-        );
-
-      }
-    )
-    .subscribe(
-      status => {
+        }
+      )
+      .subscribe(function(status){
 
         console.log(
-          "Realtime status:",
+          "Chat realtime:",
           status
         );
 
-      }
-    );
+      });
 
 }
 
 
 /* =========================================
-   DELETE MESSAGE
+   MARK READ
 ========================================= */
 
-async function deleteMessage(
-  messageId
-){
+async function markMessagesRead(){
 
-  const confirmed =
-  confirm(
-    "ဒီ Message ကို ဖျက်မှာသေချာပါသလား?"
-  );
-
-
-  if(!confirmed){
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
     return;
   }
 
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient
-      .from("chat_messages")
-      .delete()
-      .eq(
-        "id",
-        messageId
-      )
-      .eq(
-        "sender_id",
-        currentUser.id
-      );
-
-
-    if(error){
-      throw error;
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Delete message error:",
-      error
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("chat_messages")
+    .update({
+      is_read:true
+    })
+    .eq(
+      "sender_id",
+      selectedUser.id
+    )
+    .eq(
+      "receiver_id",
+      currentUser.id
+    )
+    .eq(
+      "is_read",
+      false
     );
 
-    alert(
-      "Message ဖျက်မရပါ။\n" +
+  if(error){
+
+    console.warn(
+      "Read status update:",
       error.message
     );
 
@@ -1765,79 +1522,12 @@ async function deleteMessage(
 
 
 /* =========================================
-   EMOJI
+   USER SEARCH
 ========================================= */
 
-emojiButton.addEventListener(
-  "click",
-  function(){
-
-    emojiPanel.classList.toggle(
-      "show"
-    );
-
-  }
-);
-
-
-document
-  .querySelectorAll(".emoji")
-  .forEach(
-    button => {
-
-      button.addEventListener(
-        "click",
-        function(){
-
-          messageInput.value +=
-          this.textContent;
-
-          messageInput.focus();
-
-        }
-      );
-
-    }
-  );
-
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    if(
-      !emojiPanel.contains(event.target) &&
-      event.target !== emojiButton
-    ){
-
-      emojiPanel.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================
-   TEXTAREA AUTO HEIGHT
-========================================= */
-
-messageInput.addEventListener(
+userSearch.addEventListener(
   "input",
-  function(){
-
-    this.style.height =
-    "44px";
-
-    this.style.height =
-    Math.min(
-      this.scrollHeight,
-      130
-    ) + "px";
-
-  }
+  renderUsers
 );
 
 
@@ -1856,7 +1546,7 @@ messageInput.addEventListener(
 
       event.preventDefault();
 
-      messageForm.requestSubmit();
+      composer.requestSubmit();
 
     }
 
@@ -1865,34 +1555,70 @@ messageInput.addEventListener(
 
 
 /* =========================================
-   MOBILE BACK
+   TEXTAREA AUTO RESIZE
 ========================================= */
 
-function closeMobileChat(){
+function autoResize(){
 
-  chatArea.classList.remove(
-    "mobile-show"
-  );
+  messageInput.style.height =
+    "auto";
+
+  messageInput.style.height =
+    Math.min(
+      messageInput.scrollHeight,
+      120
+    ) + "px";
 
 }
 
+messageInput.addEventListener(
+  "input",
+  autoResize
+);
+
 
 /* =========================================
-   CLEANUP
+   MOBILE BACK
 ========================================= */
 
-window.addEventListener(
-  "beforeunload",
+document
+.getElementById("mobileBack")
+.addEventListener(
+  "click",
   function(){
 
+    chatPanel.classList.remove(
+      "mobile-open"
+    );
+
+    selectedUser =
+      null;
+
+    activeChat.style.display =
+      "none";
+
+    chatEmpty.style.display =
+      "flex";
+
+    renderUsers();
+
+  }
+);
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event,session){
+
     if(
-      realtimeChannel
+      event === "SIGNED_OUT"
     ){
 
-      supabaseClient
-        .removeChannel(
-          realtimeChannel
-        );
+      window.location.href =
+        "./auth.html";
 
     }
 
@@ -1904,14 +1630,7 @@ window.addEventListener(
    START
 ========================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    loadUsers();
-
-  }
-);
+initialize();
 
 </script>
 
