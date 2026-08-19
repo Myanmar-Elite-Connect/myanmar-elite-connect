@@ -4,22 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Home • Myanmar Elite Connect</title>
+  <title>Myanmar Elite Connect</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./supabase.js"></script>
 
   <style>
-
-    /* =========================================================
-       RESET
-    ========================================================= */
-
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#f5f7fb;
+      --surface:#ffffff;
+      --surface-2:#f8fafc;
+      --text:#10233f;
+      --muted:#718097;
+      --border:rgba(16,35,63,.09);
+
+      --gold:#d8b45c;
+      --gold-light:#f4d98a;
+      --navy:#071a34;
+
+      --green:#2d8a61;
+      --red:#c94b4b;
+
+      --shadow:0 16px 45px rgba(13,35,64,.07);
+    }
+
+    body.dark{
+      --bg:#071321;
+      --surface:#0e1e32;
+      --surface-2:#10243c;
+      --text:#f3f6fa;
+      --muted:#91a0b4;
+      --border:rgba(255,255,255,.09);
+      --navy:#f3f6fa;
+      --shadow:0 18px 50px rgba(0,0,0,.28);
     }
 
     html{
@@ -28,6 +51,8 @@
 
     body{
       min-height:100vh;
+      color:var(--text);
+      background:var(--bg);
 
       font-family:
         Inter,
@@ -39,16 +64,14 @@
         "Segoe UI",
         sans-serif;
 
-      color:var(--text);
-      background:var(--bg);
-
       transition:
-        background-color .3s ease,
+        background .3s ease,
         color .3s ease;
     }
 
     button,
-    input{
+    input,
+    select{
       font:inherit;
     }
 
@@ -67,493 +90,336 @@
     }
 
 
-    /* =========================================================
-       THEME
-    ========================================================= */
-
-    :root{
-
-      --bg:#f5f7fb;
-
-      --surface:#ffffff;
-
-      --surface-soft:#f8f9fc;
-
-      --text:#10233f;
-
-      --muted:#748198;
-
-      --border:rgba(16,35,63,.09);
-
-      --gold:#d8b45c;
-
-      --gold-light:#f4d98a;
-
-      --navy:#071a34;
-
-      --blue:#2c73b9;
-
-      --green:#2d8a61;
-
-      --red:#c94b4b;
-
-      --shadow:
-        0 18px 50px rgba(13,35,64,.07);
-
-      --shadow-hover:
-        0 22px 55px rgba(13,35,64,.12);
-    }
-
-    body.dark{
-
-      --bg:#071321;
-
-      --surface:#0e1e32;
-
-      --surface-soft:#10243c;
-
-      --text:#f3f6fa;
-
-      --muted:#94a3b8;
-
-      --border:rgba(255,255,255,.09);
-
-      --navy:#f3f6fa;
-
-      --shadow:
-        0 18px 50px rgba(0,0,0,.25);
-
-      --shadow-hover:
-        0 22px 55px rgba(0,0,0,.35);
-    }
-
-
-    /* =========================================================
+    /* =====================================================
        HEADER
-    ========================================================= */
+    ===================================================== */
 
     .topbar{
-
       position:sticky;
-
       top:0;
-
       z-index:100;
 
-      height:72px;
+      height:70px;
 
-      background:
-        rgba(255,255,255,.86);
+      background:rgba(255,255,255,.9);
+      border-bottom:1px solid var(--border);
 
-      backdrop-filter:
-        blur(18px);
-
-      -webkit-backdrop-filter:
-        blur(18px);
-
-      border-bottom:
-        1px solid var(--border);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
 
     body.dark .topbar{
-
-      background:
-        rgba(7,19,33,.86);
+      background:rgba(7,19,33,.92);
     }
 
     .topbar-inner{
-
-      width:min(1180px,92%);
-
+      width:min(1180px,94%);
       height:100%;
-
       margin:auto;
 
       display:flex;
-
       align-items:center;
-
       justify-content:space-between;
+
+      gap:20px;
     }
 
-
-    /* BRAND */
-
     .brand{
-
       display:flex;
-
       align-items:center;
+      gap:10px;
 
-      gap:11px;
+      min-width:max-content;
 
-      min-width:190px;
-
-      font-size:16px;
-
-      font-weight:850;
+      font-size:14px;
+      font-weight:900;
     }
 
     .brand-logo{
+      width:40px;
+      height:40px;
 
-      width:38px;
-
-      height:38px;
+      padding:4px;
 
       object-fit:contain;
 
-      border-radius:11px;
+      border-radius:12px;
+
+      background:var(--surface);
+      border:1px solid var(--border);
     }
 
     .brand-name span{
-
       color:var(--gold);
     }
 
-
-    /* DESKTOP NAV */
-
     .desktop-nav{
-
       display:flex;
-
       align-items:center;
-
-      gap:4px;
+      gap:3px;
     }
 
-    .nav-link{
-
+    .desktop-nav a{
       padding:9px 12px;
 
       border-radius:10px;
 
       color:var(--muted);
 
-      font-size:12px;
-
-      font-weight:750;
+      font-size:11px;
+      font-weight:800;
 
       transition:.2s ease;
     }
 
-    .nav-link:hover{
-
+    .desktop-nav a:hover,
+    .desktop-nav a.active{
       color:var(--text);
-
-      background:var(--surface-soft);
+      background:var(--surface-2);
     }
-
-    .nav-link.active{
-
-      color:var(--text);
-
-      background:var(--surface-soft);
-    }
-
-
-    /* HEADER ACTIONS */
 
     .header-actions{
-
       display:flex;
-
       align-items:center;
-
-      gap:8px;
-
-      min-width:190px;
-
-      justify-content:flex-end;
+      gap:7px;
     }
 
     .icon-button{
-
-      width:40px;
-
-      height:40px;
+      width:39px;
+      height:39px;
 
       display:grid;
-
       place-items:center;
 
       border:1px solid var(--border);
-
-      border-radius:12px;
+      border-radius:11px;
 
       color:var(--text);
-
       background:var(--surface);
 
       transition:.2s ease;
     }
 
     .icon-button:hover{
-
       transform:translateY(-2px);
-
-      border-color:
-        rgba(216,180,92,.45);
+      border-color:rgba(216,180,92,.5);
     }
 
-    .profile-mini{
-
-      width:40px;
-
-      height:40px;
+    .avatar-button{
+      width:39px;
+      height:39px;
 
       overflow:hidden;
 
-      border-radius:12px;
-
-      background:var(--surface-soft);
-
       border:1px solid var(--border);
+      border-radius:11px;
+
+      background:var(--surface-2);
     }
 
-    .profile-mini img{
-
+    .avatar-button img{
       width:100%;
-
       height:100%;
-
       object-fit:cover;
     }
 
 
-    /* =========================================================
-       MAIN
-    ========================================================= */
+    /* =====================================================
+       PAGE
+    ===================================================== */
 
-    .container{
-
-      width:min(1180px,92%);
-
+    .page{
+      width:min(1180px,94%);
       margin:auto;
 
-      padding:
-        28px 0
-        80px;
+      padding:30px 0 90px;
     }
 
 
-    /* =========================================================
-       WELCOME
-    ========================================================= */
+    /* =====================================================
+       HERO
+    ===================================================== */
 
-    .welcome{
+    .hero{
+      position:relative;
 
-      display:flex;
+      overflow:hidden;
 
-      align-items:flex-end;
+      padding:38px 36px;
 
-      justify-content:space-between;
+      border:1px solid var(--border);
+      border-radius:25px;
 
-      gap:25px;
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(216,180,92,.16),
+          transparent 32%
+        ),
+        var(--surface);
 
-      margin-bottom:23px;
+      box-shadow:var(--shadow);
     }
 
-    .welcome-text{
+    .hero::after{
+      content:"";
 
-      min-width:0;
+      position:absolute;
+
+      width:220px;
+      height:220px;
+
+      right:-100px;
+      bottom:-110px;
+
+      border-radius:50%;
+
+      background:rgba(216,180,92,.08);
+
+      pointer-events:none;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+
+      max-width:720px;
     }
 
     .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+
+      margin-bottom:12px;
 
       color:var(--gold);
 
       font-size:10px;
-
-      font-weight:850;
-
-      letter-spacing:1.8px;
-
+      font-weight:900;
+      letter-spacing:.8px;
       text-transform:uppercase;
     }
 
-    .welcome h1{
+    .eyebrow-dot{
+      width:6px;
+      height:6px;
 
-      margin-top:7px;
+      border-radius:50%;
 
-      font-size:
-        clamp(25px,4vw,34px);
-
-      line-height:1.15;
-
-      letter-spacing:-.8px;
-
-      font-weight:900;
+      background:var(--gold);
     }
 
-    .welcome p{
+    .hero h1{
+      max-width:700px;
 
-      margin-top:7px;
+      font-size:clamp(28px,5vw,46px);
+      line-height:1.12;
+      letter-spacing:-1.5px;
+      font-weight:950;
+    }
+
+    .hero h1 span{
+      color:var(--gold);
+    }
+
+    .hero p{
+      max-width:620px;
+
+      margin-top:12px;
 
       color:var(--muted);
 
       font-size:13px;
+      line-height:1.75;
     }
 
 
-    /* SEARCH */
+    /* =====================================================
+       SEARCH
+    ===================================================== */
 
-    .search-box{
-
-      width:
-        min(350px,100%);
-
-      height:47px;
+    .search-wrap{
+      margin-top:24px;
 
       display:flex;
-
       align-items:center;
 
-      gap:10px;
+      max-width:760px;
 
-      padding:0 14px;
+      padding:5px;
 
-      border:
-        1px solid var(--border);
-
-      border-radius:14px;
+      border:1px solid var(--border);
+      border-radius:15px;
 
       background:var(--surface);
 
-      box-shadow:
-        0 8px 25px rgba(13,35,64,.04);
+      box-shadow:0 12px 30px rgba(13,35,64,.06);
     }
 
     .search-icon{
+      width:44px;
+
+      display:grid;
+      place-items:center;
 
       color:var(--muted);
-
       font-size:17px;
     }
 
-    .search-box input{
-
+    .search-input{
       flex:1;
 
       min-width:0;
 
-      border:none;
+      height:43px;
 
-      outline:none;
+      border:0;
+      outline:0;
 
       color:var(--text);
-
       background:transparent;
 
       font-size:12px;
     }
 
-    .search-box input::placeholder{
-
+    .search-input::placeholder{
       color:var(--muted);
     }
 
+    .search-button{
+      height:43px;
 
-    /* =========================================================
-       QUICK ACTIONS
-    ========================================================= */
+      padding:0 18px;
 
-    .quick-actions{
-
-      display:grid;
-
-      grid-template-columns:
-        repeat(5,1fr);
-
-      gap:11px;
-
-      margin-bottom:26px;
-    }
-
-    .quick-card{
-
-      min-height:86px;
-
-      display:flex;
-
-      flex-direction:column;
-
-      justify-content:center;
-
-      align-items:center;
-
-      gap:8px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius:17px;
-
-      color:var(--text);
-
-      background:var(--surface);
-
-      box-shadow:var(--shadow);
-
-      transition:
-        transform .22s ease,
-        box-shadow .22s ease,
-        border-color .22s ease;
-    }
-
-    .quick-card:hover{
-
-      transform:translateY(-4px);
-
-      box-shadow:var(--shadow-hover);
-
-      border-color:
-        rgba(216,180,92,.40);
-    }
-
-    .quick-icon{
-
-      width:36px;
-
-      height:36px;
-
-      display:grid;
-
-      place-items:center;
-
+      border:0;
       border-radius:11px;
 
-      color:var(--gold);
+      color:#071a34;
 
       background:
-        rgba(216,180,92,.12);
-
-      font-size:16px;
-    }
-
-    .quick-card span{
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
 
       font-size:11px;
-
-      font-weight:800;
+      font-weight:900;
     }
 
 
-    /* =========================================================
-       SECTION HEADER
-    ========================================================= */
+    /* =====================================================
+       CATEGORY
+    ===================================================== */
 
     .section{
-
       margin-top:27px;
     }
 
     .section-head{
-
       display:flex;
-
-      align-items:center;
-
+      align-items:flex-end;
       justify-content:space-between;
 
       gap:15px;
@@ -562,453 +428,86 @@
     }
 
     .section-title{
-
-      font-size:17px;
-
-      font-weight:880;
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:-.3px;
     }
 
     .section-subtitle{
-
-      color:var(--muted);
-
-      font-size:11px;
-    }
-
-    .view-all{
-
-      color:var(--gold);
-
-      font-size:11px;
-
-      font-weight:800;
-    }
-
-
-    /* =========================================================
-       FEATURED
-    ========================================================= */
-
-    .featured-grid{
-
-      display:grid;
-
-      grid-template-columns:
-        1.35fr
-        .65fr
-        .65fr;
-
-      gap:13px;
-    }
-
-    .featured-card{
-
-      position:relative;
-
-      min-height:215px;
-
-      overflow:hidden;
-
-      border-radius:19px;
-
-      border:
-        1px solid var(--border);
-
-      background:
-        linear-gradient(
-          135deg,
-          #071a34,
-          #163b63
-        );
-
-      box-shadow:var(--shadow);
-
-      color:white;
-    }
-
-    .featured-card.large{
-
-      min-height:255px;
-    }
-
-    .featured-image{
-
-      position:absolute;
-
-      inset:0;
-
-      width:100%;
-
-      height:100%;
-
-      object-fit:cover;
-
-      opacity:.65;
-
-      transition:.4s ease;
-    }
-
-    .featured-card:hover
-    .featured-image{
-
-      transform:scale(1.04);
-
-      opacity:.75;
-    }
-
-    .featured-overlay{
-
-      position:absolute;
-
-      inset:0;
-
-      background:
-        linear-gradient(
-          to top,
-          rgba(4,15,30,.92),
-          rgba(4,15,30,.08)
-        );
-    }
-
-    .featured-content{
-
-      position:absolute;
-
-      left:18px;
-
-      right:18px;
-
-      bottom:17px;
-
-      z-index:2;
-    }
-
-    .featured-label{
-
-      display:inline-flex;
-
-      padding:5px 8px;
-
-      border-radius:7px;
-
-      color:#071a34;
-
-      background:var(--gold);
-
-      font-size:8px;
-
-      font-weight:900;
-    }
-
-    .featured-content h3{
-
-      margin-top:9px;
-
-      font-size:18px;
-
-      font-weight:850;
-    }
-
-    .featured-card:not(.large)
-    .featured-content h3{
-
-      font-size:15px;
-    }
-
-    .featured-content p{
-
       margin-top:4px;
 
-      color:rgba(255,255,255,.68);
+      color:var(--muted);
 
       font-size:10px;
     }
-
-
-    /* =========================================================
-       CATEGORIES
-    ========================================================= */
 
     .category-grid{
-
       display:grid;
-
-      grid-template-columns:
-        repeat(6,1fr);
-
-      gap:10px;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
     }
 
-    .category{
+    .category-card{
+      position:relative;
 
-      padding:15px 8px;
-
-      text-align:center;
-
-      border:
-        1px solid var(--border);
-
-      border-radius:15px;
-
-      background:var(--surface);
-
-      transition:.2s ease;
-    }
-
-    .category:hover{
-
-      transform:translateY(-3px);
-
-      border-color:
-        rgba(216,180,92,.4);
-    }
-
-    .category-icon{
-
-      width:39px;
-
-      height:39px;
-
-      margin:
-        0 auto 8px;
-
-      display:grid;
-
-      place-items:center;
-
-      border-radius:12px;
-
-      background:var(--surface-soft);
-
-      color:var(--gold);
-
-      font-size:16px;
-    }
-
-    .category span{
-
-      font-size:10px;
-
-      font-weight:800;
-    }
-
-
-    /* =========================================================
-       LISTINGS
-    ========================================================= */
-
-    .listing-grid{
-
-      display:grid;
-
-      grid-template-columns:
-        repeat(4,1fr);
-
-      gap:13px;
-    }
-
-    .listing{
-
-      overflow:hidden;
-
-      border:
-        1px solid var(--border);
-
-      border-radius:17px;
-
-      background:var(--surface);
-
-      box-shadow:var(--shadow);
-
-      transition:.22s ease;
-    }
-
-    .listing:hover{
-
-      transform:translateY(-4px);
-
-      box-shadow:var(--shadow-hover);
-    }
-
-    .listing-image{
-
-      width:100%;
-
-      height:145px;
-
-      object-fit:cover;
-
-      background:
-        linear-gradient(
-          135deg,
-          #dfe6ef,
-          #b9c7d8
-        );
-    }
-
-    .listing-body{
-
-      padding:14px;
-    }
-
-    .listing-type{
-
-      color:var(--gold);
-
-      font-size:9px;
-
-      font-weight:850;
-
-      text-transform:uppercase;
-    }
-
-    .listing-title{
-
-      margin-top:5px;
-
-      white-space:nowrap;
-
-      overflow:hidden;
-
-      text-overflow:ellipsis;
-
-      font-size:13px;
-
-      font-weight:850;
-    }
-
-    .listing-meta{
-
-      margin-top:5px;
-
-      color:var(--muted);
-
-      font-size:10px;
-    }
-
-    .listing-bottom{
+      min-height:125px;
 
       display:flex;
-
-      align-items:center;
-
-      justify-content:space-between;
-
-      gap:8px;
-
-      margin-top:11px;
-    }
-
-    .listing-price{
-
-      color:var(--text);
-
-      font-size:14px;
-
-      font-weight:900;
-    }
-
-    .listing-location{
-
-      color:var(--muted);
-
-      font-size:9px;
-
-      white-space:nowrap;
+      flex-direction:column;
+      justify-content:flex-end;
 
       overflow:hidden;
 
-      text-overflow:ellipsis;
-    }
+      padding:18px;
 
-
-    /* =========================================================
-       ACTIVITY
-    ========================================================= */
-
-    .activity-grid{
-
-      display:grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-      gap:13px;
-    }
-
-    .activity-card{
-
-      padding:20px;
-
-      border:
-        1px solid var(--border);
-
+      border:1px solid var(--border);
       border-radius:18px;
 
       background:var(--surface);
 
+      box-shadow:0 8px 25px rgba(13,35,64,.04);
+
+      transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .category-card:hover{
+      transform:translateY(-3px);
+
+      border-color:rgba(216,180,92,.45);
+
       box-shadow:var(--shadow);
     }
 
-    .activity-row{
+    .category-icon{
+      position:absolute;
+      top:15px;
+      right:16px;
 
-      display:flex;
-
-      align-items:center;
-
-      gap:11px;
-
-      padding:11px 0;
-
-      border-bottom:
-        1px solid var(--border);
-    }
-
-    .activity-row:last-child{
-
-      border-bottom:none;
-
-      padding-bottom:0;
-    }
-
-    .activity-icon{
-
-      width:37px;
-
-      height:37px;
-
-      flex:none;
+      width:43px;
+      height:43px;
 
       display:grid;
-
       place-items:center;
 
-      border-radius:11px;
+      border-radius:13px;
 
       color:var(--gold);
 
-      background:var(--surface-soft);
+      background:rgba(216,180,92,.11);
+
+      font-size:21px;
     }
 
-    .activity-text{
-
-      min-width:0;
+    .category-card strong{
+      font-size:15px;
+      font-weight:950;
     }
 
-    .activity-text strong{
-
-      display:block;
-
-      font-size:11px;
-
-      font-weight:800;
-    }
-
-    .activity-text span{
-
-      display:block;
-
-      margin-top:3px;
+    .category-card span{
+      margin-top:4px;
 
       color:var(--muted);
 
@@ -1016,320 +515,511 @@
     }
 
 
-    /* =========================================================
-       EMPTY
-    ========================================================= */
+    /* =====================================================
+       FILTER
+    ===================================================== */
 
-    .empty{
+    .filter-panel{
+      padding:17px;
 
-      grid-column:
-        1 / -1;
+      border:1px solid var(--border);
+      border-radius:18px;
 
-      padding:35px 15px;
+      background:var(--surface);
 
-      text-align:center;
+      box-shadow:0 8px 25px rgba(13,35,64,.04);
+    }
+
+    .filter-row{
+      display:grid;
+      grid-template-columns:1.2fr 1fr 1fr 1fr auto;
+
+      gap:9px;
+      align-items:end;
+    }
+
+    .field{
+      min-width:0;
+    }
+
+    .field label{
+      display:block;
+
+      margin-bottom:6px;
 
       color:var(--muted);
 
-      border:
-        1px dashed var(--border);
+      font-size:9px;
+      font-weight:800;
+    }
 
-      border-radius:16px;
+    .field select,
+    .field input{
+      width:100%;
+      height:42px;
 
-      font-size:12px;
+      padding:0 11px;
+
+      outline:0;
+
+      color:var(--text);
+      background:var(--surface-2);
+
+      border:1px solid var(--border);
+      border-radius:10px;
+
+      font-size:10px;
+    }
+
+    .field select:focus,
+    .field input:focus{
+      border-color:rgba(216,180,92,.6);
+    }
+
+    .clear-button{
+      height:42px;
+
+      padding:0 13px;
+
+      border:1px solid var(--border);
+      border-radius:10px;
+
+      color:var(--muted);
+      background:var(--surface);
+
+      font-size:10px;
+      font-weight:850;
+
+      white-space:nowrap;
+    }
+
+    .clear-button:hover{
+      color:var(--red);
+      border-color:rgba(201,75,75,.3);
     }
 
 
-    /* =========================================================
+    /* =====================================================
+       LISTINGS
+    ===================================================== */
+
+    .listing-meta{
+      color:var(--muted);
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .listing-grid{
+      display:grid;
+
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+      gap:13px;
+    }
+
+    .listing-card{
+      min-width:0;
+      overflow:hidden;
+
+      border:1px solid var(--border);
+      border-radius:17px;
+
+      background:var(--surface);
+
+      box-shadow:0 8px 25px rgba(13,35,64,.045);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+    }
+
+    .listing-card:hover{
+      transform:translateY(-3px);
+
+      border-color:rgba(216,180,92,.42);
+
+      box-shadow:var(--shadow);
+    }
+
+    .listing-image{
+      position:relative;
+
+      aspect-ratio:1.12/1;
+
+      overflow:hidden;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e2e8f0,
+          #c8d3df
+        );
+    }
+
+    .listing-image img{
+      width:100%;
+      height:100%;
+
+      object-fit:cover;
+
+      transition:transform .3s ease;
+    }
+
+    .listing-card:hover .listing-image img{
+      transform:scale(1.035);
+    }
+
+    .listing-category{
+      position:absolute;
+      top:10px;
+      left:10px;
+
+      padding:5px 7px;
+
+      border-radius:7px;
+
+      color:#071a34;
+      background:var(--gold);
+
+      font-size:7px;
+      font-weight:950;
+      text-transform:uppercase;
+    }
+
+    .listing-body{
+      padding:12px;
+    }
+
+    .listing-title{
+      overflow:hidden;
+
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2;
+
+      min-height:32px;
+
+      font-size:12px;
+      line-height:1.35;
+      font-weight:900;
+    }
+
+    .listing-price{
+      margin-top:8px;
+
+      font-size:14px;
+      font-weight:950;
+    }
+
+    .listing-location{
+      display:flex;
+      align-items:center;
+      gap:5px;
+
+      margin-top:7px;
+
+      overflow:hidden;
+
+      color:var(--muted);
+
+      font-size:8px;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+
+    .listing-location-icon{
+      color:var(--gold);
+    }
+
+
+    /* =====================================================
+       STATES
+    ===================================================== */
+
+    .state{
+      min-height:300px;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+
+      text-align:center;
+
+      border:1px dashed var(--border);
+      border-radius:18px;
+
+      color:var(--muted);
+
+      background:var(--surface);
+    }
+
+    .state-icon{
+      width:50px;
+      height:50px;
+
+      display:grid;
+      place-items:center;
+
+      margin-bottom:11px;
+
+      border-radius:15px;
+
+      color:var(--gold);
+      background:var(--surface-2);
+
+      font-size:20px;
+    }
+
+    .state strong{
+      color:var(--text);
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .state span{
+      max-width:360px;
+
+      margin-top:5px;
+
+      font-size:10px;
+      line-height:1.6;
+    }
+
+
+    /* =====================================================
        MOBILE NAV
-    ========================================================= */
+    ===================================================== */
 
     .mobile-nav{
-
       display:none;
 
       position:fixed;
 
       left:0;
-
       right:0;
-
       bottom:0;
 
       z-index:200;
 
       height:67px;
 
-      background:
-        rgba(255,255,255,.92);
+      background:rgba(255,255,255,.95);
 
-      backdrop-filter:
-        blur(18px);
+      border-top:1px solid var(--border);
 
-      -webkit-backdrop-filter:
-        blur(18px);
-
-      border-top:
-        1px solid var(--border);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
 
     body.dark .mobile-nav{
-
-      background:
-        rgba(7,19,33,.93);
+      background:rgba(7,19,33,.96);
     }
 
     .mobile-nav-inner{
-
       height:100%;
 
       display:grid;
-
-      grid-template-columns:
-        repeat(5,1fr);
+      grid-template-columns:repeat(5,1fr);
     }
 
     .mobile-nav a{
-
       display:flex;
-
       flex-direction:column;
-
       align-items:center;
-
       justify-content:center;
 
       gap:4px;
 
       color:var(--muted);
 
-      font-size:9px;
-
-      font-weight:750;
+      font-size:8px;
+      font-weight:800;
     }
 
     .mobile-nav a.active{
-
       color:var(--gold);
     }
 
-    .mobile-nav-icon{
-
+    .mobile-icon{
       font-size:17px;
     }
 
 
-    /* =========================================================
+    /* =====================================================
        RESPONSIVE
-    ========================================================= */
+    ===================================================== */
 
-    @media(max-width:950px){
+    @media(max-width:1050px){
 
       .desktop-nav{
-
         display:none;
       }
 
-      .quick-actions{
-
-        grid-template-columns:
-          repeat(3,1fr);
-      }
-
-      .featured-grid{
-
-        grid-template-columns:
-          1fr 1fr;
-      }
-
-      .featured-card.large{
-
-        grid-column:
-          1 / -1;
-      }
-
-      .listing-grid{
-
-        grid-template-columns:
-          repeat(2,1fr);
-      }
-
-      .category-grid{
-
-        grid-template-columns:
-          repeat(3,1fr);
-      }
-
       .mobile-nav{
-
         display:block;
       }
 
-      .container{
-
-        padding-bottom:95px;
+      .page{
+        padding-bottom:100px;
       }
 
+      .listing-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+
+      .filter-row{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .clear-button{
+        width:100%;
+      }
     }
 
 
-    @media(max-width:650px){
+    @media(max-width:700px){
 
       .topbar{
+        height:62px;
+      }
 
-        height:64px;
+      .topbar-inner{
+        width:94%;
+      }
+
+      .brand-name{
+        display:none;
       }
 
       .header-actions{
-
-        min-width:auto;
+        gap:5px;
       }
 
-      .brand{
-
-        min-width:auto;
-
-        font-size:14px;
-      }
-
-      .brand-logo{
-
-        width:34px;
-
-        height:34px;
-      }
-
-      .welcome{
-
-        display:block;
-      }
-
-      .search-box{
-
-        width:100%;
-
-        margin-top:17px;
-      }
-
-      .quick-actions{
-
-        grid-template-columns:
-          repeat(3,1fr);
-      }
-
-      .quick-card{
-
-        min-height:78px;
-      }
-
-      .featured-grid{
-
-        grid-template-columns:
-          1fr;
-      }
-
-      .featured-card.large{
-
-        min-height:230px;
-      }
-
-      .featured-card:not(.large){
-
-        min-height:190px;
-      }
-
-      .activity-grid{
-
-        grid-template-columns:1fr;
-      }
-
-    }
-
-
-    @media(max-width:430px){
-
-      .container{
-
+      .page{
         width:94%;
-
-        padding-top:20px;
+        padding-top:17px;
       }
 
-      .quick-actions{
-
-        grid-template-columns:
-          repeat(3,1fr);
-
-        gap:8px;
+      .hero{
+        padding:27px 20px;
+        border-radius:20px;
       }
 
-      .quick-card{
-
-        min-height:72px;
+      .hero h1{
+        font-size:29px;
       }
 
-      .quick-icon{
-
-        width:32px;
-
-        height:32px;
-
-        font-size:14px;
+      .hero p{
+        font-size:11px;
       }
 
-      .quick-card span{
+      .search-wrap{
+        margin-top:18px;
+      }
 
-        font-size:9px;
+      .search-button{
+        padding:0 13px;
       }
 
       .category-grid{
-
-        grid-template-columns:
-          repeat(3,1fr);
+        gap:8px;
       }
 
-      .listing-grid{
-
-        grid-template-columns:
-          repeat(2,1fr);
-
-        gap:9px;
+      .category-card{
+        min-height:105px;
+        padding:13px;
+        border-radius:14px;
       }
 
-      .listing-image{
-
-        height:115px;
+      .category-icon{
+        width:34px;
+        height:34px;
+        top:11px;
+        right:11px;
+        font-size:17px;
       }
 
-      .listing-body{
-
-        padding:11px;
-      }
-
-      .listing-price{
-
+      .category-card strong{
         font-size:12px;
       }
 
+      .category-card span{
+        font-size:8px;
+      }
+
+      .filter-row{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .filter-panel{
+        padding:13px;
+      }
+
+      .listing-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+      }
+
+      .listing-body{
+        padding:10px;
+      }
+
+      .listing-title{
+        font-size:10px;
+        min-height:27px;
+      }
+
+      .listing-price{
+        font-size:12px;
+      }
+
+      .listing-location{
+        font-size:7px;
+      }
     }
 
+
+    @media(max-width:420px){
+
+      .header-actions .gem-link{
+        display:none;
+      }
+
+      .hero h1{
+        font-size:26px;
+      }
+
+      .category-grid{
+        grid-template-columns:1fr;
+      }
+
+      .category-card{
+        min-height:84px;
+      }
+
+      .filter-row{
+        grid-template-columns:1fr;
+      }
+
+      .listing-grid{
+        gap:8px;
+      }
+    }
   </style>
 </head>
 
-
 <body>
 
-
-  <!-- =======================================================
+  <!-- =====================================================
        HEADER
-  ======================================================= -->
+  ===================================================== -->
 
   <header class="topbar">
 
     <div class="topbar-inner">
-
-
-      <!-- BRAND -->
 
       <a
         href="./general.html"
@@ -1341,103 +1031,63 @@
           alt="Myanmar Elite Connect">
 
         <div class="brand-name">
-
           Myanmar
           <span>Elite</span>
           Connect
-
         </div>
 
       </a>
 
 
-      <!-- DESKTOP NAV -->
-
       <nav class="desktop-nav">
 
         <a
           href="./general.html"
-          class="nav-link active">
-
+          class="active">
           Home
-
         </a>
 
-        <a
-          href="./buy.html"
-          class="nav-link">
-
-          Buy
-
-        </a>
-
-        <a
-          href="./sell.html"
-          class="nav-link">
-
-          Sell
-
-        </a>
-
-        <a
-          href="./car.html"
-          class="nav-link">
-
+        <a href="./car.html">
           Cars
-
         </a>
 
-        <a
-          href="./property.html"
-          class="nav-link">
-
+        <a href="./property.html">
           Property
-
         </a>
 
-        <a
-          href="./chat.html"
-          class="nav-link">
-
-          Chat
-
+        <a href="./gem.html">
+          Gems
         </a>
 
       </nav>
 
-
-      <!-- ACTIONS -->
 
       <div class="header-actions">
 
         <button
           class="icon-button"
           id="themeButton"
+          type="button"
           onclick="toggleTheme()"
           aria-label="Toggle theme">
-
           ☾
-
         </button>
 
 
         <a
           href="./gem.html"
-          class="icon-button"
+          class="icon-button gem-link"
           aria-label="Gems">
-
           ◆
-
         </a>
 
 
         <a
           href="./profile.html"
-          class="profile-mini"
-          aria-label="Profile">
+          class="avatar-button">
 
           <img
-            id="headerAvatar"
+            id="avatar"
             src=""
             alt="Profile">
 
@@ -1450,312 +1100,78 @@
   </header>
 
 
-  <!-- =======================================================
+  <!-- =====================================================
        MAIN
-  ======================================================= -->
+  ===================================================== -->
 
-  <main class="container">
+  <main class="page">
 
 
-    <!-- WELCOME -->
+    <!-- HERO -->
 
-    <section class="welcome">
+    <section class="hero">
 
-      <div class="welcome-text">
+      <div class="hero-content">
 
         <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
           MYANMAR ELITE CONNECT
         </div>
 
-        <h1 id="welcomeTitle">
-          Welcome back.
+
+        <h1>
+          Find what matters.
+          <span>Connect with confidence.</span>
         </h1>
 
-        <p id="welcomeSubtitle">
-          Discover what is happening around you.
+
+        <p>
+          Discover cars, property and gems from one
+          focused marketplace built for Myanmar.
         </p>
 
-      </div>
 
+        <div class="search-wrap">
 
-      <!-- SEARCH -->
+          <div class="search-icon">
+            ⌕
+          </div>
 
-      <div class="search-box">
+          <input
+            id="searchInput"
+            class="search-input"
+            type="search"
+            autocomplete="off"
+            placeholder="Search cars, property or gems...">
 
-        <span class="search-icon">
-          ⌕
-        </span>
+          <button
+            class="search-button"
+            type="button"
+            onclick="applyFilters()">
+            Search
+          </button>
 
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search cars, property, listings...">
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- =====================================================
-         QUICK ACTIONS
-    ===================================================== -->
-
-    <section class="quick-actions">
-
-
-      <a
-        href="./buy.html"
-        class="quick-card">
-
-        <div class="quick-icon">
-          ◈
-        </div>
-
-        <span>
-          Buy
-        </span>
-
-      </a>
-
-
-      <a
-        href="./sell.html"
-        class="quick-card">
-
-        <div class="quick-icon">
-          ＋
-        </div>
-
-        <span>
-          Sell
-        </span>
-
-      </a>
-
-
-      <a
-        href="./car.html"
-        class="quick-card">
-
-        <div class="quick-icon">
-          🚘
-        </div>
-
-        <span>
-          Cars
-        </span>
-
-      </a>
-
-
-      <a
-        href="./property.html"
-        class="quick-card">
-
-        <div class="quick-icon">
-          ⌂
-        </div>
-
-        <span>
-          Property
-        </span>
-
-      </a>
-
-
-      <a
-        href="./gem.html"
-        class="quick-card">
-
-        <div class="quick-icon">
-          ◆
-        </div>
-
-        <span>
-          Gems
-        </span>
-
-      </a>
-
-    </section>
-
-
-    <!-- =====================================================
-         FEATURED
-    ===================================================== -->
+    <!-- CATEGORY -->
 
     <section class="section">
 
       <div class="section-head">
 
         <div>
-
           <div class="section-title">
-            Featured
+            Explore
           </div>
 
           <div class="section-subtitle">
-            Selected listings and opportunities
+            Choose what you are looking for.
           </div>
-
-        </div>
-
-        <a
-          href="./buy.html"
-          class="view-all">
-
-          View all →
-
-        </a>
-
-      </div>
-
-
-      <div
-        class="featured-grid"
-        id="featuredGrid">
-
-
-        <!-- FEATURED 1 -->
-
-        <a
-          href="./buy.html"
-          class="featured-card large">
-
-          <div
-            class="featured-image"
-            style="
-              background:
-              linear-gradient(
-                135deg,
-                #183c61,
-                #071a34
-              );
-            ">
-          </div>
-
-          <div class="featured-overlay"></div>
-
-          <div class="featured-content">
-
-            <span class="featured-label">
-              FEATURED
-            </span>
-
-            <h3>
-              Discover Premium Listings
-            </h3>
-
-            <p>
-              Explore selected opportunities
-              from Myanmar Elite Connect.
-            </p>
-
-          </div>
-
-        </a>
-
-
-        <!-- FEATURED 2 -->
-
-        <a
-          href="./car.html"
-          class="featured-card">
-
-          <div
-            class="featured-image"
-            style="
-              background:
-              linear-gradient(
-                135deg,
-                #455d70,
-                #172d42
-              );
-            ">
-          </div>
-
-          <div class="featured-overlay"></div>
-
-          <div class="featured-content">
-
-            <span class="featured-label">
-              CARS
-            </span>
-
-            <h3>
-              Find Your Next Car
-            </h3>
-
-            <p>
-              Browse available vehicles.
-            </p>
-
-          </div>
-
-        </a>
-
-
-        <!-- FEATURED 3 -->
-
-        <a
-          href="./property.html"
-          class="featured-card">
-
-          <div
-            class="featured-image"
-            style="
-              background:
-              linear-gradient(
-                135deg,
-                #66705d,
-                #28372f
-              );
-            ">
-          </div>
-
-          <div class="featured-overlay"></div>
-
-          <div class="featured-content">
-
-            <span class="featured-label">
-              PROPERTY
-            </span>
-
-            <h3>
-              Explore Property
-            </h3>
-
-            <p>
-              Homes, land and spaces.
-            </p>
-
-          </div>
-
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         CATEGORIES
-    ===================================================== -->
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div>
-
-          <div class="section-title">
-            Browse Categories
-          </div>
-
-          <div class="section-subtitle">
-            Find exactly what you need
-          </div>
-
         </div>
 
       </div>
@@ -1763,17 +1179,20 @@
 
       <div class="category-grid">
 
-
         <a
           href="./car.html"
-          class="category">
+          class="category-card">
 
           <div class="category-icon">
-            🚘
+            🚗
           </div>
 
-          <span>
+          <strong>
             Cars
+          </strong>
+
+          <span>
+            Find vehicles that fit you.
           </span>
 
         </a>
@@ -1781,44 +1200,18 @@
 
         <a
           href="./property.html"
-          class="category">
+          class="category-card">
 
           <div class="category-icon">
-            ⌂
+            🏠
           </div>
 
-          <span>
+          <strong>
             Property
-          </span>
-
-        </a>
-
-
-        <a
-          href="./buy.html"
-          class="category">
-
-          <div class="category-icon">
-            ◈
-          </div>
+          </strong>
 
           <span>
-            Marketplace
-          </span>
-
-        </a>
-
-
-        <a
-          href="./sell.html"
-          class="category">
-
-          <div class="category-icon">
-            ＋
-          </div>
-
-          <span>
-            Sell
+            Homes, land and property.
           </span>
 
         </a>
@@ -1826,29 +1219,18 @@
 
         <a
           href="./gem.html"
-          class="category">
+          class="category-card">
 
           <div class="category-icon">
             ◆
           </div>
 
-          <span>
+          <strong>
             Gems
-          </span>
-
-        </a>
-
-
-        <a
-          href="./chat.html"
-          class="category">
-
-          <div class="category-icon">
-            ◌
-          </div>
+          </strong>
 
           <span>
-            Messages
+            Explore fine gems and stones.
           </span>
 
         </a>
@@ -1858,336 +1240,192 @@
     </section>
 
 
-    <!-- =====================================================
-         RECENT LISTINGS
-    ===================================================== -->
+    <!-- FILTER -->
 
     <section class="section">
 
       <div class="section-head">
 
         <div>
-
           <div class="section-title">
-            Recent Listings
+            Find a listing
           </div>
 
           <div class="section-subtitle">
-            Newly added items
+            Narrow the results without clutter.
           </div>
+        </div>
+
+        <div
+          class="listing-meta"
+          id="resultCount">
+          —
+        </div>
+
+      </div>
+
+
+      <div class="filter-panel">
+
+        <div class="filter-row">
+
+
+          <div class="field">
+
+            <label>
+              Category
+            </label>
+
+            <select id="categoryFilter">
+
+              <option value="">
+                All categories
+              </option>
+
+              <option value="car">
+                Car
+              </option>
+
+              <option value="property">
+                Property
+              </option>
+
+              <option value="gem">
+                Gem
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Region / State
+            </label>
+
+            <select id="regionFilter">
+
+              <option value="">
+                All locations
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Minimum price
+            </label>
+
+            <input
+              id="minPrice"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              placeholder="MMK">
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Maximum price
+            </label>
+
+            <input
+              id="maxPrice"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              placeholder="MMK">
+
+          </div>
+
+
+          <button
+            class="clear-button"
+            type="button"
+            onclick="clearFilters()">
+
+            Clear
+
+          </button>
+
 
         </div>
 
-        <a
-          href="./buy.html"
-          class="view-all">
+      </div>
 
-          View all →
+    </section>
 
-        </a>
+
+    <!-- LISTINGS -->
+
+    <section class="section">
+
+      <div class="section-head">
+
+        <div>
+          <div class="section-title">
+            Latest Listings
+          </div>
+
+          <div class="section-subtitle">
+            Recently added on Myanmar Elite Connect.
+          </div>
+        </div>
 
       </div>
 
 
       <div
-        class="listing-grid"
-        id="listingGrid">
+        id="listingContainer"
+        class="listing-grid">
 
+        <div
+          class="state"
+          style="grid-column:1/-1;">
 
-        <!-- FALLBACK CARDS -->
-
-        <article class="listing">
-
-          <div
-            class="listing-image">
+          <div class="state-icon">
+            ◌
           </div>
 
-          <div class="listing-body">
-
-            <div class="listing-type">
-              Marketplace
-            </div>
-
-            <div class="listing-title">
-              New listing
-            </div>
-
-            <div class="listing-meta">
-              Recently added
-            </div>
-
-            <div class="listing-bottom">
-
-              <div class="listing-price">
-                —
-              </div>
-
-              <div class="listing-location">
-                Myanmar
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="listing">
-
-          <div
-            class="listing-image">
-          </div>
-
-          <div class="listing-body">
-
-            <div class="listing-type">
-              Property
-            </div>
-
-            <div class="listing-title">
-              New property
-            </div>
-
-            <div class="listing-meta">
-              Recently added
-            </div>
-
-            <div class="listing-bottom">
-
-              <div class="listing-price">
-                —
-              </div>
-
-              <div class="listing-location">
-                Myanmar
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="listing">
-
-          <div
-            class="listing-image">
-          </div>
-
-          <div class="listing-body">
-
-            <div class="listing-type">
-              Cars
-            </div>
-
-            <div class="listing-title">
-              New vehicle
-            </div>
-
-            <div class="listing-meta">
-              Recently added
-            </div>
-
-            <div class="listing-bottom">
-
-              <div class="listing-price">
-                —
-              </div>
-
-              <div class="listing-location">
-                Myanmar
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="listing">
-
-          <div
-            class="listing-image">
-          </div>
-
-          <div class="listing-body">
-
-            <div class="listing-type">
-              Marketplace
-            </div>
-
-            <div class="listing-title">
-              New item
-            </div>
-
-            <div class="listing-meta">
-              Recently added
-            </div>
-
-            <div class="listing-bottom">
-
-              <div class="listing-price">
-                —
-              </div>
-
-              <div class="listing-location">
-                Myanmar
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         ACTIVITY
-    ===================================================== -->
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div>
-
-          <div class="section-title">
-            Your Activity
-          </div>
-
-          <div class="section-subtitle">
-            Quick access to your account
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="activity-grid">
-
-
-        <div class="activity-card">
-
-          <div class="activity-row">
-
-            <div class="activity-icon">
-              ♙
-            </div>
-
-            <div class="activity-text">
-
-              <strong>
-                Your Profile
-              </strong>
-
-              <span>
-                Manage your profile and KYC
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="activity-row">
-
-            <div class="activity-icon">
-              ◆
-            </div>
-
-            <div class="activity-text">
-
-              <strong>
-                Gems
-              </strong>
-
-              <span id="activityGemText">
-                Check your Gem balance
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="activity-card">
-
-          <div class="activity-row">
-
-            <div class="activity-icon">
-              ◌
-            </div>
-
-            <div class="activity-text">
-
-              <strong>
-                Messages
-              </strong>
-
-              <span>
-                Continue your conversations
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="activity-row">
-
-            <div class="activity-icon">
-              ＋
-            </div>
-
-            <div class="activity-text">
-
-              <strong>
-                Add Listing
-              </strong>
-
-              <span>
-                Publish something for sale
-              </span>
-
-            </div>
-
-          </div>
+          <strong>
+            Loading listings
+          </strong>
+
+          <span>
+            Please wait while we load the latest listings.
+          </span>
 
         </div>
 
       </div>
 
     </section>
-
 
   </main>
 
 
-  <!-- =======================================================
+  <!-- =====================================================
        MOBILE NAV
-  ======================================================= -->
+  ===================================================== -->
 
   <nav class="mobile-nav">
 
     <div class="mobile-nav-inner">
 
-
       <a
         href="./general.html"
         class="active">
 
-        <div class="mobile-nav-icon">
+        <div class="mobile-icon">
           ⌂
         </div>
 
@@ -2196,46 +1434,42 @@
       </a>
 
 
-      <a
-        href="./buy.html">
+      <a href="./car.html">
 
-        <div class="mobile-nav-icon">
-          ◈
+        <div class="mobile-icon">
+          🚗
         </div>
 
-        Buy
+        Cars
 
       </a>
 
 
-      <a
-        href="./add-listing.html">
+      <a href="./property.html">
 
-        <div class="mobile-nav-icon">
-          ＋
+        <div class="mobile-icon">
+          🏠
         </div>
 
-        Sell
+        Property
 
       </a>
 
 
-      <a
-        href="./chat.html">
+      <a href="./gem.html">
 
-        <div class="mobile-nav-icon">
-          ◌
+        <div class="mobile-icon">
+          ◆
         </div>
 
-        Chat
+        Gems
 
       </a>
 
 
-      <a
-        href="./profile.html">
+      <a href="./profile.html">
 
-        <div class="mobile-nav-icon">
+        <div class="mobile-icon">
           ♙
         </div>
 
@@ -2250,9 +1484,9 @@
 
   <script>
 
-    /* =========================================================
+    /* =====================================================
        THEME
-    ========================================================= */
+    ===================================================== */
 
     function applyTheme(theme){
 
@@ -2272,222 +1506,623 @@
         "mec_theme",
         theme
       );
-
     }
 
 
     function toggleTheme(){
 
       const isDark =
-        document.body.classList.contains(
-          "dark"
-        );
+        document.body.classList.contains("dark");
 
       applyTheme(
         isDark
           ? "light"
           : "dark"
       );
+    }
+
+
+    /* =====================================================
+       MYANMAR 14 REGIONS / STATES
+    ===================================================== */
+
+    const regions = [
+
+      "ကချင်ပြည်နယ်",
+      "ကယားပြည်နယ်",
+      "ကရင်ပြည်နယ်",
+      "ချင်းပြည်နယ်",
+      "မွန်ပြည်နယ်",
+      "ရခိုင်ပြည်နယ်",
+      "ရှမ်းပြည်နယ်",
+
+      "စစ်ကိုင်းတိုင်းဒေသကြီး",
+      "တနင်္သာရီတိုင်းဒေသကြီး",
+      "ပဲခူးတိုင်းဒေသကြီး",
+      "မကွေးတိုင်းဒေသကြီး",
+      "မန္တလေးတိုင်းဒေသကြီး",
+      "ရန်ကုန်တိုင်းဒေသကြီး",
+      "ဧရာဝတီတိုင်းဒေသကြီး"
+
+    ];
+
+
+    function loadRegions(){
+
+      const select =
+        document.getElementById(
+          "regionFilter"
+        );
+
+
+      regions.forEach(region => {
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          region;
+
+        option.textContent =
+          region;
+
+        select.appendChild(
+          option
+        );
+
+      });
 
     }
 
 
-    /* =========================================================
-       ESCAPE
-    ========================================================= */
+    /* =====================================================
+       SAFE HTML
+    ===================================================== */
 
     function escapeHTML(value){
 
-      return String(
-        value ?? ""
-      )
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
+      return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+    }
+
+
+    /* =====================================================
+       CATEGORY NORMALIZATION
+    ===================================================== */
+
+    function normalizeCategory(value){
+
+      const text =
+        String(value ?? "")
+          .trim()
+          .toLowerCase();
+
+
+      if(
+        text.includes("car") ||
+        text.includes("ကား")
+      ){
+        return "car";
+      }
+
+
+      if(
+        text.includes("property") ||
+        text.includes("အိမ်") ||
+        text.includes("ခြံ") ||
+        text.includes("မြေ")
+      ){
+        return "property";
+      }
+
+
+      if(
+        text.includes("gem") ||
+        text.includes("ကျောက်")
+      ){
+        return "gem";
+      }
+
+
+      return "";
+
+    }
+
+
+    /* =====================================================
+       IMAGE
+    ===================================================== */
+
+    function getListingImage(item){
+
+      return (
+        item.show_photo_url ||
+        item.cover_url ||
+        item.image_url ||
+        (
+          Array.isArray(item.detail_images)
+            ? item.detail_images[0]
+            : ""
+        ) ||
+        ""
       );
 
     }
 
 
-    /* =========================================================
-       AUTH
-    ========================================================= */
+    /* =====================================================
+       PRICE
+    ===================================================== */
 
-    async function loadUser(){
+    function formatPrice(price){
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.getUser();
+      if(
+        price === null ||
+        price === undefined ||
+        price === ""
+      ){
+        return "Price on request";
+      }
+
+
+      const number =
+        Number(price);
 
 
       if(
-        error ||
-        !data?.user
+        Number.isNaN(number)
       ){
+        return escapeHTML(price);
+      }
 
-        window.location.replace(
-          "./auth.html?mode=login"
+
+      return (
+        "MMK " +
+        number.toLocaleString("en-US")
+      );
+
+    }
+
+
+    /* =====================================================
+       LOCATION
+       Region + Township + Nearby
+    ===================================================== */
+
+    function formatLocation(item){
+
+      const parts = [
+
+        item.region ||
+        item.state ||
+        "",
+
+        item.township ||
+        "",
+
+        item.nearby_address ||
+        item.nearby ||
+        ""
+
+      ]
+      .filter(Boolean);
+
+
+      if(!parts.length){
+        return "Myanmar";
+      }
+
+
+      return parts.join(" · ");
+
+    }
+
+
+    /* =====================================================
+       AUTH
+    ===================================================== */
+
+    async function getCurrentUser(){
+
+      try{
+
+        const {
+          data
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        return data?.user || null;
+
+      }
+      catch(error){
+
+        console.error(
+          "Auth error:",
+          error
         );
 
         return null;
 
       }
 
-
-      return data.user;
-
     }
 
 
-    /* =========================================================
-       PROFILE
-    ========================================================= */
+    /* =====================================================
+       PROFILE AVATAR
+    ===================================================== */
 
-    async function loadProfile(user){
+    async function loadAvatar(user){
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select(
-            "full_name,avatar_url"
-          )
-          .eq(
-            "id",
-            user.id
-          )
-          .maybeSingle();
+      if(!user){
+        return;
+      }
 
 
-      if(error){
+      try{
 
-        console.error(
-          "Profile:",
+        const {
+          data
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select("avatar_url")
+            .eq("id",user.id)
+            .maybeSingle();
+
+
+        if(
+          data?.avatar_url
+        ){
+
+          document.getElementById(
+            "avatar"
+          ).src =
+            data.avatar_url;
+
+        }
+
+      }
+      catch(error){
+
+        console.warn(
+          "Profile avatar unavailable:",
           error
         );
 
-        return;
-
       }
 
-
-      const name =
-        data?.full_name ||
-        user.user_metadata?.full_name ||
-        "there";
+    }
 
 
-      document.getElementById(
-        "welcomeTitle"
-      ).textContent =
-        `Welcome back, ${name}.`;
+    /* =====================================================
+       LISTINGS
+    ===================================================== */
+
+    let allListings = [];
 
 
-      if(data?.avatar_url){
+    async function loadListings(){
 
+      const container =
         document.getElementById(
-          "headerAvatar"
-        ).src =
-          data.avatar_url;
+          "listingContainer"
+        );
+
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("listings")
+            .select("*")
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            )
+            .limit(60);
+
+
+        if(error){
+
+          console.error(
+            "Listings error:",
+            error
+          );
+
+          showState(
+            "Unable to load listings",
+            error.message
+          );
+
+          return;
+
+        }
+
+
+        allListings =
+          (data || []).filter(item => {
+
+            return normalizeCategory(
+              item.category ||
+              item.type
+            );
+
+          });
+
+
+        applyFilters();
+
+      }
+      catch(error){
+
+        console.error(
+          error
+        );
+
+        showState(
+          "Unable to load listings",
+          "Please check your Supabase connection."
+        );
 
       }
 
     }
 
 
-    /* =========================================================
-       LISTINGS
-    ========================================================= */
+    /* =====================================================
+       FILTERS
+    ===================================================== */
 
-    async function loadListings(){
+    function applyFilters(){
 
-      /*
-       * add-listing.html မှာ အသုံးပြုမယ့်
-       * listings table ရှိတဲ့အခါ အလိုအလျောက်
-       * recent listings ပြမယ်။
-       */
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("listings")
-          .select("*")
-          .order(
-            "created_at",
-            {
-              ascending:false
-            }
-          )
-          .limit(8);
-
-
-      if(error){
-
-        console.log(
-          "Listings are not available yet:",
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      const listings =
-        data || [];
-
-
-      if(!listings.length){
-
-        return;
-
-      }
-
-
-      const grid =
+      const search =
         document.getElementById(
-          "listingGrid"
+          "searchInput"
+        ).value
+          .trim()
+          .toLowerCase();
+
+
+      const category =
+        document.getElementById(
+          "categoryFilter"
+        ).value;
+
+
+      const region =
+        document.getElementById(
+          "regionFilter"
+        ).value;
+
+
+      const minPriceValue =
+        document.getElementById(
+          "minPrice"
+        ).value;
+
+
+      const maxPriceValue =
+        document.getElementById(
+          "maxPrice"
+        ).value;
+
+
+      const minPrice =
+        minPriceValue === ""
+          ? null
+          : Number(minPriceValue);
+
+
+      const maxPrice =
+        maxPriceValue === ""
+          ? null
+          : Number(maxPriceValue);
+
+
+      const filtered =
+        allListings.filter(item => {
+
+          const itemCategory =
+            normalizeCategory(
+              item.category ||
+              item.type
+            );
+
+
+          if(
+            category &&
+            itemCategory !== category
+          ){
+            return false;
+          }
+
+
+          const itemRegion =
+            item.region ||
+            item.state ||
+            "";
+
+
+          if(
+            region &&
+            itemRegion !== region
+          ){
+            return false;
+          }
+
+
+          const price =
+            Number(item.price);
+
+
+          if(
+            minPrice !== null &&
+            (
+              Number.isNaN(price) ||
+              price < minPrice
+            )
+          ){
+            return false;
+          }
+
+
+          if(
+            maxPrice !== null &&
+            (
+              Number.isNaN(price) ||
+              price > maxPrice
+            )
+          ){
+            return false;
+          }
+
+
+          if(search){
+
+            const searchable = [
+
+              item.title,
+              item.name,
+              item.description,
+              item.category,
+              item.type,
+              item.region,
+              item.state,
+              item.township,
+              item.nearby_address,
+              item.nearby
+
+            ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+
+
+            if(
+              !searchable.includes(search)
+            ){
+              return false;
+            }
+
+          }
+
+
+          return true;
+
+        });
+
+
+      renderListings(
+        filtered
+      );
+
+    }
+
+
+    function clearFilters(){
+
+      document.getElementById(
+        "searchInput"
+      ).value = "";
+
+
+      document.getElementById(
+        "categoryFilter"
+      ).value = "";
+
+
+      document.getElementById(
+        "regionFilter"
+      ).value = "";
+
+
+      document.getElementById(
+        "minPrice"
+      ).value = "";
+
+
+      document.getElementById(
+        "maxPrice"
+      ).value = "";
+
+
+      applyFilters();
+
+    }
+
+
+    /* =====================================================
+       RENDER LISTINGS
+    ===================================================== */
+
+    function renderListings(items){
+
+      const container =
+        document.getElementById(
+          "listingContainer"
         );
 
 
-      grid.innerHTML =
-        listings
+      document.getElementById(
+        "resultCount"
+      ).textContent =
+        `${items.length} listing${items.length === 1 ? "" : "s"}`;
+
+
+      if(!items.length){
+
+        showState(
+          "No listings found",
+          "Try another category, location or price range."
+        );
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        items
           .map(
-            renderListing
+            renderListingCard
           )
           .join("");
 
     }
 
 
-    function renderListing(item){
+    function renderListingCard(item){
 
-      const image =
-        item.image_url ||
-        item.cover_url ||
-        "";
+      const id =
+        item.id;
+
+
+      const category =
+        normalizeCategory(
+          item.category ||
+          item.type
+        );
+
+
+      const categoryLabel = {
+
+        car:"Car",
+        property:"Property",
+        gem:"Gem"
+
+      }[category] || "Listing";
 
 
       const title =
@@ -2496,72 +2131,83 @@
         "Untitled Listing";
 
 
-      const type =
-        item.category ||
-        item.type ||
-        "Marketplace";
-
-
-      const price =
-        item.price != null
-          ? Number(
-              item.price
-            ).toLocaleString()
-          : "—";
+      const image =
+        getListingImage(item);
 
 
       const location =
-        item.location ||
-        "Myanmar";
+        formatLocation(item);
 
 
       return `
 
         <a
-          class="listing"
-          href="./buy.html">
+          class="listing-card"
+          href="./listing-detail.html?id=${encodeURIComponent(id)}">
 
-          ${
-            image
 
-            ?
+          <div class="listing-image">
 
-            `<img
-              class="listing-image"
-              src="${escapeHTML(image)}"
-              alt="">`
+            ${
+              image
 
-            :
+              ?
 
-            `<div
-              class="listing-image">
-            </div>`
-          }
+              `
+              <img
+                src="${escapeHTML(image)}"
+                alt="${escapeHTML(title)}"
+                loading="lazy"
+                onerror="this.style.display='none';">
+              `
+
+              :
+
+              `
+              <div
+                style="
+                  width:100%;
+                  height:100%;
+                  display:grid;
+                  place-items:center;
+                  color:var(--muted);
+                  font-size:10px;
+                ">
+                No Photo
+              </div>
+              `
+
+            }
+
+
+            <div class="listing-category">
+              ${categoryLabel}
+            </div>
+
+          </div>
 
 
           <div class="listing-body">
-
-            <div class="listing-type">
-              ${escapeHTML(type)}
-            </div>
 
             <div class="listing-title">
               ${escapeHTML(title)}
             </div>
 
-            <div class="listing-meta">
-              Recently added
+
+            <div class="listing-price">
+              ${formatPrice(item.price)}
             </div>
 
-            <div class="listing-bottom">
 
-              <div class="listing-price">
-                ${escapeHTML(price)}
-              </div>
+            <div class="listing-location">
 
-              <div class="listing-location">
+              <span class="listing-location-icon">
+                ⌖
+              </span>
+
+              <span>
                 ${escapeHTML(location)}
-              </div>
+              </span>
 
             </div>
 
@@ -2574,77 +2220,119 @@
     }
 
 
-    /* =========================================================
-       SEARCH
-    ========================================================= */
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    function showState(
+      title,
+      message
+    ){
+
+      const container =
+        document.getElementById(
+          "listingContainer"
+        );
+
+
+      container.innerHTML = `
+
+        <div
+          class="state"
+          style="grid-column:1/-1;">
+
+          <div class="state-icon">
+            !
+          </div>
+
+          <strong>
+            ${escapeHTML(title)}
+          </strong>
+
+          <span>
+            ${escapeHTML(message)}
+          </span>
+
+        </div>
+
+      `;
+
+
+      document.getElementById(
+        "resultCount"
+      ).textContent =
+        "0 listings";
+
+    }
+
+
+    /* =====================================================
+       EVENTS
+    ===================================================== */
 
     document.getElementById(
       "searchInput"
     ).addEventListener(
       "keydown",
-      function(event){
+      event => {
 
         if(
-          event.key !== "Enter"
+          event.key === "Enter"
         ){
 
-          return;
+          applyFilters();
 
         }
-
-
-        const query =
-          this.value.trim();
-
-
-        if(!query){
-
-          return;
-
-        }
-
-
-        window.location.href =
-          "./buy.html?search=" +
-          encodeURIComponent(
-            query
-          );
 
       }
     );
 
 
-    /* =========================================================
+    [
+      "categoryFilter",
+      "regionFilter",
+      "minPrice",
+      "maxPrice"
+
+    ].forEach(id => {
+
+      document.getElementById(
+        id
+      ).addEventListener(
+        "change",
+        applyFilters
+      );
+
+    });
+
+
+    /* =====================================================
        INIT
-    ========================================================= */
+    ===================================================== */
 
     async function init(){
 
-      const savedTheme =
+      applyTheme(
         localStorage.getItem(
           "mec_theme"
-        ) || "light";
-
-
-      applyTheme(
-        savedTheme
+        ) || "light"
       );
+
+
+      loadRegions();
 
 
       const user =
-        await loadUser();
+        await getCurrentUser();
 
 
-      if(!user){
+      if(user){
 
-        return;
+        await loadAvatar(
+          user
+        );
 
       }
-
-
-      await loadProfile(
-        user
-      );
 
 
       await loadListings();
