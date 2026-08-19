@@ -2,6 +2,7 @@
 <html lang="my">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -9,9 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Add Listing | Myanmar Elite Connect
-  </title>
+  <title>Myanmar Elite Connect - Add Listing</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -33,21 +32,19 @@
         sans-serif;
     }
 
-    /* HEADER */
-
     header {
       background: #071b3a;
       color: white;
-      padding: 18px 20px;
+      padding: 18px;
     }
 
     .header-inner {
-      max-width: 900px;
+      max-width: 800px;
       margin: auto;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
     }
 
     .brand {
@@ -55,96 +52,59 @@
       font-weight: bold;
     }
 
-    .back-top {
+    .home-link {
       color: white;
       text-decoration: none;
-      font-size: 14px;
     }
 
-
-    /* CONTAINER */
-
     .container {
-      width: 100%;
       max-width: 720px;
       margin: 30px auto;
       padding: 0 18px;
     }
 
-
-    /* CARD */
-
     .card {
       background: white;
       border-radius: 18px;
       padding: 28px;
+
       box-shadow:
-        0 5px 25px rgba(0, 0, 0, 0.08);
+        0 5px 25px rgba(0,0,0,.08);
     }
 
-
     h1 {
-      color: #071b3a;
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 25px;
+      color: #071b3a;
     }
 
     .subtitle {
       color: #666;
-      margin-top: 0;
-      margin-bottom: 25px;
       line-height: 1.6;
     }
-
-
-    /* MESSAGE */
-
-    #message {
-      display: none;
-      padding: 13px;
-      border-radius: 9px;
-      margin-bottom: 18px;
-      line-height: 1.6;
-      word-break: break-word;
-    }
-
-    .success {
-      display: block !important;
-      background: #e8f7ee;
-      color: #176b38;
-    }
-
-    .error {
-      display: block !important;
-      background: #fff0f0;
-      color: #b42318;
-    }
-
-
-    /* FORM */
 
     label {
       display: block;
-      margin-top: 17px;
+
+      margin-top: 18px;
       margin-bottom: 7px;
+
       font-weight: bold;
-      font-size: 14px;
     }
 
     input,
     select,
     textarea {
       width: 100%;
+
       padding: 13px;
 
-      border: 1px solid #d9dde5;
+      border: 1px solid #d7dce5;
+
       border-radius: 9px;
 
-      background: white;
+      font-size: 15px;
 
       font-family: inherit;
-      font-size: 15px;
 
       outline: none;
     }
@@ -160,85 +120,79 @@
       resize: vertical;
     }
 
-
-    /* PRICE */
-
     .price-row {
       display: flex;
       gap: 10px;
     }
 
-    .price-row input {
-      flex: 1;
-    }
-
     .currency {
-      width: 100px;
+      max-width: 100px;
       background: #f5f6f8;
     }
 
-
-    /* BUTTON */
-
-    .submit-btn {
+    .publish-btn {
       width: 100%;
+
       margin-top: 25px;
 
       padding: 15px;
 
-      border: 0;
+      border: none;
+
       border-radius: 9px;
 
       background: #071b3a;
+
       color: white;
 
       font-size: 16px;
+
       font-weight: bold;
 
       cursor: pointer;
     }
 
-    .submit-btn:hover {
-      opacity: .92;
-    }
-
-    .submit-btn:disabled {
+    .publish-btn:disabled {
       opacity: .6;
       cursor: not-allowed;
     }
 
+    #message {
+      display: none;
 
-    /* LOGIN NOTICE */
+      margin: 18px 0;
 
-    .login-notice {
-      text-align: center;
-      padding: 20px;
+      padding: 13px;
+
+      border-radius: 9px;
+
+      line-height: 1.6;
+
+      word-break: break-word;
     }
 
-    .login-btn {
-      display: inline-block;
-      margin-top: 12px;
+    .success {
+      display: block !important;
 
-      padding: 12px 22px;
+      background: #e9f8ef;
 
-      background: #071b3a;
-      color: white;
-
-      text-decoration: none;
-
-      border-radius: 8px;
-      font-weight: bold;
+      color: #176b38;
     }
 
+    .error {
+      display: block !important;
 
-    /* BACK */
+      background: #fff0f0;
+
+      color: #b42318;
+    }
 
     .back {
       display: block;
 
-      text-align: center;
-
       margin-top: 20px;
+
+      text-align: center;
 
       color: #071b3a;
 
@@ -247,21 +201,31 @@
       font-weight: bold;
     }
 
+    .login-box {
+      text-align: center;
+      padding: 25px 0;
+    }
 
-    /* MOBILE */
+    .login-button {
+      display: inline-block;
 
-    @media (max-width: 600px) {
+      margin-top: 15px;
+
+      padding: 12px 25px;
+
+      background: #071b3a;
+
+      color: white;
+
+      border-radius: 8px;
+
+      text-decoration: none;
+    }
+
+    @media(max-width:600px) {
 
       .card {
-        padding: 21px;
-      }
-
-      .header-inner {
-        align-items: flex-start;
-      }
-
-      .brand {
-        font-size: 18px;
+        padding: 20px;
       }
 
       .price-row {
@@ -269,7 +233,11 @@
       }
 
       .currency {
-        width: 100%;
+        max-width: none;
+      }
+
+      .brand {
+        font-size: 18px;
       }
 
     }
@@ -292,7 +260,7 @@
 
     <a
       href="./index.html"
-      class="back-top"
+      class="home-link"
     >
       Home
     </a>
@@ -305,27 +273,20 @@
 
 <div class="container">
 
-
   <div class="card">
-
 
     <h1>
       Add New Listing
     </h1>
 
-
     <p class="subtitle">
       ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်
-      ရောင်းရန် ကြော်ငြာတင်ပါ။
+      ရောင်းဝယ်ရေးအတွက် ကြော်ငြာတင်ပါ။
     </p>
 
 
-    <!-- MESSAGE -->
-
     <div id="message"></div>
 
-
-    <!-- FORM -->
 
     <form id="listingForm">
 
@@ -333,7 +294,7 @@
       <!-- CATEGORY -->
 
       <label for="category">
-        Category / အမျိုးအစား
+        အမျိုးအစား / Category
       </label>
 
       <select
@@ -342,19 +303,19 @@
       >
 
         <option value="">
-          -- Select Category --
+          -- ရွေးချယ်ပါ --
         </option>
 
         <option value="car">
-          🚗 Car / ကား
+          🚗 ကား / Car
         </option>
 
         <option value="property">
-          🏠 Property / အိမ်ခြံမြေ
+          🏠 အိမ်ခြံမြေ / Property
         </option>
 
         <option value="gem">
-          💎 Gem / ကျောက်မျက်
+          💎 ကျောက်မျက် / Gem
         </option>
 
       </select>
@@ -364,7 +325,7 @@
       <!-- TITLE -->
 
       <label for="title">
-        Title / ခေါင်းစဉ်
+        ခေါင်းစဉ် / Title
       </label>
 
       <input
@@ -379,7 +340,7 @@
       <!-- PRICE -->
 
       <label>
-        Price / ဈေးနှုန်း
+        ဈေးနှုန်း / Price
       </label>
 
       <div class="price-row">
@@ -406,13 +367,13 @@
       <!-- LOCATION -->
 
       <label for="location">
-        Location / တည်နေရာ
+        တည်နေရာ / Location
       </label>
 
       <input
         id="location"
         type="text"
-        placeholder="ဥပမာ - Yangon, Myanmar"
+        placeholder="ဥပမာ - Yangon"
       >
 
 
@@ -420,7 +381,7 @@
       <!-- PHONE -->
 
       <label for="phone">
-        Phone / ဆက်သွယ်ရန်
+        ဖုန်းနံပါတ် / Phone
       </label>
 
       <input
@@ -434,7 +395,7 @@
       <!-- DESCRIPTION -->
 
       <label for="description">
-        Description / အသေးစိတ်
+        အသေးစိတ် / Description
       </label>
 
       <textarea
@@ -444,11 +405,11 @@
 
 
 
-      <!-- SUBMIT -->
+      <!-- PUBLISH -->
 
       <button
-        id="submitButton"
-        class="submit-btn"
+        id="publishButton"
+        class="publish-btn"
         type="submit"
       >
         Publish Listing
@@ -462,7 +423,7 @@
       href="./index.html"
       class="back"
     >
-      ← Back to Marketplace
+      ← Marketplace သို့ပြန်သွားရန်
     </a>
 
 
@@ -476,7 +437,7 @@
 
 
 /* ==========================================
-   ELEMENTS
+   GET ELEMENTS
 ========================================== */
 
 const form =
@@ -489,9 +450,9 @@ const message =
     "message"
   );
 
-const submitButton =
+const publishButton =
   document.getElementById(
-    "submitButton"
+    "publishButton"
   );
 
 
@@ -522,27 +483,10 @@ function clearMessage() {
 
 
 /* ==========================================
-   CHECK SUPABASE
+   GET CURRENT USER
 ========================================== */
 
-if (
-  typeof supabaseClient ===
-  "undefined"
-) {
-
-  showMessage(
-    "Supabase connection မတွေ့ပါ။ supabase.js ကို စစ်ပါ။",
-    "error"
-  );
-
-}
-
-
-/* ==========================================
-   CHECK LOGIN
-========================================== */
-
-async function getCurrentUser() {
+async function getUser() {
 
   const {
     data,
@@ -575,7 +519,7 @@ async function getCurrentUser() {
 
 
 /* ==========================================
-   PAGE LOAD
+   CHECK LOGIN
 ========================================== */
 
 async function checkLogin() {
@@ -583,17 +527,17 @@ async function checkLogin() {
   try {
 
     const user =
-      await getCurrentUser();
+      await getUser();
 
 
     if (!user) {
 
       form.innerHTML = `
 
-        <div class="login-notice">
+        <div class="login-box">
 
           <h2>
-            Login Required
+            Login လိုအပ်ပါတယ်
           </h2>
 
           <p>
@@ -602,8 +546,8 @@ async function checkLogin() {
           </p>
 
           <a
-            class="login-btn"
             href="./auth.html"
+            class="login-button"
           >
             Login / Register
           </a>
@@ -630,7 +574,7 @@ checkLogin();
 
 
 /* ==========================================
-   PUBLISH LISTING
+   SUBMIT
 ========================================== */
 
 form.addEventListener(
@@ -642,36 +586,36 @@ form.addEventListener(
     clearMessage();
 
 
-    submitButton.disabled =
+    publishButton.disabled =
       true;
 
-    submitButton.textContent =
+    publishButton.textContent =
       "Publishing...";
 
 
     try {
 
 
-      /* ------------------------------
-         GET LOGGED-IN USER
-      ------------------------------ */
+      /* ----------------------------
+         USER
+      ---------------------------- */
 
       const user =
-        await getCurrentUser();
+        await getUser();
 
 
       if (!user) {
 
         throw new Error(
-          "Listing တင်ရန် Login ဝင်ထားရပါမည်။"
+          "Login ဝင်ထားခြင်းမရှိပါ။"
         );
 
       }
 
 
-      /* ------------------------------
-         GET FORM VALUES
-      ------------------------------ */
+      /* ----------------------------
+         FORM VALUES
+      ---------------------------- */
 
       const category =
         document
@@ -690,7 +634,7 @@ form.addEventListener(
           .trim();
 
 
-      const priceText =
+      const priceInput =
         document
           .getElementById(
             "price"
@@ -726,9 +670,9 @@ form.addEventListener(
           .trim();
 
 
-      /* ------------------------------
-         VALIDATION
-      ------------------------------ */
+      /* ----------------------------
+         VALIDATE
+      ---------------------------- */
 
       if (!category) {
 
@@ -742,31 +686,31 @@ form.addEventListener(
       if (!title) {
 
         throw new Error(
-          "Listing ခေါင်းစဉ် ထည့်ပေးပါ။"
+          "Title ထည့်ပေးပါ။"
         );
 
       }
 
 
-      /* ------------------------------
+      /* ----------------------------
          PRICE
-      ------------------------------ */
+      ---------------------------- */
 
       let price = null;
 
 
-      if (priceText !== "") {
+      if (priceInput !== "") {
 
         price =
-          Number(priceText);
+          Number(priceInput);
 
 
         if (
-          Number.isNaN(price)
+          !Number.isFinite(price)
         ) {
 
           throw new Error(
-            "ဈေးနှုန်း မှားနေပါတယ်။"
+            "Price မှားနေပါတယ်။"
           );
 
         }
@@ -774,16 +718,18 @@ form.addEventListener(
       }
 
 
-      /* ------------------------------
-         DATABASE INSERT
-      ------------------------------
+      /* =================================
+         DATABASE DATA
 
          IMPORTANT:
 
-         Existing database requires
-         BOTH user_id and seller_id.
+         user_id
+         seller_id
+         listing_type
+         category
 
-      ------------------------------ */
+         အားလုံး ထည့်ထားသည်။
+      ================================= */
 
       const listingData = {
 
@@ -792,6 +738,9 @@ form.addEventListener(
 
         seller_id:
           user.id,
+
+        listing_type:
+          category,
 
         category:
           category,
@@ -821,14 +770,20 @@ form.addEventListener(
 
 
       console.log(
-        "LISTING DATA:",
+        "Current User:",
+        user
+      );
+
+
+      console.log(
+        "Listing Data:",
         listingData
       );
 
 
-      /* ------------------------------
+      /* =================================
          INSERT
-      ------------------------------ */
+      ================================= */
 
       const {
         data,
@@ -843,14 +798,14 @@ form.addEventListener(
           .single();
 
 
-      /* ------------------------------
-         ERROR
-      ------------------------------ */
+      /* =================================
+         DATABASE ERROR
+      ================================= */
 
       if (error) {
 
         console.error(
-          "SUPABASE LISTING ERROR:",
+          "Supabase Error:",
           error
         );
 
@@ -859,12 +814,12 @@ form.addEventListener(
       }
 
 
-      /* ------------------------------
+      /* =================================
          SUCCESS
-      ------------------------------ */
+      ================================= */
 
       console.log(
-        "LISTING CREATED:",
+        "Created Listing:",
         data
       );
 
@@ -878,9 +833,11 @@ form.addEventListener(
       form.reset();
 
 
-      /*
-        Redirect after 1.5 seconds
-      */
+      publishButton.textContent =
+        "Published ✓";
+
+
+      /* Go Home */
 
       setTimeout(
         function() {
@@ -895,9 +852,8 @@ form.addEventListener(
 
     } catch (error) {
 
-
       console.error(
-        "LISTING ERROR:",
+        "Listing Error:",
         error
       );
 
@@ -914,11 +870,18 @@ form.addEventListener(
 
     } finally {
 
-      submitButton.disabled =
+      publishButton.disabled =
         false;
 
-      submitButton.textContent =
-        "Publish Listing";
+      if (
+        publishButton.textContent !==
+        "Published ✓"
+      ) {
+
+        publishButton.textContent =
+          "Publish Listing";
+
+      }
 
     }
 
