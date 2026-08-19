@@ -3,72 +3,66 @@
 <head>
 
 <meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-  Restaurant Feedback | Myanmar Elite Connect
-</title>
+<title>Restaurant Feedback | Myanmar Elite Connect</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
+/* =========================================================
+   MEC FEEDBACK
+   Premium Social Review UI
+========================================================= */
+
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
 :root{
 
   --navy:#071b3a;
-  --navy2:#102d59;
+  --navy-2:#102d59;
 
   --green:#19a974;
-  --green2:#65d6a7;
+  --green-soft:#eafaf3;
 
   --gold:#d9a441;
-  --gold2:#f1d487;
+  --gold-soft:#fff7df;
 
-  --bg:#f4f7fb;
+  --bg:#f5f7fa;
   --surface:#ffffff;
-  --soft:#f1f4f8;
+  --surface-2:#f8fafc;
 
   --text:#172033;
-  --muted:#697386;
+  --muted:#758096;
 
-  --border:#e3e8f0;
+  --border:#e5e9f0;
 
-  --danger:#b42318;
-  --success:#198754;
+  --danger:#c53b3b;
 
   --shadow:
-    0 10px 30px rgba(7,27,58,.08);
+    0 12px 35px rgba(7,27,58,.07);
+
+  --shadow-hover:
+    0 20px 45px rgba(7,27,58,.11);
+
 }
 
-body.dark{
-
-  --bg:#071321;
-  --surface:#0d1d31;
-  --soft:#12263d;
-
-  --text:#f4f7fb;
-  --muted:#94a3b7;
-
-  --border:rgba(255,255,255,.09);
-
-  --shadow:
-    0 15px 40px rgba(0,0,0,.28);
+html{
+  scroll-behavior:smooth;
 }
 
 body{
 
   min-height:100vh;
 
-  padding-bottom:80px;
+  background:var(--bg);
+
+  color:var(--text);
 
   font-family:
     Arial,
@@ -76,40 +70,23 @@ body{
     "Myanmar Text",
     sans-serif;
 
-  color:var(--text);
+  padding-bottom:82px;
 
-  background:var(--bg);
 }
 
 button,
 input,
-textarea,
-select{
-
-  font-family:inherit;
-
-}
-
-button{
-
-  cursor:pointer;
-
-}
-
-a{
-
-  color:inherit;
-
-  text-decoration:none;
-
+select,
+textarea{
+  font:inherit;
 }
 
 
-/* =====================================================
+/* =========================================================
    HEADER
-===================================================== */
+========================================================= */
 
-header{
+.header{
 
   position:sticky;
 
@@ -118,25 +95,28 @@ header{
   z-index:1000;
 
   background:
-    rgba(7,27,58,.97);
+    rgba(7,27,58,.96);
 
-  color:white;
+  backdrop-filter:
+    blur(18px);
 
-  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:
+    blur(18px);
 
   box-shadow:
-    0 3px 15px rgba(0,0,0,.12);
+    0 4px 18px rgba(0,0,0,.12);
 
 }
 
 .header-inner{
 
-  width:min(
-    1350px,
-    calc(100% - 36px)
-  );
+  width:
+    min(
+      1180px,
+      calc(100% - 28px)
+    );
 
-  min-height:70px;
+  height:68px;
 
   margin:auto;
 
@@ -146,143 +126,182 @@ header{
 
   justify-content:space-between;
 
-  gap:15px;
-
 }
 
 .logo{
 
-  font-size:19px;
+  color:white;
+
+  text-decoration:none;
+
+  font-size:17px;
 
   font-weight:900;
+
+  letter-spacing:-.4px;
 
   white-space:nowrap;
 
 }
 
 .logo span{
-
-  color:var(--green2);
-
+  color:#65d6a7;
 }
 
-.top-actions{
-
-  display:flex;
-
-  gap:7px;
-
-}
-
-.header-button{
-
-  min-width:40px;
-
-  height:40px;
-
-  padding:0 11px;
+.header-nav{
 
   display:flex;
 
   align-items:center;
 
-  justify-content:center;
+  gap:4px;
 
-  gap:5px;
+}
 
-  border:1px solid
-    rgba(255,255,255,.12);
+.header-nav a{
 
-  border-radius:10px;
+  color:
+    rgba(255,255,255,.82);
+
+  text-decoration:none;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  padding:8px 10px;
+
+  border-radius:8px;
+
+}
+
+.header-nav a:hover{
 
   color:white;
 
   background:
-    rgba(255,255,255,.07);
-
-  font-size:11px;
-
-  font-weight:800;
+    rgba(255,255,255,.09);
 
 }
 
-.header-button:hover{
+.header-nav a.active{
+
+  color:white;
 
   background:
-    rgba(255,255,255,.14);
+    rgba(25,169,116,.18);
 
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero{
 
-  color:white;
+  position:relative;
 
-  padding:
-    42px 18px 50px;
+  overflow:hidden;
 
   background:
 
     radial-gradient(
-      circle at 85% 5%,
-      #17467e 0,
-      #071b3a 45%,
+      circle at 85% 0%,
+      #1c4c82 0,
+      #0b2549 42%,
       #041126 100%
     );
+
+  color:white;
+
+}
+
+.hero::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:320px;
+  height:320px;
+
+  right:-130px;
+  bottom:-210px;
+
+  border-radius:50%;
+
+  background:
+    rgba(25,169,116,.12);
+
+  filter:blur(10px);
 
 }
 
 .hero-inner{
 
-  width:min(
-    1200px,
-    100%
-  );
+  position:relative;
+
+  z-index:2;
+
+  width:
+    min(
+      1180px,
+      calc(100% - 28px)
+    );
 
   margin:auto;
+
+  padding:
+    42px 0 46px;
 
 }
 
 .back{
 
-  display:inline-block;
+  display:inline-flex;
 
-  margin-bottom:20px;
+  align-items:center;
+
+  gap:6px;
 
   color:
-    rgba(255,255,255,.78);
+    rgba(255,255,255,.68);
 
-  font-size:13px;
+  text-decoration:none;
+
+  font-size:12px;
+
+  margin-bottom:22px;
 
 }
 
-.hero-title{
+.back:hover{
+  color:white;
+}
+
+.hero-content{
 
   display:flex;
 
   align-items:center;
 
-  gap:17px;
+  gap:18px;
 
 }
 
 .hero-icon{
 
-  width:76px;
+  width:64px;
+  height:64px;
 
-  height:76px;
-
-  flex:0 0 76px;
+  flex:0 0 64px;
 
   display:grid;
 
   place-items:center;
 
-  border-radius:22px;
+  border-radius:19px;
 
   background:
     rgba(255,255,255,.10);
@@ -291,16 +310,22 @@ header{
     1px solid
     rgba(255,255,255,.14);
 
-  font-size:40px;
+  font-size:32px;
+
+  box-shadow:
+    inset 0 1px
+    rgba(255,255,255,.08);
 
 }
 
 .hero h1{
 
   font-size:
-    clamp(30px,5vw,52px);
+    clamp(30px,5vw,48px);
 
   line-height:1.05;
+
+  letter-spacing:-1.8px;
 
   margin-bottom:8px;
 
@@ -309,62 +334,273 @@ header{
 .hero p{
 
   color:
-    rgba(255,255,255,.76);
+    rgba(255,255,255,.70);
+
+  font-size:13px;
 
   line-height:1.8;
 
-  font-size:14px;
-
 }
 
 
-/* =====================================================
-   MAIN
-===================================================== */
+/* =========================================================
+   PAGE
+========================================================= */
 
-main{
+.page{
 
-  width:min(
-    1200px,
-    calc(100% - 36px)
-  );
+  width:
+    min(
+      1080px,
+      calc(100% - 28px)
+    );
 
   margin:auto;
 
-  padding:
-    30px 0 45px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+
+  position:relative;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:12px;
+
+  margin:
+    22px 0 16px;
+
+}
+
+.toolbar-left{
+
+  min-width:0;
+
+}
+
+.toolbar-title{
+
+  color:var(--navy);
+
+  font-size:18px;
+
+  font-weight:900;
+
+  letter-spacing:-.5px;
+
+}
+
+.toolbar-count{
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  margin-top:4px;
+
+}
+
+.toolbar-actions{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
 
 }
 
 
-/* =====================================================
-   FILTER PANEL
-===================================================== */
+/* =========================================================
+   COMPACT SEARCH
+========================================================= */
 
-.filter-panel{
+.search-box{
 
-  padding:20px;
+  display:flex;
 
-  margin-bottom:25px;
+  align-items:center;
+
+  gap:8px;
+
+  width:
+    min(330px, 45vw);
+
+  height:40px;
+
+  padding:
+    0 12px;
+
+  background:var(--surface);
 
   border:
     1px solid var(--border);
 
-  border-radius:18px;
+  border-radius:11px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(7,27,58,.04);
+
+}
+
+.search-box span{
+
+  color:var(--muted);
+
+  font-size:15px;
+
+}
+
+.search-box input{
+
+  width:100%;
+
+  border:0;
+
+  outline:0;
+
+  background:transparent;
+
+  color:var(--text);
+
+  font-size:12px;
+
+}
+
+.search-box input::placeholder{
+  color:#9aa4b4;
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+.filter-button{
+
+  height:40px;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  padding:
+    0 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:11px;
 
   background:var(--surface);
+
+  color:var(--navy);
+
+  cursor:pointer;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  box-shadow:
+    0 5px 18px
+    rgba(7,27,58,.04);
+
+}
+
+.filter-button:hover{
+
+  border-color:
+    rgba(25,169,116,.45);
+
+}
+
+.filter-button.active{
+
+  background:
+    var(--green-soft);
+
+  border-color:
+    rgba(25,169,116,.35);
+
+  color:
+    #087a4d;
+
+}
+
+
+/* =========================================================
+   FILTER DRAWER
+========================================================= */
+
+.filter-drawer{
+
+  display:none;
+
+  background:var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:15px;
+
+  padding:13px;
+
+  margin-bottom:17px;
 
   box-shadow:var(--shadow);
 
 }
 
-.filter-title{
+.filter-drawer.open{
+  display:block;
+}
 
-  margin-bottom:13px;
+.filter-top{
 
-  font-size:15px;
+  display:flex;
 
-  font-weight:900;
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin-bottom:10px;
+
+}
+
+.filter-top strong{
+
+  color:var(--navy);
+
+  font-size:12px;
+
+}
+
+.clear-filter{
+
+  border:0;
+
+  background:none;
+
+  color:var(--green);
+
+  cursor:pointer;
+
+  font-size:11px;
+
+  font-weight:800;
 
 }
 
@@ -373,354 +609,255 @@ main{
   display:grid;
 
   grid-template-columns:
-    2fr 1fr 1fr;
+    1fr 1fr;
 
-  gap:10px;
-
-}
-
-.field{
-
-  width:100%;
-
-  height:45px;
-
-  padding:
-    0 12px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:10px;
-
-  outline:none;
-
-  color:var(--text);
-
-  background:var(--soft);
+  gap:9px;
 
 }
 
-.field:focus{
+.filter-field label{
 
-  border-color:
-    var(--green);
+  display:block;
 
-  background:
-    var(--surface);
+  color:var(--muted);
 
-}
-
-
-/* =====================================================
-   REGION CHIPS
-===================================================== */
-
-.region-list{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:7px;
-
-  margin-top:13px;
-
-}
-
-.region{
-
-  padding:
-    8px 11px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:9px;
-
-  color:var(--text);
-
-  background:var(--surface);
-
-  font-size:11px;
+  font-size:10px;
 
   font-weight:800;
 
-}
-
-.region:hover{
-
-  border-color:
-    var(--green);
+  margin-bottom:5px;
 
 }
 
-.region.active{
-
-  color:white;
-
-  border-color:
-    var(--navy);
-
-  background:
-    var(--navy);
-
-}
-
-
-/* =====================================================
-   POST BUTTON
-===================================================== */
-
-.post-area{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:15px;
-
-  margin-bottom:20px;
-
-}
-
-.post-area h2{
-
-  font-size:21px;
-
-  color:var(--navy);
-
-}
-
-body.dark .post-area h2{
-
-  color:var(--text);
-
-}
-
-.post-button{
-
-  border:0;
-
-  border-radius:10px;
-
-  padding:
-    11px 15px;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--green),
-      #12865b
-    );
-
-  font-size:12px;
-
-  font-weight:900;
-
-}
-
-
-/* =====================================================
-   POST FORM
-===================================================== */
-
-.post-form{
-
-  display:none;
-
-  padding:20px;
-
-  margin-bottom:22px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:18px;
-
-  background:var(--surface);
-
-  box-shadow:var(--shadow);
-
-}
-
-.post-form.open{
-
-  display:block;
-
-}
-
-.form-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:12px;
-
-}
-
-.form-group{
-
-  margin-bottom:13px;
-
-}
-
-.form-group.full{
-
-  grid-column:
-    1 / -1;
-
-}
-
-.form-label{
-
-  display:block;
-
-  margin-bottom:7px;
-
-  font-size:11px;
-
-  font-weight:900;
-
-}
-
-.textarea{
+.filter-field select{
 
   width:100%;
 
-  min-height:120px;
-
-  padding:12px;
-
-  resize:vertical;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:10px;
-
-  outline:none;
-
-  color:var(--text);
-
-  background:var(--soft);
-
-}
-
-.rating-select{
-
-  width:100%;
-
-  height:45px;
-
-  padding:0 12px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:10px;
-
-  color:var(--text);
-
-  background:var(--soft);
-
-}
-
-.form-actions{
-
-  display:flex;
-
-  justify-content:flex-end;
-
-  gap:8px;
-
-}
-
-.cancel-button,
-.publish-button{
+  height:38px;
 
   padding:
-    11px 16px;
+    0 9px;
+
+  border:
+    1px solid var(--border);
 
   border-radius:9px;
 
-  font-size:12px;
+  outline:none;
 
-  font-weight:900;
+  background:var(--surface-2);
+
+  color:var(--text);
+
+  font-size:11px;
 
 }
 
-.cancel-button{
+
+/* =========================================================
+   QUICK REGION CHIPS
+========================================================= */
+
+.region-strip{
+
+  display:flex;
+
+  gap:6px;
+
+  overflow-x:auto;
+
+  padding:
+    1px 0 3px;
+
+  margin-bottom:18px;
+
+  scrollbar-width:none;
+
+}
+
+.region-strip::-webkit-scrollbar{
+  display:none;
+}
+
+.region-chip{
+
+  flex:0 0 auto;
 
   border:
     1px solid var(--border);
 
-  color:var(--text);
-
   background:var(--surface);
+
+  color:var(--muted);
+
+  border-radius:999px;
+
+  padding:
+    7px 11px;
+
+  cursor:pointer;
+
+  font-size:10px;
+
+  font-weight:800;
+
+  white-space:nowrap;
 
 }
 
-.publish-button{
+.region-chip:hover{
 
-  border:0;
+  border-color:
+    rgba(25,169,116,.4);
 
-  color:white;
+  color:var(--green);
+
+}
+
+.region-chip.active{
 
   background:var(--navy);
 
+  border-color:var(--navy);
+
+  color:white;
+
 }
 
 
-/* =====================================================
-   POSTS
-===================================================== */
+/* =========================================================
+   FEED
+========================================================= */
 
 .feed{
 
-  display:grid;
+  width:
+    min(
+      760px,
+      100%
+    );
 
-  gap:18px;
+  margin:
+    0 auto;
 
 }
 
-.post-card{
+.feed-state{
 
-  overflow:hidden;
+  background:var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:17px;
+
+  padding:60px 20px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  box-shadow:var(--shadow);
+
+}
+
+.feed-state-icon{
+
+  font-size:42px;
+
+  margin-bottom:9px;
+
+}
+
+.feed-state h3{
+
+  color:var(--navy);
+
+  font-size:16px;
+
+  margin-bottom:5px;
+
+}
+
+.feed-state p{
+
+  font-size:12px;
+
+  line-height:1.7;
+
+}
+
+
+/* =========================================================
+   REVIEW CARD
+========================================================= */
+
+.review-card{
+
+  background:var(--surface);
 
   border:
     1px solid var(--border);
 
   border-radius:18px;
 
-  background:var(--surface);
+  margin-bottom:16px;
+
+  overflow:hidden;
 
   box-shadow:var(--shadow);
 
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease;
+
 }
 
-.post-header{
+.review-card:hover{
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    var(--shadow-hover);
+
+}
+
+
+/* =========================================================
+   POST HEADER
+========================================================= */
+
+.post-head{
 
   display:flex;
 
   align-items:center;
 
-  gap:11px;
+  justify-content:space-between;
 
-  padding:17px 18px;
+  gap:10px;
+
+  padding:
+    15px 16px 11px;
 
 }
 
-.avatar{
+.restaurant-info{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  min-width:0;
+
+}
+
+.restaurant-avatar{
 
   width:42px;
-
   height:42px;
 
   flex:0 0 42px;
@@ -729,100 +866,52 @@ body.dark .post-area h2{
 
   place-items:center;
 
-  overflow:hidden;
-
-  border-radius:50%;
+  border-radius:12px;
 
   background:
     linear-gradient(
-      135deg,
-      var(--navy),
-      var(--green)
+      145deg,
+      #eef4ff,
+      #eafaf3
     );
 
-  color:white;
+  border:
+    1px solid var(--border);
 
-  font-weight:900;
+  font-size:21px;
+
+  overflow:hidden;
 
 }
 
-.avatar img{
+.restaurant-avatar img{
 
   width:100%;
-
   height:100%;
 
   object-fit:cover;
 
 }
 
-.user-info{
+.restaurant-text{
 
   min-width:0;
-
-  flex:1;
-
-}
-
-.user-name{
-
-  font-size:13px;
-
-  font-weight:900;
-
-}
-
-.post-time{
-
-  margin-top:3px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-}
-
-.post-region{
-
-  padding:
-    6px 9px;
-
-  border-radius:7px;
-
-  color:
-    #356d5b;
-
-  background:
-    #e7f7f0;
-
-  font-size:10px;
-
-  font-weight:900;
-
-}
-
-.post-content{
-
-  padding:
-    0 18px 17px;
 
 }
 
 .restaurant-name{
 
-  margin-bottom:7px;
-
   color:var(--navy);
 
-  font-size:20px;
+  font-size:14px;
 
   font-weight:900;
 
-}
+  white-space:nowrap;
 
-body.dark .restaurant-name{
+  overflow:hidden;
 
-  color:var(--text);
+  text-overflow:ellipsis;
 
 }
 
@@ -830,157 +919,76 @@ body.dark .restaurant-name{
 
   display:flex;
 
+  align-items:center;
+
+  gap:5px;
+
   flex-wrap:wrap;
-
-  gap:7px;
-
-  margin-bottom:11px;
-
-}
-
-.meta{
-
-  padding:
-    5px 8px;
-
-  border-radius:6px;
 
   color:var(--muted);
 
-  background:var(--soft);
-
   font-size:10px;
+
+  margin-top:3px;
+
+}
+
+.verified{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:3px;
+
+  color:
+    #087a4d;
 
   font-weight:800;
 
 }
 
-.stars{
+.post-date{
 
-  color:#e0a326;
+  color:#9aa3b1;
 
-  letter-spacing:1px;
+  font-size:10px;
 
-}
-
-.review-text{
-
-  color:var(--text);
-
-  font-size:14px;
-
-  line-height:1.8;
-
-  white-space:pre-wrap;
+  white-space:nowrap;
 
 }
 
 
-/* =====================================================
-   POST IMAGE
-===================================================== */
+/* =========================================================
+   RATING
+========================================================= */
 
-.post-image{
-
-  width:100%;
-
-  max-height:480px;
-
-  object-fit:cover;
-
-  display:block;
-
-}
-
-
-/* =====================================================
-   REACTION BAR
-===================================================== */
-
-.reaction-bar{
+.rating-row{
 
   display:flex;
 
   align-items:center;
 
-  gap:7px;
+  gap:8px;
 
   padding:
-    11px 18px;
-
-  border-top:
-    1px solid var(--border);
-
-  border-bottom:
-    1px solid var(--border);
+    0 16px 13px;
 
 }
 
-.reaction{
+.stars{
 
-  min-width:65px;
+  color:var(--gold);
 
-  padding:
-    8px 10px;
+  letter-spacing:1px;
 
-  border:
-    1px solid var(--border);
-
-  border-radius:8px;
-
-  color:var(--muted);
-
-  background:var(--surface);
-
-  font-size:11px;
-
-  font-weight:800;
+  font-size:13px;
 
 }
 
-.reaction:hover{
+.rating-number{
 
-  background:var(--soft);
-
-}
-
-.reaction.active.like{
-
-  color:#198754;
-
-  border-color:#198754;
-
-}
-
-.reaction.active.dislike{
-
-  color:var(--danger);
-
-  border-color:var(--danger);
-
-}
-
-.comment-button{
-
-  margin-left:auto;
-
-}
-
-
-/* =====================================================
-   COMMENTS
-===================================================== */
-
-.comments{
-
-  padding:
-    15px 18px;
-
-}
-
-.comments-title{
-
-  margin-bottom:10px;
+  color:var(--navy);
 
   font-size:12px;
 
@@ -988,69 +996,273 @@ body.dark .restaurant-name{
 
 }
 
+.rating-label{
+
+  color:var(--muted);
+
+  font-size:10px;
+
+}
+
+
+/* =========================================================
+   POST TEXT
+========================================================= */
+
+.post-content{
+
+  padding:
+    0 16px 14px;
+
+}
+
+.post-title{
+
+  color:var(--navy);
+
+  font-size:17px;
+
+  font-weight:900;
+
+  line-height:1.45;
+
+  margin-bottom:6px;
+
+}
+
+.post-text{
+
+  color:#566174;
+
+  font-size:12px;
+
+  line-height:1.8;
+
+  white-space:pre-line;
+
+}
+
+
+/* =========================================================
+   POST IMAGE
+========================================================= */
+
+.post-image{
+
+  width:100%;
+
+  max-height:430px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #edf2f8,
+      #dce6f2
+    );
+
+  overflow:hidden;
+
+}
+
+.post-image img{
+
+  display:block;
+
+  width:100%;
+
+  max-height:430px;
+
+  object-fit:cover;
+
+}
+
+
+/* =========================================================
+   POST FOOTER
+========================================================= */
+
+.post-footer{
+
+  padding:
+    10px 14px 12px;
+
+}
+
+.reaction-summary{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+  padding:
+    0 3px 9px;
+
+}
+
+.action-row{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap:5px;
+
+  border-top:
+    1px solid var(--border);
+
+  padding-top:8px;
+
+}
+
+.action{
+
+  border:0;
+
+  background:transparent;
+
+  color:var(--muted);
+
+  border-radius:9px;
+
+  padding:9px 5px;
+
+  cursor:pointer;
+
+  font-size:11px;
+
+  font-weight:800;
+
+}
+
+.action:hover{
+
+  background:var(--surface-2);
+
+  color:var(--navy);
+
+}
+
+.action.liked{
+
+  color:
+    var(--green);
+
+  background:
+    var(--green-soft);
+
+}
+
+.action.disliked{
+
+  color:
+    var(--danger);
+
+  background:
+    #fff0f0;
+
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+.comments{
+
+  display:none;
+
+  border-top:
+    1px solid var(--border);
+
+  margin-top:4px;
+
+  padding:
+    12px 3px 2px;
+
+}
+
+.comments.open{
+  display:block;
+}
+
+.comment-list{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:9px;
+
+  margin-bottom:10px;
+
+}
+
 .comment{
 
   display:flex;
 
-  gap:9px;
-
-  padding:
-    8px 0;
+  gap:8px;
 
 }
 
 .comment-avatar{
 
-  width:30px;
+  width:27px;
+  height:27px;
 
-  height:30px;
-
-  flex:0 0 30px;
+  flex:0 0 27px;
 
   display:grid;
 
   place-items:center;
 
-  border-radius:50%;
+  border-radius:9px;
 
-  color:white;
+  background:#eef2f7;
 
-  background:var(--navy);
-
-  font-size:10px;
-
-  font-weight:900;
+  font-size:12px;
 
 }
 
-.comment-body{
+.comment-bubble{
 
-  flex:1;
+  background:
+    var(--surface-2);
+
+  border-radius:
+    0 10px 10px 10px;
 
   padding:
-    8px 10px;
+    7px 9px;
 
-  border-radius:9px;
-
-  background:var(--soft);
+  max-width:90%;
 
 }
 
 .comment-name{
 
-  margin-bottom:3px;
+  color:var(--navy);
 
   font-size:10px;
 
   font-weight:900;
 
+  margin-bottom:2px;
+
 }
 
 .comment-text{
 
-  color:var(--muted);
+  color:#5e6879;
 
-  font-size:11px;
+  font-size:10px;
 
   line-height:1.6;
 
@@ -1060,108 +1272,204 @@ body.dark .restaurant-name{
 
   display:flex;
 
-  gap:7px;
-
-  margin-top:10px;
+  gap:6px;
 
 }
 
-.comment-input{
-
-  min-width:0;
+.comment-form input{
 
   flex:1;
 
-  height:40px;
+  min-width:0;
 
-  padding:
-    0 11px;
+  height:36px;
 
   border:
     1px solid var(--border);
 
   border-radius:9px;
 
+  padding:
+    0 10px;
+
   outline:none;
 
-  color:var(--text);
+  font-size:11px;
 
-  background:var(--soft);
+  background:white;
 
 }
 
-.comment-submit{
+.comment-form button{
 
-  width:45px;
+  height:36px;
+
+  padding:
+    0 12px;
 
   border:0;
 
   border-radius:9px;
 
+  background:var(--navy);
+
   color:white;
 
-  background:var(--navy);
+  cursor:pointer;
+
+  font-size:11px;
+
+  font-weight:800;
 
 }
 
 
-/* =====================================================
-   EMPTY / LOADING
-===================================================== */
+/* =========================================================
+   POST REVIEW BUTTON
+========================================================= */
 
-.state{
+.write-review{
 
-  padding:
-    60px 20px;
+  display:flex;
 
-  text-align:center;
+  align-items:center;
+
+  justify-content:center;
+
+  gap:7px;
+
+  width:100%;
+
+  height:44px;
+
+  margin:
+    0 auto 18px;
 
   border:
+    1px solid
+    rgba(25,169,116,.28);
+
+  border-radius:12px;
+
+  background:
+    var(--green-soft);
+
+  color:
+    #087a4d;
+
+  text-decoration:none;
+
+  font-size:12px;
+
+  font-weight:900;
+
+}
+
+.write-review:hover{
+
+  background:
+    #dff7eb;
+
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav{
+
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  z-index:2000;
+
+  height:70px;
+
+  display:flex;
+
+  justify-content:center;
+
+  background:
+    rgba(255,255,255,.97);
+
+  backdrop-filter:
+    blur(15px);
+
+  border-top:
     1px solid var(--border);
 
-  border-radius:18px;
+  box-shadow:
+    0 -6px 22px
+    rgba(0,0,0,.07);
 
-  background:var(--surface);
+}
+
+.bottom-nav a{
+
+  width:
+    min(160px,25%);
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:3px;
 
   color:var(--muted);
 
-}
+  text-decoration:none;
 
-.state-icon{
+  font-size:9px;
 
-  margin-bottom:10px;
-
-  font-size:48px;
+  font-weight:700;
 
 }
 
-.state h3{
+.bottom-nav strong{
 
-  margin-bottom:7px;
+  font-size:19px;
 
-  color:var(--text);
+  line-height:1;
 
 }
+
+.bottom-nav a.active{
+
+  color:var(--navy);
+
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
 
 .spinner{
 
-  width:38px;
-
-  height:38px;
-
-  margin:
-    0 auto 15px;
+  width:30px;
+  height:30px;
 
   border:
-    4px solid #e5eaf2;
+    3px solid #e5eaf2;
 
   border-top-color:
-    var(--navy);
+    var(--green);
 
   border-radius:50%;
 
   animation:
     spin .8s linear infinite;
+
+  margin:
+    0 auto 13px;
 
 }
 
@@ -1174,661 +1482,538 @@ body.dark .restaurant-name{
 }
 
 
-/* =====================================================
-   BOTTOM NAV
-===================================================== */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-.bottom-nav{
-
-  position:fixed;
-
-  left:0;
-  right:0;
-  bottom:0;
-
-  z-index:2000;
-
-  display:flex;
-
-  justify-content:center;
-
-  border-top:
-    1px solid var(--border);
-
-  background:var(--surface);
-
-  box-shadow:
-    0 -5px 20px rgba(0,0,0,.08);
-
-}
-
-.bottom-nav a{
-
-  flex:1;
-
-  max-width:180px;
-
-  padding:
-    9px 5px 8px;
-
-  text-align:center;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-}
-
-.bottom-nav a strong{
-
-  display:block;
-
-  margin-bottom:2px;
-
-  font-size:21px;
-
-}
-
-.bottom-nav a.active{
-
-  color:var(--navy);
-
-  font-weight:900;
-
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:700px){
+@media(max-width:760px){
 
   .header-inner{
-
-    width:
-      calc(100% - 26px);
-
+    height:62px;
   }
 
   .logo{
-
-    font-size:16px;
-
+    font-size:15px;
   }
 
-  .hero{
+  .header-nav a{
+    display:none;
+  }
 
+  .header-nav a.active{
+    display:block;
+  }
+
+  .hero-inner{
     padding:
-      35px 13px 43px;
-
-  }
-
-  .hero-title{
-
-    align-items:flex-start;
-
-  }
-
-  .hero-icon{
-
-    width:59px;
-
-    height:59px;
-
-    flex-basis:59px;
-
-    border-radius:17px;
-
-    font-size:30px;
-
+      32px 0 37px;
   }
 
   .hero h1{
-
     font-size:30px;
+  }
+
+  .hero-icon{
+    width:57px;
+    height:57px;
+    flex-basis:57px;
+    font-size:28px;
+  }
+
+  .toolbar{
+
+    align-items:
+      flex-end;
 
   }
 
-  main{
+  .toolbar-actions{
+
+    flex:1;
+
+    justify-content:flex-end;
+
+  }
+
+  .search-box{
 
     width:
-      calc(100% - 26px);
+      42px;
 
-    padding-top:24px;
+    padding:
+      0;
 
+    justify-content:center;
+
+  }
+
+  .search-box span{
+    font-size:16px;
+  }
+
+  .search-box input{
+    display:none;
+  }
+
+  .filter-button{
+    padding:
+      0 10px;
   }
 
   .filter-grid{
-
     grid-template-columns:1fr;
-
   }
 
-  .form-grid{
-
-    grid-template-columns:1fr;
-
+  .feed{
+    width:100%;
   }
 
-  .form-group.full{
-
-    grid-column:auto;
-
+  .post-image,
+  .post-image img{
+    max-height:350px;
   }
 
-  .post-area{
+}
 
-    align-items:flex-start;
+@media(max-width:480px){
 
+  .page{
+    width:
+      calc(100% - 20px);
   }
 
-  .post-area h2{
-
-    font-size:18px;
-
+  .hero-inner{
+    width:
+      calc(100% - 20px);
   }
 
-  .post-button{
-
-    white-space:nowrap;
-
+  .hero-content{
+    gap:12px;
   }
 
-  .reaction{
+  .hero h1{
+    font-size:27px;
+    letter-spacing:-1px;
+  }
 
-    min-width:auto;
+  .hero p{
+    font-size:11px;
+  }
 
+  .restaurant-name{
+    max-width:190px;
+  }
+
+  .post-title{
+    font-size:16px;
   }
 
 }
 
 
-/* =====================================================
-   VERY SMALL
-===================================================== */
+/* =========================================================
+   DARKER ACCESSIBLE FOCUS
+========================================================= */
 
-@media(max-width:430px){
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible{
 
-  .top-actions .language-button{
+  outline:
+    2px solid
+    var(--green);
 
-    display:none;
-
-  }
-
-  .restaurant-name{
-
-    font-size:18px;
-
-  }
-
-  .review-text{
-
-    font-size:13px;
-
-  }
-
-  .reaction{
-
-    padding:
-      8px 8px;
-
-    font-size:10px;
-
-  }
+  outline-offset:2px;
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<!-- =====================================================
+<!-- =======================================================
      HEADER
-===================================================== -->
+======================================================= -->
 
-<header>
+<header class="header">
 
-<div class="header-inner">
+  <div class="header-inner">
 
-<a
-  href="./index.html"
-  class="logo"
->
-  Myanmar <span>Elite Connect</span>
-</a>
-
-
-<div class="top-actions">
-
-<button
-  class="header-button"
-  id="languageButton"
->
-  <span id="langEN">EN</span>
-  /
-  <span id="langMM" class="active">မြန်မာ</span>
-</button>
+    <a
+      href="./index.html"
+      class="logo"
+    >
+      Myanmar <span>Elite Connect</span>
+    </a>
 
 
-<button
-  class="header-button"
-  id="themeButton"
->
-  ☾
-</button>
+    <nav class="header-nav">
 
-</div>
+      <a href="./index.html">
+        General
+      </a>
 
-</div>
+      <a href="./car.html">
+        🚗 Car
+      </a>
+
+      <a href="./property.html">
+        🏠 Property
+      </a>
+
+      <a href="./gem.html">
+        💎 Gem
+      </a>
+
+      <a href="./allmarket.html">
+        🛍️ Market
+      </a>
+
+      <a
+        href="./feedback.html"
+        class="active"
+      >
+        🍽️ Reviews
+      </a>
+
+    </nav>
+
+  </div>
 
 </header>
 
 
-<!-- =====================================================
+<!-- =======================================================
      HERO
-===================================================== -->
+======================================================= -->
 
 <section class="hero">
 
-<div class="hero-inner">
+  <div class="hero-inner">
 
-<a
-  href="./index.html"
-  class="back"
->
-  ← General သို့ပြန်သွားမည်
-</a>
-
-
-<div class="hero-title">
-
-<div class="hero-icon">
-  🍽️
-</div>
+    <a
+      href="./index.html"
+      class="back"
+    >
+      ← General သို့ပြန်သွားမည်
+    </a>
 
 
-<div>
+    <div class="hero-content">
 
-<h1 id="heroTitle">
-  စားသောက်ဆိုင် Review
-</h1>
+      <div class="hero-icon">
+        🍽️
+      </div>
 
-<p id="heroSubtitle">
-  မြန်မာနိုင်ငံအတွင်းရှိ စားသောက်ဆိုင်များကို
-  Review နှင့် Feedback ပေးနိုင်သောနေရာ
-</p>
 
-</div>
+      <div>
 
-</div>
+        <h1>
+          Restaurant Reviews
+        </h1>
 
-</div>
+        <p>
+          မြန်မာနိုင်ငံတစ်ဝန်းရှိ စားသောက်ဆိုင်များကို
+          ရှာဖွေ၊ သုံးသပ်၊ အတွေ့အကြုံမျှဝေနိုင်ပါသည်။
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- =====================================================
+<!-- =======================================================
      MAIN
-===================================================== -->
+======================================================= -->
 
-<main>
+<main class="page">
 
 
-<!-- FILTER -->
+  <!-- TOOLBAR -->
 
-<section class="filter-panel">
+  <section class="toolbar">
 
-<div class="filter-title" id="filterTitle">
-  🔎 စားသောက်ဆိုင်များကို ရှာဖွေပါ
-</div>
+    <div class="toolbar-left">
 
+      <div class="toolbar-title">
+        🍽️ Restaurant Feed
+      </div>
 
-<div class="filter-grid">
+      <div
+        id="reviewCount"
+        class="toolbar-count"
+      >
+        Reviews များကို ရယူနေပါသည်...
+      </div>
 
-<input
-  id="searchInput"
-  class="field"
-  type="search"
-  placeholder="Restaurant name / မြို့ / အစားအစာ..."
->
+    </div>
 
 
-<select
-  id="regionSelect"
-  class="field"
->
+    <div class="toolbar-actions">
 
-<option value="">
-  တိုင်းဒေသကြီး / ပြည်နယ်အားလုံး
-</option>
 
-</select>
+      <div class="search-box">
 
+        <span>
+          🔎
+        </span>
 
-<select
-  id="ratingFilter"
-  class="field"
->
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="စားသောက်ဆိုင်ရှာရန်..."
+        >
 
-<option value="">
-  Rating အားလုံး
-</option>
+      </div>
 
-<option value="5">
-  ⭐ 5
-</option>
 
-<option value="4">
-  ⭐ 4 နှင့်အထက်
-</option>
+      <button
+        id="filterButton"
+        class="filter-button"
+        type="button"
+        onclick="toggleFilters()"
+      >
+        ⚙ Filter
+      </button>
 
-<option value="3">
-  ⭐ 3 နှင့်အထက်
-</option>
+    </div>
 
-<option value="2">
-  ⭐ 2 နှင့်အထက်
-</option>
+  </section>
 
-</select>
 
-</div>
+  <!-- COMPACT FILTER -->
 
+  <section
+    id="filterDrawer"
+    class="filter-drawer"
+  >
 
-<div
-  id="regionList"
-  class="region-list"
-></div>
+    <div class="filter-top">
 
-</section>
+      <strong>
+        Filter Reviews
+      </strong>
 
+      <button
+        class="clear-filter"
+        type="button"
+        onclick="clearFilters()"
+      >
+        Clear
+      </button>
 
-<!-- POST AREA -->
+    </div>
 
-<section class="post-area">
 
-<h2 id="feedTitle">
-  🍽️ Restaurant Feedback
-</h2>
+    <div class="filter-grid">
 
 
-<button
-  id="openPostButton"
-  class="post-button"
->
-  + Review တင်မည်
-</button>
+      <div class="filter-field">
 
-</section>
+        <label>
+          တိုင်းဒေသကြီး / ပြည်နယ်
+        </label>
 
+        <select id="regionFilter">
 
-<!-- =====================================================
-     POST FORM
-===================================================== -->
+          <option value="">
+            အားလုံး
+          </option>
 
-<section
-  id="postForm"
-  class="post-form"
->
+        </select>
 
-<div class="form-grid">
+      </div>
 
 
-<div class="form-group">
+      <div class="filter-field">
 
-<label
-  class="form-label"
-  for="restaurantName"
->
-  Restaurant Name
-</label>
+        <label>
+          မြို့ / မြို့နယ်
+        </label>
 
-<input
-  id="restaurantName"
-  class="field"
-  type="text"
-  placeholder="စားသောက်ဆိုင်အမည်"
->
+        <select id="cityFilter">
 
-</div>
+          <option value="">
+            အားလုံး
+          </option>
 
+        </select>
 
-<div class="form-group">
+      </div>
 
-<label
-  class="form-label"
-  for="restaurantCity"
->
-  City / မြို့
-</label>
 
-<input
-  id="restaurantCity"
-  class="field"
-  type="text"
-  placeholder="ဥပမာ Yangon"
->
+      <div class="filter-field">
 
-</div>
+        <label>
+          Rating
+        </label>
 
+        <select id="ratingFilter">
 
-<div class="form-group">
+          <option value="">
+            Rating အားလုံး
+          </option>
 
-<label
-  class="form-label"
-  for="restaurantRegion"
->
-  Region / State
-</label>
+          <option value="5">
+            ⭐ 5
+          </option>
 
-<select
-  id="restaurantRegion"
-  class="field"
-></select>
+          <option value="4">
+            ⭐ 4+
+          </option>
 
-</div>
+          <option value="3">
+            ⭐ 3+
+          </option>
 
+          <option value="2">
+            ⭐ 2+
+          </option>
 
-<div class="form-group">
+        </select>
 
-<label
-  class="form-label"
-  for="restaurantCategory"
->
-  Food Category
-</label>
+      </div>
 
-<input
-  id="restaurantCategory"
-  class="field"
-  type="text"
-  placeholder="မြန်မာ / တရုတ် / Thai / Korean..."
->
 
-</div>
+      <div class="filter-field">
 
+        <label>
+          Sort
+        </label>
 
-<div class="form-group">
+        <select id="sortFilter">
 
-<label
-  class="form-label"
-  for="restaurantRating"
->
-  Rating
-</label>
+          <option value="newest">
+            အသစ်ဆုံး
+          </option>
 
-<select
-  id="restaurantRating"
-  class="rating-select"
->
+          <option value="popular">
+            လူကြိုက်များ
+          </option>
 
-<option value="5">⭐⭐⭐⭐⭐ 5</option>
-<option value="4">⭐⭐⭐⭐ 4</option>
-<option value="3">⭐⭐⭐ 3</option>
-<option value="2">⭐⭐ 2</option>
-<option value="1">⭐ 1</option>
+          <option value="rating">
+            Rating မြင့်
+          </option>
 
-</select>
+        </select>
 
-</div>
+      </div>
 
+    </div>
 
-<div class="form-group">
+  </section>
 
-<label
-  class="form-label"
-  for="restaurantImage"
->
-  Restaurant Image URL
-</label>
 
-<input
-  id="restaurantImage"
-  class="field"
-  type="url"
-  placeholder="https://..."
->
+  <!-- QUICK REGIONS -->
 
-</div>
+  <div
+    id="regionStrip"
+    class="region-strip"
+  >
 
+    <button
+      class="region-chip active"
+      data-region=""
+      onclick="setRegion('')"
+    >
+      Myanmar
+    </button>
 
-<div class="form-group full">
+  </div>
 
-<label
-  class="form-label"
-  for="reviewText"
->
-  Your Review / Feedback
-</label>
 
-<textarea
-  id="reviewText"
-  class="textarea"
-  placeholder="စားသောက်ဆိုင်အတွေ့အကြုံ၊ အစားအစာအရသာ၊ ဝန်ဆောင်မှု၊ ဈေးနှုန်း စသည်ဖြင့် ရေးပါ..."
-></textarea>
+  <!-- WRITE REVIEW -->
 
-</div>
+  <a
+    href="./add-feedback.html"
+    class="write-review"
+  >
+    ✍️ ကိုယ်တိုင် Restaurant Review တင်မည်
+  </a>
 
-</div>
 
+  <!-- FEED -->
 
-<div class="form-actions">
+  <section
+    id="feed"
+    class="feed"
+  >
 
-<button
-  id="cancelPost"
-  class="cancel-button"
->
-  Cancel
-</button>
+    <div class="feed-state">
 
-<button
-  id="publishPost"
-  class="publish-button"
->
-  Publish Review
-</button>
+      <div class="spinner"></div>
 
-</div>
+      Restaurant Reviews များကို
+      ရယူနေပါသည်...
 
-</section>
+    </div>
 
-
-<!-- =====================================================
-     FEED
-===================================================== -->
-
-<section
-  id="feed"
-  class="feed"
->
-
-<div class="state">
-
-<div class="spinner"></div>
-
-Restaurant feedback များကို
-ရယူနေပါသည်...
-
-</div>
-
-</section>
+  </section>
 
 
 </main>
 
 
-<!-- =====================================================
+<!-- =======================================================
      BOTTOM NAV
-===================================================== -->
+======================================================= -->
 
 <nav class="bottom-nav">
 
-<a href="./index.html">
+  <a href="./index.html">
 
-<strong>📋</strong>
+    <strong>📋</strong>
 
-General
+    General
 
-</a>
-
-
-<a
-  href="./chat.html"
->
-
-<strong>💬</strong>
-
-Chat
-
-</a>
+  </a>
 
 
-<a
-  href="./allmarket.html"
->
+  <a href="./chat.html">
 
-<strong>🛍️</strong>
+    <strong>💬</strong>
 
-Market
+    Chat
 
-</a>
+  </a>
 
 
-<a
-  href="./feedback.html"
-  class="active"
->
+  <a
+    href="./add-feedback.html"
+    class="active"
+  >
 
-<strong>🍽️</strong>
+    <strong>✍️</strong>
 
-Food
+    Review
 
-</a>
+  </a>
 
 
-<a
-  href="./profile.html"
->
+  <a href="./profile.html">
 
-<strong>👤</strong>
+    <strong>👤</strong>
 
-Profile
+    Profile
 
-</a>
+  </a>
 
 </nav>
 
 
 <script>
 
-/* =====================================================
+/* =========================================================
    SUPABASE
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
   "https://ikjwisfsdcupibgjiuvp.supabase.co";
@@ -1843,62 +2028,55 @@ const supabaseClient =
   );
 
 
-/* =====================================================
-   REGIONS / STATES
-===================================================== */
+/* =========================================================
+   STATE
+========================================================= */
+
+let reviews = [];
+
+let currentRegion = "";
+
+let currentCity = "";
+
+let currentRating = "";
+
+let currentSort = "newest";
+
+let currentSearch = "";
+
+let openedComments = new Set();
+
+let reactions = {};
+
+
+/* =========================================================
+   REGIONS
+========================================================= */
 
 const regions = [
 
   "ရန်ကုန်တိုင်းဒေသကြီး",
-
   "မန္တလေးတိုင်းဒေသကြီး",
-
   "နေပြည်တော်",
-
   "ပဲခူးတိုင်းဒေသကြီး",
-
   "ဧရာဝတီတိုင်းဒေသကြီး",
-
   "မကွေးတိုင်းဒေသကြီး",
-
   "စစ်ကိုင်းတိုင်းဒေသကြီး",
-
   "တနင်္သာရီတိုင်းဒေသကြီး",
-
   "မွန်ပြည်နယ်",
-
   "ကရင်ပြည်နယ်",
-
-  "ကယားပြည်နယ်",
-
+  "ကချင်ပြည်နယ်",
   "ချင်းပြည်နယ်",
-
   "ရခိုင်ပြည်နယ်",
-
   "ရှမ်းပြည်နယ်",
-
-  "ကချင်ပြည်နယ်"
+  "ကယားပြည်နယ်"
 
 ];
 
 
-/* =====================================================
-   STATE
-===================================================== */
-
-let posts = [];
-
-let selectedRegion = "";
-
-let language =
-  localStorage.getItem(
-    "mec_language"
-  ) || "mm";
-
-
-/* =====================================================
-   HELPERS
-===================================================== */
+/* =========================================================
+   ESCAPE
+========================================================= */
 
 function escapeHtml(value){
 
@@ -1906,9 +2084,7 @@ function escapeHtml(value){
     value === null ||
     value === undefined
   ){
-
     return "";
-
   }
 
   return String(value)
@@ -1922,94 +2098,104 @@ function escapeHtml(value){
 }
 
 
-function getStars(rating){
+/* =========================================================
+   IMAGE PARSER
+========================================================= */
+
+function getImage(item){
 
   const value =
-    Number(rating || 0);
+    item.image_url ||
+    item.image ||
+    item.photo ||
+    "";
 
-  return (
-    "★".repeat(value)
-    +
-    "☆".repeat(
-      Math.max(
-        0,
-        5-value
-      )
+  if(
+    typeof value === "string" &&
+    value.startsWith("http")
+  ){
+    return value;
+  }
+
+  return "";
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(date){
+
+  if(!date){
+    return "";
+  }
+
+  const d =
+    new Date(date);
+
+  if(
+    Number.isNaN(
+      d.getTime()
     )
+  ){
+    return "";
+  }
+
+  return d.toLocaleDateString(
+    "my-MM",
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric"
+    }
   );
 
 }
 
 
-function formatDate(date){
+/* =========================================================
+   STAR
+========================================================= */
 
-  if(!date){
+function stars(rating){
 
-    return "";
+  const value =
+    Math.max(
+      0,
+      Math.min(
+        5,
+        Number(rating || 0)
+      )
+    );
 
-  }
+  const rounded =
+    Math.round(value);
 
-  try{
-
-    return new Date(date)
-      .toLocaleDateString(
-        language === "mm"
-          ? "my-MM"
-          : "en-US",
-        {
-          year:"numeric",
-          month:"short",
-          day:"numeric"
-        }
-      );
-
-  }
-  catch{
-
-    return "";
-
-  }
+  return (
+    "★".repeat(rounded)
+    +
+    "☆".repeat(5-rounded)
+  );
 
 }
 
 
-/* =====================================================
+/* =========================================================
    REGION OPTIONS
-===================================================== */
+========================================================= */
 
-function buildRegions(){
+function setupRegions(){
 
-  const regionSelect =
+  const select =
     document.getElementById(
-      "regionSelect"
+      "regionFilter"
     );
 
-  const restaurantRegion =
+  const strip =
     document.getElementById(
-      "restaurantRegion"
+      "regionStrip"
     );
-
-  regionSelect.innerHTML = `
-
-    <option value="">
-      ${language === "mm"
-        ? "တိုင်းဒေသကြီး / ပြည်နယ်အားလုံး"
-        : "All Regions / States"}
-    </option>
-
-  `;
-
-
-  restaurantRegion.innerHTML = `
-
-    <option value="">
-      ${language === "mm"
-        ? "ရွေးချယ်ပါ"
-        : "Select Region / State"}
-    </option>
-
-  `;
-
 
   regions.forEach(
     region => {
@@ -2025,118 +2211,114 @@ function buildRegions(){
       option.textContent =
         region;
 
-      regionSelect.appendChild(
-        option.cloneNode(true)
+      select.appendChild(
+        option
       );
 
-      restaurantRegion.appendChild(
+
+      const chip =
+        document.createElement(
+          "button"
+        );
+
+      chip.className =
+        "region-chip";
+
+      chip.dataset.region =
+        region;
+
+      chip.textContent =
+        region
+          .replace(
+            "တိုင်းဒေသကြီး",
+            ""
+          )
+          .replace(
+            "ပြည်နယ်",
+            ""
+          );
+
+      chip.onclick =
+        () =>
+        setRegion(region);
+
+      strip.appendChild(
+        chip
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CITY OPTIONS
+========================================================= */
+
+function setupCities(){
+
+  const select =
+    document.getElementById(
+      "cityFilter"
+    );
+
+  const cities = [
+
+    ...new Set(
+
+      reviews
+
+        .map(
+          item =>
+          item.city ||
+          item.township
+        )
+
+        .filter(Boolean)
+
+    )
+
+  ].sort();
+
+  select.innerHTML = `
+
+    <option value="">
+      အားလုံး
+    </option>
+
+  `;
+
+
+  cities.forEach(
+    city => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        city;
+
+      option.textContent =
+        city;
+
+      select.appendChild(
         option
       );
 
     }
   );
 
-
-  const regionList =
-    document.getElementById(
-      "regionList"
-    );
-
-  regionList.innerHTML = "";
-
-
-  const allButton =
-    document.createElement(
-      "button"
-    );
-
-  allButton.className =
-    "region active";
-
-  allButton.textContent =
-    language === "mm"
-      ? "အားလုံး"
-      : "All";
-
-  allButton.onclick =
-    () => setRegion("");
-
-  regionList.appendChild(
-    allButton
-  );
-
-
-  regions.forEach(
-    region => {
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-      button.className =
-        "region";
-
-      button.textContent =
-        region;
-
-      button.onclick =
-        () => setRegion(region);
-
-      regionList.appendChild(
-        button
-      );
-
-    }
-  );
-
 }
 
 
-/* =====================================================
-   REGION
-===================================================== */
+/* =========================================================
+   LOAD REVIEWS
+========================================================= */
 
-function setRegion(region){
-
-  selectedRegion =
-    region;
-
-  document.getElementById(
-    "regionSelect"
-  ).value =
-    region;
-
-  document.querySelectorAll(
-    ".region"
-  ).forEach(
-    button => {
-
-      button.classList.toggle(
-        "active",
-        button.textContent === region ||
-        (
-          !region &&
-          (
-            button.textContent === "အားလုံး" ||
-            button.textContent === "All"
-          )
-        )
-      );
-
-    }
-  );
-
-  renderPosts();
-
-}
-
-
-/* =====================================================
-   LOAD POSTS
-===================================================== */
-
-async function loadPosts(){
+async function loadReviews(){
 
   const feed =
     document.getElementById(
@@ -2145,11 +2327,11 @@ async function loadPosts(){
 
   feed.innerHTML = `
 
-    <div class="state">
+    <div class="feed-state">
 
       <div class="spinner"></div>
 
-      Restaurant feedback များကို
+      Restaurant Reviews များကို
       ရယူနေပါသည်...
 
     </div>
@@ -2159,6 +2341,32 @@ async function loadPosts(){
 
   try{
 
+    /*
+      Expected table:
+
+      restaurant_reviews
+
+      Useful columns:
+
+      id
+      restaurant_name
+      title
+      content
+      rating
+      region
+      city
+      restaurant_image
+      review_image
+      author_name
+      author_avatar
+      verified
+      likes_count
+      dislikes_count
+      comments_count
+      created_at
+    */
+
+
     const {
       data,
       error
@@ -2166,60 +2374,61 @@ async function loadPosts(){
       await supabaseClient
 
         .from(
-          "restaurant_feedback"
+          "restaurant_reviews"
         )
 
-        .select(
-          "*"
-        )
+        .select("*")
 
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
+        .eq(
+          "status",
+          "approved"
         );
 
 
     if(error){
-
       throw error;
-
     }
 
 
-    posts =
+    reviews =
       Array.isArray(data)
-        ? data
-        : [];
+      ?
+      data
+      :
+      [];
 
 
-    renderPosts();
+    setupCities();
+
+    renderReviews();
+
 
   }
   catch(error){
 
     console.error(
-      "Feedback load error:",
+      "Restaurant feedback error:",
       error
     );
 
 
     feed.innerHTML = `
 
-      <div class="state">
+      <div class="feed-state">
 
-        <div class="state-icon">
+        <div class="feed-state-icon">
           ⚠️
         </div>
 
         <h3>
-          Feedback များကို မရယူနိုင်ပါ
+          Review များကို မရယူနိုင်ပါ
         </h3>
 
         <p>
-          Database table မတည်ဆောက်ရသေးခြင်း
-          သို့မဟုတ် connection error ဖြစ်နိုင်ပါသည်။
+          ${escapeHtml(
+            error.message ||
+            "Database error"
+          )}
         </p>
 
       </div>
@@ -2231,126 +2440,600 @@ async function loadPosts(){
 }
 
 
-/* =====================================================
+/* =========================================================
    FILTER
-===================================================== */
+========================================================= */
 
-function getFilteredPosts(){
+function getFilteredReviews(){
 
-  const keyword =
-    document.getElementById(
-      "searchInput"
-    ).value
+  currentSearch =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
       .trim()
       .toLowerCase();
 
 
-  const rating =
-    Number(
-      document.getElementById(
-        "ratingFilter"
-      ).value || 0
+  let result =
+    [...reviews];
+
+
+  if(currentSearch){
+
+    result =
+      result.filter(
+        item => {
+
+          const text = [
+
+            item.restaurant_name,
+            item.title,
+            item.content,
+            item.region,
+            item.city,
+            item.township
+
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+          return text.includes(
+            currentSearch
+          );
+
+        }
+      );
+
+  }
+
+
+  if(currentRegion){
+
+    result =
+      result.filter(
+        item =>
+          item.region ===
+          currentRegion
+      );
+
+  }
+
+
+  if(currentCity){
+
+    result =
+      result.filter(
+        item =>
+          (
+            item.city ||
+            item.township
+          )
+          ===
+          currentCity
+      );
+
+  }
+
+
+  if(currentRating){
+
+    result =
+      result.filter(
+        item =>
+          Number(
+            item.rating || 0
+          )
+          >=
+          Number(
+            currentRating
+          )
+      );
+
+  }
+
+
+  if(
+    currentSort ===
+    "rating"
+  ){
+
+    result.sort(
+      (
+        a,
+        b
+      ) =>
+        Number(
+          b.rating || 0
+        )
+        -
+        Number(
+          a.rating || 0
+        )
     );
 
+  }
 
-  return posts.filter(
-    post => {
+  else if(
+    currentSort ===
+    "popular"
+  ){
 
-      const searchable = [
-
-        post.restaurant_name,
-
-        post.city,
-
-        post.region,
-
-        post.food_category,
-
-        post.review
-
-      ]
-
-      .filter(Boolean)
-
-      .join(" ")
-
-      .toLowerCase();
-
-
-      if(
-        keyword &&
-        !searchable.includes(
-          keyword
+    result.sort(
+      (
+        a,
+        b
+      ) =>
+        (
+          Number(
+            b.likes_count || 0
+          )
+          -
+          Number(
+            a.likes_count || 0
+          )
         )
-      ){
+    );
 
-        return false;
+  }
 
-      }
+  else{
 
+    result.sort(
+      (
+        a,
+        b
+      ) =>
+        new Date(
+          b.created_at || 0
+        )
+        -
+        new Date(
+          a.created_at || 0
+        )
+    );
 
-      if(
-        selectedRegion &&
-        post.region !== selectedRegion
-      ){
-
-        return false;
-
-      }
-
-
-      if(
-        rating &&
-        Number(post.rating || 0)
-          < rating
-      ){
-
-        return false;
-
-      }
+  }
 
 
-      return true;
-
-    }
-  );
+  return result;
 
 }
 
 
-/* =====================================================
-   RENDER POSTS
-===================================================== */
+/* =========================================================
+   CREATE CARD
+========================================================= */
 
-function renderPosts(){
+function createReviewCard(item){
+
+  const id =
+    item.id;
+
+  const restaurant =
+    escapeHtml(
+      item.restaurant_name ||
+      "Restaurant"
+    );
+
+  const title =
+    escapeHtml(
+      item.title ||
+      "Restaurant Review"
+    );
+
+  const content =
+    escapeHtml(
+      item.content ||
+      item.description ||
+      ""
+    );
+
+  const author =
+    escapeHtml(
+      item.author_name ||
+      "MEC User"
+    );
+
+  const region =
+    escapeHtml(
+      item.region ||
+      ""
+    );
+
+  const city =
+    escapeHtml(
+      item.city ||
+      item.township ||
+      ""
+    );
+
+  const rating =
+    Number(
+      item.rating || 0
+    );
+
+  const image =
+    getImage(item);
+
+  const restaurantImage =
+    item.restaurant_image ||
+    "";
+
+  const likes =
+    Number(
+      item.likes_count || 0
+    );
+
+  const dislikes =
+    Number(
+      item.dislikes_count || 0
+    );
+
+  const comments =
+    Number(
+      item.comments_count || 0
+    );
+
+
+  const reaction =
+    reactions[id] ||
+    "";
+
+
+  const commentsOpen =
+    openedComments.has(id);
+
+
+  return `
+
+    <article
+      class="review-card"
+      data-id="${escapeHtml(id)}"
+    >
+
+
+      <!-- POST HEADER -->
+
+      <div class="post-head">
+
+
+        <div class="restaurant-info">
+
+
+          <div class="restaurant-avatar">
+
+            ${
+              restaurantImage
+              ?
+              `
+                <img
+                  src="${escapeHtml(
+                    restaurantImage
+                  )}"
+                  alt=""
+                >
+              `
+              :
+              "🍽️"
+            }
+
+          </div>
+
+
+          <div class="restaurant-text">
+
+            <div class="restaurant-name">
+              ${restaurant}
+            </div>
+
+
+            <div class="restaurant-meta">
+
+              ${
+                city
+                ?
+                `
+                  <span>
+                    📍 ${city}
+                  </span>
+                `
+                :
+                ""
+              }
+
+
+              ${
+                region
+                ?
+                `
+                  <span>
+                    · ${region}
+                  </span>
+                `
+                :
+                ""
+              }
+
+
+              ${
+                item.verified
+                ?
+                `
+                  <span class="verified">
+                    ✓ Verified
+                  </span>
+                `
+                :
+                ""
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="post-date">
+          ${formatDate(item.created_at)}
+        </div>
+
+      </div>
+
+
+      <!-- RATING -->
+
+      <div class="rating-row">
+
+        <span class="stars">
+          ${stars(rating)}
+        </span>
+
+        <span class="rating-number">
+          ${rating.toFixed(1)}
+        </span>
+
+        <span class="rating-label">
+          / 5
+        </span>
+
+      </div>
+
+
+      <!-- TEXT -->
+
+      <div class="post-content">
+
+        <div class="post-title">
+          ${title}
+        </div>
+
+
+        ${
+          content
+          ?
+          `
+            <div class="post-text">
+              ${content}
+            </div>
+          `
+          :
+          ""
+        }
+
+      </div>
+
+
+      <!-- IMAGE -->
+
+      ${
+        image
+        ?
+        `
+          <div class="post-image">
+
+            <img
+              src="${escapeHtml(image)}"
+              alt="${restaurant}"
+              loading="lazy"
+            >
+
+          </div>
+        `
+        :
+        ""
+      }
+
+
+      <!-- ACTIONS -->
+
+      <div class="post-footer">
+
+
+        <div class="reaction-summary">
+
+          <span>
+            ${
+              likes
+              ?
+              `👍 ${likes}`
+              :
+              "Like မရှိသေးပါ"
+            }
+          </span>
+
+
+          <span>
+            ${
+              comments
+              ?
+              `${comments} comments`
+              :
+              ""
+            }
+          </span>
+
+        </div>
+
+
+        <div class="action-row">
+
+
+          <button
+            class="
+              action
+              ${reaction === "like" ? "liked" : ""}
+            "
+            onclick="
+              reactToReview(
+                '${escapeHtml(id)}',
+                'like'
+              )
+            "
+          >
+            👍 Like
+          </button>
+
+
+          <button
+            class="
+              action
+              ${reaction === "dislike" ? "disliked" : ""}
+            "
+            onclick="
+              reactToReview(
+                '${escapeHtml(id)}',
+                'dislike'
+              )
+            "
+          >
+            👎 Dislike
+          </button>
+
+
+          <button
+            class="action"
+            onclick="
+              toggleComments(
+                '${escapeHtml(id)}'
+              )
+            "
+          >
+            💬 Comment
+          </button>
+
+        </div>
+
+
+        <!-- COMMENTS -->
+
+        <div
+          id="comments-${escapeHtml(id)}"
+          class="
+            comments
+            ${commentsOpen ? "open" : ""}
+          "
+        >
+
+          <div
+            id="comment-list-${escapeHtml(id)}"
+            class="comment-list"
+          >
+
+            <div
+              style="
+                color:#9aa3b1;
+                font-size:10px;
+              "
+            >
+              Comments များကို ရယူနေပါသည်...
+            </div>
+
+          </div>
+
+
+          <form
+            class="comment-form"
+            onsubmit="
+              submitComment(
+                event,
+                '${escapeHtml(id)}'
+              )
+            "
+          >
+
+            <input
+              id="comment-input-${escapeHtml(id)}"
+              type="text"
+              maxlength="500"
+              placeholder="Comment ရေးပါ..."
+              required
+            >
+
+            <button
+              type="submit"
+            >
+              Send
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderReviews(){
 
   const feed =
     document.getElementById(
       "feed"
     );
 
+  const count =
+    document.getElementById(
+      "reviewCount"
+    );
+
 
   const filtered =
-    getFilteredPosts();
+    getFilteredReviews();
+
+
+  count.textContent =
+    `${filtered.length} reviews`;
 
 
   if(!filtered.length){
 
     feed.innerHTML = `
 
-      <div class="state">
+      <div class="feed-state">
 
-        <div class="state-icon">
-          🍽️
+        <div class="feed-state-icon">
+          🔎
         </div>
 
         <h3>
-          Restaurant Review မတွေ့ပါ
+          Review မတွေ့ပါ
         </h3>
 
         <p>
-          Filter သို့မဟုတ် Search ကို
-          ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။
+          Search သို့မဟုတ် Filter ကို
+          ပြောင်းပြီး ထပ်ရှာကြည့်ပါ။
         </p>
 
       </div>
@@ -2365,506 +3048,194 @@ function renderPosts(){
   feed.innerHTML =
     filtered
       .map(
-        createPostCard
+        createReviewCard
       )
       .join("");
 
 
-  loadReactionCounts();
+  /*
+    Restore opened comments
+  */
+
+  openedComments.forEach(
+    id =>
+      loadComments(id)
+  );
 
 }
 
 
-/* =====================================================
-   CREATE POST
-===================================================== */
+/* =========================================================
+   REGION
+========================================================= */
 
-function createPostCard(post){
+function setRegion(region){
 
-  const image =
-    post.image_url
-      ? `
+  currentRegion =
+    region;
 
-        <img
-          class="post-image"
-          src="${escapeHtml(post.image_url)}"
-          alt="${escapeHtml(post.restaurant_name)}"
-          loading="lazy"
-        >
-
-      `
-      : "";
+  document
+    .getElementById(
+      "regionFilter"
+    )
+    .value =
+    region;
 
 
-  const userName =
-    escapeHtml(
-      post.user_name ||
-      "MEC User"
+  document
+    .querySelectorAll(
+      ".region-chip"
+    )
+    .forEach(
+      chip => {
+
+        chip.classList.toggle(
+          "active",
+          chip.dataset.region ===
+          region
+        );
+
+      }
     );
 
 
-  const initial =
-    escapeHtml(
-      userName
-        .charAt(0)
-        .toUpperCase()
-    );
-
-
-  return `
-
-    <article
-      class="post-card"
-      data-post-id="${escapeHtml(post.id)}"
-    >
-
-
-      <div class="post-header">
-
-        <div class="avatar">
-
-          ${post.avatar_url
-            ? `
-              <img
-                src="${escapeHtml(post.avatar_url)}"
-                alt=""
-              >
-            `
-            : initial
-          }
-
-        </div>
-
-
-        <div class="user-info">
-
-          <div class="user-name">
-            ${userName}
-          </div>
-
-          <div class="post-time">
-            ${formatDate(post.created_at)}
-          </div>
-
-        </div>
-
-
-        <div class="post-region">
-
-          📍
-          ${escapeHtml(post.region || "မြန်မာနိုင်ငံ")}
-
-        </div>
-
-      </div>
-
-
-      ${image}
-
-
-      <div class="post-content">
-
-        <div class="restaurant-name">
-
-          🍽️
-          ${escapeHtml(
-            post.restaurant_name ||
-            "Restaurant"
-          )}
-
-        </div>
-
-
-        <div class="restaurant-meta">
-
-          <span class="meta">
-
-            📍
-            ${escapeHtml(
-              post.city ||
-              "မြို့မဖော်ပြပါ"
-            )}
-
-          </span>
-
-
-          ${
-            post.food_category
-              ?
-              `
-                <span class="meta">
-                  🍜
-                  ${escapeHtml(
-                    post.food_category
-                  )}
-                </span>
-              `
-              :
-              ""
-          }
-
-
-          <span class="meta stars">
-
-            ${getStars(post.rating)}
-
-          </span>
-
-        </div>
-
-
-        <div class="review-text">
-
-          ${escapeHtml(
-            post.review ||
-            ""
-          )}
-
-        </div>
-
-      </div>
-
-
-      <div class="reaction-bar">
-
-        <button
-          class="reaction like"
-          onclick="reactPost('${escapeHtml(post.id)}','like')"
-        >
-
-          ❤️
-          <span id="like-${escapeHtml(post.id)}">
-            0
-          </span>
-
-        </button>
-
-
-        <button
-          class="reaction dislike"
-          onclick="reactPost('${escapeHtml(post.id)}','dislike')"
-        >
-
-          👎
-          <span id="dislike-${escapeHtml(post.id)}">
-            0
-          </span>
-
-        </button>
-
-
-        <button
-          class="reaction comment-button"
-          onclick="toggleComments('${escapeHtml(post.id)}')"
-        >
-
-          💬
-          Comment
-
-        </button>
-
-      </div>
-
-
-      <div
-        class="comments"
-        id="comments-${escapeHtml(post.id)}"
-      >
-
-        <div class="comments-title">
-
-          💬 Comments
-
-        </div>
-
-
-        <div
-          class="comments-list"
-          id="comment-list-${escapeHtml(post.id)}"
-        >
-
-          Loading...
-
-        </div>
-
-
-        <div class="comment-form">
-
-          <input
-            class="comment-input"
-            id="comment-input-${escapeHtml(post.id)}"
-            type="text"
-            placeholder="Comment ရေးပါ..."
-          >
-
-
-          <button
-            class="comment-submit"
-            onclick="addComment('${escapeHtml(post.id)}')"
-          >
-            ➤
-          </button>
-
-        </div>
-
-      </div>
-
-
-    </article>
-
-  `;
+  renderReviews();
 
 }
 
 
-/* =====================================================
-   REACTIONS
-===================================================== */
+/* =========================================================
+   FILTER DRAWER
+========================================================= */
 
-async function loadReactionCounts(){
+function toggleFilters(){
 
-  for(
-    const post of
-    getFilteredPosts()
+  const drawer =
+    document.getElementById(
+      "filterDrawer"
+    );
+
+  const button =
+    document.getElementById(
+      "filterButton"
+    );
+
+  drawer.classList.toggle(
+    "open"
+  );
+
+  button.classList.toggle(
+    "active"
+  );
+
+}
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+function clearFilters(){
+
+  currentRegion = "";
+
+  currentCity = "";
+
+  currentRating = "";
+
+  currentSort = "newest";
+
+
+  document
+    .getElementById(
+      "searchInput"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "regionFilter"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "cityFilter"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "ratingFilter"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "sortFilter"
+    )
+    .value = "newest";
+
+
+  setRegion("");
+
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+function toggleComments(id){
+
+  const box =
+    document.getElementById(
+      `comments-${id}`
+    );
+
+  if(
+    openedComments.has(id)
   ){
 
-    try{
+    openedComments.delete(id);
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-
-          .from(
-            "restaurant_feedback_reactions"
-          )
-
-          .select(
-            "reaction"
-          )
-
-          .eq(
-            "post_id",
-            post.id
-          );
-
-
-      if(error){
-
-        continue;
-
-      }
-
-
-      const likes =
-        data.filter(
-          item =>
-          item.reaction === "like"
-        ).length;
-
-
-      const dislikes =
-        data.filter(
-          item =>
-          item.reaction === "dislike"
-        ).length;
-
-
-      const likeElement =
-        document.getElementById(
-          `like-${post.id}`
-        );
-
-
-      const dislikeElement =
-        document.getElementById(
-          `dislike-${post.id}`
-        );
-
-
-      if(likeElement){
-
-        likeElement.textContent =
-          likes;
-
-      }
-
-
-      if(dislikeElement){
-
-        dislikeElement.textContent =
-          dislikes;
-
-      }
-
-    }
-    catch(error){
-
-      console.error(
-        error
-      );
-
-    }
-
-  }
-
-}
-
-
-/* =====================================================
-   REACT
-===================================================== */
-
-async function reactPost(
-  postId,
-  reaction
-){
-
-  try{
-
-    const {
-      data:{
-        user
-      }
-    } =
-      await supabaseClient.auth
-        .getUser();
-
-
-    if(!user){
-
-      alert(
-        language === "mm"
-          ? "Like / Dislike လုပ်ရန် အကောင့်ဝင်ထားရပါမည်။"
-          : "Please log in to react."
-      );
-
-      return;
-
-    }
-
-
-    const {
-      data:existing
-    } =
-      await supabaseClient
-
-        .from(
-          "restaurant_feedback_reactions"
-        )
-
-        .select(
-          "id,reaction"
-        )
-
-        .eq(
-          "post_id",
-          postId
-        )
-
-        .eq(
-          "user_id",
-          user.id
-        )
-
-        .maybeSingle();
-
-
-    if(existing){
-
-      if(
-        existing.reaction === reaction
-      ){
-
-        await supabaseClient
-
-          .from(
-            "restaurant_feedback_reactions"
-          )
-
-          .delete()
-
-          .eq(
-            "id",
-            existing.id
-          );
-
-      }
-      else{
-
-        await supabaseClient
-
-          .from(
-            "restaurant_feedback_reactions"
-          )
-
-          .update({
-            reaction
-          })
-
-          .eq(
-            "id",
-            existing.id
-          );
-
-      }
-
-    }
-    else{
-
-      await supabaseClient
-
-        .from(
-          "restaurant_feedback_reactions"
-        )
-
-        .insert({
-
-          post_id:postId,
-
-          user_id:user.id,
-
-          reaction
-
-        });
-
-    }
-
-
-    loadReactionCounts();
-
-  }
-  catch(error){
-
-    console.error(
-      "Reaction error:",
-      error
+    box.classList.remove(
+      "open"
     );
 
   }
+  else{
+
+    openedComments.add(id);
+
+    box.classList.add(
+      "open"
+    );
+
+    loadComments(id);
+
+  }
 
 }
 
 
-/* =====================================================
-   COMMENTS
-===================================================== */
+/* =========================================================
+   LOAD COMMENTS
+========================================================= */
 
-async function loadComments(
-  postId
-){
+async function loadComments(id){
 
   const list =
     document.getElementById(
-      `comment-list-${postId}`
+      `comment-list-${id}`
     );
 
-
   if(!list){
-
     return;
-
   }
 
 
@@ -2877,16 +3248,14 @@ async function loadComments(
       await supabaseClient
 
         .from(
-          "restaurant_feedback_comments"
+          "restaurant_review_comments"
         )
 
-        .select(
-          "*"
-        )
+        .select("*")
 
         .eq(
-          "post_id",
-          postId
+          "review_id",
+          id
         )
 
         .order(
@@ -2898,21 +3267,21 @@ async function loadComments(
 
 
     if(error){
-
       throw error;
-
     }
 
 
-    if(!data?.length){
+    if(
+      !data ||
+      !data.length
+    ){
 
       list.innerHTML = `
 
         <div
           style="
-            color:var(--muted);
-            font-size:11px;
-            padding:5px 0;
+            color:#9aa3b1;
+            font-size:10px;
           "
         >
           Comment မရှိသေးပါ။
@@ -2933,38 +3302,23 @@ async function loadComments(
             <div class="comment">
 
               <div class="comment-avatar">
-
-                ${escapeHtml(
-                  (
-                    comment.user_name ||
-                    "U"
-                  )
-                  .charAt(0)
-                  .toUpperCase()
-                )}
-
+                👤
               </div>
 
-
-              <div class="comment-body">
+              <div class="comment-bubble">
 
                 <div class="comment-name">
-
                   ${escapeHtml(
-                    comment.user_name ||
+                    comment.author_name ||
                     "MEC User"
                   )}
-
                 </div>
 
-
                 <div class="comment-text">
-
                   ${escapeHtml(
-                    comment.comment ||
+                    comment.content ||
                     ""
                   )}
-
                 </div>
 
               </div>
@@ -2979,81 +3333,56 @@ async function loadComments(
   catch(error){
 
     console.error(
-      "Comment load error:",
+      "Comment error:",
       error
     );
 
-    list.innerHTML =
-      "Comment များကို မရယူနိုင်ပါ။";
+    list.innerHTML = `
+
+      <div
+        style="
+          color:#b42318;
+          font-size:10px;
+        "
+      >
+        Comments မရယူနိုင်ပါ။
+      </div>
+
+    `;
 
   }
 
 }
 
 
-/* =====================================================
-   TOGGLE COMMENTS
-===================================================== */
+/* =========================================================
+   COMMENT SUBMIT
+========================================================= */
 
-async function toggleComments(
-  postId
+async function submitComment(
+  event,
+  reviewId
 ){
 
-  await loadComments(
-    postId
-  );
+  event.preventDefault();
 
-}
-
-
-/* =====================================================
-   ADD COMMENT
-===================================================== */
-
-async function addComment(
-  postId
-){
 
   const input =
     document.getElementById(
-      `comment-input-${postId}`
+      `comment-input-${reviewId}`
     );
 
 
-  const comment =
+  const content =
     input.value.trim();
 
 
-  if(!comment){
-
+  if(!content){
     return;
-
   }
 
 
   try{
-
-    const {
-      data:{
-        user
-      }
-    } =
-      await supabaseClient.auth
-        .getUser();
-
-
-    if(!user){
-
-      alert(
-        language === "mm"
-          ? "Comment ရေးရန် အကောင့်ဝင်ထားရပါမည်။"
-          : "Please log in to comment."
-      );
-
-      return;
-
-    }
-
 
     const {
       data:userData
@@ -3062,10 +3391,9 @@ async function addComment(
         .getUser();
 
 
-    const userName =
-      userData?.user?.user_metadata?.full_name ||
-      user.email?.split("@")[0] ||
-      "MEC User";
+    const user =
+      userData &&
+      userData.user;
 
 
     const {
@@ -3074,45 +3402,62 @@ async function addComment(
       await supabaseClient
 
         .from(
-          "restaurant_feedback_comments"
+          "restaurant_review_comments"
         )
 
         .insert({
 
-          post_id:postId,
+          review_id:
+            reviewId,
 
-          user_id:user.id,
+          author_id:
+            user
+            ?
+            user.id
+            :
+            null,
 
-          user_name:userName,
+          author_name:
+            user
+            ?
+            (
+              user.user_metadata
+                ?.full_name
+              ||
+              user.email
+              ||
+              "MEC User"
+            )
+            :
+            "MEC User",
 
-          comment
+          content:
+            content
 
         });
 
 
     if(error){
-
       throw error;
-
     }
 
 
     input.value = "";
 
-    loadComments(
-      postId
+    await loadComments(
+      reviewId
     );
 
   }
   catch(error){
 
     console.error(
-      "Comment error:",
+      "Comment submit error:",
       error
     );
 
     alert(
-      "Comment မတင်နိုင်ပါ။"
+      "Comment တင်၍မရပါ။ Login ဝင်ထားခြင်း သို့မဟုတ် Database permission ကို စစ်ဆေးပါ။"
     );
 
   }
@@ -3120,423 +3465,252 @@ async function addComment(
 }
 
 
-/* =====================================================
-   OPEN POST FORM
-===================================================== */
+/* =========================================================
+   LIKE / DISLIKE
+========================================================= */
 
-document.getElementById(
-  "openPostButton"
-).addEventListener(
-  "click",
-  async () => {
+async function reactToReview(
+  reviewId,
+  type
+){
 
-    try{
-
-      const {
-        data:{
-          user
-        }
-      } =
-        await supabaseClient.auth
-          .getUser();
+  const previous =
+    reactions[reviewId] ||
+    "";
 
 
-      if(!user){
+  /*
+    Same button ကို ထပ်နှိပ်ရင်
+    reaction ကို ဖျက်သလို local state မှာထားမယ်။
+  */
 
-        alert(
-          language === "mm"
-            ? "Review တင်ရန် အကောင့်ဝင်ထားရပါမည်။"
-            : "Please log in to post a review."
+  if(previous === type){
+
+    reactions[reviewId] = "";
+
+  }
+  else{
+
+    reactions[reviewId] =
+      type;
+
+  }
+
+
+  renderReviews();
+
+
+  /*
+    Optional persistence.
+
+    Expected table:
+
+    restaurant_review_reactions
+
+    review_id
+    user_id
+    reaction
+    created_at
+
+    This part intentionally uses upsert
+    so one user can have one reaction.
+  */
+
+  try{
+
+    const {
+      data:userData
+    } =
+      await supabaseClient.auth
+        .getUser();
+
+
+    const user =
+      userData &&
+      userData.user;
+
+
+    if(!user){
+      return;
+    }
+
+
+    const reaction =
+      reactions[reviewId];
+
+
+    if(!reaction){
+
+      await supabaseClient
+
+        .from(
+          "restaurant_review_reactions"
+        )
+
+        .delete()
+
+        .eq(
+          "review_id",
+          reviewId
+        )
+
+        .eq(
+          "user_id",
+          user.id
         );
-
-        window.location.href =
-          "./auth.html?mode=login";
-
-        return;
-
-      }
-
-
-      document.getElementById(
-        "postForm"
-      ).classList.add(
-        "open"
-      );
-
-    }
-    catch(error){
-
-      console.error(
-        error
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   CANCEL
-===================================================== */
-
-document.getElementById(
-  "cancelPost"
-).addEventListener(
-  "click",
-  () => {
-
-    document.getElementById(
-      "postForm"
-    ).classList.remove(
-      "open"
-    );
-
-  }
-);
-
-
-/* =====================================================
-   PUBLISH
-===================================================== */
-
-document.getElementById(
-  "publishPost"
-).addEventListener(
-  "click",
-  async () => {
-
-    const button =
-      document.getElementById(
-        "publishPost"
-      );
-
-
-    const restaurantName =
-      document.getElementById(
-        "restaurantName"
-      ).value.trim();
-
-
-    const city =
-      document.getElementById(
-        "restaurantCity"
-      ).value.trim();
-
-
-    const region =
-      document.getElementById(
-        "restaurantRegion"
-      ).value;
-
-
-    const category =
-      document.getElementById(
-        "restaurantCategory"
-      ).value.trim();
-
-
-    const rating =
-      Number(
-        document.getElementById(
-          "restaurantRating"
-        ).value
-      );
-
-
-    const image =
-      document.getElementById(
-        "restaurantImage"
-      ).value.trim();
-
-
-    const review =
-      document.getElementById(
-        "reviewText"
-      ).value.trim();
-
-
-    if(
-      !restaurantName ||
-      !city ||
-      !region ||
-      !review
-    ){
-
-      alert(
-        language === "mm"
-          ? "Restaurant Name၊ City၊ Region နဲ့ Review ကို ဖြည့်ပါ။"
-          : "Please complete the restaurant, city, region and review fields."
-      );
 
       return;
 
     }
 
 
-    button.disabled = true;
+    const {
+      error
+    } =
+      await supabaseClient
 
-    button.textContent =
-      "Publishing...";
+        .from(
+          "restaurant_review_reactions"
+        )
 
+        .upsert(
 
-    try{
+          {
 
-      const {
-        data:{
-          user
-        }
-      } =
-        await supabaseClient.auth
-          .getUser();
+            review_id:
+              reviewId,
 
+            user_id:
+              user.id,
 
-      if(!user){
+            reaction:
+              reaction
 
-        throw new Error(
-          "Login required"
+          },
+
+          {
+            onConflict:
+              "review_id,user_id"
+          }
+
         );
 
-      }
 
-
-      const userName =
-        user.user_metadata?.full_name ||
-        user.email?.split("@")[0] ||
-        "MEC User";
-
-
-      const {
-        error
-      } =
-        await supabaseClient
-
-          .from(
-            "restaurant_feedback"
-          )
-
-          .insert({
-
-            user_id:user.id,
-
-            user_name:userName,
-
-            restaurant_name:
-              restaurantName,
-
-            city,
-
-            region,
-
-            food_category:
-              category,
-
-            rating,
-
-            image_url:
-              image || null,
-
-            review
-
-          });
-
-
-      if(error){
-
-        throw error;
-
-      }
-
-
-      document.getElementById(
-        "restaurantName"
-      ).value = "";
-
-      document.getElementById(
-        "restaurantCity"
-      ).value = "";
-
-      document.getElementById(
-        "restaurantRegion"
-      ).value = "";
-
-      document.getElementById(
-        "restaurantCategory"
-      ).value = "";
-
-      document.getElementById(
-        "restaurantImage"
-      ).value = "";
-
-      document.getElementById(
-        "reviewText"
-      ).value = "";
-
-
-      document.getElementById(
-        "postForm"
-      ).classList.remove(
-        "open"
-      );
-
-
-      await loadPosts();
-
-    }
-    catch(error){
-
+    if(error){
       console.error(
-        "Publish error:",
+        "Reaction error:",
         error
       );
-
-
-      alert(
-        error.message ||
-        "Review မတင်နိုင်ပါ။"
-      );
-
-    }
-    finally{
-
-      button.disabled = false;
-
-      button.textContent =
-        "Publish Review";
-
     }
 
   }
-);
+  catch(error){
 
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-document.getElementById(
-  "searchInput"
-).addEventListener(
-  "input",
-  renderPosts
-);
-
-
-document.getElementById(
-  "ratingFilter"
-).addEventListener(
-  "change",
-  renderPosts
-);
-
-
-document.getElementById(
-  "regionSelect"
-).addEventListener(
-  "change",
-  event => {
-
-    setRegion(
-      event.target.value
+    console.error(
+      "Reaction error:",
+      error
     );
 
   }
-);
-
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
-document.getElementById(
-  "languageButton"
-).addEventListener(
-  "click",
-  () => {
-
-    language =
-      language === "mm"
-        ? "en"
-        : "mm";
-
-    localStorage.setItem(
-      "mec_language",
-      language
-    );
-
-    location.reload();
-
-  }
-);
-
-
-/* =====================================================
-   THEME
-===================================================== */
-
-function applyTheme(
-  theme
-){
-
-  document.body.classList.toggle(
-    "dark",
-    theme === "dark"
-  );
-
-
-  document.getElementById(
-    "themeButton"
-  ).textContent =
-    theme === "dark"
-      ? "☀"
-      : "☾";
-
-
-  localStorage.setItem(
-    "mec_theme",
-    theme
-  );
 
 }
 
 
-document.getElementById(
-  "themeButton"
-).addEventListener(
-  "click",
-  () => {
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
 
-    const dark =
-      document.body.classList.contains(
-        "dark"
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
+    "input",
+    renderReviews
+  );
+
+
+document
+  .getElementById(
+    "regionFilter"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      setRegion(
+        event.target.value
       );
 
+    }
+  );
 
-    applyTheme(
-      dark
-        ? "light"
-        : "dark"
-    );
+
+document
+  .getElementById(
+    "cityFilter"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      currentCity =
+        event.target.value;
+
+      renderReviews();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "ratingFilter"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      currentRating =
+        event.target.value;
+
+      renderReviews();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "sortFilter"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      currentSort =
+        event.target.value;
+
+      renderReviews();
+
+    }
+  );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    setupRegions();
+
+    loadReviews();
 
   }
 );
-
-
-/* =====================================================
-   START
-===================================================== */
-
-buildRegions();
-
-
-applyTheme(
-  localStorage.getItem(
-    "mec_theme"
-  ) || "light"
-);
-
-
-loadPosts();
 
 </script>
 
