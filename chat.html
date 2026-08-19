@@ -1,212 +1,395 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Chat - Myanmar Elite Connect</title>
+<title>Chat • Myanmar Elite Connect</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase.js"></script>
 
 <style>
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
 :root{
-  --navy:#071b3a;
-  --navy2:#102d59;
-  --green:#19a974;
-  --green2:#0f8f60;
-  --bg:#f4f7fb;
-  --white:#fff;
-  --text:#172033;
-  --muted:#697386;
-  --border:#e3e8f0;
-  --danger:#b42318;
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --soft:#f7f9fc;
+  --soft2:#eef2f7;
+  --text:#10233f;
+  --muted:#75839a;
+  --border:rgba(16,35,63,.09);
+  --gold:#d8b45c;
+  --gold2:#f1d78b;
+  --navy:#071a34;
+  --green:#2d8a61;
+  --red:#c94b4b;
+  --shadow:0 18px 50px rgba(13,35,64,.07);
+}
+
+body.dark{
+  --bg:#071321;
+  --surface:#0e1e32;
+  --soft:#10243c;
+  --soft2:#162b44;
+  --text:#f4f7fb;
+  --muted:#91a0b5;
+  --border:rgba(255,255,255,.09);
+  --navy:#f4f7fb;
+  --shadow:0 18px 50px rgba(0,0,0,.28);
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
 }
 
 body{
-  font-family:Arial,"Noto Sans Myanmar",sans-serif;
-  background:var(--bg);
+  min-height:100vh;
   color:var(--text);
-  height:100vh;
-  overflow:hidden;
+  background:var(--bg);
+  font-family:
+    Inter,
+    "Noto Sans Myanmar",
+    "Myanmar Text",
+    system-ui,
+    sans-serif;
 }
 
-/* HEADER */
-
-header{
-  height:64px;
-  background:var(--navy);
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:0 20px;
+button,
+input{
+  font:inherit;
 }
 
-.header-inner{
-  width:100%;
-  max-width:1250px;
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  height:68px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(18px);
+}
+
+body.dark .topbar{
+  background:rgba(7,19,33,.94);
+}
+
+.topbar-inner{
+  width:min(1200px,94%);
+  height:100%;
   margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:15px;
 }
 
-.logo{
-  color:white;
-  text-decoration:none;
-  font-size:19px;
-  font-weight:900;
-}
-
-.logo span{
-  color:#65d6a7;
-}
-
-.home{
-  color:white;
-  text-decoration:none;
-  padding:8px 13px;
-  border-radius:8px;
-  background:rgba(255,255,255,.1);
-  font-size:13px;
-}
-
-/* CHAT APP */
-
-.chat-app{
-  max-width:1250px;
-  height:calc(100vh - 64px);
-  margin:auto;
-  display:grid;
-  grid-template-columns:330px 1fr;
-  background:white;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-  border-right:1px solid var(--border);
+.brand{
   display:flex;
-  flex-direction:column;
-  min-width:0;
+  align-items:center;
+  gap:10px;
 }
 
-.sidebar-top{
-  padding:20px;
-  border-bottom:1px solid var(--border);
+.brand img{
+  width:39px;
+  height:39px;
+  object-fit:contain;
+  border-radius:11px;
 }
 
-.sidebar-title{
-  font-size:23px;
-  font-weight:900;
-  color:var(--navy);
-  margin-bottom:4px;
+.brand-name{
+  font-size:14px;
+  font-weight:950;
+  white-space:nowrap;
 }
 
-.sidebar-subtitle{
+.brand-name span{
+  color:var(--gold);
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:3px;
+}
+
+.nav a{
+  padding:9px 12px;
+  border-radius:10px;
   color:var(--muted);
   font-size:12px;
+  font-weight:850;
 }
 
-.search-users{
-  margin-top:16px;
-  width:100%;
-  padding:11px 13px;
+.nav a:hover,
+.nav a.active{
+  color:var(--text);
+  background:var(--soft);
+}
+
+.nav a.active{
+  color:var(--gold);
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.icon-btn{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
   border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  font-family:inherit;
+  border-radius:11px;
+  color:var(--text);
+  background:var(--surface);
 }
 
-.search-users:focus{
-  border-color:var(--navy);
-}
-
-.user-list{
-  flex:1;
-  overflow-y:auto;
-}
-
-.user-item{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:14px 17px;
-  cursor:pointer;
-  border-bottom:1px solid #f0f2f6;
-  transition:.15s;
-}
-
-.user-item:hover{
-  background:#f5f8fc;
-}
-
-.user-item.active{
-  background:#eaf7f1;
-}
-
-.avatar{
-  width:46px;
-  height:46px;
-  min-width:46px;
-  border-radius:50%;
-  background:var(--navy);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
+.profile{
+  width:39px;
+  height:39px;
   overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--soft);
 }
 
-.avatar img{
+.profile img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-.user-info{
+/* =========================
+   PAGE
+========================= */
+
+.page{
+  width:min(1200px,94%);
+  height:calc(100vh - 68px);
+  margin:68px auto 0;
+  padding:18px 0 22px;
+}
+
+.chat-shell{
+  height:100%;
+  display:grid;
+  grid-template-columns:340px minmax(0,1fr);
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid var(--border);
+  background:var(--surface);
+}
+
+.sidebar-head{
+  padding:18px 16px 13px;
+  border-bottom:1px solid var(--border);
+}
+
+.sidebar-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.sidebar-title{
+  font-size:18px;
+  font-weight:950;
+}
+
+.sidebar-subtitle{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.search{
+  position:relative;
+  margin-top:14px;
+}
+
+.search input{
+  width:100%;
+  height:40px;
+  padding:0 12px 0 37px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:none;
+  color:var(--text);
+  background:var(--soft);
+  font-size:11px;
+}
+
+.search input:focus{
+  border-color:rgba(216,180,92,.65);
+}
+
+.search-icon{
+  position:absolute;
+  left:13px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:14px;
+}
+
+.rooms{
+  flex:1;
+  overflow:auto;
+}
+
+.room{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px 15px;
+  border:0;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  color:var(--text);
+  background:transparent;
+}
+
+.room:hover{
+  background:var(--soft);
+}
+
+.room.active{
+  background:var(--soft);
+  box-shadow:inset 3px 0 0 var(--gold);
+}
+
+.room-avatar{
+  position:relative;
+  width:43px;
+  height:43px;
+  flex:none;
+  overflow:hidden;
+  border-radius:13px;
+  background:var(--soft2);
+}
+
+.room-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.online-dot{
+  position:absolute;
+  right:1px;
+  bottom:1px;
+  width:9px;
+  height:9px;
+  border:2px solid var(--surface);
+  border-radius:50%;
+  background:var(--green);
+}
+
+.room-main{
   min-width:0;
   flex:1;
 }
 
-.user-name{
-  font-weight:800;
-  color:var(--navy);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+.room-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
 }
 
-.user-city{
+.room-name{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11px;
+  font-weight:900;
+}
+
+.room-time{
+  flex:none;
   color:var(--muted);
-  font-size:12px;
+  font-size:8px;
+}
+
+.room-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
   margin-top:4px;
-  white-space:nowrap;
+}
+
+.room-preview{
   overflow:hidden;
   text-overflow:ellipsis;
-}
-
-.empty-users{
-  padding:35px 20px;
-  text-align:center;
+  white-space:nowrap;
   color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
+  font-size:9px;
 }
 
-/* CHAT PANEL */
+.unread{
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  color:#071a34;
+  background:var(--gold);
+  font-size:8px;
+  font-weight:950;
+}
 
-.chat-panel{
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+  min-width:0;
+  min-height:0;
   display:flex;
   flex-direction:column;
-  min-width:0;
-  background:#f8fafc;
+  background:var(--bg);
 }
 
 .chat-empty{
@@ -218,581 +401,724 @@ header{
   padding:30px;
 }
 
-.chat-empty-icon{
-  font-size:65px;
-  margin-bottom:15px;
+.empty-icon{
+  width:64px;
+  height:64px;
+  margin:0 auto 13px;
+  display:grid;
+  place-items:center;
+  border-radius:20px;
+  color:var(--gold);
+  background:var(--soft);
+  font-size:25px;
 }
 
-.chat-empty h2{
-  color:var(--navy);
-  margin-bottom:8px;
+.chat-empty strong{
+  display:block;
+  font-size:16px;
+  font-weight:950;
 }
 
 .chat-empty p{
+  max-width:320px;
+  margin:6px auto 0;
   color:var(--muted);
-  line-height:1.7;
-  font-size:14px;
-}
-
-/* ACTIVE CHAT */
-
-.active-chat{
-  display:none;
-  flex-direction:column;
-  height:100%;
-  min-height:0;
+  font-size:10px;
+  line-height:1.6;
 }
 
 .chat-header{
-  height:74px;
-  min-height:74px;
-  background:white;
-  border-bottom:1px solid var(--border);
+  min-height:68px;
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:12px 18px;
+  gap:11px;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
 }
 
-.chat-user-info{
-  flex:1;
+.back-btn{
+  display:none;
+  width:34px;
+  height:34px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  background:var(--soft);
+}
+
+.chat-avatar{
+  width:42px;
+  height:42px;
+  flex:none;
+  overflow:hidden;
+  border-radius:13px;
+  background:var(--soft2);
+}
+
+.chat-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.chat-user{
   min-width:0;
+  flex:1;
 }
 
 .chat-user-name{
-  color:var(--navy);
-  font-size:16px;
-  font-weight:900;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:12px;
+  font-weight:950;
 }
 
 .chat-user-status{
-  color:var(--green2);
-  font-size:12px;
-  margin-top:4px;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:8px;
 }
 
-/* MESSAGES */
+.chat-actions{
+  display:flex;
+  gap:6px;
+}
+
+.small-btn{
+  width:34px;
+  height:34px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  background:var(--soft);
+}
 
 .messages{
   flex:1;
-  overflow-y:auto;
-  padding:22px;
+  min-height:0;
+  overflow:auto;
+  padding:18px 18px 12px;
+}
+
+.message-day{
   display:flex;
-  flex-direction:column;
+  align-items:center;
   gap:9px;
+  margin:4px 0 16px;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:800;
+}
+
+.message-day::before,
+.message-day::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--border);
 }
 
 .message-row{
   display:flex;
-  width:100%;
+  margin:6px 0;
 }
 
 .message-row.mine{
   justify-content:flex-end;
 }
 
-.message-row.theirs{
-  justify-content:flex-start;
+.message{
+  max-width:min(70%,520px);
 }
 
-.message-bubble{
-  max-width:min(70%,500px);
-  padding:10px 13px;
+.bubble{
+  padding:10px 12px;
+  border:1px solid var(--border);
   border-radius:15px;
-  line-height:1.6;
-  font-size:14px;
+  background:var(--surface);
+  font-size:11px;
+  line-height:1.55;
+  white-space:pre-wrap;
   word-break:break-word;
 }
 
-.mine .message-bubble{
-  background:var(--navy);
-  color:white;
-  border-bottom-right-radius:4px;
+.message-row.mine .bubble{
+  border-color:rgba(216,180,92,.3);
+  color:#071a34;
+  background:linear-gradient(
+    135deg,
+    var(--gold2),
+    var(--gold)
+  );
+  border-bottom-right-radius:5px;
 }
 
-.theirs .message-bubble{
-  background:white;
-  color:var(--text);
-  border:1px solid var(--border);
-  border-bottom-left-radius:4px;
+.message-row:not(.mine) .bubble{
+  border-bottom-left-radius:5px;
 }
 
-.message-time{
-  display:block;
-  margin-top:4px;
-  font-size:9px;
-  opacity:.65;
-  text-align:right;
+.message-meta{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:5px;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:7px;
 }
-
-/* COMPOSER */
 
 .composer{
-  background:white;
+  padding:11px 14px 14px;
   border-top:1px solid var(--border);
-  padding:12px;
+  background:var(--surface);
+}
+
+.composer-inner{
   display:flex;
-  gap:9px;
+  align-items:flex-end;
+  gap:7px;
+  padding:7px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--soft);
 }
 
 .message-input{
   flex:1;
-  border:1px solid var(--border);
-  border-radius:11px;
-  padding:12px 14px;
-  outline:none;
-  font-family:inherit;
-  font-size:14px;
-  resize:none;
-  min-height:45px;
+  min-height:35px;
   max-height:120px;
+  padding:8px 7px;
+  resize:none;
+  border:0;
+  outline:none;
+  color:var(--text);
+  background:transparent;
+  font-size:11px;
+  line-height:1.45;
 }
 
-.message-input:focus{
-  border-color:var(--navy);
-}
-
-.send-button{
-  width:48px;
+.send-btn{
+  width:38px;
+  height:38px;
+  flex:none;
   border:0;
   border-radius:11px;
-  background:var(--navy);
-  color:white;
-  font-size:19px;
-  cursor:pointer;
+  color:#071a34;
+  background:linear-gradient(
+    135deg,
+    var(--gold2),
+    var(--gold)
+  );
+  font-size:15px;
+  font-weight:950;
 }
 
-.send-button:hover{
-  background:var(--navy2);
-}
-
-.send-button:disabled{
-  opacity:.5;
+.send-btn:disabled{
   cursor:not-allowed;
+  opacity:.45;
 }
 
-/* LOGIN */
+.composer-note{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:7px;
+}
 
-.login-screen{
-  height:calc(100vh - 64px);
+/* =========================
+   STATE
+========================= */
+
+.state{
+  min-height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:25px;
-}
-
-.login-card{
-  max-width:430px;
-  width:100%;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:35px;
   text-align:center;
-  box-shadow:0 12px 35px rgba(7,27,58,.08);
 }
 
-.login-icon{
-  font-size:55px;
-  margin-bottom:12px;
+.state-icon{
+  width:55px;
+  height:55px;
+  margin:0 auto 11px;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  color:var(--gold);
+  background:var(--soft);
+  font-size:21px;
 }
 
-.login-card h2{
-  color:var(--navy);
-  margin-bottom:8px;
-}
-
-.login-card p{
-  color:var(--muted);
-  line-height:1.7;
-  font-size:14px;
-}
-
-.login-button{
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 22px;
-  border-radius:10px;
-  background:var(--navy);
-  color:white;
-  text-decoration:none;
-  font-weight:800;
-}
-
-/* MESSAGE */
-
-.notice{
-  position:fixed;
-  top:78px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:2000;
-  max-width:90%;
-  padding:11px 17px;
-  border-radius:10px;
-  display:none;
+.state strong{
+  display:block;
   font-size:13px;
-  box-shadow:0 8px 25px rgba(0,0,0,.15);
 }
 
-.notice.error{
-  display:block;
-  background:#fff0f0;
-  color:var(--danger);
-  border:1px solid #ffd0d0;
+.state p{
+  max-width:280px;
+  margin:5px auto 0;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.6;
 }
 
-.notice.success{
-  display:block;
-  background:#e9f8ef;
-  color:#176b38;
-  border:1px solid #bce8cb;
-}
-
-/* MOBILE */
-
-.mobile-back{
-  display:none;
+.retry{
+  margin-top:12px;
+  height:36px;
+  padding:0 13px;
   border:0;
-  background:none;
-  font-size:22px;
-  cursor:pointer;
-  color:var(--navy);
+  border-radius:10px;
+  color:#071a34;
+  background:var(--gold);
+  font-size:9px;
+  font-weight:900;
 }
 
-@media(max-width:750px){
+/* =========================
+   MOBILE NAV
+========================= */
 
-  body{
-    overflow:hidden;
+.mobile-nav{
+  display:none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px){
+
+  .nav{
+    display:none;
   }
 
-  header{
-    height:58px;
+  .page{
+    width:100%;
+    height:calc(100vh - 68px);
+    padding:0;
   }
 
-  .logo{
-    font-size:16px;
-  }
-
-  .chat-app{
-    height:calc(100vh - 58px);
-    display:block;
-    position:relative;
+  .chat-shell{
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    grid-template-columns:1fr;
   }
 
   .sidebar{
-    width:100%;
-    height:100%;
-    border:0;
+    border-right:0;
   }
 
-  .chat-panel{
-    position:absolute;
-    inset:0;
+  .chat{
     display:none;
   }
 
-  .chat-panel.mobile-open{
+  body.mobile-chat-open .sidebar{
+    display:none;
+  }
+
+  body.mobile-chat-open .chat{
     display:flex;
   }
 
-  .mobile-back{
-    display:block;
+  .back-btn{
+    display:grid;
+    place-items:center;
   }
 
-  .chat-header{
-    padding:10px 12px;
+  .mobile-nav{
+    display:block;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:200;
+    height:64px;
+    border-top:1px solid var(--border);
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(18px);
+  }
+
+  body.dark .mobile-nav{
+    background:rgba(7,19,33,.96);
+  }
+
+  .mobile-nav-inner{
+    height:100%;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+  }
+
+  .mobile-nav a{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    color:var(--muted);
+    font-size:8px;
+    font-weight:850;
+  }
+
+  .mobile-nav a.active{
+    color:var(--gold);
+  }
+
+  .mobile-icon{
+    font-size:17px;
+  }
+
+  .page{
+    padding-bottom:64px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .topbar{
+    height:62px;
+  }
+
+  .page{
+    margin-top:62px;
+    height:calc(100vh - 62px);
+  }
+
+  .brand-name{
+    display:none;
+  }
+
+  .topbar-inner{
+    width:94%;
+  }
+
+  .header-actions{
+    gap:5px;
+  }
+
+  .icon-btn,
+  .profile{
+    width:37px;
+    height:37px;
+  }
+
+  .sidebar-head{
+    padding:15px 12px 11px;
+  }
+
+  .room{
+    padding:12px;
   }
 
   .messages{
-    padding:15px 12px;
+    padding:14px 11px 10px;
   }
 
-  .message-bubble{
+  .message{
     max-width:82%;
   }
 
-  .composer{
-    padding:9px;
+  .chat-header{
+    padding:9px 11px;
   }
 
-  .home{
-    display:none;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
+<header class="topbar">
 
-    <a href="./index.html" class="logo">
-      Myanmar <span>Elite Connect</span>
+  <div class="topbar-inner">
+
+    <a href="./general.html" class="brand">
+
+      <img
+        src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+        alt="Myanmar Elite Connect">
+
+      <div class="brand-name">
+        Myanmar <span>Elite</span> Connect
+      </div>
+
     </a>
 
-    <a href="./index.html" class="home">
-      ← Home
-    </a>
+    <nav class="nav">
+
+      <a href="./general.html">Home</a>
+      <a href="./buy.html">Buy</a>
+      <a href="./sell.html">Sell</a>
+      <a href="./car.html">Cars</a>
+      <a href="./property.html">Property</a>
+      <a href="./chat.html" class="active">Chat</a>
+
+    </nav>
+
+    <div class="header-actions">
+
+      <button
+        id="themeButton"
+        class="icon-btn"
+        type="button">
+        ☾
+      </button>
+
+      <a
+        href="./gem.html"
+        class="icon-btn"
+        aria-label="Gems">
+        ◆
+      </a>
+
+      <a
+        href="./profile.html"
+        class="profile">
+
+        <img
+          id="topAvatar"
+          src=""
+          alt="Profile">
+
+      </a>
+
+    </div>
 
   </div>
+
 </header>
 
-<div id="notice" class="notice"></div>
 
-<!-- LOGIN SCREEN -->
+<main class="page">
 
-<div id="loginScreen" class="login-screen" style="display:none">
+  <section class="chat-shell">
 
-  <div class="login-card">
+    <!-- SIDEBAR -->
 
-    <div class="login-icon">💬</div>
+    <aside class="sidebar">
 
-    <h2>Login လိုအပ်ပါတယ်</h2>
+      <div class="sidebar-head">
 
-    <p>
-      Chat အသုံးပြုရန် Login ဝင်ထားရန်လိုအပ်ပါသည်။
-    </p>
+        <div class="sidebar-title-row">
 
-    <a href="./auth.html" class="login-button">
-      Login / Register
-    </a>
+          <div>
+            <div class="sidebar-title">
+              Messages
+            </div>
 
-  </div>
-
-</div>
-
-<!-- CHAT APP -->
-
-<div id="chatApp" class="chat-app" style="display:none">
-
-  <!-- USERS -->
-
-  <aside class="sidebar">
-
-    <div class="sidebar-top">
-
-      <div class="sidebar-title">
-        Messages
-      </div>
-
-      <div class="sidebar-subtitle">
-        ဆက်သွယ်လိုသော User ကိုရွေးပါ
-      </div>
-
-      <input
-        id="userSearch"
-        class="search-users"
-        type="text"
-        placeholder="🔎 User ရှာရန်..."
-        autocomplete="off"
-      >
-
-    </div>
-
-    <div id="userList" class="user-list">
-
-      <div class="empty-users">
-        User များကို ရှာဖွေနေပါသည်...
-      </div>
-
-    </div>
-
-  </aside>
-
-  <!-- CHAT -->
-
-  <section id="chatPanel" class="chat-panel">
-
-    <div id="chatEmpty" class="chat-empty">
-
-      <div>
-
-        <div class="chat-empty-icon">
-          💬
-        </div>
-
-        <h2>
-          Chat စတင်ပါ
-        </h2>
-
-        <p>
-          ဘယ်ဘက်မှ User တစ်ယောက်ကိုရွေးပြီး
-          စကားပြောနိုင်ပါသည်။
-        </p>
-
-      </div>
-
-    </div>
-
-    <div id="activeChat" class="active-chat">
-
-      <div class="chat-header">
-
-        <button
-          id="mobileBack"
-          class="mobile-back"
-          type="button"
-        >
-          ←
-        </button>
-
-        <div id="chatAvatar" class="avatar">
-          👤
-        </div>
-
-        <div class="chat-user-info">
-
-          <div id="chatUserName" class="chat-user-name">
-            User
-          </div>
-
-          <div class="chat-user-status">
-            ● Chat
+            <div class="sidebar-subtitle">
+              Buyer & Seller conversations
+            </div>
           </div>
 
         </div>
 
+        <div class="search">
+
+          <span class="search-icon">⌕</span>
+
+          <input
+            id="roomSearch"
+            type="search"
+            placeholder="Search conversations...">
+
+        </div>
+
       </div>
+
+      <div id="rooms" class="rooms">
+
+        <div class="state">
+          <div>
+            <div class="state-icon">◌</div>
+            <strong>Loading chats</strong>
+            <p>Loading your conversations...</p>
+          </div>
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CHAT -->
+
+    <section class="chat" id="chatPanel">
+
+      <div id="chatEmpty" class="chat-empty">
+
+        <div>
+
+          <div class="empty-icon">
+            ◌
+          </div>
+
+          <strong>
+            Select a conversation
+          </strong>
+
+          <p>
+            Choose a buyer or seller conversation
+            from the left to start messaging.
+          </p>
+
+        </div>
+
+      </div>
+
 
       <div
-        id="messages"
-        class="messages"
-      ></div>
+        id="chatContent"
+        style="display:none;height:100%;min-height:0;flex-direction:column;">
 
-      <form
-        id="composer"
-        class="composer"
-      >
+        <header class="chat-header">
 
-        <textarea
-          id="messageInput"
-          class="message-input"
-          rows="1"
-          maxlength="5000"
-          placeholder="Message ရေးပါ..."
-        ></textarea>
+          <button
+            id="backButton"
+            class="back-btn"
+            type="button">
+            ←
+          </button>
 
-        <button
-          id="sendButton"
-          class="send-button"
-          type="submit"
-        >
-          ➤
-        </button>
+          <div class="chat-avatar">
 
-      </form>
+            <img
+              id="chatAvatar"
+              src=""
+              alt="User">
 
-    </div>
+          </div>
+
+          <div class="chat-user">
+
+            <div
+              id="chatUserName"
+              class="chat-user-name">
+              User
+            </div>
+
+            <div
+              id="chatUserStatus"
+              class="chat-user-status">
+              Myanmar Elite Connect
+            </div>
+
+          </div>
+
+          <div class="chat-actions">
+
+            <button
+              id="profileButton"
+              class="small-btn"
+              type="button"
+              title="View profile">
+              ♙
+            </button>
+
+          </div>
+
+        </header>
+
+
+        <div
+          id="messages"
+          class="messages">
+
+        </div>
+
+
+        <div class="composer">
+
+          <div class="composer-inner">
+
+            <textarea
+              id="messageInput"
+              class="message-input"
+              rows="1"
+              maxlength="3000"
+              placeholder="Write a message..."></textarea>
+
+            <button
+              id="sendButton"
+              class="send-btn"
+              type="button">
+              ↑
+            </button>
+
+          </div>
+
+          <div class="composer-note">
+            Please keep conversations related to the listing and transaction.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
 
   </section>
 
-</div>
+</main>
+
+
+<nav class="mobile-nav">
+
+  <div class="mobile-nav-inner">
+
+    <a href="./general.html">
+      <div class="mobile-icon">⌂</div>
+      Home
+    </a>
+
+    <a href="./buy.html">
+      <div class="mobile-icon">◈</div>
+      Buy
+    </a>
+
+    <a href="./add-listing.html">
+      <div class="mobile-icon">＋</div>
+      Sell
+    </a>
+
+    <a href="./chat.html" class="active">
+      <div class="mobile-icon">◌</div>
+      Chat
+    </a>
+
+    <a href="./profile.html">
+      <div class="mobile-icon">♙</div>
+      Profile
+    </a>
+
+  </div>
+
+</nav>
+
 
 <script>
 
-/* =========================================
-   SUPABASE
-========================================= */
-
-const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* =========================================
+/* =========================================================
    STATE
-========================================= */
+========================================================= */
 
 let currentUser = null;
-let selectedUser = null;
-let profiles = [];
+let rooms = [];
+let activeRoom = null;
+let messages = [];
 let realtimeChannel = null;
 
 
-/* =========================================
-   ELEMENTS
-========================================= */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-const loginScreen =
-document.getElementById("loginScreen");
+function escapeHTML(value){
 
-const chatApp =
-document.getElementById("chatApp");
-
-const userList =
-document.getElementById("userList");
-
-const userSearch =
-document.getElementById("userSearch");
-
-const chatPanel =
-document.getElementById("chatPanel");
-
-const chatEmpty =
-document.getElementById("chatEmpty");
-
-const activeChat =
-document.getElementById("activeChat");
-
-const messagesBox =
-document.getElementById("messages");
-
-const messageInput =
-document.getElementById("messageInput");
-
-const sendButton =
-document.getElementById("sendButton");
-
-const composer =
-document.getElementById("composer");
-
-const notice =
-document.getElementById("notice");
-
-
-/* =========================================
-   NOTICE
-========================================= */
-
-function showNotice(text,type="success"){
-
-  notice.textContent = text;
-  notice.className =
-    "notice " + type;
-
-  setTimeout(function(){
-
-    notice.className = "notice";
-
-  },3000);
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHtml(value){
-
-  if(
-    value === null ||
-    value === undefined
-  ){
-    return "";
-  }
-
-  return String(value)
+  return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -802,460 +1128,67 @@ function escapeHtml(value){
 }
 
 
-/* =========================================
-   AVATAR
-========================================= */
+function normalizeText(value){
 
-function getInitial(name){
+  return String(value ?? "")
+    .trim()
+    .toLowerCase();
 
-  if(!name){
+}
+
+
+function initials(name){
+
+  const value =
+    String(name || "User")
+      .trim();
+
+  if(!value){
     return "U";
   }
 
-  return name
-    .trim()
-    .charAt(0)
+  return value
+    .split(/\s+/)
+    .slice(0,2)
+    .map(
+      part => part[0]
+    )
+    .join("")
     .toUpperCase();
 
 }
 
 
-function avatarHtml(profile){
+function avatarHTML(profile){
 
-  if(profile.avatar_url){
+  if(profile?.avatar_url){
 
     return `
       <img
-        src="${escapeHtml(profile.avatar_url)}"
-        alt="Avatar"
-        onerror="this.style.display='none'"
-      >
+        src="${escapeHTML(profile.avatar_url)}"
+        alt="${escapeHTML(profile.full_name || "User")}"
+        onerror="this.style.display='none';">
     `;
 
   }
 
-  return escapeHtml(
-    getInitial(profile.full_name)
-  );
-
-}
-
-
-/* =========================================
-   CURRENT USER
-========================================= */
-
-async function getCurrentUser(){
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient.auth.getSession();
-
-  if(error){
-    throw error;
-  }
-
-  if(
-    !data ||
-    !data.session ||
-    !data.session.user
-  ){
-
-    return null;
-
-  }
-
-  return data.session.user;
-
-}
-
-
-/* =========================================
-   LOGIN
-========================================= */
-
-async function initialize(){
-
-  try{
-
-    currentUser =
-      await getCurrentUser();
-
-    if(!currentUser){
-
-      loginScreen.style.display =
-        "flex";
-
-      return;
-
-    }
-
-    chatApp.style.display =
-      "grid";
-
-    await loadProfiles();
-
-    subscribeRealtime();
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    showNotice(
-      error.message ||
-      "Chat စတင်၍မရပါ။",
-      "error"
-    );
-
-  }
-
-}
-
-
-/* =========================================
-   LOAD PROFILES
-========================================= */
-
-async function loadProfiles(){
-
-  userList.innerHTML = `
-    <div class="empty-users">
-      User များကို ရယူနေပါသည်...
-    </div>
-  `;
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-    .from("profiles")
-    .select(
-      "id,full_name,phone,avatar_url,city,bio,role"
-    )
-    .neq(
-      "id",
-      currentUser.id
-    )
-    .order(
-      "full_name",
-      {
-        ascending:true,
-        nullsFirst:false
-      }
-    );
-
-  if(error){
-    throw error;
-  }
-
-  profiles =
-    Array.isArray(data)
-    ? data
-    : [];
-
-  renderUsers();
-
-}
-
-
-/* =========================================
-   RENDER USERS
-========================================= */
-
-function renderUsers(){
-
-  const keyword =
-    userSearch.value
-      .trim()
-      .toLowerCase();
-
-  const filtered =
-    profiles.filter(function(profile){
-
-      const text = [
-        profile.full_name,
-        profile.city,
-        profile.bio
-      ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-
-      return text.includes(keyword);
-
-    });
-
-  if(!filtered.length){
-
-    userList.innerHTML = `
-      <div class="empty-users">
-        User မတွေ့ပါ။
-      </div>
-    `;
-
-    return;
-
-  }
-
-  userList.innerHTML =
-    filtered.map(function(profile){
-
-      const active =
-        selectedUser &&
-        selectedUser.id === profile.id
-        ? "active"
-        : "";
-
-      return `
-        <div
-          class="user-item ${active}"
-          data-user-id="${escapeHtml(profile.id)}"
-        >
-
-          <div class="avatar">
-            ${avatarHtml(profile)}
-          </div>
-
-          <div class="user-info">
-
-            <div class="user-name">
-              ${escapeHtml(
-                profile.full_name ||
-                "Myanmar Elite User"
-              )}
-            </div>
-
-            <div class="user-city">
-              ${
-                escapeHtml(
-                  profile.city ||
-                  "Myanmar"
-                )
-              }
-            </div>
-
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
-
-  document
-    .querySelectorAll(".user-item")
-    .forEach(function(item){
-
-      item.addEventListener(
-        "click",
-        function(){
-
-          const id =
-            item.dataset.userId;
-
-          const profile =
-            profiles.find(
-              p => p.id === id
-            );
-
-          if(profile){
-            openChat(profile);
-          }
-
-        }
-      );
-
-    });
-
-}
-
-
-/* =========================================
-   OPEN CHAT
-========================================= */
-
-async function openChat(profile){
-
-  selectedUser =
-    profile;
-
-  renderUsers();
-
-  chatEmpty.style.display =
-    "none";
-
-  activeChat.style.display =
-    "flex";
-
-  chatPanel.classList.add(
-    "mobile-open"
-  );
-
-  document.getElementById(
-    "chatUserName"
-  ).textContent =
-    profile.full_name ||
-    "Myanmar Elite User";
-
-  document.getElementById(
-    "chatAvatar"
-  ).innerHTML =
-    avatarHtml(profile);
-
-  await loadMessages();
-
-  messageInput.focus();
-
-}
-
-
-/* =========================================
-   LOAD MESSAGES
-========================================= */
-
-async function loadMessages(){
-
-  if(!selectedUser){
-    return;
-  }
-
-  messagesBox.innerHTML = `
+  return `
     <div style="
-      text-align:center;
-      color:#697386;
-      padding:30px;
-      font-size:13px;
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      font-size:12px;
+      font-weight:950;
+      color:var(--gold);
+      background:var(--soft2);
     ">
-      Messages ရယူနေပါသည်...
+      ${escapeHTML(initials(profile?.full_name))}
     </div>
   `;
 
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-    .from("chat_messages")
-    .select(
-      "id,sender_id,receiver_id,message,created_at,is_read"
-    )
-    .or(
-      `and(sender_id.eq.${currentUser.id},receiver_id.eq.${selectedUser.id}),and(sender_id.eq.${selectedUser.id},receiver_id.eq.${currentUser.id})`
-    )
-    .order(
-      "created_at",
-      {
-        ascending:true
-      }
-    );
-
-  if(error){
-
-    console.error(error);
-
-    messagesBox.innerHTML = `
-      <div style="
-        text-align:center;
-        color:#b42318;
-        padding:30px;
-        font-size:13px;
-      ">
-        ❌ Messages ရယူ၍မရပါ။
-        <br><br>
-        ${escapeHtml(error.message)}
-      </div>
-    `;
-
-    return;
-
-  }
-
-  renderMessages(
-    Array.isArray(data)
-    ? data
-    : []
-  );
-
-  await markMessagesRead();
-
 }
 
-
-/* =========================================
-   RENDER MESSAGES
-========================================= */
-
-function renderMessages(list){
-
-  if(!list.length){
-
-    messagesBox.innerHTML = `
-      <div style="
-        text-align:center;
-        color:#697386;
-        padding:40px 20px;
-        font-size:13px;
-      ">
-        💬<br><br>
-        ဒီ User နဲ့ Message မရှိသေးပါ။<br>
-        ပထမဆုံး Message ပို့လိုက်ပါ။
-      </div>
-    `;
-
-    return;
-
-  }
-
-  messagesBox.innerHTML =
-    list.map(function(item){
-
-      const mine =
-        item.sender_id === currentUser.id;
-
-      const time =
-        formatTime(item.created_at);
-
-      return `
-        <div class="
-          message-row
-          ${mine ? "mine" : "theirs"}
-        ">
-
-          <div class="message-bubble">
-
-            ${escapeHtml(item.message)}
-
-            <span class="message-time">
-              ${time}
-              ${
-                mine
-                ? (
-                  item.is_read
-                  ? " · ✓✓"
-                  : " · ✓"
-                )
-                : ""
-              }
-            </span>
-
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
-
-  scrollMessages();
-
-}
-
-
-/* =========================================
-   TIME
-========================================= */
 
 function formatTime(value){
 
@@ -1266,8 +1199,12 @@ function formatTime(value){
   const date =
     new Date(value);
 
+  if(Number.isNaN(date.getTime())){
+    return "";
+  }
+
   return date.toLocaleTimeString(
-    "en-US",
+    [],
     {
       hour:"numeric",
       minute:"2-digit"
@@ -1277,105 +1214,1078 @@ function formatTime(value){
 }
 
 
-/* =========================================
-   SCROLL
-========================================= */
+function formatRoomTime(value){
 
-function scrollMessages(){
+  if(!value){
+    return "";
+  }
 
-  messagesBox.scrollTop =
-    messagesBox.scrollHeight;
+  const date =
+    new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "";
+  }
+
+  const now =
+    new Date();
+
+  if(
+    date.toDateString() ===
+    now.toDateString()
+  ){
+
+    return formatTime(value);
+
+  }
+
+  return date.toLocaleDateString(
+    [],
+    {
+      day:"numeric",
+      month:"short"
+    }
+  );
 
 }
 
 
-/* =========================================
-   SEND MESSAGE
-========================================= */
+/* =========================================================
+   THEME
+========================================================= */
 
-composer.addEventListener(
-  "submit",
-  async function(event){
+function applyTheme(theme){
 
-    event.preventDefault();
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
 
-    if(!currentUser){
-      return;
-    }
+  document.getElementById(
+    "themeButton"
+  ).textContent =
+    theme === "dark"
+      ? "☀"
+      : "☾";
 
-    if(!selectedUser){
-      return;
-    }
+  localStorage.setItem(
+    "mec_theme",
+    theme
+  );
 
-    const text =
-      messageInput.value.trim();
+}
 
-    if(!text){
-      return;
-    }
 
-    sendButton.disabled =
-      true;
+function toggleTheme(){
 
-    try{
+  applyTheme(
+    document.body.classList.contains("dark")
+      ? "light"
+      : "dark"
+  );
 
-      const {
-        error
-      } =
-      await supabaseClient
-        .from("chat_messages")
-        .insert({
-          sender_id:
-            currentUser.id,
+}
 
-          receiver_id:
-            selectedUser.id,
 
-          message:
-            text,
+/* =========================================================
+   AUTH
+========================================================= */
 
-          is_read:
-            false
-        });
+async function getCurrentUser(){
 
-      if(error){
-        throw error;
-      }
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getUser();
 
-      messageInput.value = "";
+  if(error){
 
-      autoResize();
+    console.error(error);
 
-    }
-    catch(error){
+    return null;
 
-      console.error(error);
+  }
 
-      showNotice(
-        "Message ပို့၍မရပါ: " +
-        error.message,
-        "error"
+  return data?.user || null;
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+async function loadTopProfile(){
+
+  if(!currentUser){
+    return;
+  }
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("full_name,avatar_url")
+      .eq(
+        "id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+  if(
+    !error &&
+    data?.avatar_url
+  ){
+
+    document.getElementById(
+      "topAvatar"
+    ).src =
+      data.avatar_url;
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD ROOMS
+========================================================= */
+
+async function loadRooms(){
+
+  showRoomsLoading();
+
+  /*
+   * chat_rooms schema:
+   * id
+   * user_one
+   * user_two
+   * created_at
+   * updated_at
+   */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("chat_rooms")
+      .select(`
+        id,
+        user_one,
+        user_two,
+        created_at,
+        updated_at
+      `)
+      .or(
+        `user_one.eq.${currentUser.id},user_two.eq.${currentUser.id}`
+      )
+      .order(
+        "updated_at",
+        {
+          ascending:false
+        }
       );
 
-    }
-    finally{
+  if(error){
 
-      sendButton.disabled =
-        false;
+    console.error(
+      "Room loading error:",
+      error
+    );
 
-      messageInput.focus();
+    showRoomsError(
+      error.message
+    );
+
+    return;
+
+  }
+
+  const rawRooms =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  if(!rawRooms.length){
+
+    rooms = [];
+
+    renderRooms();
+
+    return;
+
+  }
+
+
+  /*
+   * Get other users' profiles.
+   */
+
+  const otherIds =
+    rawRooms
+      .map(
+        room =>
+          room.user_one === currentUser.id
+            ? room.user_two
+            : room.user_one
+      )
+      .filter(Boolean);
+
+
+  const uniqueIds =
+    [...new Set(otherIds)];
+
+
+  let profiles = [];
+
+
+  if(uniqueIds.length){
+
+    const result =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,avatar_url,role"
+        )
+        .in(
+          "id",
+          uniqueIds
+        );
+
+    if(!result.error){
+
+      profiles =
+        result.data || [];
 
     }
 
   }
-);
 
 
-/* =========================================
+  /*
+   * Last message + unread count.
+   */
+
+  const roomObjects =
+    await Promise.all(
+      rawRooms.map(
+        async room => {
+
+          const otherId =
+            room.user_one === currentUser.id
+              ? room.user_two
+              : room.user_one;
+
+
+          const profile =
+            profiles.find(
+              item =>
+                item.id === otherId
+            ) || {
+              id:otherId,
+              full_name:"User",
+              avatar_url:"",
+              role:"user"
+            };
+
+
+          const {
+            data:lastMessages
+          } =
+            await supabaseClient
+              .from("chat_messages")
+              .select(
+                "id,message,created_at,sender_id,is_read"
+              )
+              .eq(
+                "receiver_id",
+                currentUser.id
+              )
+              .eq(
+                "sender_id",
+                otherId
+              )
+              .order(
+                "created_at",
+                {
+                  ascending:false
+                }
+              )
+              .limit(20);
+
+
+          const {
+            data:lastAny
+          } =
+            await supabaseClient
+              .from("chat_messages")
+              .select(
+                "id,message,created_at,sender_id,is_read"
+              )
+              .or(
+                `and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`
+              )
+              .order(
+                "created_at",
+                {
+                  ascending:false
+                }
+              )
+              .limit(1);
+
+
+          const unread =
+            (lastMessages || [])
+              .filter(
+                item =>
+                  item.is_read === false
+              )
+              .length;
+
+
+          return {
+            ...room,
+            otherId,
+            profile,
+            lastMessage:
+              lastAny?.[0] || null,
+            unread
+          };
+
+        }
+      )
+    );
+
+
+  rooms =
+    roomObjects;
+
+  renderRooms();
+
+}
+
+
+/* =========================================================
+   RENDER ROOMS
+========================================================= */
+
+function renderRooms(){
+
+  const container =
+    document.getElementById(
+      "rooms"
+    );
+
+
+  const query =
+    normalizeText(
+      document.getElementById(
+        "roomSearch"
+      ).value
+    );
+
+
+  const filtered =
+    rooms.filter(
+      room => {
+
+        if(!query){
+          return true;
+        }
+
+        const name =
+          normalizeText(
+            room.profile?.full_name
+          );
+
+        const preview =
+          normalizeText(
+            room.lastMessage?.message
+          );
+
+        return (
+          name.includes(query) ||
+          preview.includes(query)
+        );
+
+      }
+    );
+
+
+  if(!filtered.length){
+
+    container.innerHTML = `
+
+      <div class="state">
+
+        <div>
+
+          <div class="state-icon">
+            ◌
+          </div>
+
+          <strong>
+            No conversations
+          </strong>
+
+          <p>
+            Start a conversation from a listing
+            when you want to contact a seller.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    filtered
+      .map(
+        room => {
+
+          const active =
+            activeRoom?.id === room.id;
+
+          const profile =
+            room.profile || {};
+
+          const preview =
+            room.lastMessage?.message ||
+            "No messages yet";
+
+
+          return `
+
+            <button
+              class="room ${active ? "active" : ""}"
+              type="button"
+              data-room-id="${escapeHTML(room.id)}">
+
+              <div class="room-avatar">
+
+                ${
+                  avatarHTML(profile)
+                }
+
+                <span class="online-dot"></span>
+
+              </div>
+
+              <div class="room-main">
+
+                <div class="room-top">
+
+                  <span class="room-name">
+                    ${escapeHTML(
+                      profile.full_name || "User"
+                    )}
+                  </span>
+
+                  <span class="room-time">
+                    ${escapeHTML(
+                      formatRoomTime(
+                        room.lastMessage?.created_at ||
+                        room.updated_at
+                      )
+                    )}
+                  </span>
+
+                </div>
+
+                <div class="room-bottom">
+
+                  <span class="room-preview">
+                    ${escapeHTML(
+                      preview
+                    )}
+                  </span>
+
+                  ${
+                    room.unread > 0
+                      ?
+                      `
+                        <span class="unread">
+                          ${room.unread > 99 ? "99+" : room.unread}
+                        </span>
+                      `
+                      :
+                      ""
+                  }
+
+                </div>
+
+              </div>
+
+            </button>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  container
+    .querySelectorAll(".room")
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const room =
+              rooms.find(
+                item =>
+                  item.id ===
+                  button.dataset.roomId
+              );
+
+            if(room){
+
+              openRoom(room);
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   OPEN ROOM
+========================================================= */
+
+async function openRoom(room){
+
+  activeRoom =
+    room;
+
+  document.body.classList.add(
+    "mobile-chat-open"
+  );
+
+  document.getElementById(
+    "chatEmpty"
+  ).style.display =
+    "none";
+
+  const content =
+    document.getElementById(
+      "chatContent"
+    );
+
+  content.style.display =
+    "flex";
+
+
+  const profile =
+    room.profile || {};
+
+
+  document.getElementById(
+    "chatUserName"
+  ).textContent =
+    profile.full_name ||
+    "User";
+
+
+  document.getElementById(
+    "chatUserStatus"
+  ).textContent =
+    profile.role === "admin"
+      ? "Myanmar Elite Connect Admin"
+      : "Buyer / Seller";
+
+
+  const avatar =
+    document.getElementById(
+      "chatAvatar"
+    );
+
+  avatar.outerHTML = `
+    <div
+      id="chatAvatar"
+      class="chat-avatar">
+      ${
+        avatarHTML(profile)
+      }
+    </div>
+  `;
+
+
+  renderRooms();
+
+  await loadMessages(
+    room
+  );
+
+  await markRoomRead(
+    room
+  );
+
+  subscribeToRoom(
+    room
+  );
+
+}
+
+
+/* =========================================================
+   LOAD MESSAGES
+========================================================= */
+
+async function loadMessages(room){
+
+  const container =
+    document.getElementById(
+      "messages"
+    );
+
+
+  container.innerHTML = `
+
+    <div class="state">
+
+      <div>
+
+        <div class="state-icon">
+          ◌
+        </div>
+
+        <strong>
+          Loading messages
+        </strong>
+
+        <p>
+          Please wait...
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  /*
+   * chat_messages does not currently have room_id.
+   *
+   * Therefore the conversation is identified
+   * by sender_id + receiver_id.
+   */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("chat_messages")
+      .select(`
+        id,
+        sender_id,
+        receiver_id,
+        message,
+        created_at,
+        is_read
+      `)
+      .or(
+        `and(sender_id.eq.${currentUser.id},receiver_id.eq.${room.otherId}),and(sender_id.eq.${room.otherId},receiver_id.eq.${currentUser.id})`
+      )
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      "Message loading error:",
+      error
+    );
+
+    container.innerHTML = `
+
+      <div class="state">
+
+        <div>
+
+          <div class="state-icon">
+            !
+          </div>
+
+          <strong>
+            Messages could not be loaded
+          </strong>
+
+          <p>
+            ${escapeHTML(error.message)}
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  messages =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  renderMessages();
+
+}
+
+
+/* =========================================================
+   RENDER MESSAGES
+========================================================= */
+
+function renderMessages(){
+
+  const container =
+    document.getElementById(
+      "messages"
+    );
+
+
+  if(!messages.length){
+
+    container.innerHTML = `
+
+      <div class="state">
+
+        <div>
+
+          <div class="state-icon">
+            ✦
+          </div>
+
+          <strong>
+            Start the conversation
+          </strong>
+
+          <p>
+            Ask about the car, property or gem
+            you're interested in.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let lastDay = "";
+
+
+  container.innerHTML =
+    messages
+      .map(
+        item => {
+
+          const mine =
+            item.sender_id ===
+            currentUser.id;
+
+
+          const date =
+            new Date(
+              item.created_at
+            );
+
+
+          const day =
+            Number.isNaN(date.getTime())
+              ? ""
+              : date.toLocaleDateString(
+                  [],
+                  {
+                    day:"numeric",
+                    month:"long",
+                    year:"numeric"
+                  }
+                );
+
+
+          let dayHTML = "";
+
+          if(day !== lastDay){
+
+            dayHTML = `
+              <div class="message-day">
+                ${escapeHTML(day)}
+              </div>
+            `;
+
+            lastDay =
+              day;
+
+          }
+
+
+          return `
+
+            ${dayHTML}
+
+            <div
+              class="message-row ${mine ? "mine" : ""}">
+
+              <div class="message">
+
+                <div class="bubble">
+                  ${escapeHTML(
+                    item.message
+                  )}
+                </div>
+
+                <div class="message-meta">
+
+                  <span>
+                    ${escapeHTML(
+                      formatTime(
+                        item.created_at
+                      )
+                    )}
+                  </span>
+
+                  ${
+                    mine
+                      ?
+                      `<span>${item.is_read ? "✓✓" : "✓"}</span>`
+                      :
+                      ""
+                  }
+
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  requestAnimationFrame(
+    () => {
+
+      container.scrollTop =
+        container.scrollHeight;
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage(){
+
+  if(!currentUser){
+    return;
+  }
+
+  if(!activeRoom){
+    return;
+  }
+
+
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+
+  const message =
+    input.value.trim();
+
+
+  if(!message){
+    return;
+  }
+
+
+  const button =
+    document.getElementById(
+      "sendButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("chat_messages")
+      .insert({
+        sender_id:
+          currentUser.id,
+
+        receiver_id:
+          activeRoom.otherId,
+
+        message:
+          message,
+
+        is_read:
+          false
+      })
+      .select()
+      .single();
+
+
+  button.disabled =
+    false;
+
+
+  if(error){
+
+    console.error(
+      "Send message error:",
+      error
+    );
+
+    alert(
+      "Message could not be sent.\n\n" +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  input.value =
+    "";
+
+  autoResize();
+
+
+  /*
+   * Realtime normally adds this.
+   * Add immediately as fallback.
+   */
+
+  if(
+    data &&
+    !messages.some(
+      item =>
+        item.id === data.id
+    )
+  ){
+
+    messages.push(
+      data
+    );
+
+    renderMessages();
+
+  }
+
+
+  await supabaseClient
+    .from("chat_rooms")
+    .update({
+      updated_at:
+        new Date().toISOString()
+    })
+    .eq(
+      "id",
+      activeRoom.id
+    );
+
+
+  await loadRooms();
+
+}
+
+
+/* =========================================================
+   MARK READ
+========================================================= */
+
+async function markRoomRead(room){
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("chat_messages")
+      .update({
+        is_read:true
+      })
+      .eq(
+        "sender_id",
+        room.otherId
+      )
+      .eq(
+        "receiver_id",
+        currentUser.id
+      )
+      .eq(
+        "is_read",
+        false
+      );
+
+
+  if(error){
+
+    console.warn(
+      "Read status update failed:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
    REALTIME
-========================================= */
+========================================================= */
 
-function subscribeRealtime(){
+function unsubscribeRealtime(){
 
   if(realtimeChannel){
 
@@ -1384,12 +2294,25 @@ function subscribeRealtime(){
         realtimeChannel
       );
 
+    realtimeChannel =
+      null;
+
   }
+
+}
+
+
+function subscribeToRoom(room){
+
+  unsubscribeRealtime();
+
 
   realtimeChannel =
     supabaseClient
       .channel(
-        "chat-messages-" +
+        "chat-room-" +
+        room.id +
+        "-" +
         currentUser.id
       )
       .on(
@@ -1397,147 +2320,259 @@ function subscribeRealtime(){
         {
           event:"INSERT",
           schema:"public",
-          table:"chat_messages"
+          table:"chat_messages",
+          filter:
+            `sender_id=eq.${room.otherId}`
         },
-        async function(payload){
+        async payload => {
 
-          const message =
+          const item =
             payload.new;
 
+
           if(
-            !message ||
-            !selectedUser
+            item.receiver_id !==
+            currentUser.id
           ){
+
             return;
+
           }
 
-          const belongsToCurrentChat =
-            (
-              message.sender_id === currentUser.id &&
-              message.receiver_id === selectedUser.id
-            ) ||
-            (
-              message.sender_id === selectedUser.id &&
-              message.receiver_id === currentUser.id
+
+          if(
+            !messages.some(
+              existing =>
+                existing.id ===
+                item.id
+            )
+          ){
+
+            messages.push(
+              item
             );
 
-          if(
-            !belongsToCurrentChat
-          ){
-            return;
+            renderMessages();
+
           }
 
-          await loadMessages();
+
+          await markRoomRead(
+            room
+          );
+
+          await loadRooms();
 
         }
       )
-      .on(
-        "postgres_changes",
-        {
-          event:"UPDATE",
-          schema:"public",
-          table:"chat_messages"
-        },
-        async function(payload){
-
-          if(!selectedUser){
-            return;
-          }
-
-          const message =
-            payload.new;
-
-          const belongs =
-            (
-              message.sender_id === currentUser.id &&
-              message.receiver_id === selectedUser.id
-            ) ||
-            (
-              message.sender_id === selectedUser.id &&
-              message.receiver_id === currentUser.id
-            );
-
-          if(belongs){
-            await loadMessages();
-          }
-
-        }
-      )
-      .subscribe(function(status){
-
-        console.log(
-          "Chat realtime:",
-          status
-        );
-
-      });
+      .subscribe();
 
 }
 
 
-/* =========================================
-   MARK READ
-========================================= */
+/* =========================================================
+   AUTO RESIZE
+========================================================= */
 
-async function markMessagesRead(){
+function autoResize(){
 
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-    return;
-  }
-
-  const {
-    error
-  } =
-  await supabaseClient
-    .from("chat_messages")
-    .update({
-      is_read:true
-    })
-    .eq(
-      "sender_id",
-      selectedUser.id
-    )
-    .eq(
-      "receiver_id",
-      currentUser.id
-    )
-    .eq(
-      "is_read",
-      false
+  const input =
+    document.getElementById(
+      "messageInput"
     );
 
-  if(error){
+  input.style.height =
+    "auto";
 
-    console.warn(
-      "Read status update:",
-      error.message
-    );
-
-  }
+  input.style.height =
+    Math.min(
+      input.scrollHeight,
+      120
+    ) + "px";
 
 }
 
 
-/* =========================================
-   USER SEARCH
-========================================= */
+/* =========================================================
+   STATES
+========================================================= */
 
-userSearch.addEventListener(
-  "input",
-  renderUsers
+function showRoomsLoading(){
+
+  document.getElementById(
+    "rooms"
+  ).innerHTML = `
+
+    <div class="state">
+
+      <div>
+
+        <div class="state-icon">
+          ◌
+        </div>
+
+        <strong>
+          Loading chats
+        </strong>
+
+        <p>
+          Loading your conversations...
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function showRoomsError(message){
+
+  document.getElementById(
+    "rooms"
+  ).innerHTML = `
+
+    <div class="state">
+
+      <div>
+
+        <div class="state-icon">
+          !
+        </div>
+
+        <strong>
+          Chat could not be loaded
+        </strong>
+
+        <p>
+          ${escapeHTML(message)}
+        </p>
+
+        <button
+          class="retry"
+          type="button"
+          onclick="loadRooms()">
+          Try Again
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   MOBILE BACK
+========================================================= */
+
+document.getElementById(
+  "backButton"
+)
+.addEventListener(
+  "click",
+  () => {
+
+    document.body.classList.remove(
+      "mobile-chat-open"
+    );
+
+    unsubscribeRealtime();
+
+    activeRoom =
+      null;
+
+    document.getElementById(
+      "chatContent"
+    ).style.display =
+      "none";
+
+    document.getElementById(
+      "chatEmpty"
+    ).style.display =
+      "flex";
+
+    renderRooms();
+
+  }
 );
 
 
-/* =========================================
-   ENTER TO SEND
-========================================= */
+/* =========================================================
+   PROFILE BUTTON
+========================================================= */
 
-messageInput.addEventListener(
+document.getElementById(
+  "profileButton"
+)
+.addEventListener(
+  "click",
+  () => {
+
+    if(!activeRoom){
+      return;
+    }
+
+    window.location.href =
+      "./profile.html?id=" +
+      encodeURIComponent(
+        activeRoom.otherId
+      );
+
+  }
+);
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+document.getElementById(
+  "themeButton"
+)
+.addEventListener(
+  "click",
+  toggleTheme
+);
+
+
+document.getElementById(
+  "roomSearch"
+)
+.addEventListener(
+  "input",
+  renderRooms
+);
+
+
+document.getElementById(
+  "sendButton"
+)
+.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+document.getElementById(
+  "messageInput"
+)
+.addEventListener(
+  "input",
+  autoResize
+);
+
+
+document.getElementById(
+  "messageInput"
+)
+.addEventListener(
   "keydown",
-  function(event){
+  event => {
 
     if(
       event.key === "Enter" &&
@@ -1546,7 +2581,7 @@ messageInput.addEventListener(
 
       event.preventDefault();
 
-      composer.requestSubmit();
+      sendMessage();
 
     }
 
@@ -1554,64 +2589,15 @@ messageInput.addEventListener(
 );
 
 
-/* =========================================
-   TEXTAREA AUTO RESIZE
-========================================= */
-
-function autoResize(){
-
-  messageInput.style.height =
-    "auto";
-
-  messageInput.style.height =
-    Math.min(
-      messageInput.scrollHeight,
-      120
-    ) + "px";
-
-}
-
-messageInput.addEventListener(
-  "input",
-  autoResize
-);
-
-
-/* =========================================
-   MOBILE BACK
-========================================= */
-
-document
-.getElementById("mobileBack")
-.addEventListener(
-  "click",
-  function(){
-
-    chatPanel.classList.remove(
-      "mobile-open"
-    );
-
-    selectedUser =
-      null;
-
-    activeChat.style.display =
-      "none";
-
-    chatEmpty.style.display =
-      "flex";
-
-    renderUsers();
-
-  }
-);
-
-
-/* =========================================
+/* =========================================================
    AUTH STATE
-========================================= */
+========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
-  function(event,session){
+  async (
+    event,
+    session
+  ) => {
 
     if(
       event === "SIGNED_OUT"
@@ -1620,17 +2606,96 @@ supabaseClient.auth.onAuthStateChange(
       window.location.href =
         "./auth.html";
 
+      return;
+
+    }
+
+    if(
+      session?.user &&
+      !currentUser
+    ){
+
+      currentUser =
+        session.user;
+
+      await loadRooms();
+
     }
 
   }
 );
 
 
-/* =========================================
-   START
-========================================= */
+/* =========================================================
+   INIT
+========================================================= */
 
-initialize();
+async function init(){
+
+  applyTheme(
+    localStorage.getItem(
+      "mec_theme"
+    ) || "light"
+  );
+
+
+  currentUser =
+    await getCurrentUser();
+
+
+  if(!currentUser){
+
+    /*
+     * Chat is private.
+     * Buyer/seller must be logged in.
+     */
+
+    document.getElementById(
+      "rooms"
+    ).innerHTML = `
+
+      <div class="state">
+
+        <div>
+
+          <div class="state-icon">
+            ♙
+          </div>
+
+          <strong>
+            Login required
+          </strong>
+
+          <p>
+            Please sign in to view and send messages.
+          </p>
+
+          <button
+            class="retry"
+            type="button"
+            onclick="location.href='./auth.html'">
+            Sign In
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  await loadTopProfile();
+
+  await loadRooms();
+
+}
+
+
+init();
 
 </script>
 
