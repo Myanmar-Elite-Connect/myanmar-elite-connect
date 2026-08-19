@@ -6,160 +6,532 @@
 
   <title>Myanmar Elite Connect</title>
 
-  <link rel="stylesheet" href="./style.css">
-
   <style>
+    /* =========================================================
+       RESET
+    ========================================================= */
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      margin: 0;
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(30, 111, 255, .16), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(20, 180, 120, .10), transparent 35%),
-        #061630;
-      color: white;
+      font-family:
+        Inter,
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      overflow: hidden;
+
+      color: #10233f;
+      background: #f7f9fc;
+
+      transition:
+        background-color 0.35s ease,
+        color 0.35s ease;
     }
 
-    .landing {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
+    button,
+    a {
+      font: inherit;
     }
 
-    .landing-container {
-      width: 100%;
-      max-width: 1100px;
-      text-align: center;
-    }
-
-    .logo {
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 25px;
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 25px;
-      font-weight: 900;
-      color: #061630;
-      background: linear-gradient(135deg, #d9b65b, #fff0a8);
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      color: #d9b65b;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(42px, 7vw, 82px);
-      line-height: 1;
-      letter-spacing: -3px;
-    }
-
-    h1 span {
-      color: #d9b65b;
-    }
-
-    .description {
-      max-width: 650px;
-      margin: 25px auto 35px;
-      color: #aebbd0;
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border: 0;
-      text-decoration: none;
-      padding: 15px 25px;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 800;
+    button {
       cursor: pointer;
-      transition: .2s ease;
     }
 
-    .btn-primary {
-      color: #061630;
-      background: linear-gradient(135deg, #d9b65b, #fff0a8);
+    a {
+      text-decoration: none;
     }
 
-    .btn-secondary {
-      color: white;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.15);
+
+    /* =========================================================
+       THEME
+    ========================================================= */
+
+    :root {
+      --bg: #f7f9fc;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-solid: #ffffff;
+
+      --text: #10233f;
+      --muted: #718097;
+
+      --border: rgba(16, 35, 63, 0.10);
+
+      --gold: #d8b45c;
+      --gold-light: #f4d98a;
+
+      --navy: #071a34;
+      --navy-soft: #102b4d;
+
+      --shadow:
+        0 30px 80px rgba(13, 35, 64, 0.10);
+
+      --button-shadow:
+        0 12px 30px rgba(16, 35, 63, 0.14);
     }
 
-    .btn:hover {
+    body.dark {
+      --bg: #071321;
+      --surface: rgba(14, 30, 50, 0.80);
+      --surface-solid: #0e1e32;
+
+      --text: #f3f6fa;
+      --muted: #91a0b4;
+
+      --border: rgba(255, 255, 255, 0.10);
+
+      --navy: #f4f6f9;
+      --navy-soft: #dce3eb;
+
+      --shadow:
+        0 30px 80px rgba(0, 0, 0, 0.35);
+
+      --button-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.30);
+    }
+
+
+    /* =========================================================
+       BACKGROUND
+    ========================================================= */
+
+    .page {
+      position: relative;
+
+      width: 100%;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      overflow: hidden;
+    }
+
+    .background-glow {
+      position: absolute;
+
+      width: 520px;
+      height: 520px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(216, 180, 92, 0.16) 0%,
+          rgba(216, 180, 92, 0.05) 42%,
+          transparent 72%
+        );
+
+      filter: blur(5px);
+
+      pointer-events: none;
+    }
+
+    .background-glow.one {
+      top: -220px;
+      left: -180px;
+    }
+
+    .background-glow.two {
+      right: -250px;
+      bottom: -260px;
+    }
+
+
+    /* =========================================================
+       TOP CONTROLS
+    ========================================================= */
+
+    .top-controls {
+      position: absolute;
+
+      top: 28px;
+      right: 30px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      z-index: 10;
+    }
+
+    .control {
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+
+      border: 1px solid var(--border);
+
+      border-radius: 999px;
+
+      color: var(--text);
+      background: var(--surface);
+
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+
+      transition: 0.25s ease;
+    }
+
+    .control:hover {
       transform: translateY(-2px);
+      border-color: rgba(216, 180, 92, 0.45);
     }
 
-    .categories {
-      margin-top: 65px;
+    .language-control {
+      padding: 4px;
+    }
+
+    .language-control button {
+      height: 30px;
+      min-width: 42px;
+
+      border: none;
+      border-radius: 999px;
+
+      color: var(--muted);
+      background: transparent;
+
+      font-size: 12px;
+      font-weight: 800;
+
+      transition: 0.25s ease;
+    }
+
+    .language-control button.active {
+      color: #071a34;
+      background: var(--gold);
+    }
+
+    .theme-control {
+      width: 40px;
+      justify-content: center;
+
+      border: none;
+      background: var(--surface);
+    }
+
+    .theme-control button {
+      width: 100%;
+      height: 100%;
+
+      border: none;
+      border-radius: 999px;
+
+      color: var(--text);
+      background: transparent;
+
+      font-size: 17px;
+
+      transition: 0.25s ease;
+    }
+
+    .theme-control button:hover {
+      transform: rotate(12deg);
+    }
+
+
+    /* =========================================================
+       MAIN CARD
+    ========================================================= */
+
+    .welcome-card {
+      position: relative;
+      z-index: 2;
+
+      width: min(480px, 100%);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      text-align: center;
+
+      padding: 48px 42px 42px;
+
+      border: 1px solid var(--border);
+      border-radius: 32px;
+
+      background: var(--surface);
+
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+
+      box-shadow: var(--shadow);
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .logo-wrap {
+      width: 112px;
+      height: 112px;
+
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
+      place-items: center;
+
+      margin-bottom: 24px;
+
+      border-radius: 30px;
+
+      background: var(--surface-solid);
+
+      border: 1px solid var(--border);
+
+      box-shadow:
+        0 18px 45px rgba(16, 35, 63, 0.10);
+
+      overflow: hidden;
+
+      animation: logoAppear 0.8s ease both;
     }
 
-    .category {
-      padding: 22px 15px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.09);
-      backdrop-filter: blur(15px);
+    .logo-wrap img {
+      width: 82%;
+      height: 82%;
+
+      object-fit: contain;
+
+      display: block;
     }
 
-    .category-icon {
-      font-size: 30px;
+    @keyframes logoAppear {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.94);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+
+    /* =========================================================
+       BRAND TEXT
+    ========================================================= */
+
+    .brand-name {
+      color: var(--text);
+
+      font-size: clamp(25px, 5vw, 34px);
+
+      font-weight: 850;
+
+      letter-spacing: -1.2px;
+
+      line-height: 1.1;
+
       margin-bottom: 10px;
+
+      animation: textAppear 0.7s 0.1s ease both;
     }
 
-    .category strong {
-      display: block;
-      font-size: 15px;
+    .brand-name span {
+      color: var(--gold);
     }
 
-    .category small {
-      display: block;
-      color: #91a0b7;
-      margin-top: 6px;
+    .tagline {
+      max-width: 350px;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+      line-height: 1.7;
+
+      margin-bottom: 30px;
+
+      animation: textAppear 0.7s 0.18s ease both;
     }
 
-    @media (max-width: 700px) {
-      .landing {
+    @keyframes textAppear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    /* =========================================================
+       AUTH BUTTONS
+    ========================================================= */
+
+    .auth-buttons {
+      width: 100%;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 11px;
+
+      animation: textAppear 0.7s 0.25s ease both;
+    }
+
+    .auth-button {
+      height: 52px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 15px;
+
+      font-size: 14px;
+      font-weight: 850;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+    }
+
+    .auth-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .login-button {
+      color: var(--text);
+
+      background: transparent;
+
+      border: 1px solid var(--border);
+    }
+
+    .login-button:hover {
+      border-color: rgba(216, 180, 92, 0.55);
+      background: rgba(216, 180, 92, 0.08);
+    }
+
+    .signup-button {
+      color: #071a34;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
+      border: 1px solid transparent;
+
+      box-shadow: var(--button-shadow);
+    }
+
+    .signup-button:hover {
+      box-shadow:
+        0 17px 35px rgba(16, 35, 63, 0.18);
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .minimal-footer {
+      margin-top: 26px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      letter-spacing: 0.4px;
+
+      animation: textAppear 0.7s 0.32s ease both;
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 600px) {
+
+      .page {
         padding: 20px;
       }
 
-      .categories {
-        grid-template-columns: repeat(2, 1fr);
+      .top-controls {
+        top: 18px;
+        right: 18px;
       }
 
-      .description {
-        font-size: 16px;
+      .welcome-card {
+        padding: 42px 24px 28px;
+
+        border-radius: 27px;
+      }
+
+      .logo-wrap {
+        width: 94px;
+        height: 94px;
+
+        border-radius: 25px;
+      }
+
+      .brand-name {
+        font-size: 27px;
+      }
+
+      .tagline {
+        font-size: 13px;
+        margin-bottom: 25px;
+      }
+
+      .auth-buttons {
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+      }
+
+      .auth-button {
+        height: 50px;
+      }
+    }
+
+    @media (max-width: 380px) {
+
+      .top-controls {
+        top: 13px;
+        right: 13px;
+      }
+
+      .welcome-card {
+        padding-left: 19px;
+        padding-right: 19px;
+      }
+
+      .brand-name {
+        font-size: 24px;
       }
     }
   </style>
@@ -167,79 +539,225 @@
 
 <body>
 
-  <main class="landing">
+  <main class="page">
 
-    <div class="landing-container">
+    <div class="background-glow one"></div>
+    <div class="background-glow two"></div>
 
-      <div class="logo">
-        ME
+
+    <!-- LANGUAGE + THEME -->
+
+    <div class="top-controls">
+
+      <div class="control language-control">
+        <button
+          id="langMM"
+          type="button"
+          onclick="setLanguage('mm')">
+          မြန်မာ
+        </button>
+
+        <button
+          id="langEN"
+          type="button"
+          class="active"
+          onclick="setLanguage('en')">
+          EN
+        </button>
       </div>
 
-      <div class="eyebrow">
-        MYANMAR ELITE CONNECT
-      </div>
-
-      <h1>
-        Everything.
-        <span>Connected.</span>
-      </h1>
-
-      <p class="description">
-        A modern marketplace where you can discover
-        cars, property, gems and other valuable products,
-        connect with people and manage everything from one place.
-      </p>
-
-      <div class="actions">
-
-        <a
-          href="./auth.html"
-          class="btn btn-primary"
-        >
-          Get Started →
-        </a>
-
-        <a
-          href="./auth.html?mode=login"
-          class="btn btn-secondary"
-        >
-          Sign In
-        </a>
-
-      </div>
-
-
-      <div class="categories">
-
-        <div class="category">
-          <div class="category-icon">🚗</div>
-          <strong>Cars</strong>
-          <small>Vehicles</small>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">🏠</div>
-          <strong>Property</strong>
-          <small>Homes & Land</small>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">💎</div>
-          <strong>Gems</strong>
-          <small>Gems & Jewelry</small>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">🛍️</div>
-          <strong>Marketplace</strong>
-          <small>Buy & Sell</small>
-        </div>
-
+      <div class="control theme-control">
+        <button
+          id="themeButton"
+          type="button"
+          onclick="toggleTheme()"
+          aria-label="Toggle dark mode">
+          ☾
+        </button>
       </div>
 
     </div>
 
+
+    <!-- MAIN -->
+
+    <section class="welcome-card">
+
+      <div class="logo-wrap">
+        <img
+          src="https://lh3.googleusercontent.com/d/1BbTVppfuWJWIl6QQs909l1HuDW3shLW_"
+          alt="Myanmar Elite Connect Logo"
+          onerror="this.style.display='none';"
+        >
+      </div>
+
+
+      <h1
+        class="brand-name"
+        id="brandName">
+        Myanmar <span>Elite</span> Connect
+      </h1>
+
+
+      <p
+        class="tagline"
+        id="tagline">
+        One place to connect, discover and trade.
+      </p>
+
+
+      <div class="auth-buttons">
+
+        <a
+          class="auth-button login-button"
+          id="loginButton"
+          href="./auth.html?mode=login">
+          Log In
+        </a>
+
+        <a
+          class="auth-button signup-button"
+          id="signupButton"
+          href="./auth.html?mode=signup">
+          Sign Up
+        </a>
+
+      </div>
+
+
+      <div
+        class="minimal-footer"
+        id="footerText">
+        Myanmar Elite Connect
+      </div>
+
+    </section>
+
   </main>
+
+
+  <script>
+
+    /* =========================================================
+       LANGUAGE
+    ========================================================= */
+
+    const translations = {
+
+      en: {
+        brand: 'Myanmar <span>Elite</span> Connect',
+        tagline: 'One place to connect, discover and trade.',
+        login: 'Log In',
+        signup: 'Sign Up',
+        footer: 'Myanmar Elite Connect'
+      },
+
+      mm: {
+        brand: 'မြန်မာ <span>Elite</span> Connect',
+        tagline: 'ချိတ်ဆက်ရန်၊ ရှာဖွေရန်နှင့် ရောင်းဝယ်ရန် တစ်နေရာတည်း။',
+        login: 'ဝင်ရောက်မည်',
+        signup: 'အကောင့်ဖွင့်မည်',
+        footer: 'Myanmar Elite Connect'
+      }
+
+    };
+
+
+    function setLanguage(language) {
+
+      localStorage.setItem(
+        'mec_language',
+        language
+      );
+
+      const t = translations[language];
+
+      document.getElementById('brandName').innerHTML =
+        t.brand;
+
+      document.getElementById('tagline').textContent =
+        t.tagline;
+
+      document.getElementById('loginButton').textContent =
+        t.login;
+
+      document.getElementById('signupButton').textContent =
+        t.signup;
+
+      document.getElementById('footerText').textContent =
+        t.footer;
+
+      document.getElementById('langMM')
+        .classList.toggle(
+          'active',
+          language === 'mm'
+        );
+
+      document.getElementById('langEN')
+        .classList.toggle(
+          'active',
+          language === 'en'
+        );
+
+      document.documentElement.lang =
+        language === 'mm'
+          ? 'my'
+          : 'en';
+    }
+
+
+    /* =========================================================
+       DARK / LIGHT MODE
+    ========================================================= */
+
+    function applyTheme(theme) {
+
+      document.body.classList.toggle(
+        'dark',
+        theme === 'dark'
+      );
+
+      document.getElementById(
+        'themeButton'
+      ).textContent =
+        theme === 'dark'
+          ? '☀'
+          : '☾';
+
+      localStorage.setItem(
+        'mec_theme',
+        theme
+      );
+    }
+
+
+    function toggleTheme() {
+
+      const isDark =
+        document.body.classList.contains('dark');
+
+      applyTheme(
+        isDark
+          ? 'light'
+          : 'dark'
+      );
+    }
+
+
+    /* =========================================================
+       INITIAL SETTINGS
+    ========================================================= */
+
+    const savedLanguage =
+      localStorage.getItem('mec_language') || 'en';
+
+    const savedTheme =
+      localStorage.getItem('mec_theme') || 'light';
+
+    setLanguage(savedLanguage);
+    applyTheme(savedTheme);
+
+  </script>
 
 </body>
 </html>
