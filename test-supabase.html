@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Supabase Test</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+</head>
+
+<body>
+
+<h2>Myanmar Elite Connect</h2>
+
+<p id="status">Ready</p>
+
+<button id="test">
+  Test Sign Up Connection
+</button>
+
+<script>
+
+document.getElementById("test").onclick = async function () {
+
+  const status =
+    document.getElementById("status");
+
+  status.textContent =
+    "Testing...";
+
+  try {
+
+    const email =
+      "test" + Date.now() + "@example.com";
+
+    const password =
+      "Test123456!";
+
+    const result =
+      await supabaseClient.auth.signUp({
+
+        email: email,
+
+        password: password
+
+      });
+
+    if (result.error) {
+
+      status.textContent =
+        "ERROR: " +
+        result.error.message;
+
+      return;
+    }
+
+    status.textContent =
+      "SUCCESS: Supabase Sign Up is working.";
+
+  } catch (error) {
+
+    status.textContent =
+      "ERROR: " +
+      error.message;
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
