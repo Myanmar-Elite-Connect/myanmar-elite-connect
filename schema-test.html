@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Listings Schema Test</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f7fb;
+      color: #10233f;
+      padding: 24px;
+    }
+
+    .card {
+      max-width: 800px;
+      margin: auto;
+      padding: 24px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    h2 {
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #718097;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #d8b45c;
+      color: #071a34;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    pre {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #0b1728;
+      color: #eaf0f7;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .ok {
+      color: #23845b;
+      font-weight: 800;
+    }
+
+    .error {
+      color: #c94b4b;
+      font-weight: 800;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h2>Myanmar Elite Connect</h2>
+
+  <p>
+    Listings Database Schema Test
+  </p>
+
+  <div id="status">
+    Ready
+  </div>
+
+  <button id="testButton">
+    Check Listings Database
+  </button>
+
+  <pre id="result">Waiting...</pre>
+
+</div>
+
+<script>
+
+const statusEl =
+  document.getElementById("status");
+
+const resultEl =
+  document.getElementById("result");
+
+document
+  .getElementById("testButton")
+  .addEventListener("click", testListings);
+
+
+async function testListings() {
+
+  statusEl.textContent =
+    "Testing...";
+
+  statusEl.className = "";
+
+  resultEl.textContent =
+    "Connecting to listings table...";
+
+
+  try {
+
+    if (
+      typeof supabaseClient === "undefined"
+    ) {
+
+      throw new Error(
+        "supabaseClient was not created. Check supabase.js"
+      );
+
+    }
+
+
+    /*
+      Select one listing.
+      This tells us which columns
+      actually exist in the table.
+    */
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("listings")
+        .select("*")
+        .limit(1);
+
+
+    if (error) {
+
+      statusEl.textContent =
+        "ERROR";
+
+      statusEl.className =
+        "error";
+
+      resultEl.textContent =
+        JSON.stringify(
+          {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code
+          },
+          null,
+          2
+        );
+
+      return;
+    }
+
+
+    statusEl.textContent =
+      "SUCCESS — Listings table is accessible.";
+
+    statusEl.className =
+      "ok";
+
+
+    /*
+      Show existing columns.
+    */
+
+    const columns =
+      data && data.length
+        ? Object.keys(data[0])
+        : [];
+
+
+    resultEl.textContent =
+      JSON.stringify(
+        {
+          row_count_returned:
+            data.length,
+
+          columns:
+            columns,
+
+          sample_row:
+            data.length
+              ? data[0]
+              : "No listings found yet."
+        },
+        null,
+        2
+      );
+
+
+  } catch (error) {
+
+    statusEl.textContent =
+      "ERROR";
+
+    statusEl.className =
+      "error";
+
+    resultEl.textContent =
+      error.message;
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
