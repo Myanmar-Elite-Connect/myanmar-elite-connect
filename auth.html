@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="my">
-
+<html lang="en">
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -9,10 +9,188 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Myanmar Elite Connect</title>
+  <title>Login — Myanmar Elite Connect</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase.js"></script>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+
+  <div class="auth-page">
+
+    <div class="auth-card">
+
+      <a
+        href="./index.html"
+        class="auth-logo"
+      >
+        ME
+      </a>
+
+
+      <div class="auth-heading">
+
+        <span id="authEyebrow">
+          WELCOME BACK
+        </span>
+
+        <h1 id="authTitle">
+          Sign in
+        </h1>
+
+        <p id="authDescription">
+          Sign in to continue to Myanmar Elite Connect.
+        </p>
+
+      </div>
+
+
+      <!-- ERROR -->
+
+      <div
+        id="authError"
+        class="auth-message error"
+        style="display:none;"
+      ></div>
+
+
+      <!-- SUCCESS -->
+
+      <div
+        id="authSuccess"
+        class="auth-message success"
+        style="display:none;"
+      ></div>
+
+
+      <!-- AUTH FORM -->
+
+      <form id="authForm">
+
+
+        <!-- NAME -->
+
+        <div
+          class="form-group"
+          id="nameGroup"
+          style="display:none;"
+        >
+
+          <label for="name">
+            Full Name
+          </label>
+
+          <input
+            id="name"
+            type="text"
+            placeholder="Your full name"
+            autocomplete="name"
+          >
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+            Email
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+          >
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div
+          class="form-group"
+          id="confirmGroup"
+          style="display:none;"
+        >
+
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
+
+          <input
+            id="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="new-password"
+          >
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="auth-submit"
+          id="authSubmit"
+        >
+          Sign In
+        </button>
+
+      </form>
+
+
+      <!-- SWITCH -->
+
+      <div class="auth-switch">
+
+        <span id="switchText">
+          Don't have an account?
+        </span>
+
+        <button
+          type="button"
+          id="switchMode"
+        >
+          Create account
+        </button>
+
+      </div>
+
+
+      <a
+        href="./index.html"
+        class="back-home"
+      >
+        ← Back to website
+      </a>
+
+    </div>
+
+  </div>
+
 
   <style>
 
@@ -22,910 +200,549 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
-      background: #071b3a;
-      font-family: Arial, "Noto Sans Myanmar", sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
+    .auth-page {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      padding: 20px;
+      padding: 25px;
+      background:
+        radial-gradient(circle at top right, rgba(30,111,255,.18), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(20,180,120,.10), transparent 35%),
+        #061630;
     }
 
-    .card {
+    .auth-card {
       width: 100%;
-      max-width: 430px;
-
-      background: white;
-
-      border-radius: 20px;
-
-      padding: 30px;
-
-      box-shadow:
-        0 20px 50px rgba(0,0,0,.25);
+      max-width: 460px;
+      padding: 38px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: 0 30px 90px rgba(0,0,0,.35);
+      backdrop-filter: blur(20px);
+      color: white;
     }
 
-    .logo {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .logo h1 {
-      color: #071b3a;
-      margin-bottom: 5px;
-    }
-
-    .logo p {
-      color: #777;
-      margin: 0;
-    }
-
-    .tabs {
+    .auth-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 19px;
+      margin-bottom: 28px;
       display: flex;
-      gap: 5px;
-      background: #f1f3f6;
-      padding: 5px;
-      border-radius: 10px;
-      margin-bottom: 22px;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #061630;
+      font-size: 20px;
+      font-weight: 900;
+      background: linear-gradient(135deg,#d9b65b,#fff0a8);
     }
 
-    .tab {
-      flex: 1;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
+    .auth-heading span {
+      color: #d9b65b;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
     }
 
-    .tab.active {
-      background: #071b3a;
-      color: white;
+    .auth-heading h1 {
+      margin: 8px 0;
+      font-size: 38px;
     }
 
-    .tab:not(.active) {
-      background: transparent;
-      color: #555;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
-    input {
-      width: 100%;
-
-      padding: 13px;
-
-      border: 1px solid #d8dce3;
-
-      border-radius: 8px;
-
-      font-size: 15px;
-
-      margin-bottom: 15px;
-
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #071b3a;
-    }
-
-    .button {
-      width: 100%;
-
-      padding: 14px;
-
-      border: none;
-
-      border-radius: 9px;
-
-      background: #071b3a;
-
-      color: white;
-
-      font-size: 16px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-    .button:disabled {
-      opacity: .6;
-    }
-
-    .message {
-      margin-bottom: 18px;
-
-      padding: 12px;
-
-      border-radius: 8px;
-
-      display: none;
-
+    .auth-heading p {
+      margin: 0 0 28px;
+      color: #96a5bb;
       line-height: 1.6;
     }
 
-    .success {
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
       display: block;
-      background: #e9f8ef;
-      color: #176b38;
+      margin-bottom: 8px;
+      color: #cbd5e4;
+      font-size: 13px;
+      font-weight: 700;
     }
 
-    .error {
-      display: block;
-      background: #fff0f0;
-      color: #b42318;
+    .form-group input {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 13px;
+      outline: none;
+      color: white;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
     }
 
-    .hidden {
-      display: none;
+    .form-group input:focus {
+      border-color: #d9b65b;
+      box-shadow: 0 0 0 3px rgba(217,182,91,.10);
     }
 
-    .user-box {
+    .auth-submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 15px;
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 900;
+      color: #061630;
+      background: linear-gradient(135deg,#d9b65b,#fff0a8);
+    }
+
+    .auth-switch {
+      margin-top: 23px;
       text-align: center;
+      color: #8797af;
+      font-size: 14px;
     }
 
-    .user-box h2 {
-      color: #071b3a;
+    .auth-switch button {
+      border: 0;
+      background: transparent;
+      color: #d9b65b;
+      cursor: pointer;
+      font-weight: 800;
     }
 
-    .user-email {
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .logout {
-      background: #b42318;
-    }
-
-    .home {
+    .back-home {
       display: block;
+      margin-top: 24px;
       text-align: center;
-      margin-top: 18px;
-      color: #071b3a;
+      color: #7f91aa;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .auth-message {
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .auth-message.error {
+      color: #ffd6d6;
+      background: rgba(220,50,50,.13);
+      border: 1px solid rgba(220,50,50,.25);
+    }
+
+    .auth-message.success {
+      color: #d4ffe7;
+      background: rgba(20,180,120,.12);
+      border: 1px solid rgba(20,180,120,.25);
+    }
+
+    @media(max-width:520px) {
+
+      .auth-page {
+        padding: 15px;
+      }
+
+      .auth-card {
+        padding: 25px 20px;
+        border-radius: 22px;
+      }
+
+      .auth-heading h1 {
+        font-size: 32px;
+      }
+
     }
 
   </style>
 
-</head>
 
+  <script src="./supabase.js"></script>
 
-<body>
 
+  <script>
 
-<div class="card">
+    let mode = "login";
 
 
-  <!-- BRAND -->
+    const authForm =
+      document.getElementById("authForm");
 
-  <div class="logo">
+    const authTitle =
+      document.getElementById("authTitle");
 
-    <h1>
-      Myanmar Elite Connect
-    </h1>
+    const authEyebrow =
+      document.getElementById("authEyebrow");
 
-    <p>
-      Find. Connect. Trade.
-    </p>
+    const authDescription =
+      document.getElementById("authDescription");
 
-  </div>
+    const authSubmit =
+      document.getElementById("authSubmit");
 
+    const switchMode =
+      document.getElementById("switchMode");
 
-  <!-- MESSAGE -->
+    const switchText =
+      document.getElementById("switchText");
 
-  <div
-    id="message"
-    class="message"
-  ></div>
+    const nameGroup =
+      document.getElementById("nameGroup");
 
+    const confirmGroup =
+      document.getElementById("confirmGroup");
 
-  <!-- AUTH AREA -->
+    const nameInput =
+      document.getElementById("name");
 
-  <div id="authArea">
+    const confirmInput =
+      document.getElementById("confirmPassword");
 
+    const errorBox =
+      document.getElementById("authError");
 
-    <!-- TABS -->
+    const successBox =
+      document.getElementById("authSuccess");
 
-    <div class="tabs">
 
-      <button
-        id="loginTab"
-        class="tab active"
-        type="button"
-        onclick="showLogin()"
-      >
-        Login
-      </button>
+    /* -----------------------------------
+       URL MODE
+    ----------------------------------- */
 
-      <button
-        id="registerTab"
-        class="tab"
-        type="button"
-        onclick="showRegister()"
-      >
-        Register
-      </button>
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
-    </div>
+    if(params.get("mode") === "signup"){
+      mode = "signup";
+    }
 
 
-    <!-- LOGIN -->
+    function updateMode(){
 
-    <form id="loginForm">
+      const signup =
+        mode === "signup";
 
-      <label>
-        Email
-      </label>
 
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="your@email.com"
-        required
-      >
+      authTitle.textContent =
+        signup
+          ? "Create account"
+          : "Sign in";
 
 
-      <label>
-        Password
-      </label>
+      authEyebrow.textContent =
+        signup
+          ? "JOIN THE MARKETPLACE"
+          : "WELCOME BACK";
 
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Password"
-        required
-      >
 
+      authDescription.textContent =
+        signup
+          ? "Create your account to access the marketplace."
+          : "Sign in to continue to Myanmar Elite Connect.";
 
-      <button
-        id="loginButton"
-        class="button"
-        type="submit"
-      >
-        Login
-      </button>
 
-    </form>
+      authSubmit.textContent =
+        signup
+          ? "Create Account"
+          : "Sign In";
 
 
-    <!-- REGISTER -->
+      switchText.textContent =
+        signup
+          ? "Already have an account?"
+          : "Don't have an account?";
 
-    <form
-      id="registerForm"
-      class="hidden"
-    >
 
-      <label>
-        Full Name
-      </label>
+      switchMode.textContent =
+        signup
+          ? "Sign in"
+          : "Create account";
 
-      <input
-        id="registerName"
-        type="text"
-        placeholder="Your Name"
-        required
-      >
 
+      nameGroup.style.display =
+        signup ? "block" : "none";
 
-      <label>
-        Email
-      </label>
 
-      <input
-        id="registerEmail"
-        type="email"
-        placeholder="your@email.com"
-        required
-      >
+      confirmGroup.style.display =
+        signup ? "block" : "none";
 
 
-      <label>
-        Password
-      </label>
+      nameInput.required =
+        signup;
 
-      <input
-        id="registerPassword"
-        type="password"
-        placeholder="At least 6 characters"
-        minlength="6"
-        required
-      >
 
+      confirmInput.required =
+        signup;
 
-      <label>
-        Phone Number
-      </label>
+    }
 
-      <input
-        id="registerPhone"
-        type="tel"
-        placeholder="09xxxxxxxxx"
-      >
 
+    updateMode();
 
-      <button
-        id="registerButton"
-        class="button"
-        type="submit"
-      >
-        Create Account
-      </button>
 
-    </form>
+    switchMode.addEventListener(
+      "click",
+      () => {
 
+        mode =
+          mode === "login"
+            ? "signup"
+            : "login";
 
-  </div>
+        hideMessages();
 
+        updateMode();
 
-  <!-- LOGGED IN AREA -->
+      }
+    );
 
-  <div
-    id="userArea"
-    class="user-box hidden"
-  >
 
-    <h2>
-      Welcome! 🎉
-    </h2>
+    function showError(message){
 
-    <p>
-      Myanmar Elite Connect မှ ကြိုဆိုပါတယ်။
-    </p>
+      errorBox.textContent =
+        message;
 
-    <p
-      id="userEmail"
-      class="user-email"
-    ></p>
+      errorBox.style.display =
+        "block";
 
+      successBox.style.display =
+        "none";
 
-    <button
-      id="logoutButton"
-      class="button logout"
-      type="button"
-    >
-      Logout
-    </button>
+    }
 
-  </div>
 
+    function showSuccess(message){
 
-  <a
-    href="./index.html"
-    class="home"
-  >
-    ← Back to Marketplace
-  </a>
+      successBox.textContent =
+        message;
 
+      successBox.style.display =
+        "block";
 
-</div>
+      errorBox.style.display =
+        "none";
 
+    }
 
-<script>
 
+    function hideMessages(){
 
-/* =========================
-   VARIABLES
-========================= */
+      errorBox.style.display =
+        "none";
 
-const authArea =
-  document.getElementById(
-    "authArea"
-  );
+      successBox.style.display =
+        "none";
 
-const userArea =
-  document.getElementById(
-    "userArea"
-  );
+    }
 
-const message =
-  document.getElementById(
-    "message"
-  );
 
+    /* -----------------------------------
+       SUPABASE CLIENT
+    ----------------------------------- */
 
-/* =========================
-   MESSAGE
-========================= */
+    function getSupabaseClient(){
 
-function showMessage(
-  text,
-  type
-) {
+      if(window.supabaseClient){
+        return window.supabaseClient;
+      }
 
-  message.textContent = text;
+      if(window.supabase){
+        return window.supabase;
+      }
 
-  message.className =
-    "message " + type;
+      return null;
 
-}
+    }
 
 
-function clearMessage() {
+    /* -----------------------------------
+       SUBMIT
+    ----------------------------------- */
 
-  message.textContent = "";
+    authForm.addEventListener(
+      "submit",
+      async (event) => {
 
-  message.className =
-    "message";
+        event.preventDefault();
 
-}
+        hideMessages();
 
 
-/* =========================
-   TABS
-========================= */
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
-function showLogin() {
 
-  clearMessage();
+        const password =
+          document
+            .getElementById("password")
+            .value;
 
-  document
-    .getElementById("loginForm")
-    .classList.remove("hidden");
 
-  document
-    .getElementById("registerForm")
-    .classList.add("hidden");
+        const client =
+          getSupabaseClient();
 
-  document
-    .getElementById("loginTab")
-    .classList.add("active");
 
-  document
-    .getElementById("registerTab")
-    .classList.remove("active");
+        if(!client){
 
-}
+          showError(
+            "Supabase connection is not available. Please check supabase.js."
+          );
 
+          return;
 
-function showRegister() {
+        }
 
-  clearMessage();
 
-  document
-    .getElementById("loginForm")
-    .classList.add("hidden");
+        authSubmit.disabled =
+          true;
 
-  document
-    .getElementById("registerForm")
-    .classList.remove("hidden");
 
-  document
-    .getElementById("loginTab")
-    .classList.remove("active");
+        authSubmit.textContent =
+          mode === "login"
+            ? "Signing in..."
+            : "Creating account...";
 
-  document
-    .getElementById("registerTab")
-    .classList.add("active");
 
-}
+        try{
 
 
-/* =========================
-   SHOW USER
-========================= */
+          /* LOGIN */
 
-function showUser(user) {
+          if(mode === "login"){
 
-  authArea.classList.add(
-    "hidden"
-  );
+            const result =
+              await client.auth.signInWithPassword({
+                email,
+                password
+              });
 
-  userArea.classList.remove(
-    "hidden"
-  );
 
-  document
-    .getElementById("userEmail")
-    .textContent =
-      user.email || "";
+            if(result.error){
 
-}
+              throw result.error;
 
+            }
 
-/* =========================
-   SHOW AUTH
-========================= */
 
-function showAuth() {
+            window.location.href =
+              "./general.html";
 
-  authArea.classList.remove(
-    "hidden"
-  );
+            return;
 
-  userArea.classList.add(
-    "hidden"
-  );
+          }
 
-}
 
+          /* SIGN UP */
 
-/* =========================
-   REGISTER
-========================= */
+          const fullName =
+            nameInput.value.trim();
 
-document
-  .getElementById("registerForm")
-  .addEventListener(
-    "submit",
-    async function(event) {
 
-      event.preventDefault();
+          if(password.length < 6){
 
-      clearMessage();
+            throw new Error(
+              "Password must contain at least 6 characters."
+            );
 
+          }
 
-      const button =
-        document.getElementById(
-          "registerButton"
-        );
 
+          if(
+            password !==
+            confirmInput.value
+          ){
 
-      const name =
-        document
-          .getElementById(
-            "registerName"
-          )
-          .value
-          .trim();
+            throw new Error(
+              "Passwords do not match."
+            );
 
+          }
 
-      const email =
-        document
-          .getElementById(
-            "registerEmail"
-          )
-          .value
-          .trim();
 
+          const result =
+            await client.auth.signUp({
 
-      const password =
-        document
-          .getElementById(
-            "registerPassword"
-          )
-          .value;
+              email,
 
-
-      const phone =
-        document
-          .getElementById(
-            "registerPhone"
-          )
-          .value
-          .trim();
-
-
-      button.disabled = true;
-
-      button.textContent =
-        "Creating Account...";
-
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .signUp({
-
-              email: email,
-
-              password: password,
+              password,
 
               options: {
-
                 data: {
-
-                  full_name: name,
-
-                  phone: phone
-
+                  full_name: fullName
                 }
-
               }
 
             });
 
 
-        if (error) {
+          if(result.error){
 
-          throw error;
+            throw result.error;
 
-        }
+          }
 
 
-        if (data.session) {
+          /*
+             If email confirmation is disabled,
+             session exists and user can go directly
+             to General.
 
-          showMessage(
-            "Account ဖန်တီးပြီးပါပြီ။",
-            "success"
+             If confirmation is enabled,
+             show the confirmation message.
+          */
+
+          if(result.data.session){
+
+            window.location.href =
+              "./general.html";
+
+          } else {
+
+            showSuccess(
+              "Account created successfully. Please check your email to verify your account."
+            );
+
+          }
+
+
+        }catch(error){
+
+          console.error(error);
+
+          showError(
+            error.message ||
+            "Authentication failed."
           );
 
 
-          showUser(
-            data.user
-          );
+        }finally{
 
-        } else {
+          authSubmit.disabled =
+            false;
 
-          showMessage(
-            "Account ဖန်တီးပြီးပါပြီ။ Email ကိုစစ်ပြီး Confirmation Link ကိုနှိပ်ပါ။",
-            "success"
-          );
-
-        }
-
-
-      } catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        showMessage(
-          error.message,
-          "error"
-        );
-
-      } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-          "Create Account";
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   LOGIN
-========================= */
-
-document
-  .getElementById("loginForm")
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-      clearMessage();
-
-
-      const button =
-        document.getElementById(
-          "loginButton"
-        );
-
-
-      const email =
-        document
-          .getElementById(
-            "loginEmail"
-          )
-          .value
-          .trim();
-
-
-      const password =
-        document
-          .getElementById(
-            "loginPassword"
-          )
-          .value;
-
-
-      button.disabled = true;
-
-      button.textContent =
-        "Logging in...";
-
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .signInWithPassword({
-
-              email: email,
-
-              password: password
-
-            });
-
-
-        if (error) {
-
-          throw error;
+          authSubmit.textContent =
+            mode === "login"
+              ? "Sign In"
+              : "Create Account";
 
         }
 
-
-        showMessage(
-          "Login အောင်မြင်ပါသည်။",
-          "success"
-        );
-
-
-        showUser(
-          data.user
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        showMessage(
-          error.message,
-          "error"
-        );
-
-      } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-          "Login";
-
       }
-
-    }
-  );
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-document
-  .getElementById("logoutButton")
-  .addEventListener(
-    "click",
-    async function() {
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient.auth
-            .signOut();
-
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        clearMessage();
-
-        showAuth();
-
-        showLogin();
-
-
-      } catch (error) {
-
-        showMessage(
-          error.message,
-          "error"
-        );
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   CHECK SESSION
-========================= */
-
-async function checkSession() {
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth
-        .getSession();
-
-
-    if (error) {
-
-      throw error;
-
-    }
-
-
-    if (data.session) {
-
-      showUser(
-        data.session.user
-      );
-
-    } else {
-
-      showAuth();
-
-    }
-
-
-  } catch (error) {
-
-    console.error(
-      error
     );
 
-    showMessage(
-      error.message,
-      "error"
-    );
-
-  }
-
-}
-
-
-checkSession();
-
-
-/* =========================
-   AUTH STATE
-========================= */
-
-supabaseClient.auth
-  .onAuthStateChange(
-    function(
-      event,
-      session
-    ) {
-
-      if (session) {
-
-        showUser(
-          session.user
-        );
-
-      } else {
-
-        showAuth();
-
-      }
-
-    }
-  );
-
-
-</script>
+  </script>
 
 </body>
-
 </html>
