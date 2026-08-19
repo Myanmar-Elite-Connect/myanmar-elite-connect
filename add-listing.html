@@ -10,11 +10,14 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Myanmar Elite Connect - Add Listing</title>
+  <title>
+    Myanmar Elite Connect - Add Listing
+  </title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script src="./supabase.js"></script>
+
 
   <style>
 
@@ -24,76 +27,150 @@
 
     body {
       margin: 0;
+
       background: #f4f6f9;
+
       color: #222;
+
       font-family:
         Arial,
         "Noto Sans Myanmar",
         sans-serif;
     }
 
+
+    /* HEADER */
+
     header {
       background: #071b3a;
+
       color: white;
+
       padding: 18px;
     }
 
     .header-inner {
       max-width: 800px;
+
       margin: auto;
 
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
     }
 
     .brand {
       font-size: 21px;
+
       font-weight: bold;
     }
 
     .home-link {
       color: white;
+
       text-decoration: none;
     }
 
+
+    /* CONTAINER */
+
     .container {
+      width: 100%;
+
       max-width: 720px;
+
       margin: 30px auto;
+
       padding: 0 18px;
     }
 
+
+    /* CARD */
+
     .card {
       background: white;
+
       border-radius: 18px;
+
       padding: 28px;
 
       box-shadow:
-        0 5px 25px rgba(0,0,0,.08);
+        0 5px 25px
+        rgba(0,0,0,.08);
     }
+
 
     h1 {
       margin-top: 0;
+
       color: #071b3a;
+
+      font-size: 26px;
     }
 
     .subtitle {
       color: #666;
-      line-height: 1.6;
+
+      line-height: 1.7;
+
+      margin-bottom: 25px;
     }
+
+
+    /* MESSAGE */
+
+    #message {
+      display: none;
+
+      padding: 14px;
+
+      margin-bottom: 18px;
+
+      border-radius: 9px;
+
+      line-height: 1.7;
+
+      word-break: break-word;
+    }
+
+    #message.success {
+      display: block;
+
+      background: #e9f8ef;
+
+      color: #176b38;
+    }
+
+    #message.error {
+      display: block;
+
+      background: #fff0f0;
+
+      color: #b42318;
+    }
+
+
+    /* FORM */
 
     label {
       display: block;
 
       margin-top: 18px;
+
       margin-bottom: 7px;
+
+      font-size: 14px;
 
       font-weight: bold;
     }
 
+
     input,
     select,
     textarea {
+
       width: 100%;
 
       padding: 13px;
@@ -102,35 +179,70 @@
 
       border-radius: 9px;
 
-      font-size: 15px;
+      background: white;
+
+      color: #222;
 
       font-family: inherit;
 
+      font-size: 15px;
+
       outline: none;
+
     }
+
 
     input:focus,
     select:focus,
     textarea:focus {
+
       border-color: #071b3a;
+
     }
+
 
     textarea {
+
       min-height: 140px;
+
       resize: vertical;
+
     }
 
+
+    /* PRICE */
+
     .price-row {
+
       display: flex;
+
       gap: 10px;
+
+    }
+
+    .price-input {
+
+      flex: 1;
+
     }
 
     .currency {
-      max-width: 100px;
-      background: #f5f6f8;
+
+      width: 100px;
+
+      background: #f1f3f6;
+
+      text-align: center;
+
+      font-weight: bold;
+
     }
 
+
+    /* BUTTON */
+
     .publish-btn {
+
       width: 100%;
 
       margin-top: 25px;
@@ -150,44 +262,23 @@
       font-weight: bold;
 
       cursor: pointer;
+
     }
+
 
     .publish-btn:disabled {
+
       opacity: .6;
+
       cursor: not-allowed;
+
     }
 
-    #message {
-      display: none;
 
-      margin: 18px 0;
-
-      padding: 13px;
-
-      border-radius: 9px;
-
-      line-height: 1.6;
-
-      word-break: break-word;
-    }
-
-    .success {
-      display: block !important;
-
-      background: #e9f8ef;
-
-      color: #176b38;
-    }
-
-    .error {
-      display: block !important;
-
-      background: #fff0f0;
-
-      color: #b42318;
-    }
+    /* BACK */
 
     .back {
+
       display: block;
 
       margin-top: 20px;
@@ -199,14 +290,22 @@
       text-decoration: none;
 
       font-weight: bold;
+
     }
 
+
+    /* LOGIN */
+
     .login-box {
+
       text-align: center;
-      padding: 25px 0;
+
+      padding: 25px 5px;
+
     }
 
     .login-button {
+
       display: inline-block;
 
       margin-top: 15px;
@@ -217,27 +316,41 @@
 
       color: white;
 
+      text-decoration: none;
+
       border-radius: 8px;
 
-      text-decoration: none;
+      font-weight: bold;
+
     }
 
-    @media(max-width:600px) {
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
 
       .card {
+
         padding: 20px;
+
       }
 
       .price-row {
+
         flex-direction: column;
+
       }
 
       .currency {
-        max-width: none;
+
+        width: 100%;
+
       }
 
       .brand {
+
         font-size: 18px;
+
       }
 
     }
@@ -255,14 +368,19 @@
   <div class="header-inner">
 
     <div class="brand">
+
       Myanmar Elite Connect
+
     </div>
+
 
     <a
       href="./index.html"
       class="home-link"
     >
+
       Home
+
     </a>
 
   </div>
@@ -273,19 +391,30 @@
 
 <div class="container">
 
+
   <div class="card">
 
+
     <h1>
+
       Add New Listing
+
     </h1>
 
+
     <p class="subtitle">
-      ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်
-      ရောင်းဝယ်ရေးအတွက် ကြော်ငြာတင်ပါ။
+
+      🚗 ကား · 🏠 အိမ်ခြံမြေ · 💎 ကျောက်မျက်
+
+      <br>
+
+      ရောင်းရန် ကြော်ငြာတင်ပါ။
+
     </p>
 
 
     <div id="message"></div>
+
 
 
     <form id="listingForm">
@@ -294,8 +423,11 @@
       <!-- CATEGORY -->
 
       <label for="category">
+
         အမျိုးအစား / Category
+
       </label>
+
 
       <select
         id="category"
@@ -303,19 +435,30 @@
       >
 
         <option value="">
-          -- ရွေးချယ်ပါ --
+
+          -- အမျိုးအစားရွေးပါ --
+
         </option>
+
 
         <option value="car">
-          🚗 ကား / Car
+
+          🚗 Car / ကား
+
         </option>
+
 
         <option value="property">
-          🏠 အိမ်ခြံမြေ / Property
+
+          🏠 Property / အိမ်ခြံမြေ
+
         </option>
 
+
         <option value="gem">
-          💎 ကျောက်မျက် / Gem
+
+          💎 Gem / ကျောက်မျက်
+
         </option>
 
       </select>
@@ -325,8 +468,11 @@
       <!-- TITLE -->
 
       <label for="title">
+
         ခေါင်းစဉ် / Title
+
       </label>
+
 
       <input
         id="title"
@@ -340,18 +486,24 @@
       <!-- PRICE -->
 
       <label>
+
         ဈေးနှုန်း / Price
+
       </label>
+
 
       <div class="price-row">
 
+
         <input
           id="price"
+          class="price-input"
           type="number"
           min="0"
           step="0.01"
           placeholder="ဥပမာ - 85000000"
         >
+
 
         <input
           class="currency"
@@ -367,8 +519,11 @@
       <!-- LOCATION -->
 
       <label for="location">
+
         တည်နေရာ / Location
+
       </label>
+
 
       <input
         id="location"
@@ -381,8 +536,11 @@
       <!-- PHONE -->
 
       <label for="phone">
-        ဖုန်းနံပါတ် / Phone
+
+        ဆက်သွယ်ရန် / Phone
+
       </label>
+
 
       <input
         id="phone"
@@ -395,8 +553,11 @@
       <!-- DESCRIPTION -->
 
       <label for="description">
+
         အသေးစိတ် / Description
+
       </label>
+
 
       <textarea
         id="description"
@@ -405,14 +566,16 @@
 
 
 
-      <!-- PUBLISH -->
+      <!-- SUBMIT -->
 
       <button
         id="publishButton"
         class="publish-btn"
         type="submit"
       >
+
         Publish Listing
+
       </button>
 
 
@@ -423,7 +586,9 @@
       href="./index.html"
       class="back"
     >
+
       ← Marketplace သို့ပြန်သွားရန်
+
     </a>
 
 
@@ -436,29 +601,15 @@
 <script>
 
 
-/* ==========================================
-   GET ELEMENTS
-========================================== */
-
-const form =
-  document.getElementById(
-    "listingForm"
-  );
+/* =========================================
+   MESSAGE
+========================================= */
 
 const message =
   document.getElementById(
     "message"
   );
 
-const publishButton =
-  document.getElementById(
-    "publishButton"
-  );
-
-
-/* ==========================================
-   MESSAGE
-========================================== */
 
 function showMessage(
   text,
@@ -467,8 +618,7 @@ function showMessage(
 
   message.textContent = text;
 
-  message.className =
-    type;
+  message.className = type;
 
 }
 
@@ -482,11 +632,11 @@ function clearMessage() {
 }
 
 
-/* ==========================================
-   GET CURRENT USER
-========================================== */
+/* =========================================
+   GET USER
+========================================= */
 
-async function getUser() {
+async function getCurrentUser() {
 
   const {
     data,
@@ -518,47 +668,53 @@ async function getUser() {
 }
 
 
-/* ==========================================
+/* =========================================
    CHECK LOGIN
-========================================== */
+========================================= */
 
 async function checkLogin() {
 
   try {
 
     const user =
-      await getUser();
+      await getCurrentUser();
 
 
     if (!user) {
 
-      form.innerHTML = `
+      document
+        .getElementById(
+          "listingForm"
+        )
+        .innerHTML = `
 
-        <div class="login-box">
+          <div class="login-box">
 
-          <h2>
-            Login လိုအပ်ပါတယ်
-          </h2>
+            <h2>
+              Login လိုအပ်ပါတယ်
+            </h2>
 
-          <p>
-            Listing တင်ရန်
-            အရင် Login ဝင်ပေးပါ။
-          </p>
+            <p>
+              Listing တင်ရန်
+              အရင် Login ဝင်ပေးပါ။
+            </p>
 
-          <a
-            href="./auth.html"
-            class="login-button"
-          >
-            Login / Register
-          </a>
+            <a
+              href="./auth.html"
+              class="login-button"
+            >
+              Login / Register
+            </a>
 
-        </div>
+          </div>
 
-      `;
+        `;
 
     }
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     showMessage(
       error.message,
@@ -573,320 +729,318 @@ async function checkLogin() {
 checkLogin();
 
 
-/* ==========================================
-   SUBMIT
-========================================== */
+/* =========================================
+   SUBMIT LISTING
+========================================= */
 
-form.addEventListener(
-  "submit",
-  async function(event) {
+document
+  .getElementById(
+    "listingForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
-
-    clearMessage();
-
-
-    publishButton.disabled =
-      true;
-
-    publishButton.textContent =
-      "Publishing...";
+      event.preventDefault();
 
 
-    try {
+      clearMessage();
 
 
-      /* ----------------------------
-         USER
-      ---------------------------- */
-
-      const user =
-        await getUser();
-
-
-      if (!user) {
-
-        throw new Error(
-          "Login ဝင်ထားခြင်းမရှိပါ။"
+      const button =
+        document.getElementById(
+          "publishButton"
         );
 
-      }
+
+      button.disabled = true;
+
+      button.textContent =
+        "Publishing...";
 
 
-      /* ----------------------------
-         FORM VALUES
-      ---------------------------- */
-
-      const category =
-        document
-          .getElementById(
-            "category"
-          )
-          .value;
+      try {
 
 
-      const title =
-        document
-          .getElementById(
-            "title"
-          )
-          .value
-          .trim();
+        /* USER */
+
+        const user =
+          await getCurrentUser();
 
 
-      const priceInput =
-        document
-          .getElementById(
-            "price"
-          )
-          .value
-          .trim();
-
-
-      const location =
-        document
-          .getElementById(
-            "location"
-          )
-          .value
-          .trim();
-
-
-      const phone =
-        document
-          .getElementById(
-            "phone"
-          )
-          .value
-          .trim();
-
-
-      const description =
-        document
-          .getElementById(
-            "description"
-          )
-          .value
-          .trim();
-
-
-      /* ----------------------------
-         VALIDATE
-      ---------------------------- */
-
-      if (!category) {
-
-        throw new Error(
-          "Category ရွေးပေးပါ။"
-        );
-
-      }
-
-
-      if (!title) {
-
-        throw new Error(
-          "Title ထည့်ပေးပါ။"
-        );
-
-      }
-
-
-      /* ----------------------------
-         PRICE
-      ---------------------------- */
-
-      let price = null;
-
-
-      if (priceInput !== "") {
-
-        price =
-          Number(priceInput);
-
-
-        if (
-          !Number.isFinite(price)
-        ) {
+        if (!user) {
 
           throw new Error(
-            "Price မှားနေပါတယ်။"
+            "Listing တင်ရန် Login ဝင်ထားရပါမည်။"
           );
 
         }
 
+
+        /* FORM */
+
+        const category =
+          document
+            .getElementById(
+              "category"
+            )
+            .value;
+
+
+        const title =
+          document
+            .getElementById(
+              "title"
+            )
+            .value
+            .trim();
+
+
+        const priceText =
+          document
+            .getElementById(
+              "price"
+            )
+            .value
+            .trim();
+
+
+        const location =
+          document
+            .getElementById(
+              "location"
+            )
+            .value
+            .trim();
+
+
+        const phone =
+          document
+            .getElementById(
+              "phone"
+            )
+            .value
+            .trim();
+
+
+        const description =
+          document
+            .getElementById(
+              "description"
+            )
+            .value
+            .trim();
+
+
+        /* VALIDATION */
+
+        if (!category) {
+
+          throw new Error(
+            "Category ရွေးပေးပါ။"
+          );
+
+        }
+
+
+        if (!title) {
+
+          throw new Error(
+            "Title ထည့်ပေးပါ။"
+          );
+
+        }
+
+
+        /* PRICE */
+
+        let price = null;
+
+
+        if (priceText !== "") {
+
+          price =
+            Number(priceText);
+
+
+          if (
+            !Number.isFinite(
+              price
+            )
+          ) {
+
+            throw new Error(
+              "Price မှားနေပါတယ်။"
+            );
+
+          }
+
+        }
+
+
+        /* =================================
+           FINAL DATABASE OBJECT
+
+           IMPORTANT:
+
+           listing_type = SALE
+
+           Database check constraint:
+           sale OR rent
+        ================================= */
+
+        const listingData = {
+
+          user_id:
+            user.id,
+
+          seller_id:
+            user.id,
+
+          listing_type:
+            "sale",
+
+          category:
+            category,
+
+          title:
+            title,
+
+          description:
+            description ||
+            null,
+
+          price:
+            price,
+
+          currency:
+            "MMK",
+
+          location:
+            location ||
+            null,
+
+          phone:
+            phone ||
+            null,
+
+          status:
+            "active"
+
+        };
+
+
+        console.log(
+          "USER:",
+          user.id
+        );
+
+
+        console.log(
+          "LISTING DATA:",
+          listingData
+        );
+
+
+        /* =================================
+           INSERT
+        ================================= */
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("listings")
+            .insert(
+              listingData
+            )
+            .select()
+            .single();
+
+
+        /* ERROR */
+
+        if (error) {
+
+          console.error(
+            "SUPABASE ERROR:",
+            error
+          );
+
+          throw error;
+
+        }
+
+
+        /* SUCCESS */
+
+        console.log(
+          "LISTING CREATED:",
+          data
+        );
+
+
+        showMessage(
+          "✅ Listing အောင်မြင်စွာ တင်ပြီးပါပြီ။",
+          "success"
+        );
+
+
+        document
+          .getElementById(
+            "listingForm"
+          )
+          .reset();
+
+
+        button.textContent =
+          "Published ✓";
+
+
+        /* HOME */
+
+        setTimeout(
+          function() {
+
+            window.location.href =
+              "./index.html";
+
+          },
+          1500
+        );
+
+
       }
 
-
-      /* =================================
-         DATABASE DATA
-
-         IMPORTANT:
-
-         user_id
-         seller_id
-         listing_type
-         category
-
-         အားလုံး ထည့်ထားသည်။
-      ================================= */
-
-      const listingData = {
-
-        user_id:
-          user.id,
-
-        seller_id:
-          user.id,
-
-        listing_type:
-          category,
-
-        category:
-          category,
-
-        title:
-          title,
-
-        description:
-          description || null,
-
-        price:
-          price,
-
-        currency:
-          "MMK",
-
-        location:
-          location || null,
-
-        phone:
-          phone || null,
-
-        status:
-          "active"
-
-      };
-
-
-      console.log(
-        "Current User:",
-        user
-      );
-
-
-      console.log(
-        "Listing Data:",
-        listingData
-      );
-
-
-      /* =================================
-         INSERT
-      ================================= */
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("listings")
-          .insert(
-            listingData
-          )
-          .select()
-          .single();
-
-
-      /* =================================
-         DATABASE ERROR
-      ================================= */
-
-      if (error) {
+      catch (error) {
 
         console.error(
-          "Supabase Error:",
+          "LISTING ERROR:",
           error
         );
 
-        throw error;
 
-      }
-
-
-      /* =================================
-         SUCCESS
-      ================================= */
-
-      console.log(
-        "Created Listing:",
-        data
-      );
+        showMessage(
+          "❌ " +
+          (
+            error.message ||
+            "Listing တင်မရပါ။"
+          ),
+          "error"
+        );
 
 
-      showMessage(
-        "✅ Listing အောင်မြင်စွာ တင်ပြီးပါပြီ။",
-        "success"
-      );
+        button.disabled =
+          false;
 
-
-      form.reset();
-
-
-      publishButton.textContent =
-        "Published ✓";
-
-
-      /* Go Home */
-
-      setTimeout(
-        function() {
-
-          window.location.href =
-            "./index.html";
-
-        },
-        1500
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "Listing Error:",
-        error
-      );
-
-
-      showMessage(
-        "❌ " +
-        (
-          error.message ||
-          "Listing တင်မရပါ။"
-        ),
-        "error"
-      );
-
-
-    } finally {
-
-      publishButton.disabled =
-        false;
-
-      if (
-        publishButton.textContent !==
-        "Published ✓"
-      ) {
-
-        publishButton.textContent =
+        button.textContent =
           "Publish Listing";
 
       }
 
     }
-
-  }
-);
+  );
 
 
 </script>
