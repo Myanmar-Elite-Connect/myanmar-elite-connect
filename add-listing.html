@@ -2,22 +2,15 @@
 <html lang="my">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Myanmar Elite Connect - Add Listing</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="./supabase.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -25,68 +18,67 @@
     body {
       margin: 0;
       background: #f4f6f9;
-      color: #222;
-      font-family:
-        Arial,
-        "Noto Sans Myanmar",
-        sans-serif;
+      color: #172033;
+      font-family: Arial, "Noto Sans Myanmar", sans-serif;
     }
 
     header {
       background: #071b3a;
       color: white;
-      padding: 18px;
+      padding: 17px 20px;
     }
 
     .header-inner {
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
-
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
     }
 
     .brand {
       font-size: 21px;
-      font-weight: bold;
+      font-weight: 800;
     }
 
     .home-link {
       color: white;
       text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.1);
     }
 
     .container {
-      max-width: 720px;
+      max-width: 850px;
       margin: 30px auto;
-      padding: 0 18px;
+      padding: 0 18px 50px;
     }
 
     .card {
       background: white;
-      border-radius: 18px;
-      padding: 28px;
-
-      box-shadow:
-        0 5px 25px rgba(0,0,0,.08);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
     }
 
     h1 {
-      margin-top: 0;
+      margin: 0 0 8px;
       color: #071b3a;
     }
 
     .subtitle {
-      color: #666;
+      color: #687386;
       line-height: 1.7;
+      margin-bottom: 25px;
     }
 
     #message {
       display: none;
-      padding: 14px;
+      padding: 14px 16px;
       margin: 18px 0;
-      border-radius: 9px;
+      border-radius: 10px;
       line-height: 1.7;
       word-break: break-word;
     }
@@ -95,38 +87,35 @@
       display: block;
       background: #e9f8ef;
       color: #176b38;
+      border: 1px solid #bce8cb;
     }
 
     #message.error {
       display: block;
       background: #fff0f0;
       color: #b42318;
+      border: 1px solid #ffd0d0;
     }
 
     label {
       display: block;
-      margin-top: 18px;
+      margin-top: 19px;
       margin-bottom: 7px;
-
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 800;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      padding: 13px;
-
+      padding: 13px 14px;
       border: 1px solid #d7dce5;
-      border-radius: 9px;
-
+      border-radius: 10px;
       background: white;
-      color: #222;
-
+      color: #172033;
       font-family: inherit;
       font-size: 15px;
-
       outline: none;
     }
 
@@ -134,11 +123,18 @@
     select:focus,
     textarea:focus {
       border-color: #071b3a;
+      box-shadow: 0 0 0 3px rgba(7,27,58,.08);
     }
 
     textarea {
-      min-height: 140px;
+      min-height: 150px;
       resize: vertical;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
     }
 
     .price-row {
@@ -146,33 +142,113 @@
       gap: 10px;
     }
 
-    .price-input {
-      flex: 1;
-    }
-
     .currency {
-      width: 100px;
+      width: 110px;
       background: #f1f3f6;
       text-align: center;
+      font-weight: 800;
+    }
+
+    /* IMAGE UPLOAD */
+
+    .upload-box {
+      margin-top: 10px;
+      border: 2px dashed #b9c3d4;
+      border-radius: 15px;
+      padding: 25px 18px;
+      text-align: center;
+      background: #fafbfe;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .upload-box:hover,
+    .upload-box.dragover {
+      border-color: #071b3a;
+      background: #f1f5fb;
+    }
+
+    .upload-icon {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .upload-title {
+      font-weight: 800;
+      color: #071b3a;
+      margin-bottom: 6px;
+    }
+
+    .upload-help {
+      color: #697386;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    #imageInput {
+      display: none;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .preview-item {
+      position: relative;
+      height: 150px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #e9edf4;
+      border: 1px solid #dde3ed;
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .remove-image {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,.72);
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
       font-weight: bold;
+    }
+
+    .image-count {
+      margin-top: 10px;
+      color: #697386;
+      font-size: 13px;
     }
 
     .publish-btn {
       width: 100%;
-
-      margin-top: 25px;
-      padding: 15px;
-
+      margin-top: 28px;
+      padding: 16px;
       border: none;
-      border-radius: 9px;
-
+      border-radius: 11px;
       background: #071b3a;
       color: white;
-
       font-size: 16px;
-      font-weight: bold;
-
+      font-weight: 800;
       cursor: pointer;
+      transition: .2s;
+    }
+
+    .publish-btn:hover {
+      background: #0d2b58;
     }
 
     .publish-btn:disabled {
@@ -182,42 +258,52 @@
 
     .back {
       display: block;
-
       margin-top: 20px;
-
       text-align: center;
-
       color: #071b3a;
-
       text-decoration: none;
-
-      font-weight: bold;
+      font-weight: 700;
     }
 
     .login-box {
       text-align: center;
-      padding: 25px 5px;
+      padding: 30px 5px;
     }
 
     .login-button {
       display: inline-block;
-
       margin-top: 15px;
       padding: 12px 25px;
-
       background: #071b3a;
       color: white;
-
       text-decoration: none;
-
-      border-radius: 8px;
+      border-radius: 9px;
       font-weight: bold;
     }
 
-    @media (max-width: 600px) {
+    .required {
+      color: #d92d20;
+    }
+
+    .note {
+      margin-top: 10px;
+      padding: 12px;
+      background: #f5f7fb;
+      border-radius: 9px;
+      color: #697386;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
 
       .card {
-        padding: 20px;
+        padding: 21px;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+        gap: 0;
       }
 
       .price-row {
@@ -228,19 +314,23 @@
         width: 100%;
       }
 
-      .brand {
-        font-size: 18px;
+      .preview-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
+      .preview-item {
+        height: 145px;
+      }
+
+      .brand {
+        font-size: 17px;
+      }
     }
-
   </style>
-
 </head>
 
 
 <body>
-
 
 <header>
 
@@ -262,7 +352,6 @@
 </header>
 
 
-
 <div class="container">
 
   <div class="card">
@@ -272,13 +361,9 @@
     </h1>
 
     <p class="subtitle">
-
       🚗 ကား · 🏠 အိမ်ခြံမြေ · 💎 ကျောက်မျက်
-
       <br>
-
       ရောင်းရန် / ငှားရန် ကြော်ငြာတင်ပါ။
-
     </p>
 
 
@@ -292,6 +377,7 @@
 
       <label for="listingType">
         ရောင်း/ငှား / Listing Type
+        <span class="required">*</span>
       </label>
 
       <select
@@ -314,11 +400,11 @@
       </select>
 
 
-
       <!-- CATEGORY -->
 
       <label for="category">
         အမျိုးအစား / Category
+        <span class="required">*</span>
       </label>
 
       <select
@@ -345,20 +431,20 @@
       </select>
 
 
-
       <!-- TITLE -->
 
       <label for="title">
         ခေါင်းစဉ် / Title
+        <span class="required">*</span>
       </label>
 
       <input
         id="title"
         type="text"
+        maxlength="150"
         placeholder="ဥပမာ - Toyota Alphard 2022"
         required
       >
-
 
 
       <!-- PRICE -->
@@ -388,33 +474,40 @@
       </div>
 
 
+      <!-- CITY / TOWNSHIP -->
 
-      <!-- CITY -->
+      <div class="two-column">
 
-      <label for="city">
-        မြို့ / City
-      </label>
+        <div>
 
-      <input
-        id="city"
-        type="text"
-        placeholder="ဥပမာ - Yangon"
-      >
+          <label for="city">
+            မြို့ / City
+          </label>
+
+          <input
+            id="city"
+            type="text"
+            placeholder="ဥပမာ - Yangon"
+          >
+
+        </div>
 
 
+        <div>
 
-      <!-- TOWNSHIP -->
+          <label for="township">
+            မြို့နယ် / Township
+          </label>
 
-      <label for="township">
-        မြို့နယ် / Township
-      </label>
+          <input
+            id="township"
+            type="text"
+            placeholder="ဥပမာ - Bahan"
+          >
 
-      <input
-        id="township"
-        type="text"
-        placeholder="ဥပမာ - Bahan"
-      >
+        </div>
 
+      </div>
 
 
       <!-- ADDRESS -->
@@ -430,7 +523,6 @@
       >
 
 
-
       <!-- LOCATION -->
 
       <label for="location">
@@ -444,7 +536,6 @@
       >
 
 
-
       <!-- PHONE -->
 
       <label for="phone">
@@ -454,9 +545,9 @@
       <input
         id="phone"
         type="tel"
+        maxlength="30"
         placeholder="09xxxxxxxxx"
       >
-
 
 
       <!-- DESCRIPTION -->
@@ -467,9 +558,65 @@
 
       <textarea
         id="description"
+        maxlength="5000"
         placeholder="ပစ္စည်းအကြောင်း အသေးစိတ်ရေးပါ..."
       ></textarea>
 
+
+      <!-- IMAGE -->
+
+      <label>
+        ပုံများ / Listing Images
+      </label>
+
+      <div
+        class="upload-box"
+        id="uploadBox"
+      >
+
+        <div class="upload-icon">
+          🖼️
+        </div>
+
+        <div class="upload-title">
+          ပုံများ ရွေးချယ်ပါ
+        </div>
+
+        <div class="upload-help">
+          နှိပ်ပြီး ပုံများရွေးနိုင်ပါသည်
+          <br>
+          JPG / PNG / WEBP · တစ်ပုံ 5MB အထိ
+        </div>
+
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+        >
+
+      </div>
+
+
+      <div
+        id="previewGrid"
+        class="preview-grid"
+      ></div>
+
+      <div
+        id="imageCount"
+        class="image-count"
+      >
+        ပုံရွေးထားခြင်း မရှိသေးပါ။
+      </div>
+
+
+      <div class="note">
+        💡 ပုံများကို Supabase Storage ရှိ
+        <strong>listing-images</strong>
+        bucket ထဲသို့ upload လုပ်ပြီး
+        Listing နဲ့ ချိတ်ဆက်ပေးပါမည်။
+      </div>
 
 
       <!-- SUBMIT -->
@@ -479,11 +626,8 @@
         class="publish-btn"
         type="submit"
       >
-
         Publish Listing
-
       </button>
-
 
     </form>
 
@@ -492,54 +636,77 @@
       href="./index.html"
       class="back"
     >
-
       ← Marketplace သို့ပြန်သွားရန်
-
     </a>
-
 
   </div>
 
 </div>
 
 
-
 <script>
 
-
-/* =====================================
+/* =========================================
    ELEMENTS
-===================================== */
+========================================= */
 
 const form =
-  document.getElementById(
-    "listingForm"
-  );
+  document.getElementById("listingForm");
 
 const message =
-  document.getElementById(
-    "message"
-  );
+  document.getElementById("message");
 
 const publishButton =
-  document.getElementById(
-    "publishButton"
-  );
+  document.getElementById("publishButton");
+
+const imageInput =
+  document.getElementById("imageInput");
+
+const uploadBox =
+  document.getElementById("uploadBox");
+
+const previewGrid =
+  document.getElementById("previewGrid");
+
+const imageCount =
+  document.getElementById("imageCount");
 
 
-/* =====================================
+/* =========================================
+   SETTINGS
+========================================= */
+
+const STORAGE_BUCKET =
+  "listing-images";
+
+const MAX_IMAGES =
+  10;
+
+const MAX_FILE_SIZE =
+  5 * 1024 * 1024;
+
+
+/* =========================================
+   SELECTED IMAGES
+========================================= */
+
+let selectedFiles = [];
+
+
+/* =========================================
    MESSAGE
-===================================== */
+========================================= */
 
-function showMessage(
-  text,
-  type
-) {
+function showMessage(text, type) {
 
   message.textContent = text;
 
   message.className = type;
 
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
@@ -552,9 +719,9 @@ function clearMessage() {
 }
 
 
-/* =====================================
-   GET CURRENT USER
-===================================== */
+/* =========================================
+   CURRENT USER
+========================================= */
 
 async function getCurrentUser() {
 
@@ -564,33 +731,25 @@ async function getCurrentUser() {
   } =
     await supabaseClient.auth.getSession();
 
-
   if (error) {
-
     throw error;
-
   }
-
 
   if (
     !data ||
     !data.session ||
     !data.session.user
   ) {
-
     return null;
-
   }
 
-
   return data.session.user;
-
 }
 
 
-/* =====================================
+/* =========================================
    LOGIN CHECK
-===================================== */
+========================================= */
 
 async function checkLogin() {
 
@@ -598,7 +757,6 @@ async function checkLogin() {
 
     const user =
       await getCurrentUser();
-
 
     if (!user) {
 
@@ -629,11 +787,10 @@ async function checkLogin() {
     }
 
   }
-
   catch (error) {
 
     showMessage(
-      error.message,
+      "❌ " + error.message,
       "error"
     );
 
@@ -642,12 +799,481 @@ async function checkLogin() {
 }
 
 
-checkLogin();
+/* =========================================
+   IMAGE INPUT
+========================================= */
+
+uploadBox.addEventListener(
+  "click",
+  function() {
+
+    imageInput.click();
+
+  }
+);
 
 
-/* =====================================
+imageInput.addEventListener(
+  "change",
+  function() {
+
+    addFiles(
+      Array.from(imageInput.files)
+    );
+
+    imageInput.value = "";
+
+  }
+);
+
+
+/* =========================================
+   DRAG & DROP
+========================================= */
+
+uploadBox.addEventListener(
+  "dragover",
+  function(event) {
+
+    event.preventDefault();
+
+    uploadBox.classList.add(
+      "dragover"
+    );
+
+  }
+);
+
+
+uploadBox.addEventListener(
+  "dragleave",
+  function() {
+
+    uploadBox.classList.remove(
+      "dragover"
+    );
+
+  }
+);
+
+
+uploadBox.addEventListener(
+  "drop",
+  function(event) {
+
+    event.preventDefault();
+
+    uploadBox.classList.remove(
+      "dragover"
+    );
+
+    addFiles(
+      Array.from(
+        event.dataTransfer.files
+      )
+    );
+
+  }
+);
+
+
+/* =========================================
+   ADD FILES
+========================================= */
+
+function addFiles(files) {
+
+  clearMessage();
+
+  for (
+    const file of files
+  ) {
+
+    if (
+      selectedFiles.length >=
+      MAX_IMAGES
+    ) {
+
+      showMessage(
+        "အများဆုံး " +
+        MAX_IMAGES +
+        " ပုံအထိသာ ရွေးနိုင်ပါသည်။",
+        "error"
+      );
+
+      break;
+
+    }
+
+
+    if (
+      ![
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ].includes(
+        file.type
+      )
+    ) {
+
+      showMessage(
+        file.name +
+        " သည် JPG, PNG သို့မဟုတ် WEBP မဟုတ်ပါ။",
+        "error"
+      );
+
+      continue;
+
+    }
+
+
+    if (
+      file.size >
+      MAX_FILE_SIZE
+    ) {
+
+      showMessage(
+        file.name +
+        " သည် 5MB ထက်ကြီးနေပါသည်။",
+        "error"
+      );
+
+      continue;
+
+    }
+
+
+    const duplicate =
+      selectedFiles.some(
+        function(existing) {
+
+          return (
+            existing.name === file.name &&
+            existing.size === file.size
+          );
+
+        }
+      );
+
+
+    if (duplicate) {
+      continue;
+    }
+
+
+    selectedFiles.push(file);
+
+  }
+
+
+  renderPreviews();
+
+}
+
+
+/* =========================================
+   RENDER PREVIEWS
+========================================= */
+
+function renderPreviews() {
+
+  previewGrid.innerHTML = "";
+
+
+  selectedFiles.forEach(
+    function(file, index) {
+
+      const url =
+        URL.createObjectURL(file);
+
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "preview-item";
+
+
+      item.innerHTML = `
+
+        <img
+          src="${url}"
+          alt="Listing image"
+        >
+
+        <button
+          type="button"
+          class="remove-image"
+          data-index="${index}"
+        >
+          ×
+        </button>
+
+      `;
+
+
+      item
+        .querySelector(
+          ".remove-image"
+        )
+        .addEventListener(
+          "click",
+          function() {
+
+            selectedFiles.splice(
+              index,
+              1
+            );
+
+            renderPreviews();
+
+          }
+        );
+
+
+      previewGrid.appendChild(item);
+
+    }
+  );
+
+
+  if (
+    selectedFiles.length === 0
+  ) {
+
+    imageCount.textContent =
+      "ပုံရွေးထားခြင်း မရှိသေးပါ။";
+
+  }
+  else {
+
+    imageCount.textContent =
+      selectedFiles.length +
+      " ပုံ ရွေးထားပါသည်။";
+
+  }
+
+}
+
+
+/* =========================================
+   SAFE FILE NAME
+========================================= */
+
+function safeFileName(name) {
+
+  return name
+    .toLowerCase()
+    .replace(
+      /[^a-z0-9.]+/g,
+      "-"
+    )
+    .replace(
+      /^-+|-+$/g,
+      ""
+    );
+
+}
+
+
+/* =========================================
+   UPLOAD IMAGES
+========================================= */
+
+async function uploadImages(
+  userId,
+  listingId
+) {
+
+  const imageUrls = [];
+
+
+  for (
+    let i = 0;
+    i < selectedFiles.length;
+    i++
+  ) {
+
+    const file =
+      selectedFiles[i];
+
+
+    publishButton.textContent =
+      "Uploading image " +
+      (i + 1) +
+      " / " +
+      selectedFiles.length +
+      "...";
+
+
+    const extension =
+      file.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+
+    const cleanName =
+      safeFileName(
+        file.name
+          .replace(
+            /\.[^/.]+$/,
+            ""
+          )
+      );
+
+
+    const uniqueName =
+      Date.now() +
+      "-" +
+      i +
+      "-" +
+      cleanName +
+      "." +
+      extension;
+
+
+    const filePath =
+      userId +
+      "/" +
+      listingId +
+      "/" +
+      uniqueName;
+
+
+    const {
+      error: uploadError
+    } =
+      await supabaseClient
+        .storage
+        .from(
+          STORAGE_BUCKET
+        )
+        .upload(
+          filePath,
+          file,
+          {
+            cacheControl: "3600",
+            upsert: false,
+            contentType:
+              file.type
+          }
+        );
+
+
+    if (uploadError) {
+
+      throw new Error(
+        "Image upload failed: " +
+        uploadError.message
+      );
+
+    }
+
+
+    const {
+      data
+    } =
+      supabaseClient
+        .storage
+        .from(
+          STORAGE_BUCKET
+        )
+        .getPublicUrl(
+          filePath
+        );
+
+
+    if (
+      !data ||
+      !data.publicUrl
+    ) {
+
+      throw new Error(
+        "Image URL မရရှိပါ။"
+      );
+
+    }
+
+
+    imageUrls.push(
+      data.publicUrl
+    );
+
+  }
+
+
+  return imageUrls;
+
+}
+
+
+/* =========================================
+   DELETE UPLOADED FILES
+   If DB insert/update fails
+========================================= */
+
+async function deleteUploadedImages(
+  userId,
+  listingId,
+  urls
+) {
+
+  if (!urls.length) {
+    return;
+  }
+
+
+  const paths =
+    urls.map(
+      function(url) {
+
+        const marker =
+          "/storage/v1/object/public/" +
+          STORAGE_BUCKET +
+          "/";
+
+
+        const index =
+          url.indexOf(marker);
+
+
+        if (
+          index === -1
+        ) {
+          return null;
+        }
+
+
+        return url.substring(
+          index + marker.length
+        );
+
+      }
+    )
+    .filter(Boolean);
+
+
+  if (!paths.length) {
+    return;
+  }
+
+
+  await supabaseClient
+    .storage
+    .from(
+      STORAGE_BUCKET
+    )
+    .remove(paths);
+
+}
+
+
+/* =========================================
    SUBMIT
-===================================== */
+========================================= */
 
 form.addEventListener(
   "submit",
@@ -662,11 +1288,16 @@ form.addEventListener(
       true;
 
     publishButton.textContent =
-      "Publishing...";
+      "Checking...";
+
+
+    let createdListingId =
+      null;
+
+    let uploadedUrls = [];
 
 
     try {
-
 
       /* USER */
 
@@ -787,10 +1418,16 @@ form.addEventListener(
       }
 
 
-      if (!category) {
+      if (
+        ![
+          "car",
+          "property",
+          "gem"
+        ].includes(category)
+      ) {
 
         throw new Error(
-          "Category ရွေးပေးပါ။"
+          "မှန်ကန်သော Category ရွေးပါ။"
         );
 
       }
@@ -817,7 +1454,8 @@ form.addEventListener(
 
 
         if (
-          !Number.isFinite(price)
+          !Number.isFinite(price) ||
+          price < 0
         ) {
 
           throw new Error(
@@ -830,14 +1468,19 @@ form.addEventListener(
 
 
       /* =================================
-         DATABASE OBJECT
-
-         Matches current listings table
+         INSERT LISTING FIRST
       ================================= */
+
+      publishButton.textContent =
+        "Creating listing...";
+
 
       const listingData = {
 
         user_id:
+          user.id,
+
+        seller_id:
           user.id,
 
         category:
@@ -882,31 +1525,21 @@ form.addEventListener(
         images:
           [],
 
-        seller_id:
-          user.id
+        featured:
+          false
 
       };
 
 
       console.log(
-        "USER ID:",
-        user.id
-      );
-
-
-      console.log(
-        "LISTING DATA:",
+        "Creating listing:",
         listingData
       );
 
 
-      /* =================================
-         INSERT
-      ================================= */
-
       const {
-        data,
-        error
+        data: listing,
+        error: insertError
       } =
         await supabaseClient
           .from("listings")
@@ -917,26 +1550,80 @@ form.addEventListener(
           .single();
 
 
-      /* ERROR */
-
-      if (error) {
+      if (insertError) {
 
         console.error(
-          "SUPABASE ERROR:",
-          error
+          "LISTING INSERT ERROR:",
+          insertError
         );
 
-        throw error;
+        throw insertError;
 
       }
 
 
-      /* SUCCESS */
+      createdListingId =
+        listing.id;
 
-      console.log(
-        "LISTING CREATED:",
-        data
-      );
+
+      /* =================================
+         UPLOAD IMAGES
+      ================================= */
+
+      if (
+        selectedFiles.length > 0
+      ) {
+
+        uploadedUrls =
+          await uploadImages(
+            user.id,
+            createdListingId
+          );
+
+
+        /* =================================
+           UPDATE LISTING WITH IMAGE URLS
+        ================================= */
+
+        publishButton.textContent =
+          "Saving image information...";
+
+
+        const {
+          error: updateError
+        } =
+          await supabaseClient
+            .from("listings")
+            .update({
+              images:
+                uploadedUrls
+            })
+            .eq(
+              "id",
+              createdListingId
+            );
+
+
+        if (updateError) {
+
+          console.error(
+            "IMAGE URL UPDATE ERROR:",
+            updateError
+          );
+
+          throw updateError;
+
+        }
+
+      }
+
+
+      /* =================================
+         SUCCESS
+      ================================= */
+
+      publishButton.textContent =
+        "Published ✓";
 
 
       showMessage(
@@ -947,9 +1634,9 @@ form.addEventListener(
 
       form.reset();
 
+      selectedFiles = [];
 
-      publishButton.textContent =
-        "Published ✓";
+      renderPreviews();
 
 
       setTimeout(
@@ -962,8 +1649,8 @@ form.addEventListener(
         1500
       );
 
-
     }
+
 
     catch (error) {
 
@@ -971,6 +1658,45 @@ form.addEventListener(
         "LISTING ERROR:",
         error
       );
+
+
+      /*
+        If images uploaded but
+        something failed afterwards,
+        remove uploaded images.
+      */
+
+      if (
+        uploadedUrls.length &&
+        createdListingId
+      ) {
+
+        try {
+
+          const user =
+            await getCurrentUser();
+
+          if (user) {
+
+            await deleteUploadedImages(
+              user.id,
+              createdListingId,
+              uploadedUrls
+            );
+
+          }
+
+        }
+        catch (cleanupError) {
+
+          console.error(
+            "Cleanup error:",
+            cleanupError
+          );
+
+        }
+
+      }
 
 
       showMessage(
@@ -995,9 +1721,15 @@ form.addEventListener(
 );
 
 
+/* =========================================
+   START
+========================================= */
+
+checkLogin();
+
+renderPreviews();
+
 </script>
 
-
 </body>
-
 </html>
