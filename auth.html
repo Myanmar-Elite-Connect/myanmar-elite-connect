@@ -6,10 +6,7 @@
 
   <title>Myanmar Elite Connect — Account</title>
 
-  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Your Supabase connection -->
   <script src="./supabase.js"></script>
 
   <style>
@@ -25,10 +22,10 @@
       --soft: #f1f4f8;
       --text: #10233f;
       --muted: #728096;
-      --navy: #071a34;
-      --navy2: #173b62;
       --gold: #d7b35a;
       --gold-light: #f1d487;
+      --navy: #071a34;
+      --navy2: #173b62;
       --border: rgba(16,35,63,.09);
       --error: #c94a4a;
       --success: #26845b;
@@ -41,15 +38,12 @@
       --soft: #12263d;
       --text: #f4f7fb;
       --muted: #94a3b7;
-      --navy: #f4f7fb;
-      --navy2: #dce5ef;
       --border: rgba(255,255,255,.09);
       --shadow: 0 25px 70px rgba(0,0,0,.32);
     }
 
     body {
       min-height: 100vh;
-
       font-family:
         Inter,
         "Noto Sans Myanmar",
@@ -62,10 +56,6 @@
 
       color: var(--text);
       background: var(--bg);
-
-      transition:
-        background .3s ease,
-        color .3s ease;
     }
 
     button,
@@ -84,43 +74,8 @@
 
     .page {
       min-height: 100vh;
-
       display: flex;
       flex-direction: column;
-
-      position: relative;
-      overflow: hidden;
-    }
-
-    .background {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .glow {
-      position: absolute;
-
-      width: 500px;
-      height: 500px;
-
-      border-radius: 50%;
-
-      filter: blur(15px);
-    }
-
-    .glow.one {
-      top: -270px;
-      right: -170px;
-
-      background: rgba(215,179,90,.10);
-    }
-
-    .glow.two {
-      bottom: -300px;
-      left: -200px;
-
-      background: rgba(23,59,98,.08);
     }
 
     /* =========================
@@ -128,13 +83,8 @@
     ========================= */
 
     .topbar {
-      position: relative;
-      z-index: 5;
-
       width: min(1180px, calc(100% - 36px));
-
       height: 76px;
-
       margin: auto;
 
       display: flex;
@@ -145,7 +95,6 @@
     .brand {
       display: flex;
       align-items: center;
-
       gap: 12px;
     }
 
@@ -157,28 +106,21 @@
       place-items: center;
 
       overflow: hidden;
-
       border-radius: 12px;
 
       background: var(--surface);
-
       border: 1px solid var(--border);
-
-      box-shadow:
-        0 5px 18px rgba(0,0,0,.06);
     }
 
     .brand-logo img {
       width: 82%;
       height: 82%;
-
       object-fit: contain;
     }
 
     .brand-name {
       font-size: 15px;
       font-weight: 850;
-
       letter-spacing: -.35px;
     }
 
@@ -194,36 +136,22 @@
     .icon-button {
       height: 40px;
       min-width: 40px;
-
       padding: 0 11px;
 
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 5px;
 
       border-radius: 11px;
 
       color: var(--text);
-
       background: var(--surface);
-
       border: 1px solid var(--border);
-
-      transition: .2s ease;
-    }
-
-    .icon-button:hover {
-      transform: translateY(-2px);
-
-      border-color:
-        rgba(215,179,90,.55);
     }
 
     .language-button {
-      display: flex;
-      align-items: center;
-
-      gap: 5px;
-
       font-size: 11px;
       font-weight: 800;
     }
@@ -238,9 +166,6 @@
 
     .main {
       flex: 1;
-
-      position: relative;
-      z-index: 2;
 
       display: flex;
       align-items: center;
@@ -280,8 +205,6 @@
 
       margin-bottom: 27px;
 
-      position: relative;
-
       border-radius: 38px;
 
       background:
@@ -296,44 +219,16 @@
       box-shadow: var(--shadow);
     }
 
-    .logo-showcase::before {
-      content: "";
-
-      position: absolute;
-
-      inset: 12px;
-
-      border-radius: 29px;
-
-      border:
-        1px solid
-        rgba(215,179,90,.22);
-    }
-
     .logo-showcase img {
-      position: relative;
-      z-index: 2;
-
       width: 67%;
       height: 67%;
-
       object-fit: contain;
-
-      filter:
-        drop-shadow(
-          0 14px 24px
-          rgba(7,26,52,.12)
-        );
     }
 
     .intro h1 {
-      font-size:
-        clamp(34px,5vw,52px);
-
+      font-size: clamp(34px,5vw,52px);
       line-height: 1.05;
-
       letter-spacing: -2.4px;
-
       margin-bottom: 17px;
     }
 
@@ -343,11 +238,8 @@
 
     .intro p {
       max-width: 440px;
-
       color: var(--muted);
-
       font-size: 14px;
-
       line-height: 1.85;
     }
 
@@ -363,7 +255,6 @@
       border-radius: 25px;
 
       background: var(--surface);
-
       border: 1px solid var(--border);
 
       box-shadow: var(--shadow);
@@ -371,13 +262,11 @@
 
     .tabs {
       display: grid;
-
       grid-template-columns: 1fr 1fr;
 
       padding: 4px;
 
       background: var(--soft);
-
       border-radius: 13px;
 
       margin-bottom: 27px;
@@ -387,7 +276,6 @@
       height: 43px;
 
       border: 0;
-
       border-radius: 10px;
 
       background: transparent;
@@ -400,7 +288,6 @@
 
     .tab.active {
       color: var(--text);
-
       background: var(--surface);
 
       box-shadow:
@@ -409,19 +296,14 @@
 
     .title {
       font-size: 24px;
-
       letter-spacing: -.8px;
-
       margin-bottom: 7px;
     }
 
     .subtitle {
       color: var(--muted);
-
       font-size: 12px;
-
       line-height: 1.65;
-
       margin-bottom: 25px;
     }
 
@@ -449,29 +331,19 @@
       padding: 0 14px;
 
       border: 1px solid transparent;
-
       outline: none;
 
       border-radius: 12px;
 
       color: var(--text);
-
       background: var(--soft);
 
       font-size: 13px;
-
-      transition: .2s ease;
     }
 
     .input:focus {
-      border-color:
-        rgba(215,179,90,.65);
-
+      border-color: rgba(215,179,90,.65);
       background: var(--surface);
-    }
-
-    .input::placeholder {
-      color: var(--muted);
     }
 
     .password {
@@ -487,7 +359,6 @@
       transform: translateY(-50%);
 
       border: 0;
-
       background: transparent;
 
       color: var(--muted);
@@ -499,11 +370,9 @@
     .forgot {
       display: block;
 
-      margin:
-        -5px 0 19px auto;
+      margin: -5px 0 19px auto;
 
       border: 0;
-
       background: transparent;
 
       color: var(--gold);
@@ -517,7 +386,6 @@
       height: 50px;
 
       border: 0;
-
       border-radius: 13px;
 
       color: #fff;
@@ -531,12 +399,6 @@
 
       font-size: 13px;
       font-weight: 850;
-
-      box-shadow:
-        0 12px 28px
-        rgba(7,26,52,.18);
-
-      transition: .2s ease;
     }
 
     body.dark .submit {
@@ -550,14 +412,9 @@
         );
     }
 
-    .submit:hover {
-      transform: translateY(-2px);
-    }
-
     .submit:disabled {
-      cursor: not-allowed;
       opacity: .65;
-      transform: none;
+      cursor: not-allowed;
     }
 
     .message {
@@ -593,7 +450,6 @@
 
     .switch button {
       border: 0;
-
       background: transparent;
 
       color: var(--gold);
@@ -610,11 +466,7 @@
     ========================= */
 
     .footer {
-      position: relative;
-      z-index: 3;
-
-      padding:
-        0 18px 22px;
+      padding: 0 18px 22px;
 
       text-align: center;
 
@@ -631,9 +483,7 @@
 
       .layout {
         grid-template-columns: 1fr;
-
         gap: 35px;
-
         max-width: 560px;
       }
 
@@ -646,14 +496,9 @@
         width: 120px;
         height: 120px;
 
-        margin:
-          0 auto 20px;
+        margin: 0 auto 20px;
 
         border-radius: 28px;
-      }
-
-      .logo-showcase::before {
-        border-radius: 21px;
       }
 
       .intro p {
@@ -664,9 +509,7 @@
     @media (max-width: 520px) {
 
       .topbar {
-        width:
-          calc(100% - 26px);
-
+        width: calc(100% - 26px);
         height: 68px;
       }
 
@@ -675,24 +518,17 @@
       }
 
       .main {
-        padding:
-          20px 13px 40px;
+        padding: 20px 13px 40px;
       }
 
       .card {
         padding: 22px 18px;
-
         border-radius: 20px;
       }
 
       .intro h1 {
         font-size: 36px;
-
         letter-spacing: -1.7px;
-      }
-
-      .intro p {
-        font-size: 13px;
       }
     }
   </style>
@@ -700,23 +536,72 @@
 
 <body>
 
-  <div class="page">
+<div class="page">
 
-    <div class="background">
-      <div class="glow one"></div>
-      <div class="glow two"></div>
+  <!-- HEADER -->
+
+  <header class="topbar">
+
+    <a
+      href="./index.html"
+      class="brand">
+
+      <div class="brand-logo">
+        <img
+          src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+          alt="Myanmar Elite Connect">
+      </div>
+
+      <div class="brand-name">
+        Myanmar <span>Elite</span> Connect
+      </div>
+
+    </a>
+
+    <div class="top-actions">
+
+      <button
+        type="button"
+        class="icon-button language-button"
+        id="languageButton">
+
+        <span
+          id="langEN"
+          class="active">
+          EN
+        </span>
+
+        <span>/</span>
+
+        <span id="langMM">
+          မြန်မာ
+        </span>
+
+      </button>
+
+      <button
+        type="button"
+        class="icon-button"
+        id="themeButton">
+        ☾
+      </button>
+
     </div>
 
-    <!-- HEADER -->
+  </header>
 
-    <header class="topbar">
 
-      <a
-        href="./index.html"
-        class="brand"
-        aria-label="Myanmar Elite Connect">
+  <!-- MAIN -->
 
-        <div class="brand-logo">
+  <main class="main">
+
+    <div class="layout">
+
+      <!-- INTRO -->
+
+      <section class="intro">
+
+        <div class="logo-showcase">
 
           <img
             src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
@@ -724,1500 +609,1177 @@
 
         </div>
 
-        <div class="brand-name">
-          Myanmar <span>Elite</span> Connect
+        <h1 id="introTitle">
+          Welcome to
+          <span>Myanmar Elite Connect.</span>
+        </h1>
+
+        <p id="introText">
+          Sign in to your account or create
+          a new account to continue.
+        </p>
+
+      </section>
+
+
+      <!-- AUTH CARD -->
+
+      <section class="card">
+
+        <div class="tabs">
+
+          <button
+            type="button"
+            class="tab active"
+            id="loginTab">
+            Log In
+          </button>
+
+          <button
+            type="button"
+            class="tab"
+            id="signupTab">
+            Sign Up
+          </button>
+
         </div>
 
-      </a>
 
-      <div class="top-actions">
+        <!-- LOGIN -->
 
-        <button
-          type="button"
-          class="icon-button language-button"
-          id="languageButton"
-          aria-label="Change language">
+        <form
+          id="loginForm"
+          autocomplete="on">
 
-          <span
-            id="langEN"
-            class="active">
-            EN
-          </span>
+          <h2
+            class="title"
+            id="loginTitle">
+            Welcome back
+          </h2>
 
-          <span>/</span>
-
-          <span id="langMM">
-            မြန်မာ
-          </span>
-
-        </button>
-
-        <button
-          type="button"
-          class="icon-button"
-          id="themeButton"
-          aria-label="Change theme">
-
-          ☾
-
-        </button>
-
-      </div>
-
-    </header>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-      <div class="layout">
-
-        <!-- INTRO -->
-
-        <section class="intro">
-
-          <div class="logo-showcase">
-
-            <img
-              src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
-              alt="Myanmar Elite Connect">
-
-          </div>
-
-          <h1 id="introTitle">
-            Welcome to
-            <span>Myanmar Elite Connect.</span>
-          </h1>
-
-          <p id="introText">
-            Sign in to your account or create
-            a new account to continue.
+          <p
+            class="subtitle"
+            id="loginSubtitle">
+            Enter your account details to continue.
           </p>
 
-        </section>
 
+          <div class="field">
 
-        <!-- AUTH CARD -->
+            <label for="loginEmail">
+              Email
+            </label>
 
-        <section class="card">
-
-          <!-- TABS -->
-
-          <div class="tabs">
-
-            <button
-              type="button"
-              class="tab active"
-              id="loginTab">
-
-              Log In
-
-            </button>
-
-            <button
-              type="button"
-              class="tab"
-              id="signupTab">
-
-              Sign Up
-
-            </button>
+            <input
+              class="input"
+              id="loginEmail"
+              type="email"
+              autocomplete="email"
+              placeholder="Enter your email"
+              required>
 
           </div>
 
 
-          <!-- LOGIN -->
+          <div class="field">
 
-          <form
-            id="loginForm"
-            autocomplete="on">
+            <label for="loginPassword">
+              Password
+            </label>
 
-            <h2
-              class="title"
-              id="loginTitle">
-
-              Welcome back
-
-            </h2>
-
-            <p
-              class="subtitle"
-              id="loginSubtitle">
-
-              Enter your account details to continue.
-
-            </p>
-
-            <div class="field">
-
-              <label
-                for="loginEmail"
-                id="loginEmailLabel">
-
-                Email
-
-              </label>
+            <div class="input-wrap">
 
               <input
-                class="input"
-                id="loginEmail"
-                type="email"
-                autocomplete="email"
-                placeholder="Enter your email"
+                class="input password"
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password"
                 required>
 
-            </div>
-
-            <div class="field">
-
-              <label
-                for="loginPassword"
-                id="loginPasswordLabel">
-
-                Password
-
-              </label>
-
-              <div class="input-wrap">
-
-                <input
-                  class="input password"
-                  id="loginPassword"
-                  type="password"
-                  autocomplete="current-password"
-                  placeholder="Enter your password"
-                  required>
-
-                <button
-                  type="button"
-                  class="show-password"
-                  data-input="loginPassword">
-
-                  Show
-
-                </button>
-
-              </div>
+              <button
+                type="button"
+                class="show-password"
+                data-input="loginPassword">
+                Show
+              </button>
 
             </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="forgot"
+            id="forgotButton">
+            Forgot password?
+          </button>
+
+
+          <button
+            type="submit"
+            class="submit"
+            id="loginSubmit">
+            Log In
+          </button>
+
+
+          <div
+            class="message"
+            id="loginMessage">
+          </div>
+
+
+          <div class="switch">
+
+            <span id="loginSwitchText">
+              Don't have an account?
+            </span>
 
             <button
               type="button"
-              class="forgot"
-              id="forgotButton">
-
-              Forgot password?
-
+              id="goSignup">
+              Sign Up
             </button>
 
-            <button
-              type="submit"
-              class="submit"
-              id="loginSubmit">
+          </div>
 
+        </form>
+
+
+        <!-- SIGN UP -->
+
+        <form
+          id="signupForm"
+          class="hidden"
+          autocomplete="on">
+
+          <h2
+            class="title"
+            id="signupTitle">
+            Create your account
+          </h2>
+
+          <p
+            class="subtitle"
+            id="signupSubtitle">
+            Create an account to get started.
+          </p>
+
+
+          <div class="field">
+
+            <label for="signupName">
+              Full name
+            </label>
+
+            <input
+              class="input"
+              id="signupName"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter your name"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="signupEmail">
+              Email
+            </label>
+
+            <input
+              class="input"
+              id="signupEmail"
+              type="email"
+              autocomplete="email"
+              placeholder="Enter your email"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="signupPassword">
+              Password
+            </label>
+
+            <div class="input-wrap">
+
+              <input
+                class="input password"
+                id="signupPassword"
+                type="password"
+                autocomplete="new-password"
+                minlength="6"
+                placeholder="Create a password"
+                required>
+
+              <button
+                type="button"
+                class="show-password"
+                data-input="signupPassword">
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit"
+            id="signupSubmit">
+            Create Account
+          </button>
+
+
+          <div
+            class="message"
+            id="signupMessage">
+          </div>
+
+
+          <div class="switch">
+
+            <span id="signupSwitchText">
+              Already have an account?
+            </span>
+
+            <button
+              type="button"
+              id="goLogin">
               Log In
-
             </button>
 
-            <div
-              class="message"
-              id="loginMessage">
-            </div>
+          </div>
 
-            <div class="switch">
+        </form>
 
-              <span id="loginSwitchText">
-                Don't have an account?
-              </span>
+      </section>
 
-              <button
-                type="button"
-                id="goSignup">
+    </div>
 
-                Sign Up
+  </main>
 
-              </button>
 
-            </div>
+  <footer class="footer">
+    Myanmar Elite Connect
+  </footer>
 
-          </form>
+</div>
 
 
-          <!-- SIGN UP -->
+<script>
 
-          <form
-            id="signupForm"
-            class="hidden"
-            autocomplete="on">
+/* =====================================================
+   TRANSLATIONS
+===================================================== */
 
-            <h2
-              class="title"
-              id="signupTitle">
+const translations = {
 
-              Create your account
+  en: {
 
-            </h2>
+    introTitle:
+      'Welcome to <span>Myanmar Elite Connect.</span>',
 
-            <p
-              class="subtitle"
-              id="signupSubtitle">
+    introText:
+      'Sign in to your account or create a new account to continue.',
 
-              Create an account to get started.
+    loginTab:
+      'Log In',
 
-            </p>
+    signupTab:
+      'Sign Up',
 
-            <div class="field">
+    loginTitle:
+      'Welcome back',
 
-              <label
-                for="signupName"
-                id="signupNameLabel">
+    loginSubtitle:
+      'Enter your account details to continue.',
 
-                Full name
+    signupTitle:
+      'Create your account',
 
-              </label>
+    signupSubtitle:
+      'Create an account to get started.',
 
-              <input
-                class="input"
-                id="signupName"
-                type="text"
-                autocomplete="name"
-                placeholder="Enter your name"
-                required>
+    name:
+      'Full name',
 
-            </div>
+    email:
+      'Email',
 
-            <div class="field">
+    password:
+      'Password',
 
-              <label
-                for="signupEmail"
-                id="signupEmailLabel">
+    namePlaceholder:
+      'Enter your name',
 
-                Email
+    emailPlaceholder:
+      'Enter your email',
 
-              </label>
+    loginPasswordPlaceholder:
+      'Enter your password',
 
-              <input
-                class="input"
-                id="signupEmail"
-                type="email"
-                autocomplete="email"
-                placeholder="Enter your email"
-                required>
+    signupPasswordPlaceholder:
+      'Create a password',
 
-            </div>
+    forgot:
+      'Forgot password?',
 
-            <div class="field">
+    loginSubmit:
+      'Log In',
 
-              <label
-                for="signupPassword"
-                id="signupPasswordLabel">
+    signupSubmit:
+      'Create Account',
 
-                Password
+    loginSwitch:
+      "Don't have an account?",
 
-              </label>
+    signupSwitch:
+      'Already have an account?',
 
-              <div class="input-wrap">
+    show:
+      'Show',
 
-                <input
-                  class="input password"
-                  id="signupPassword"
-                  type="password"
-                  autocomplete="new-password"
-                  placeholder="Create a password"
-                  minlength="6"
-                  required>
+    hide:
+      'Hide',
 
-                <button
-                  type="button"
-                  class="show-password"
-                  data-input="signupPassword">
+    loggingIn:
+      'Signing in...',
 
-                  Show
+    creating:
+      'Creating account...',
 
-                </button>
+    loginSuccess:
+      'Login successful. Redirecting...',
 
-              </div>
+    signupSuccess:
+      'Account created successfully.',
 
-            </div>
+    confirmation:
+      'Please check your email to confirm your account.',
 
-            <button
-              type="submit"
-              class="submit"
-              id="signupSubmit">
+    wrong:
+      'Email or password is incorrect.',
 
-              Create Account
+    exists:
+      'This email may already be registered.',
 
-            </button>
+    generic:
+      'Something went wrong. Please try again.',
 
-            <div
-              class="message"
-              id="signupMessage">
-            </div>
+    recoverySent:
+      'Password recovery email has been sent.'
 
-            <div class="switch">
+  },
 
-              <span id="signupSwitchText">
-                Already have an account?
-              </span>
 
-              <button
-                type="button"
-                id="goLogin">
+  mm: {
 
-                Log In
+    introTitle:
+      'Myanmar Elite Connect မှ <span>ကြိုဆိုပါတယ်။</span>',
 
-              </button>
+    introText:
+      'ဆက်လက်အသုံးပြုရန် အကောင့်ဝင်ပါ သို့မဟုတ် အကောင့်အသစ်ဖွင့်ပါ။',
 
-            </div>
+    loginTab:
+      'အကောင့်ဝင်ရန်',
 
-          </form>
+    signupTab:
+      'အကောင့်ဖွင့်ရန်',
 
-        </section>
+    loginTitle:
+      'ပြန်လည်ကြိုဆိုပါတယ်',
 
-      </div>
+    loginSubtitle:
+      'ဆက်လက်အသုံးပြုရန် အကောင့်အချက်အလက်များ ထည့်ပါ။',
 
-    </main>
+    signupTitle:
+      'အကောင့်ဖွင့်ပါ',
 
+    signupSubtitle:
+      'စတင်အသုံးပြုရန် အကောင့်အသစ်ဖန်တီးပါ။',
 
-    <footer class="footer">
-      Myanmar Elite Connect
-    </footer>
+    name:
+      'အမည်',
 
-  </div>
+    email:
+      'အီးမေးလ်',
 
+    password:
+      'စကားဝှက်',
 
-  <script>
+    namePlaceholder:
+      'အမည်ထည့်ပါ',
 
-    /* =====================================================
-       LANGUAGE
-    ===================================================== */
+    emailPlaceholder:
+      'အီးမေးလ်ထည့်ပါ',
 
-    const text = {
+    loginPasswordPlaceholder:
+      'စကားဝှက်ထည့်ပါ',
 
-      en: {
+    signupPasswordPlaceholder:
+      'စကားဝှက်ဖန်တီးပါ',
 
-        introTitle:
-          'Welcome to <span>Myanmar Elite Connect.</span>',
+    forgot:
+      'စကားဝှက်မေ့နေပါသလား?',
 
-        introText:
-          'Sign in to your account or create a new account to continue.',
+    loginSubmit:
+      'အကောင့်ဝင်ရန်',
 
-        loginTab:
-          'Log In',
+    signupSubmit:
+      'အကောင့်ဖွင့်ရန်',
 
-        signupTab:
-          'Sign Up',
+    loginSwitch:
+      'အကောင့်မရှိသေးပါသလား?',
 
-        loginTitle:
-          'Welcome back',
+    signupSwitch:
+      'အကောင့်ရှိပြီးသားလား?',
 
-        loginSubtitle:
-          'Enter your account details to continue.',
+    show:
+      'ပြရန်',
 
-        signupTitle:
-          'Create your account',
+    hide:
+      'ဖျောက်ရန်',
 
-        signupSubtitle:
-          'Create an account to get started.',
+    loggingIn:
+      'အကောင့်ဝင်နေပါသည်...',
 
-        name:
-          'Full name',
+    creating:
+      'အကောင့်ဖွင့်နေပါသည်...',
 
-        email:
-          'Email',
+    loginSuccess:
+      'အကောင့်ဝင်ပြီးပါပြီ။ ဆက်လက်သွားနေပါသည်...',
 
-        password:
-          'Password',
+    signupSuccess:
+      'အကောင့်ဖွင့်ပြီးပါပြီ။',
 
-        namePlaceholder:
-          'Enter your name',
+    confirmation:
+      'အီးမေးလ်ကို စစ်ဆေးပြီး အကောင့်အတည်ပြုပါ။',
 
-        emailPlaceholder:
-          'Enter your email',
+    wrong:
+      'အီးမေးလ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်။',
 
-        loginPasswordPlaceholder:
-          'Enter your password',
+    exists:
+      'ဒီအီးမေးလ်က အကောင့်ရှိပြီးသားဖြစ်နိုင်ပါတယ်။',
 
-        signupPasswordPlaceholder:
-          'Create a password',
+    generic:
+      'တစ်စုံတစ်ခု မှားယွင်းနေပါသည်။ ထပ်မံကြိုးစားပါ။',
 
-        forgot:
-          'Forgot password?',
+    recoverySent:
+      'Password recovery အီးမေးလ် ပို့ပြီးပါပြီ။'
 
-        loginSubmit:
-          'Log In',
+  }
 
-        signupSubmit:
-          'Create Account',
+};
 
-        loginSwitch:
-          "Don't have an account?",
 
-        signupSwitch:
-          'Already have an account?',
+let language =
+  localStorage.getItem("mec_language") || "en";
 
-        show:
-          'Show',
+const t = () =>
+  translations[language];
 
-        hide:
-          'Hide',
 
-        loggingIn:
-          'Signing in...',
+/* =====================================================
+   LANGUAGE
+===================================================== */
 
-        creating:
-          'Creating account...',
+function updateLanguage() {
 
-        loginSuccess:
-          'Login successful. Redirecting...',
+  const text = t();
 
-        signupSuccess:
-          'Account created successfully.',
+  document.getElementById("introTitle").innerHTML =
+    text.introTitle;
 
-        confirmation:
-          'Please check your email to confirm your account.',
+  document.getElementById("introText").textContent =
+    text.introText;
 
-        wrong:
-          'Email or password is incorrect.',
+  document.getElementById("loginTab").textContent =
+    text.loginTab;
 
-        exists:
-          'This email may already be registered.',
+  document.getElementById("signupTab").textContent =
+    text.signupTab;
 
-        generic:
-          'Something went wrong. Please try again.',
+  document.getElementById("loginTitle").textContent =
+    text.loginTitle;
 
-        recoverySending:
-          'Sending recovery email...',
+  document.getElementById("loginSubtitle").textContent =
+    text.loginSubtitle;
 
-        recoverySent:
-          'Password recovery email has been sent. Please check your email.',
+  document.getElementById("signupTitle").textContent =
+    text.signupTitle;
 
-        recoveryError:
-          'Unable to send password recovery email.'
+  document.getElementById("signupSubtitle").textContent =
+    text.signupSubtitle;
 
-      },
+  document.querySelector(
+    'label[for="loginEmail"]'
+  ).textContent = text.email;
 
+  document.querySelector(
+    'label[for="loginPassword"]'
+  ).textContent = text.password;
 
-      mm: {
+  document.querySelector(
+    'label[for="signupName"]'
+  ).textContent = text.name;
 
-        introTitle:
-          'Myanmar Elite Connect မှ <span>ကြိုဆိုပါတယ်။</span>',
+  document.querySelector(
+    'label[for="signupEmail"]'
+  ).textContent = text.email;
 
-        introText:
-          'ဆက်လက်အသုံးပြုရန် အကောင့်ဝင်ပါ သို့မဟုတ် အကောင့်အသစ်ဖွင့်ပါ။',
+  document.querySelector(
+    'label[for="signupPassword"]'
+  ).textContent = text.password;
 
-        loginTab:
-          'အကောင့်ဝင်ရန်',
+  document.getElementById("loginEmail").placeholder =
+    text.emailPlaceholder;
 
-        signupTab:
-          'အကောင့်ဖွင့်ရန်',
+  document.getElementById("signupEmail").placeholder =
+    text.emailPlaceholder;
 
-        loginTitle:
-          'ပြန်လည်ကြိုဆိုပါတယ်',
+  document.getElementById("signupName").placeholder =
+    text.namePlaceholder;
 
-        loginSubtitle:
-          'ဆက်လက်အသုံးပြုရန် အကောင့်အချက်အလက်များ ထည့်ပါ။',
+  document.getElementById("loginPassword").placeholder =
+    text.loginPasswordPlaceholder;
 
-        signupTitle:
-          'အကောင့်ဖွင့်ပါ',
+  document.getElementById("signupPassword").placeholder =
+    text.signupPasswordPlaceholder;
 
-        signupSubtitle:
-          'စတင်အသုံးပြုရန် အကောင့်အသစ်ဖန်တီးပါ။',
+  document.getElementById("forgotButton").textContent =
+    text.forgot;
 
-        name:
-          'အမည်',
+  if (!document.getElementById("loginSubmit").disabled) {
+    document.getElementById("loginSubmit").textContent =
+      text.loginSubmit;
+  }
 
-        email:
-          'အီးမေးလ်',
+  if (!document.getElementById("signupSubmit").disabled) {
+    document.getElementById("signupSubmit").textContent =
+      text.signupSubmit;
+  }
 
-        password:
-          'စကားဝှက်',
+  document.getElementById("loginSwitchText").textContent =
+    text.loginSwitch;
 
-        namePlaceholder:
-          'အမည်ထည့်ပါ',
+  document.getElementById("signupSwitchText").textContent =
+    text.signupSwitch;
 
-        emailPlaceholder:
-          'အီးမေးလ်ထည့်ပါ',
+  document.querySelectorAll(".show-password").forEach(
+    button => {
 
-        loginPasswordPlaceholder:
-          'စကားဝှက်ထည့်ပါ',
+      const input =
+        document.getElementById(button.dataset.input);
 
-        signupPasswordPlaceholder:
-          'စကားဝှက်ဖန်တီးပါ',
-
-        forgot:
-          'စကားဝှက်မေ့နေပါသလား?',
-
-        loginSubmit:
-          'အကောင့်ဝင်ရန်',
-
-        signupSubmit:
-          'အကောင့်ဖွင့်ရန်',
-
-        loginSwitch:
-          'အကောင့်မရှိသေးပါသလား?',
-
-        signupSwitch:
-          'အကောင့်ရှိပြီးသားလား?',
-
-        show:
-          'ပြရန်',
-
-        hide:
-          'ဖျောက်ရန်',
-
-        loggingIn:
-          'အကောင့်ဝင်နေပါသည်...',
-
-        creating:
-          'အကောင့်ဖွင့်နေပါသည်...',
-
-        loginSuccess:
-          'အကောင့်ဝင်ပြီးပါပြီ။ ဆက်လက်သွားနေပါသည်...',
-
-        signupSuccess:
-          'အကောင့်ဖွင့်ပြီးပါပြီ။',
-
-        confirmation:
-          'အီးမေးလ်ကို စစ်ဆေးပြီး အကောင့်အတည်ပြုပါ။',
-
-        wrong:
-          'အီးမေးလ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်။',
-
-        exists:
-          'ဒီအီးမေးလ်က အကောင့်ရှိပြီးသားဖြစ်နိုင်ပါတယ်။',
-
-        generic:
-          'တစ်စုံတစ်ခု မှားယွင်းနေပါသည်။ ထပ်မံကြိုးစားပါ။',
-
-        recoverySending:
-          'Recovery email ပို့နေပါသည်...',
-
-        recoverySent:
-          'Password recovery အီးမေးလ် ပို့ပြီးပါပြီ။ အီးမေးလ်ကို စစ်ဆေးပါ။',
-
-        recoveryError:
-          'Password recovery အီးမေးလ် ပို့၍ မရပါ။'
-
-      }
-
-    };
-
-
-    let language =
-      localStorage.getItem(
-        "mec_language"
-      ) || "en";
-
-
-    /* =====================================================
-       HELPERS
-    ===================================================== */
-
-    function getText() {
-      return text[language];
-    }
-
-
-    function showMessage(
-      element,
-      message,
-      type
-    ) {
-
-      element.textContent =
-        message;
-
-      element.className =
-        "message " + type;
+      button.textContent =
+        input.type === "text"
+          ? text.hide
+          : text.show;
 
     }
+  );
+
+  document.getElementById("langEN").classList.toggle(
+    "active",
+    language === "en"
+  );
+
+  document.getElementById("langMM").classList.toggle(
+    "active",
+    language === "mm"
+  );
+
+  document.documentElement.lang =
+    language === "mm" ? "my" : "en";
+}
 
 
-    function clearMessages() {
+/* =====================================================
+   FORM SWITCHING
+===================================================== */
 
-      document.getElementById(
-        "loginMessage"
-      ).textContent = "";
+const loginForm =
+  document.getElementById("loginForm");
 
-      document.getElementById(
-        "loginMessage"
-      ).className = "message";
-
-      document.getElementById(
-        "signupMessage"
-      ).textContent = "";
-
-      document.getElementById(
-        "signupMessage"
-      ).className = "message";
-
-    }
+const signupForm =
+  document.getElementById("signupForm");
 
 
-    /* =====================================================
-       LANGUAGE
-    ===================================================== */
+function clearMessages() {
 
-    function updateLanguage() {
+  document.getElementById(
+    "loginMessage"
+  ).textContent = "";
 
-      const t = getText();
+  document.getElementById(
+    "signupMessage"
+  ).textContent = "";
 
-
-      document.getElementById(
-        "introTitle"
-      ).innerHTML =
-        t.introTitle;
+}
 
 
-      document.getElementById(
-        "introText"
-      ).textContent =
-        t.introText;
+function showLogin(updateURL = true) {
+
+  loginForm.classList.remove("hidden");
+  signupForm.classList.add("hidden");
+
+  document.getElementById(
+    "loginTab"
+  ).classList.add("active");
+
+  document.getElementById(
+    "signupTab"
+  ).classList.remove("active");
+
+  clearMessages();
+
+  if (updateURL) {
+
+    history.replaceState(
+      null,
+      "",
+      "./auth.html?mode=login"
+    );
+
+  }
+
+}
 
 
-      document.getElementById(
-        "loginTab"
-      ).textContent =
-        t.loginTab;
+function showSignup(updateURL = true) {
+
+  loginForm.classList.add("hidden");
+  signupForm.classList.remove("hidden");
+
+  document.getElementById(
+    "loginTab"
+  ).classList.remove("active");
+
+  document.getElementById(
+    "signupTab"
+  ).classList.add("active");
+
+  clearMessages();
+
+  if (updateURL) {
+
+    history.replaceState(
+      null,
+      "",
+      "./auth.html?mode=signup"
+    );
+
+  }
+
+}
 
 
-      document.getElementById(
-        "signupTab"
-      ).textContent =
-        t.signupTab;
+document.getElementById(
+  "loginTab"
+).addEventListener(
+  "click",
+  () => showLogin()
+);
 
 
-      document.getElementById(
-        "loginTitle"
-      ).textContent =
-        t.loginTitle;
+document.getElementById(
+  "signupTab"
+).addEventListener(
+  "click",
+  () => showSignup()
+);
 
 
-      document.getElementById(
-        "loginSubtitle"
-      ).textContent =
-        t.loginSubtitle;
+document.getElementById(
+  "goSignup"
+).addEventListener(
+  "click",
+  () => showSignup()
+);
 
 
-      document.getElementById(
-        "signupTitle"
-      ).textContent =
-        t.signupTitle;
+document.getElementById(
+  "goLogin"
+).addEventListener(
+  "click",
+  () => showLogin()
+);
 
 
-      document.getElementById(
-        "signupSubtitle"
-      ).textContent =
-        t.signupSubtitle;
+/* =====================================================
+   INITIAL URL MODE
+===================================================== */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+if (params.get("mode") === "signup") {
+
+  showSignup(false);
+
+} else {
+
+  showLogin(false);
+
+}
 
 
-      document.getElementById(
-        "loginEmailLabel"
-      ).textContent =
-        t.email;
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+  element,
+  message,
+  type
+) {
+
+  element.textContent = message;
+
+  element.className =
+    "message " + type;
+
+}
 
 
-      document.getElementById(
-        "loginPasswordLabel"
-      ).textContent =
-        t.password;
+/* =====================================================
+   ERROR TRANSLATION
+===================================================== */
+
+function getErrorMessage(error) {
+
+  const message =
+    String(
+      error?.message || ""
+    ).toLowerCase();
+
+  const text = t();
 
 
-      document.getElementById(
-        "signupNameLabel"
-      ).textContent =
-        t.name;
+  if (
+    message.includes("invalid login credentials") ||
+    message.includes("invalid credentials")
+  ) {
+
+    return text.wrong;
+
+  }
 
 
-      document.getElementById(
-        "signupEmailLabel"
-      ).textContent =
-        t.email;
+  if (
+    message.includes("user already registered") ||
+    message.includes("already registered")
+  ) {
+
+    return text.exists;
+
+  }
 
 
-      document.getElementById(
-        "signupPasswordLabel"
-      ).textContent =
-        t.password;
+  return error?.message || text.generic;
+
+}
 
 
+/* =====================================================
+   LOGIN
+===================================================== */
+
+loginForm.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+    const email =
       document.getElementById(
         "loginEmail"
-      ).placeholder =
-        t.emailPlaceholder;
+      ).value.trim();
 
-
-      document.getElementById(
-        "signupEmail"
-      ).placeholder =
-        t.emailPlaceholder;
-
-
-      document.getElementById(
-        "signupName"
-      ).placeholder =
-        t.namePlaceholder;
-
-
+    const password =
       document.getElementById(
         "loginPassword"
-      ).placeholder =
-        t.loginPasswordPlaceholder;
+      ).value;
+
+    const button =
+      document.getElementById(
+        "loginSubmit"
+      );
+
+    const message =
+      document.getElementById(
+        "loginMessage"
+      );
 
 
+    if (!email || !password) {
+      return;
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+      t().loggingIn;
+
+    message.textContent = "";
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      if (!data?.session) {
+        throw new Error(
+          "Login session could not be created."
+        );
+      }
+
+
+      showMessage(
+        message,
+        t().loginSuccess,
+        "success"
+      );
+
+
+      /*
+        Give Supabase a moment to persist
+        the session before redirect.
+      */
+
+      setTimeout(
+        () => {
+
+          window.location.replace(
+            "./general.html"
+          );
+
+        },
+        350
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Login error:",
+        error
+      );
+
+      showMessage(
+        message,
+        getErrorMessage(error),
+        "error"
+      );
+
+      button.disabled = false;
+
+      button.textContent =
+        t().loginSubmit;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   SIGN UP
+===================================================== */
+
+signupForm.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+    const name =
+      document.getElementById(
+        "signupName"
+      ).value.trim();
+
+    const email =
+      document.getElementById(
+        "signupEmail"
+      ).value.trim();
+
+    const password =
       document.getElementById(
         "signupPassword"
-      ).placeholder =
-        t.signupPasswordPlaceholder;
+      ).value;
 
 
+    const button =
+      document.getElementById(
+        "signupSubmit"
+      );
+
+    const message =
+      document.getElementById(
+        "signupMessage"
+      );
+
+
+    button.disabled = true;
+
+    button.textContent =
+      t().creating;
+
+    message.textContent = "";
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signUp({
+
+          email,
+
+          password,
+
+          options: {
+
+            data: {
+
+              full_name: name
+
+            }
+
+          }
+
+        });
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      /*
+        Supabase may require email confirmation.
+      */
+
+      if (data?.session) {
+
+        showMessage(
+          message,
+          t().signupSuccess,
+          "success"
+        );
+
+
+        setTimeout(
+          () => {
+
+            window.location.replace(
+              "./general.html"
+            );
+
+          },
+          600
+        );
+
+
+      } else {
+
+        showMessage(
+          message,
+          t().confirmation,
+          "success"
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+          t().signupSubmit;
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "Signup error:",
+        error
+      );
+
+      showMessage(
+        message,
+        getErrorMessage(error),
+        "error"
+      );
+
+      button.disabled = false;
+
+      button.textContent =
+        t().signupSubmit;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+document.getElementById(
+  "forgotButton"
+).addEventListener(
+  "click",
+  async () => {
+
+    const email =
+      document.getElementById(
+        "loginEmail"
+      ).value.trim();
+
+    const message =
+      document.getElementById(
+        "loginMessage"
+      );
+
+
+    if (!email) {
+
+      showMessage(
+        message,
+
+        language === "mm"
+          ? "အီးမေးလ်ကို အရင်ထည့်ပါ။"
+          : "Enter your email first.",
+
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const button =
       document.getElementById(
         "forgotButton"
-      ).textContent =
-        t.forgot;
+      );
 
 
-      const loginButton =
-        document.getElementById(
-          "loginSubmit"
-        );
-
-      if (!loginButton.disabled) {
-
-        loginButton.textContent =
-          t.loginSubmit;
-
-      }
+    button.disabled = true;
 
 
-      const signupButton =
-        document.getElementById(
-          "signupSubmit"
-        );
+    try {
 
-      if (!signupButton.disabled) {
+      /*
+        IMPORTANT:
+        The recovery email must open
+        reset-password.html.
+      */
 
-        signupButton.textContent =
-          t.signupSubmit;
-
-      }
-
-
-      document.getElementById(
-        "loginSwitchText"
-      ).textContent =
-        t.loginSwitch;
+      const redirectTo =
+        new URL(
+          "./reset-password.html",
+          window.location.href
+        ).href;
 
 
-      document.getElementById(
-        "signupSwitchText"
-      ).textContent =
-        t.signupSwitch;
-
-
-      document.querySelectorAll(
-        ".show-password"
-      ).forEach(button => {
-
-        const input =
-          document.getElementById(
-            button.dataset.input
+      const {
+        error
+      } =
+        await supabaseClient.auth
+          .resetPasswordForEmail(
+            email,
+            {
+              redirectTo
+            }
           );
 
-        button.textContent =
-          input.type === "text"
-            ? t.hide
-            : t.show;
 
-      });
+      if (error) {
+        throw error;
+      }
 
 
-      document.getElementById(
-        "langEN"
-      ).classList.toggle(
-        "active",
-        language === "en"
+      showMessage(
+        message,
+        t().recoverySent,
+        "success"
       );
 
 
-      document.getElementById(
-        "langMM"
-      ).classList.toggle(
-        "active",
-        language === "mm"
+    } catch (error) {
+
+      console.error(
+        "Password recovery error:",
+        error
       );
 
+      showMessage(
+        message,
+        getErrorMessage(error),
+        "error"
+      );
 
-      document.documentElement.lang =
-        language === "mm"
-          ? "my"
-          : "en";
+    } finally {
+
+      button.disabled = false;
 
     }
 
+  }
+);
 
-    /* =====================================================
-       FORM MODE
-    ===================================================== */
 
-    const loginForm =
-      document.getElementById(
-        "loginForm"
-      );
+/* =====================================================
+   SHOW / HIDE PASSWORD
+===================================================== */
 
-    const signupForm =
-      document.getElementById(
-        "signupForm"
-      );
+document.querySelectorAll(
+  ".show-password"
+).forEach(
+  button => {
 
-
-    function showLogin(
-      updateURL = true
-    ) {
-
-      loginForm.classList.remove(
-        "hidden"
-      );
-
-      signupForm.classList.add(
-        "hidden"
-      );
-
-
-      document.getElementById(
-        "loginTab"
-      ).classList.add(
-        "active"
-      );
-
-
-      document.getElementById(
-        "signupTab"
-      ).classList.remove(
-        "active"
-      );
-
-
-      clearMessages();
-
-
-      if (updateURL) {
-
-        history.replaceState(
-          null,
-          "",
-          "./auth.html?mode=login"
-        );
-
-      }
-
-    }
-
-
-    function showSignup(
-      updateURL = true
-    ) {
-
-      loginForm.classList.add(
-        "hidden"
-      );
-
-      signupForm.classList.remove(
-        "hidden"
-      );
-
-
-      document.getElementById(
-        "loginTab"
-      ).classList.remove(
-        "active"
-      );
-
-
-      document.getElementById(
-        "signupTab"
-      ).classList.add(
-        "active"
-      );
-
-
-      clearMessages();
-
-
-      if (updateURL) {
-
-        history.replaceState(
-          null,
-          "",
-          "./auth.html?mode=signup"
-        );
-
-      }
-
-    }
-
-
-    document.getElementById(
-      "loginTab"
-    ).addEventListener(
-      "click",
-      () => showLogin()
-    );
-
-
-    document.getElementById(
-      "signupTab"
-    ).addEventListener(
-      "click",
-      () => showSignup()
-    );
-
-
-    document.getElementById(
-      "goSignup"
-    ).addEventListener(
-      "click",
-      () => showSignup()
-    );
-
-
-    document.getElementById(
-      "goLogin"
-    ).addEventListener(
-      "click",
-      () => showLogin()
-    );
-
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
-
-    if (
-      params.get("mode") === "signup"
-    ) {
-
-      showSignup(false);
-
-    } else {
-
-      showLogin(false);
-
-    }
-
-
-    /* =====================================================
-       ERROR TRANSLATION
-    ===================================================== */
-
-    function getErrorMessage(
-      error
-    ) {
-
-      const message =
-        String(
-          error?.message || ""
-        ).toLowerCase();
-
-
-      const t = getText();
-
-
-      if (
-        message.includes(
-          "invalid login credentials"
-        ) ||
-        message.includes(
-          "invalid credentials"
-        )
-      ) {
-
-        return t.wrong;
-
-      }
-
-
-      if (
-        message.includes(
-          "user already registered"
-        ) ||
-        message.includes(
-          "already registered"
-        )
-      ) {
-
-        return t.exists;
-
-      }
-
-
-      if (
-        message.includes(
-          "email not confirmed"
-        )
-      ) {
-
-        return t.confirmation;
-
-      }
-
-
-      return error?.message
-        ? error.message
-        : t.generic;
-
-    }
-
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    loginForm.addEventListener(
-      "submit",
-      async function(event) {
-
-        event.preventDefault();
-
-
-        const email =
-          document.getElementById(
-            "loginEmail"
-          ).value.trim();
-
-
-        const password =
-          document.getElementById(
-            "loginPassword"
-          ).value;
-
-
-        const button =
-          document.getElementById(
-            "loginSubmit"
-          );
-
-
-        const message =
-          document.getElementById(
-            "loginMessage"
-          );
-
-
-        message.textContent = "";
-
-
-        button.disabled = true;
-
-
-        button.textContent =
-          getText().loggingIn;
-
-
-        try {
-
-          const {
-            data,
-            error
-          } =
-            await supabaseClient.auth
-              .signInWithPassword({
-                email,
-                password
-              });
-
-
-          if (error) {
-            throw error;
-          }
-
-
-          if (!data?.session) {
-
-            throw new Error(
-              "Login session could not be created."
-            );
-
-          }
-
-
-          showMessage(
-            message,
-            getText().loginSuccess,
-            "success"
-          );
-
-
-          setTimeout(
-            () => {
-
-              window.location.replace(
-                "./general.html"
-              );
-
-            },
-            500
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "Login failed:",
-            error
-          );
-
-
-          showMessage(
-            message,
-            getErrorMessage(error),
-            "error"
-          );
-
-
-          button.disabled = false;
-
-
-          button.textContent =
-            getText().loginSubmit;
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       SIGN UP
-    ===================================================== */
-
-    signupForm.addEventListener(
-      "submit",
-      async function(event) {
-
-        event.preventDefault();
-
-
-        const name =
-          document.getElementById(
-            "signupName"
-          ).value.trim();
-
-
-        const email =
-          document.getElementById(
-            "signupEmail"
-          ).value.trim();
-
-
-        const password =
-          document.getElementById(
-            "signupPassword"
-          ).value;
-
-
-        const button =
-          document.getElementById(
-            "signupSubmit"
-          );
-
-
-        const message =
-          document.getElementById(
-            "signupMessage"
-          );
-
-
-        message.textContent = "";
-
-
-        button.disabled = true;
-
-
-        button.textContent =
-          getText().creating;
-
-
-        try {
-
-          const {
-            data,
-            error
-          } =
-            await supabaseClient.auth
-              .signUp({
-
-                email,
-
-                password,
-
-                options: {
-
-                  data: {
-
-                    full_name:
-                      name
-
-                  }
-
-                }
-
-              });
-
-
-          if (error) {
-            throw error;
-          }
-
-
-          if (data?.session) {
-
-            showMessage(
-              message,
-              getText().signupSuccess,
-              "success"
-            );
-
-
-            setTimeout(
-              () => {
-
-                window.location.replace(
-                  "./general.html"
-                );
-
-              },
-              700
-            );
-
-
-          } else {
-
-            showMessage(
-              message,
-              getText().confirmation,
-              "success"
-            );
-
-
-            button.disabled = false;
-
-
-            button.textContent =
-              getText().signupSubmit;
-
-          }
-
-
-        } catch (error) {
-
-          console.error(
-            "Signup failed:",
-            error
-          );
-
-
-          showMessage(
-            message,
-            getErrorMessage(error),
-            "error"
-          );
-
-
-          button.disabled = false;
-
-
-          button.textContent =
-            getText().signupSubmit;
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       FORGOT PASSWORD
-       IMPORTANT:
-       Redirect directly to reset-password.html
-    ===================================================== */
-
-    document.getElementById(
-      "forgotButton"
-    ).addEventListener(
-      "click",
-      async function() {
-
-        const email =
-          document.getElementById(
-            "loginEmail"
-          ).value.trim();
-
-
-        const message =
-          document.getElementById(
-            "loginMessage"
-          );
-
-
-        const button =
-          document.getElementById(
-            "forgotButton"
-          );
-
-
-        const t = getText();
-
-
-        if (!email) {
-
-          showMessage(
-            message,
-            language === "mm"
-              ? "အီးမေးလ်ကို အရင်ထည့်ပါ။"
-              : "Enter your email first.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        button.disabled = true;
-
-
-        button.textContent =
-          t.recoverySending;
-
-
-        try {
-
-          /*
-            Use the same directory as auth.html.
-            This works whether the website is hosted
-            at the domain root or inside a folder.
-          */
-
-          const resetURL =
-            new URL(
-              "./reset-password.html",
-              window.location.href
-            ).href;
-
-
-          const {
-            error
-          } =
-            await supabaseClient.auth
-              .resetPasswordForEmail(
-                email,
-                {
-                  redirectTo:
-                    resetURL
-                }
-              );
-
-
-          if (error) {
-            throw error;
-          }
-
-
-          showMessage(
-            message,
-            t.recoverySent,
-            "success"
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "Password recovery failed:",
-            error
-          );
-
-
-          showMessage(
-            message,
-            error?.message ||
-              t.recoveryError,
-            "error"
-          );
-
-        } finally {
-
-          button.disabled = false;
-
-
-          button.textContent =
-            t.forgot;
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       PASSWORD SHOW / HIDE
-    ===================================================== */
-
-    document.querySelectorAll(
-      ".show-password"
-    ).forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          function() {
-
-            const input =
-              document.getElementById(
-                this.dataset.input
-              );
-
-
-            input.type =
-              input.type === "password"
-                ? "text"
-                : "password";
-
-
-            updateLanguage();
-
-          }
-        );
-
-      }
-    );
-
-
-    /* =====================================================
-       LANGUAGE
-    ===================================================== */
-
-    document.getElementById(
-      "languageButton"
-    ).addEventListener(
+    button.addEventListener(
       "click",
       function() {
 
-        language =
-          language === "en"
-            ? "mm"
-            : "en";
+        const input =
+          document.getElementById(
+            this.dataset.input
+          );
 
 
-        localStorage.setItem(
-          "mec_language",
-          language
-        );
+        input.type =
+          input.type === "password"
+            ? "text"
+            : "password";
 
 
         updateLanguage();
@@ -2225,112 +1787,137 @@
       }
     );
 
-
-    /* =====================================================
-       THEME
-    ===================================================== */
-
-    function applyTheme(
-      theme
-    ) {
-
-      document.body.classList.toggle(
-        "dark",
-        theme === "dark"
-      );
+  }
+);
 
 
-      document.getElementById(
-        "themeButton"
-      ).textContent =
-        theme === "dark"
-          ? "☀"
-          : "☾";
+/* =====================================================
+   LANGUAGE BUTTON
+===================================================== */
+
+document.getElementById(
+  "languageButton"
+).addEventListener(
+  "click",
+  () => {
+
+    language =
+      language === "en"
+        ? "mm"
+        : "en";
 
 
-      localStorage.setItem(
-        "mec_theme",
-        theme
-      );
-
-    }
-
-
-    document.getElementById(
-      "themeButton"
-    ).addEventListener(
-      "click",
-      function() {
-
-        const dark =
-          document.body.classList.contains(
-            "dark"
-          );
-
-
-        applyTheme(
-          dark
-            ? "light"
-            : "dark"
-        );
-
-      }
-    );
-
-
-    /* =====================================================
-       SESSION CHECK
-       If already logged in, go to general.html.
-    ===================================================== */
-
-    async function checkExistingSession() {
-
-      try {
-
-        const {
-          data
-        } =
-          await supabaseClient.auth
-            .getSession();
-
-
-        if (data?.session) {
-
-          window.location.replace(
-            "./general.html"
-          );
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          "Session check failed:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       START
-    ===================================================== */
-
-    applyTheme(
-      localStorage.getItem(
-        "mec_theme"
-      ) || "light"
+    localStorage.setItem(
+      "mec_language",
+      language
     );
 
 
     updateLanguage();
 
+  }
+);
 
-    checkExistingSession();
 
-  </script>
+/* =====================================================
+   THEME
+===================================================== */
+
+function applyTheme(theme) {
+
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
+
+  document.getElementById(
+    "themeButton"
+  ).textContent =
+    theme === "dark"
+      ? "☀"
+      : "☾";
+
+
+  localStorage.setItem(
+    "mec_theme",
+    theme
+  );
+
+}
+
+
+document.getElementById(
+  "themeButton"
+).addEventListener(
+  "click",
+  () => {
+
+    const dark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+
+    applyTheme(
+      dark
+        ? "light"
+        : "dark"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   EXISTING SESSION
+===================================================== */
+
+async function checkExistingSession() {
+
+  try {
+
+    const {
+      data
+    } =
+      await supabaseClient.auth.getSession();
+
+
+    if (data?.session) {
+
+      window.location.replace(
+        "./general.html"
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Session check failed:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+applyTheme(
+  localStorage.getItem(
+    "mec_theme"
+  ) || "light"
+);
+
+updateLanguage();
+
+checkExistingSession();
+
+</script>
 
 </body>
 </html>
