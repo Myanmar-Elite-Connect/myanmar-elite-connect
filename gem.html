@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gem Marketplace | Myanmar Elite Connect</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+ --navy:#071b3a;
+ --navy2:#102d59;
+ --green:#19a974;
+ --gold:#d9a441;
+ --bg:#f4f7fb;
+ --white:#fff;
+ --text:#172033;
+ --muted:#697386;
+ --border:#e3e8f0;
+ --danger:#b42318;
+ --shadow:0 10px 30px rgba(7,27,58,.08);
+}
+
+body{
+ font-family:Arial,"Noto Sans Myanmar",sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ min-height:100vh;
+ padding-bottom:75px;
+}
+
+button,input,select{font-family:inherit}
+
+/* HEADER */
+
+header{
+ position:sticky;
+ top:0;
+ z-index:1000;
+ background:rgba(7,27,58,.97);
+ backdrop-filter:blur(12px);
+ color:white;
+ box-shadow:0 3px 15px rgba(0,0,0,.12);
+}
+
+.header-inner{
+ max-width:1350px;
+ margin:auto;
+ padding:14px 5%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.logo{
+ color:white;
+ text-decoration:none;
+ font-size:20px;
+ font-weight:900;
+}
+
+.logo span{
+ color:#65d6a7;
+}
+
+.top-nav{
+ display:flex;
+ gap:7px;
+}
+
+.top-nav a{
+ color:white;
+ text-decoration:none;
+ padding:9px 12px;
+ border-radius:8px;
+ font-size:13px;
+}
+
+.top-nav a:hover{
+ background:rgba(255,255,255,.1);
+}
+
+/* HERO */
+
+.hero{
+ background:
+ radial-gradient(
+  circle at 85% 10%,
+  #17467e 0,
+  #071b3a 45%,
+  #041126 100%
+ );
+ color:white;
+ padding:45px 5% 55px;
+}
+
+.hero-inner{
+ max-width:1350px;
+ margin:auto;
+}
+
+.back{
+ display:inline-block;
+ color:rgba(255,255,255,.8);
+ text-decoration:none;
+ margin-bottom:20px;
+ font-size:14px;
+}
+
+.hero-title{
+ display:flex;
+ align-items:center;
+ gap:18px;
+}
+
+.hero-icon{
+ width:75px;
+ height:75px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:rgba(255,255,255,.1);
+ border:1px solid rgba(255,255,255,.15);
+ border-radius:20px;
+ font-size:42px;
+}
+
+.hero h1{
+ font-size:clamp(32px,5vw,52px);
+ margin-bottom:7px;
+}
+
+.hero p{
+ color:rgba(255,255,255,.78);
+ line-height:1.8;
+}
+
+/* MAIN */
+
+main{
+ max-width:1350px;
+ margin:auto;
+ padding:35px 5% 40px;
+}
+
+/* SEARCH */
+
+.search-panel{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:20px;
+ box-shadow:var(--shadow);
+ margin-bottom:25px;
+}
+
+.search-row{
+ display:grid;
+ grid-template-columns:2fr 1fr 1fr;
+ gap:10px;
+}
+
+.search-row input,
+.search-row select{
+ width:100%;
+ padding:13px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ outline:none;
+ background:white;
+ color:var(--text);
+}
+
+.search-row input:focus,
+.search-row select:focus{
+ border-color:var(--navy);
+}
+
+/* BUY / SELL */
+
+.mode-buttons{
+ display:flex;
+ gap:8px;
+ margin-top:15px;
+}
+
+.mode{
+ flex:1;
+ border:1px solid var(--border);
+ background:white;
+ color:var(--text);
+ padding:12px;
+ border-radius:10px;
+ cursor:pointer;
+ font-weight:800;
+}
+
+.mode.active{
+ background:var(--navy);
+ color:white;
+ border-color:var(--navy);
+}
+
+/* GEM TYPES */
+
+.gem-types{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:15px;
+}
+
+.gem-type{
+ border:1px solid var(--border);
+ background:white;
+ padding:9px 13px;
+ border-radius:9px;
+ cursor:pointer;
+ font-weight:700;
+ font-size:13px;
+}
+
+.gem-type.active{
+ background:#102d59;
+ color:white;
+ border-color:#102d59;
+}
+
+/* PRICE */
+
+.price-row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+ margin-top:15px;
+}
+
+.price-row input{
+ width:100%;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:9px;
+ outline:none;
+}
+
+/* LISTING HEAD */
+
+.listing-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:18px;
+ gap:15px;
+ flex-wrap:wrap;
+}
+
+.listing-head h2{
+ color:var(--navy);
+}
+
+.count{
+ color:var(--muted);
+ font-size:13px;
+ margin-top:5px;
+}
+
+/* GRID */
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:22px;
+}
+
+.card{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:18px;
+ overflow:hidden;
+ box-shadow:var(--shadow);
+ transition:.25s;
+}
+
+.card:hover{
+ transform:translateY(-5px);
+ box-shadow:0 18px 40px rgba(7,27,58,.14);
+}
+
+.image{
+ height:220px;
+ background:
+ linear-gradient(
+  135deg,
+  #071b3a,
+  #24548d
+ );
+ position:relative;
+ overflow:hidden;
+}
+
+.image img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ display:block;
+}
+
+.no-image{
+ width:100%;
+ height:100%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:65px;
+}
+
+.featured{
+ position:absolute;
+ top:12px;
+ left:12px;
+ background:var(--gold);
+ color:white;
+ padding:6px 9px;
+ border-radius:7px;
+ font-size:11px;
+ font-weight:900;
+}
+
+.image-count{
+ position:absolute;
+ bottom:10px;
+ right:10px;
+ background:rgba(0,0,0,.65);
+ color:white;
+ padding:5px 8px;
+ border-radius:7px;
+ font-size:11px;
+}
+
+.body{
+ padding:18px;
+}
+
+.type{
+ display:inline-block;
+ background:#f2ecff;
+ color:#6841a5;
+ padding:5px 9px;
+ border-radius:6px;
+ font-size:11px;
+ font-weight:900;
+ margin-bottom:9px;
+}
+
+.title{
+ color:var(--navy);
+ font-size:19px;
+ font-weight:900;
+ line-height:1.4;
+ margin-bottom:8px;
+}
+
+.price{
+ color:var(--navy);
+ font-size:20px;
+ font-weight:900;
+ margin-bottom:8px;
+}
+
+.location{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.6;
+ margin-bottom:10px;
+}
+
+.description{
+ color:#596476;
+ font-size:13px;
+ line-height:1.65;
+ margin-bottom:14px;
+}
+
+.contact{
+ display:block;
+ width:100%;
+ text-align:center;
+ text-decoration:none;
+ background:var(--navy);
+ color:white;
+ padding:11px;
+ border-radius:9px;
+ font-size:14px;
+ font-weight:800;
+}
+
+.contact:hover{
+ background:var(--navy2);
+}
+
+/* STATES */
+
+.state{
+ grid-column:1/-1;
+ background:white;
+ border:1px solid var(--border);
+ border-radius:16px;
+ padding:55px 20px;
+ text-align:center;
+ color:var(--muted);
+}
+
+.state-icon{
+ font-size:50px;
+ margin-bottom:10px;
+}
+
+.state h3{
+ color:var(--navy);
+ margin-bottom:7px;
+}
+
+.spinner{
+ width:38px;
+ height:38px;
+ border:4px solid #e5eaf2;
+ border-top-color:var(--navy);
+ border-radius:50%;
+ animation:spin .8s linear infinite;
+ margin:0 auto 15px;
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ z-index:2000;
+ background:white;
+ border-top:1px solid var(--border);
+ display:flex;
+ justify-content:center;
+ box-shadow:0 -5px 20px rgba(0,0,0,.08);
+}
+
+.bottom-nav a{
+ flex:1;
+ max-width:180px;
+ padding:10px 5px 8px;
+ text-align:center;
+ text-decoration:none;
+ color:var(--muted);
+ font-size:11px;
+}
+
+.bottom-nav a strong{
+ display:block;
+ font-size:22px;
+ margin-bottom:2px;
+}
+
+.bottom-nav a.active{
+ color:var(--navy);
+ font-weight:900;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+ .grid{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+}
+
+@media(max-width:700px){
+
+ .top-nav a{
+  display:none;
+ }
+
+ .hero{
+  padding:38px 5% 45px;
+ }
+
+ .hero-title{
+  align-items:flex-start;
+ }
+
+ .hero-icon{
+  width:60px;
+  height:60px;
+  font-size:32px;
+ }
+
+ .hero h1{
+  font-size:31px;
+ }
+
+ main{
+  padding:25px 4% 35px;
+ }
+
+ .search-row{
+  grid-template-columns:1fr;
+ }
+
+ .price-row{
+  grid-template-columns:1fr;
+ }
+
+ .mode-buttons{
+  flex-direction:column;
+ }
+
+ .grid{
+  grid-template-columns:1fr;
+ }
+
+ .image{
+  height:230px;
+ }
+
+ .logo{
+  font-size:16px;
+ }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<a
+ href="./index.html"
+ class="logo"
+>
+Myanmar <span>Elite Connect</span>
+</a>
+
+<nav class="top-nav">
+
+<a href="./index.html">
+General
+</a>
+
+<a href="./car.html">
+🚗 Car
+</a>
+
+<a href="./property.html">
+🏠 Property
+</a>
+
+<a href="./gem.html">
+💎 Gem
+</a>
+
+<a href="./add-listing.html">
++ Sell
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-inner">
+
+<a
+ href="./index.html"
+ class="back"
+>
+← General သို့ပြန်သွားမည်
+</a>
+
+<div class="hero-title">
+
+<div class="hero-icon">
+💎
+</div>
+
+<div>
+
+<h1>
+Gem Marketplace
+</h1>
+
+<p>
+ကျောက်မျက် • ရတနာ • အဖိုးတန်ကျောက်များ
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<main>
+
+
+<!-- SEARCH -->
+
+<section class="search-panel">
+
+<div class="search-row">
+
+<input
+ id="searchInput"
+ type="text"
+ placeholder="ကျောက်မျက်၊ Ruby၊ Sapphire..."
+>
+
+<select id="cityFilter">
+
+<option value="">
+မြို့အားလုံး
+</option>
+
+</select>
+
+<select id="listingTypeFilter">
+
+<option value="">
+ရောင်း/ဝယ် အားလုံး
+</option>
+
+<option value="sale">
+ရောင်းရန်
+</option>
+
+<option value="rent">
+ငှားရန်
+</option>
+
+</select>
+
+</div>
+
+
+<!-- BUY / SELL -->
+
+<div class="mode-buttons">
+
+<button
+ id="allMode"
+ class="mode active"
+ onclick="setMode('all')"
+>
+💎 All
+</button>
+
+<button
+ id="buyerMode"
+ class="mode"
+ onclick="setMode('buyer')"
+>
+🛒 Buyer
+</button>
+
+<button
+ id="sellerMode"
+ class="mode"
+ onclick="setMode('seller')"
+>
+🏪 Seller
+</button>
+
+</div>
+
+
+<!-- GEM TYPES -->
+
+<div class="gem-types">
+
+<button
+ id="allGem"
+ class="gem-type active"
+ onclick="setGemType('')"
+>
+💎 All Gems
+</button>
+
+<button
+ class="gem-type"
+ onclick="setGemType('ruby')"
+>
+🔴 Ruby
+</button>
+
+<button
+ class="gem-type"
+ onclick="setGemType('sapphire')"
+>
+🔵 Sapphire
+</button>
+
+<button
+ class="gem-type"
+ onclick="setGemType('jade')"
+>
+🟢 Jade
+</button>
+
+<button
+ class="gem-type"
+ onclick="setGemType('diamond')"
+>
+💠 Diamond
+</button>
+
+<button
+ class="gem-type"
+ onclick="setGemType('other')"
+>
+✨ Other
+</button>
+
+</div>
+
+
+<!-- PRICE -->
+
+<div class="price-row">
+
+<input
+ id="minPrice"
+ type="number"
+ min="0"
+ placeholder="အနည်းဆုံးဈေး"
+>
+
+<input
+ id="maxPrice"
+ type="number"
+ min="0"
+ placeholder="အများဆုံးဈေး"
+>
+
+</div>
+
+</section>
+
+
+<!-- LISTINGS -->
+
+<section>
+
+<div class="listing-head">
+
+<div>
+
+<h2>
+💎 Gem Listings
+</h2>
+
+<div
+ id="listingCount"
+ class="count"
+>
+Listings များကို ရယူနေပါသည်...
+</div>
+
+</div>
+
+<button
+ class="filter"
+ onclick="loadListings()"
+>
+↻ Refresh
+</button>
+
+</div>
+
+
+<div
+ id="listingsGrid"
+ class="grid"
+>
+
+<div class="state">
+
+<div class="spinner"></div>
+
+Gem listings များကို
+ရယူနေပါသည်...
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+<a href="./index.html">
+
+<strong>📋</strong>
+
+General
+
+</a>
+
+<a href="./chat.html">
+
+<strong>💬</strong>
+
+Chat
+
+</a>
+
+<a href="./add-listing.html">
+
+<strong>➕</strong>
+
+Post
+
+</a>
+
+<a href="./profile.html">
+
+<strong>👤</strong>
+
+Profile
+
+</a>
+
+</nav>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+"https://ikjwisfsdcupibgjiuvp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
+
+const supabaseClient =
+window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+
+/* =========================================
+   STATE
+========================================= */
+
+let allListings = [];
+
+let currentMode = "all";
+
+let currentGemType = "";
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHtml(value){
+
+ if(
+  value === null ||
+  value === undefined
+ ){
+  return "";
+ }
+
+ return String(value)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+function formatPrice(
+ price,
+ currency
+){
+
+ if(
+  price === null ||
+  price === undefined ||
+  price === ""
+ ){
+
+  return "ဈေးနှုန်း မဖော်ပြပါ";
+
+ }
+
+ const number =
+ Number(price);
+
+ if(
+  !Number.isFinite(number)
+ ){
+
+  return escapeHtml(price);
+
+ }
+
+ return (
+  number.toLocaleString("en-US")
+  +
+  " "
+  +
+  (
+   currency ||
+   "MMK"
+  )
+ );
+
+}
+
+
+/* =========================================
+   IMAGE PARSER
+========================================= */
+
+function getImages(item){
+
+ if(!item.images){
+  return [];
+ }
+
+ if(Array.isArray(item.images)){
+
+  return item.images
+   .filter(Boolean);
+
+ }
+
+ if(
+  typeof item.images === "string"
+ ){
+
+  try{
+
+   const parsed =
+    JSON.parse(item.images);
+
+   if(Array.isArray(parsed)){
+
+    return parsed
+     .filter(Boolean);
+
+   }
+
+  }
+  catch(error){
+
+   if(
+    item.images
+     .startsWith("http")
+   ){
+
+    return [
+     item.images
+    ];
+
+   }
+
+  }
+
+ }
+
+ return [];
+
+}
+
+
+/* =========================================
+   LOCATION
+========================================= */
+
+function getLocation(item){
+
+ const parts=[];
+
+ if(item.city){
+  parts.push(item.city);
+ }
+
+ if(item.township){
+  parts.push(item.township);
+ }
+
+ if(item.location){
+  parts.push(item.location);
+ }
+
+ if(item.address){
+  parts.push(item.address);
+ }
+
+ return [
+  ...new Set(parts)
+ ].join(" • ")
+ ||
+ "တည်နေရာ မဖော်ပြပါ";
+
+}
+
+
+/* =========================================
+   GEM TYPE DETECTOR
+========================================= */
+
+function detectGemType(item){
+
+ const text = (
+
+  (item.title || "")
+  +
+  " "
+  +
+  (item.description || "")
+
+ )
+ .toLowerCase();
+
+
+ if(
+  text.includes("ruby") ||
+  text.includes("ရူဘီ") ||
+  text.includes("ပတ္တမြား")
+ ){
+
+  return "ruby";
+
+ }
+
+
+ if(
+  text.includes("sapphire") ||
+  text.includes("နီလာ")
+ ){
+
+  return "sapphire";
+
+ }
+
+
+ if(
+  text.includes("jade") ||
+  text.includes("ကျောက်စိမ်း")
+ ){
+
+  return "jade";
+
+ }
+
+
+ if(
+  text.includes("diamond") ||
+  text.includes("စိန်")
+ ){
+
+  return "diamond";
+
+ }
+
+
+ return "other";
+
+}
+
+
+/* =========================================
+   BUYER / SELLER DETECTOR
+========================================= */
+
+function detectMode(item){
+
+ const text = (
+
+  (item.title || "")
+  +
+  " "
+  +
+  (item.description || "")
+
+ )
+ .toLowerCase();
+
+
+ /*
+   Buyer posts can be written as:
+   ဝယ်လိုသည် / ဝယ်မည် / looking for
+ */
+
+ if(
+  text.includes("ဝယ်လို") ||
+  text.includes("ဝယ်မည်") ||
+  text.includes("looking for") ||
+  text.includes("wanted") ||
+  text.includes("buying")
+ ){
+
+  return "buyer";
+
+ }
+
+
+ return "seller";
+
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+function createCard(item){
+
+ const images =
+  getImages(item);
+
+ const firstImage =
+  images[0] || "";
+
+ const title =
+  escapeHtml(
+   item.title ||
+   "Gem Listing"
+  );
+
+ const description =
+  escapeHtml(
+   item.description ||
+   ""
+  );
+
+ const location =
+  escapeHtml(
+   getLocation(item)
+  );
+
+ const price =
+  escapeHtml(
+   formatPrice(
+    item.price,
+    item.currency
+   )
+  );
+
+
+ let imageHTML;
+
+
+ if(firstImage){
+
+  imageHTML = `
+
+   <img
+    src="${escapeHtml(firstImage)}"
+    alt="${title}"
+    loading="lazy"
+    onerror="
+     this.style.display='none';
+     this.nextElementSibling.style.display='flex';
+    "
+   >
+
+   <div
+    class="no-image"
+    style="display:none"
+   >
+    💎
+   </div>
+
+  `;
+
+ }
+ else{
+
+  imageHTML = `
+
+   <div class="no-image">
+    💎
+   </div>
+
+  `;
+
+ }
+
+
+ const featured =
+  item.featured
+  ?
+  `
+   <div class="featured">
+    ⭐ FEATURED
+   </div>
+  `
+  :
+  "";
+
+
+ const imageCount =
+  images.length > 1
+  ?
+  `
+   <div class="image-count">
+    🖼️ ${images.length}
+   </div>
+  `
+  :
+  "";
+
+
+ const mode =
+  detectMode(item);
+
+
+ const modeText =
+  mode === "buyer"
+  ?
+  "🛒 Buyer"
+  :
+  "🏪 Seller";
+
+
+ const contact =
+  item.phone
+  ?
+  `
+   <a
+    class="contact"
+    href="tel:${encodeURIComponent(item.phone)}"
+   >
+    📞 Contact
+   </a>
+  `
+  :
+  "";
+
+
+ return `
+
+  <article class="card">
+
+   <div class="image">
+
+    ${imageHTML}
+
+    ${featured}
+
+    ${imageCount}
+
+   </div>
+
+
+   <div class="body">
+
+    <span class="type">
+
+     ${modeText}
+
+     ·
+
+     💎 Gem
+
+    </span>
+
+
+    <div class="title">
+     ${title}
+    </div>
+
+
+    <div class="price">
+     ${price}
+    </div>
+
+
+    <div class="location">
+     📍 ${location}
+    </div>
+
+
+    ${
+     description
+     ?
+     `
+      <div class="description">
+       ${description}
+      </div>
+     `
+     :
+     ""
+    }
+
+
+    ${contact}
+
+   </div>
+
+  </article>
+
+ `;
+
+}
+
+
+/* =========================================
+   LOAD LISTINGS
+========================================= */
+
+async function loadListings(){
+
+ const grid =
+  document.getElementById(
+   "listingsGrid"
+  );
+
+ const count =
+  document.getElementById(
+   "listingCount"
+  );
+
+
+ grid.innerHTML = `
+
+  <div class="state">
+
+   <div class="spinner"></div>
+
+   Gem listings များကို
+   ရယူနေပါသည်...
+
+  </div>
+
+ `;
+
+
+ try{
+
+  const {
+   data,
+   error
+  } =
+  await supabaseClient
+
+   .from("listings")
+
+   .select("*")
+
+   .eq(
+    "category",
+    "gem"
+   )
+
+   .eq(
+    "status",
+    "approved"
+   )
+
+   .order(
+    "created_at",
+    {
+     ascending:false
+    }
+   );
+
+
+  if(error){
+   throw error;
+  }
+
+
+  allListings =
+   Array.isArray(data)
+   ?
+   data
+   :
+   [];
+
+
+  createCityOptions();
+
+  renderListings();
+
+
+ }
+ catch(error){
+
+  console.error(
+   "Gem listing error:",
+   error
+  );
+
+
+  count.textContent =
+   "Database error";
+
+
+  grid.innerHTML = `
+
+   <div class="state">
+
+    <div class="state-icon">
+     ⚠️
+    </div>
+
+    <h3>
+     Gem listings မရပါ
+    </h3>
+
+    <p>
+     ${escapeHtml(
+      error.message ||
+      "Unknown error"
+     )}
+    </p>
+
+   </div>
+
+  `;
+
+ }
+
+}
+
+
+/* =========================================
+   CITY OPTIONS
+========================================= */
+
+function createCityOptions(){
+
+ const select =
+  document.getElementById(
+   "cityFilter"
+  );
+
+
+ const cities =
+  allListings
+
+   .map(
+    item =>
+    item.city
+   )
+
+   .filter(Boolean);
+
+
+ const unique =
+  [
+   ...new Set(cities)
+  ]
+  .sort();
+
+
+ select.innerHTML = `
+
+  <option value="">
+   မြို့အားလုံး
+  </option>
+
+ `;
+
+
+ unique.forEach(
+  city => {
+
+   const option =
+    document.createElement(
+     "option"
+    );
+
+   option.value =
+    city;
+
+   option.textContent =
+    city;
+
+   select.appendChild(
+    option
+   );
+
+  }
+ );
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderListings(){
+
+ const grid =
+  document.getElementById(
+   "listingsGrid"
+  );
+
+ const count =
+  document.getElementById(
+   "listingCount"
+  );
+
+
+ const keyword =
+  document
+   .getElementById(
+    "searchInput"
+   )
+   .value
+   .trim()
+   .toLowerCase();
+
+
+ const city =
+  document
+   .getElementById(
+    "cityFilter"
+   )
+   .value;
+
+
+ const listingType =
+  document
+   .getElementById(
+    "listingTypeFilter"
+   )
+   .value;
+
+
+ const minPrice =
+  Number(
+   document
+    .getElementById(
+     "minPrice"
+    )
+    .value
+  );
+
+
+ const maxPrice =
+  Number(
+   document
+    .getElementById(
+     "maxPrice"
+    )
+    .value
+  );
+
+
+ let filtered =
+  [...allListings];
+
+
+ /* SEARCH */
+
+ if(keyword){
+
+  filtered =
+   filtered.filter(
+    item => {
+
+     const searchable = [
+
+      item.title,
+      item.description,
+      item.city,
+      item.township,
+      item.address,
+      item.location
+
+     ]
+     .filter(Boolean)
+     .join(" ")
+     .toLowerCase();
+
+
+     return searchable
+      .includes(keyword);
+
+    }
+   );
+
+ }
+
+
+ /* CITY */
+
+ if(city){
+
+  filtered =
+   filtered.filter(
+    item =>
+    item.city === city
+   );
+
+ }
+
+
+ /* LISTING TYPE */
+
+ if(listingType){
+
+  filtered =
+   filtered.filter(
+    item =>
+    item.listing_type ===
+    listingType
+   );
+
+ }
+
+
+ /* GEM TYPE */
+
+ if(currentGemType){
+
+  filtered =
+   filtered.filter(
+    item =>
+    detectGemType(item)
+    ===
+    currentGemType
+   );
+
+ }
+
+
+ /* BUYER / SELLER */
+
+ if(currentMode !== "all"){
+
+  filtered =
+   filtered.filter(
+    item =>
+    detectMode(item)
+    ===
+    currentMode
+   );
+
+ }
+
+
+ /* PRICE */
+
+ if(
+  minPrice > 0
+ ){
+
+  filtered =
+   filtered.filter(
+    item =>
+    Number(item.price || 0)
+    >=
+    minPrice
+   );
+
+ }
+
+
+ if(
+  maxPrice > 0
+ ){
+
+  filtered =
+   filtered.filter(
+    item =>
+    Number(item.price || 0)
+    <=
+    maxPrice
+   );
+
+ }
+
+
+ count.textContent =
+  `${filtered.length} gem listings ရှိပါသည်`;
+
+
+ if(!filtered.length){
+
+  grid.innerHTML = `
+
+   <div class="state">
+
+    <div class="state-icon">
+     🔍
+    </div>
+
+    <h3>
+     Gem Listing မတွေ့ပါ
+    </h3>
+
+    <p>
+     Search / Filter ကို
+     ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။
+    </p>
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+
+ grid.innerHTML =
+  filtered
+   .map(createCard)
+   .join("");
+
+}
+
+
+/* =========================================
+   MODE
+========================================= */
+
+function setMode(mode){
+
+ currentMode =
+  mode;
+
+
+ document
+  .querySelectorAll(
+   ".mode"
+  )
+  .forEach(
+   button =>
+   button.classList.remove(
+    "active"
+   )
+  );
+
+
+ if(mode === "all"){
+
+  document
+   .getElementById(
+    "allMode"
+   )
+   .classList.add(
+    "active"
+   );
+
+ }
+ else if(mode === "buyer"){
+
+  document
+   .getElementById(
+    "buyerMode"
+   )
+   .classList.add(
+    "active"
+   );
+
+ }
+ else{
+
+  document
+   .getElementById(
+    "sellerMode"
+   )
+   .classList.add(
+    "active"
+   );
+
+ }
+
+
+ renderListings();
+
+}
+
+
+/* =========================================
+   GEM TYPE
+========================================= */
+
+function setGemType(type){
+
+ currentGemType =
+  type;
+
+
+ document
+  .querySelectorAll(
+   ".gem-type"
+  )
+  .forEach(
+   button =>
+   button.classList.remove(
+    "active"
+   )
+  );
+
+
+ if(type === ""){
+
+  document
+   .getElementById(
+    "allGem"
+   )
+   .classList.add(
+    "active"
+   );
+
+ }
+
+
+ renderListings();
+
+}
+
+
+/* =========================================
+   LIVE FILTERS
+========================================= */
+
+document
+ .getElementById(
+  "searchInput"
+ )
+ .addEventListener(
+  "input",
+  renderListings
+ );
+
+
+document
+ .getElementById(
+  "cityFilter"
+ )
+ .addEventListener(
+  "change",
+  renderListings
+ );
+
+
+document
+ .getElementById(
+  "listingTypeFilter"
+ )
+ .addEventListener(
+  "change",
+  renderListings
+ );
+
+
+document
+ .getElementById(
+  "minPrice"
+ )
+ .addEventListener(
+  "input",
+  renderListings
+ );
+
+
+document
+ .getElementById(
+  "maxPrice"
+ )
+ .addEventListener(
+  "input",
+  renderListings
+ );
+
+
+/* =========================================
+   START
+========================================= */
+
+document.addEventListener(
+ "DOMContentLoaded",
+ loadListings
+);
+
+</script>
+
+</body>
+</html>
