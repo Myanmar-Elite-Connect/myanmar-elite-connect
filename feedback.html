@@ -22,7 +22,6 @@
 }
 
 :root{
-
   --navy:#071a34;
   --navy2:#102b4d;
 
@@ -38,12 +37,10 @@
   --border:rgba(16,35,63,.09);
 
   --green:#19a974;
-
   --danger:#c53b32;
 
   --shadow:
     0 18px 55px rgba(7,26,52,.09);
-
 }
 
 html{
@@ -51,7 +48,6 @@ html{
 }
 
 body{
-
   font-family:
     Inter,
     Arial,
@@ -60,13 +56,17 @@ body{
     sans-serif;
 
   background:var(--bg);
-
   color:var(--text);
 
   min-height:100vh;
 
   padding-bottom:78px;
+}
 
+button,
+input,
+select{
+  font:inherit;
 }
 
 
@@ -75,73 +75,58 @@ body{
 ===================================================== */
 
 .header{
-
   position:sticky;
-
   top:0;
-
   z-index:1000;
 
   height:72px;
 
   background:
-    rgba(255,255,255,.93);
+    rgba(255,255,255,.94);
 
-  backdrop-filter:
-    blur(18px);
-
-  -webkit-backdrop-filter:
-    blur(18px);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
 
   border-bottom:
     1px solid var(--border);
-
 }
 
 .header-inner{
-
-  width:
-    min(
-      1180px,
-      calc(100% - 30px)
-    );
+  width:min(
+    1180px,
+    calc(100% - 30px)
+  );
 
   height:100%;
 
   margin:auto;
 
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
 
+  gap:15px;
 }
 
 .brand{
-
   display:flex;
-
   align-items:center;
-
   gap:10px;
 
   text-decoration:none;
 
   min-width:0;
-
 }
 
 .brand-logo{
-
   width:42px;
-
   height:42px;
+
+  flex:0 0 42px;
 
   border-radius:12px;
 
   display:grid;
-
   place-items:center;
 
   overflow:hidden;
@@ -153,28 +138,24 @@ body{
 
   box-shadow:
     0 5px 18px rgba(7,26,52,.08);
-
 }
 
 .brand-logo img{
-
   width:82%;
   height:82%;
 
   object-fit:contain;
 
+  display:block;
 }
 
 .brand-name{
-
   color:var(--navy);
 
   font-size:15px;
-
   font-weight:900;
 
   white-space:nowrap;
-
 }
 
 .brand-name span{
@@ -182,48 +163,45 @@ body{
 }
 
 .top-nav{
-
   display:flex;
-
   align-items:center;
-
   gap:5px;
 
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+
+.top-nav::-webkit-scrollbar{
+  display:none;
 }
 
 .top-nav a{
-
   text-decoration:none;
 
   color:var(--muted);
 
   font-size:12px;
-
   font-weight:800;
 
   padding:8px 10px;
 
   border-radius:9px;
 
-  transition:.2s;
+  white-space:nowrap;
 
+  transition:.2s;
 }
 
 .top-nav a:hover{
-
   color:var(--navy);
-
   background:#f2f5f9;
-
 }
 
 .top-nav a.active{
-
   color:var(--navy);
 
   background:
     rgba(215,179,90,.12);
-
 }
 
 
@@ -232,13 +210,10 @@ body{
 ===================================================== */
 
 .hero{
-
   position:relative;
-
   overflow:hidden;
 
   background:
-
     radial-gradient(
       circle at 82% 15%,
       rgba(215,179,90,.18),
@@ -253,11 +228,9 @@ body{
     );
 
   color:white;
-
 }
 
 .hero::after{
-
   content:"";
 
   position:absolute;
@@ -273,28 +246,25 @@ body{
   border:
     1px solid
     rgba(215,179,90,.18);
-
 }
 
 .hero-inner{
+  position:relative;
+  z-index:2;
 
-  width:
-    min(
-      1180px,
-      calc(100% - 30px)
-    );
+  width:min(
+    1180px,
+    calc(100% - 30px)
+  );
 
   margin:auto;
 
   padding:
     45px 0 52px;
-
 }
 
 .back{
-
   display:inline-flex;
-
   align-items:center;
 
   gap:6px;
@@ -305,11 +275,9 @@ body{
   text-decoration:none;
 
   font-size:12px;
-
   font-weight:700;
 
   margin-bottom:22px;
-
 }
 
 .back:hover{
@@ -317,15 +285,11 @@ body{
 }
 
 .hero-content{
-
   max-width:760px;
-
 }
 
 .eyebrow{
-
   display:inline-flex;
-
   align-items:center;
 
   gap:8px;
@@ -333,29 +297,23 @@ body{
   color:var(--gold2);
 
   font-size:10px;
-
   font-weight:900;
 
   letter-spacing:1.7px;
 
   margin-bottom:14px;
-
 }
 
 .eyebrow::before{
-
   content:"";
 
   width:25px;
-
   height:1px;
 
   background:var(--gold);
-
 }
 
 .hero h1{
-
   font-size:
     clamp(
       31px,
@@ -368,7 +326,6 @@ body{
   letter-spacing:-1.8px;
 
   margin-bottom:14px;
-
 }
 
 .hero h1 span{
@@ -376,7 +333,6 @@ body{
 }
 
 .hero-description{
-
   color:
     rgba(255,255,255,.72);
 
@@ -385,7 +341,6 @@ body{
   line-height:1.85;
 
   max-width:650px;
-
 }
 
 
@@ -394,63 +349,48 @@ body{
 ===================================================== */
 
 main{
-
-  width:
-    min(
-      1180px,
-      calc(100% - 30px)
-    );
+  width:min(
+    1180px,
+    calc(100% - 30px)
+  );
 
   margin:auto;
 
   padding:
     28px 0 45px;
-
 }
 
 
 /* =====================================================
-   COMPACT FILTER BAR
+   FILTER
 ===================================================== */
 
 .filter-toolbar{
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
 
   gap:12px;
 
   margin-bottom:25px;
-
 }
 
 .filter-left{
-
   display:flex;
-
   align-items:center;
 
   gap:7px;
 
   flex-wrap:wrap;
-
 }
 
 .search-box{
-
   position:relative;
-
   width:260px;
-
 }
 
 .search-box input{
-
   width:100%;
-
   height:42px;
 
   border:
@@ -469,15 +409,12 @@ main{
 
   box-shadow:
     0 7px 25px rgba(7,26,52,.05);
-
 }
 
 .search-box span{
-
   position:absolute;
 
   left:13px;
-
   top:50%;
 
   transform:
@@ -486,19 +423,14 @@ main{
   color:var(--muted);
 
   font-size:14px;
-
 }
 
 .mini-filter{
-
   position:relative;
-
 }
 
 .mini-filter select{
-
   appearance:none;
-
   -webkit-appearance:none;
 
   height:42px;
@@ -520,24 +452,20 @@ main{
   outline:none;
 
   font-size:12px;
-
   font-weight:800;
 
   cursor:pointer;
 
   box-shadow:
     0 7px 25px rgba(7,26,52,.05);
-
 }
 
 .mini-filter::after{
-
   content:"⌄";
 
   position:absolute;
 
   right:11px;
-
   top:50%;
 
   transform:
@@ -546,11 +474,9 @@ main{
   color:var(--muted);
 
   pointer-events:none;
-
 }
 
 .filter-button{
-
   height:42px;
 
   border:
@@ -562,25 +488,23 @@ main{
 
   border-radius:12px;
 
-  padding:0 13px;
+  padding:
+    0 13px;
 
   font-size:12px;
-
   font-weight:900;
 
   cursor:pointer;
 
+  transition:.2s;
 }
 
 .filter-button:hover{
-
   border-color:
     rgba(215,179,90,.65);
-
 }
 
 .filter-button.gold{
-
   background:
     linear-gradient(
       135deg,
@@ -591,7 +515,6 @@ main{
   color:var(--navy);
 
   border-color:transparent;
-
 }
 
 
@@ -600,9 +523,7 @@ main{
 ===================================================== */
 
 .quick-categories{
-
   display:flex;
-
   align-items:center;
 
   gap:7px;
@@ -614,7 +535,6 @@ main{
   padding-bottom:3px;
 
   margin-bottom:30px;
-
 }
 
 .quick-categories::-webkit-scrollbar{
@@ -622,7 +542,6 @@ main{
 }
 
 .quick{
-
   flex:0 0 auto;
 
   border:
@@ -638,7 +557,6 @@ main{
     8px 12px;
 
   font-size:11px;
-
   font-weight:800;
 
   cursor:pointer;
@@ -646,20 +564,16 @@ main{
   white-space:nowrap;
 
   transition:.2s;
-
 }
 
 .quick:hover{
-
   color:var(--navy);
 
   border-color:
     rgba(215,179,90,.55);
-
 }
 
 .quick.active{
-
   color:var(--navy);
 
   background:
@@ -667,7 +581,6 @@ main{
 
   border-color:
     rgba(215,179,90,.55);
-
 }
 
 
@@ -676,58 +589,45 @@ main{
 ===================================================== */
 
 .feed-header{
-
   display:flex;
-
   align-items:end;
-
   justify-content:space-between;
 
   gap:15px;
 
   margin-bottom:17px;
-
 }
 
 .feed-title{
-
   color:var(--navy);
 
   font-size:23px;
-
   font-weight:900;
 
   letter-spacing:-.5px;
-
 }
 
 .feed-subtitle{
-
   color:var(--muted);
 
   font-size:11px;
 
   margin-top:5px;
-
 }
 
 .result-count{
-
   color:var(--muted);
 
   font-size:11px;
-
   font-weight:700;
-
 }
 
 
 /* =====================================================
-   RESTAURANT FEED
+   FEED
 ===================================================== */
 
 .feed{
-
   display:grid;
 
   grid-template-columns:
@@ -737,11 +637,9 @@ main{
     );
 
   gap:20px;
-
 }
 
 .post{
-
   background:white;
 
   border:
@@ -756,27 +654,23 @@ main{
   transition:
     transform .22s ease,
     box-shadow .22s ease;
-
 }
 
 .post:hover{
-
   transform:
     translateY(-4px);
 
   box-shadow:
     0 24px 60px
     rgba(7,26,52,.13);
-
 }
 
 
 /* =====================================================
-   POST IMAGE
+   IMAGE
 ===================================================== */
 
 .post-image{
-
   position:relative;
 
   height:270px;
@@ -789,11 +683,9 @@ main{
       #071a34,
       #274a70
     );
-
 }
 
 .post-image img{
-
   width:100%;
   height:100%;
 
@@ -803,25 +695,19 @@ main{
 
   transition:
     transform .5s ease;
-
 }
 
 .post:hover
 .post-image img{
-
   transform:scale(1.035);
-
 }
 
 .image-fallback{
-
   width:100%;
   height:100%;
 
   display:flex;
-
   align-items:center;
-
   justify-content:center;
 
   font-size:65px;
@@ -832,11 +718,9 @@ main{
       #071a34,
       #1c4269
     );
-
 }
 
 .region-badge{
-
   position:absolute;
 
   top:13px;
@@ -855,20 +739,16 @@ main{
   backdrop-filter:blur(8px);
 
   font-size:10px;
-
   font-weight:900;
-
 }
 
 .rating-badge{
-
   position:absolute;
 
   right:13px;
   top:13px;
 
   display:flex;
-
   align-items:center;
 
   gap:4px;
@@ -884,9 +764,7 @@ main{
   color:var(--navy);
 
   font-size:11px;
-
   font-weight:900;
-
 }
 
 
@@ -895,29 +773,22 @@ main{
 ===================================================== */
 
 .post-body{
-
-  padding:18px 19px 17px;
-
+  padding:
+    18px 19px 17px;
 }
 
 .post-meta{
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
 
   gap:10px;
 
   margin-bottom:9px;
-
 }
 
 .restaurant-type{
-
-  color:
-    #876a20;
+  color:#876a20;
 
   background:
     rgba(215,179,90,.13);
@@ -932,35 +803,27 @@ main{
     5px 8px;
 
   font-size:9px;
-
   font-weight:900;
-
 }
 
 .post-date{
-
   color:var(--muted);
 
   font-size:10px;
-
 }
 
 .restaurant-name{
-
   color:var(--navy);
 
   font-size:20px;
-
   font-weight:900;
 
   line-height:1.35;
 
   margin-bottom:7px;
-
 }
 
 .restaurant-location{
-
   color:var(--muted);
 
   font-size:11px;
@@ -968,11 +831,9 @@ main{
   line-height:1.6;
 
   margin-bottom:11px;
-
 }
 
 .review-text{
-
   color:#536176;
 
   font-size:13px;
@@ -988,61 +849,48 @@ main{
   -webkit-box-orient:vertical;
 
   overflow:hidden;
-
 }
 
 
 /* =====================================================
-   STAR RATING
+   STARS
 ===================================================== */
 
 .stars{
-
   display:flex;
-
   align-items:center;
 
   gap:2px;
 
   margin-bottom:15px;
-
 }
 
 .star{
-
   color:#d3d8e0;
 
   font-size:15px;
-
 }
 
 .star.on{
-
   color:var(--gold);
-
 }
 
 .rating-number{
-
   color:var(--navy);
 
   font-size:12px;
-
   font-weight:900;
 
   margin-left:5px;
-
 }
 
 
 /* =====================================================
-   POST ACTIONS
+   ACTIONS
 ===================================================== */
 
 .post-actions{
-
   display:flex;
-
   align-items:center;
 
   gap:7px;
@@ -1051,11 +899,9 @@ main{
 
   border-top:
     1px solid var(--border);
-
 }
 
 .action{
-
   border:0;
 
   background:#f7f9fc;
@@ -1070,43 +916,32 @@ main{
   cursor:pointer;
 
   font-size:11px;
-
   font-weight:800;
 
   transition:.18s;
-
 }
 
 .action:hover{
-
   background:#eef2f7;
-
   color:var(--navy);
-
 }
 
 .action.liked{
-
   color:var(--green);
 
   background:
     rgba(25,169,116,.10);
-
 }
 
 .action.disliked{
-
   color:var(--danger);
 
   background:
     rgba(197,59,50,.08);
-
 }
 
 .action.comment{
-
   margin-left:auto;
-
 }
 
 
@@ -1115,11 +950,9 @@ main{
 ===================================================== */
 
 .comment-area{
-
   display:none;
 
   padding-top:13px;
-
 }
 
 .comment-area.open{
@@ -1127,15 +960,14 @@ main{
 }
 
 .comment-form{
-
   display:flex;
 
   gap:7px;
 
+  margin-bottom:12px;
 }
 
 .comment-form input{
-
   min-width:0;
 
   flex:1;
@@ -1149,14 +981,13 @@ main{
 
   outline:none;
 
-  padding:0 11px;
+  padding:
+    0 11px;
 
   font-size:11px;
-
 }
 
 .comment-form button{
-
   border:0;
 
   background:var(--navy);
@@ -1165,14 +996,91 @@ main{
 
   border-radius:9px;
 
-  padding:0 13px;
+  padding:
+    0 13px;
 
   font-size:11px;
-
   font-weight:800;
 
   cursor:pointer;
+}
 
+
+/* =====================================================
+   COMMENT LIST
+===================================================== */
+
+.comment-list{
+  display:flex;
+
+  flex-direction:column;
+
+  gap:8px;
+
+  max-height:280px;
+
+  overflow-y:auto;
+
+  padding-right:2px;
+}
+
+.comment-item{
+  padding:
+    10px 11px;
+
+  border-radius:10px;
+
+  background:#f7f9fc;
+
+  border:
+    1px solid var(--border);
+}
+
+.comment-user{
+  color:var(--navy);
+
+  font-size:10px;
+  font-weight:900;
+
+  margin-bottom:4px;
+}
+
+.comment-text{
+  color:#536176;
+
+  font-size:11px;
+
+  line-height:1.65;
+
+  word-break:break-word;
+}
+
+.comment-time{
+  color:var(--muted);
+
+  font-size:9px;
+
+  margin-top:5px;
+}
+
+.comment-loading{
+  color:var(--muted);
+
+  font-size:10px;
+
+  text-align:center;
+
+  padding:8px;
+}
+
+.no-comments{
+  color:var(--muted);
+
+  font-size:10px;
+
+  text-align:center;
+
+  padding:9px;
 }
 
 
@@ -1181,7 +1089,6 @@ main{
 ===================================================== */
 
 .state{
-
   grid-column:1/-1;
 
   background:white;
@@ -1191,44 +1098,36 @@ main{
 
   border-radius:18px;
 
-  padding:65px 20px;
+  padding:
+    65px 20px;
 
   text-align:center;
 
   color:var(--muted);
-
 }
 
 .state-icon{
-
   font-size:45px;
 
   margin-bottom:10px;
-
 }
 
 .state h3{
-
   color:var(--navy);
 
   font-size:18px;
 
   margin-bottom:7px;
-
 }
 
 .state p{
-
   font-size:12px;
 
   line-height:1.7;
-
 }
 
 .spinner{
-
   width:35px;
-
   height:35px;
 
   border:
@@ -1243,15 +1142,12 @@ main{
 
   margin:
     0 auto 14px;
-
 }
 
 @keyframes spin{
-
   to{
     transform:rotate(360deg);
   }
-
 }
 
 
@@ -1260,7 +1156,6 @@ main{
 ===================================================== */
 
 .bottom-nav{
-
   position:fixed;
 
   left:0;
@@ -1286,11 +1181,9 @@ main{
   display:flex;
 
   justify-content:center;
-
 }
 
 .bottom-nav a{
-
   flex:1;
 
   max-width:180px;
@@ -1304,13 +1197,10 @@ main{
   padding-top:8px;
 
   font-size:9px;
-
   font-weight:700;
-
 }
 
 .bottom-nav strong{
-
   display:block;
 
   font-size:19px;
@@ -1318,19 +1208,14 @@ main{
   line-height:22px;
 
   margin-bottom:2px;
-
 }
 
 .bottom-nav a.active{
-
   color:var(--navy);
-
 }
 
 .bottom-nav a.active strong{
-
   color:var(--gold);
-
 }
 
 
@@ -1345,9 +1230,7 @@ main{
   }
 
   .feed{
-
     grid-template-columns:1fr;
-
   }
 
   .post-image{
@@ -1355,45 +1238,31 @@ main{
   }
 
   .filter-toolbar{
-
     align-items:stretch;
 
     flex-direction:column;
-
   }
 
   .filter-left{
-
     width:100%;
-
   }
 
   .search-box{
-
     width:100%;
-
   }
 
   .mini-filter{
-
     flex:1;
-
   }
 
   .mini-filter select{
-
     width:100%;
-
   }
 
   .filter-button{
-
     width:auto;
-
   }
-
 }
-
 
 @media(max-width:520px){
 
@@ -1404,10 +1273,8 @@ main{
   .header-inner,
   .hero-inner,
   main{
-
     width:
       calc(100% - 24px);
-
   }
 
   .brand-name{
@@ -1415,18 +1282,14 @@ main{
   }
 
   .hero-inner{
-
     padding:
       34px 0 42px;
-
   }
 
   .hero h1{
-
     font-size:34px;
 
     letter-spacing:-1.2px;
-
   }
 
   .hero-description{
@@ -1452,7 +1315,6 @@ main{
   .post-body{
     padding:16px;
   }
-
 }
 
 
@@ -1464,12 +1326,10 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 a:focus-visible{
-
   outline:
     2px solid var(--gold);
 
   outline-offset:2px;
-
 }
 
 </style>
@@ -1559,7 +1419,6 @@ a:focus-visible{
       ← General သို့ပြန်သွားမည်
     </a>
 
-
     <div class="hero-content">
 
       <div class="eyebrow">
@@ -1572,12 +1431,10 @@ a:focus-visible{
       </h1>
 
       <p class="hero-description">
-
         မြန်မာနိုင်ငံအတွင်းရှိ စားသောက်ဆိုင်များကို
         ဒေသအလိုက် ရှာဖွေပြီး အတွေ့အကြုံ၊
         အရသာ၊ ဝန်ဆောင်မှုနှင့် ဈေးနှုန်းအပေါ်
         Feedback နှင့် Review များ မျှဝေနိုင်ပါသည်။
-
       </p>
 
     </div>
@@ -1594,12 +1451,11 @@ a:focus-visible{
 <main>
 
 
-  <!-- COMPACT FILTER -->
+  <!-- FILTER -->
 
   <div class="filter-toolbar">
 
     <div class="filter-left">
-
 
       <div class="search-box">
 
@@ -1920,6 +1776,8 @@ let allFeedback = [];
 
 let currentRegion = "";
 
+let loadedComments = new Set();
+
 
 /* =====================================================
    HELPERS
@@ -1935,17 +1793,11 @@ function escapeHtml(value){
   }
 
   return String(value)
-
     .replace(/&/g,"&amp;")
-
     .replace(/</g,"&lt;")
-
     .replace(/>/g,"&gt;")
-
     .replace(/"/g,"&quot;")
-
     .replace(/'/g,"&#039;");
-
 }
 
 
@@ -1977,7 +1829,9 @@ function getImages(item){
         item.images.startsWith("http")
       ){
 
-        return [item.images];
+        return [
+          item.images
+        ];
 
       }
 
@@ -1986,7 +1840,6 @@ function getImages(item){
   }
 
   return [];
-
 }
 
 
@@ -2015,44 +1868,57 @@ function formatDate(date){
       year:"numeric"
     }
   );
+}
 
+
+function formatCommentDate(date){
+
+  if(!date){
+    return "";
+  }
+
+  const d =
+    new Date(date);
+
+  if(
+    Number.isNaN(
+      d.getTime()
+    )
+  ){
+    return "";
+  }
+
+  return d.toLocaleDateString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
 }
 
 
 /* =====================================================
-   REGION
+   REGIONS
 ===================================================== */
 
 const regions = [
 
   "Yangon",
-
   "Mandalay",
-
   "Naypyidaw",
-
   "Bago",
-
   "Magway",
-
   "Sagaing",
-
   "Tanintharyi",
-
   "Ayeyarwady",
-
   "Kachin",
-
   "Kayah",
-
   "Kayin",
-
   "Chin",
-
   "Mon",
-
   "Rakhine",
-
   "Shan"
 
 ];
@@ -2085,7 +1951,6 @@ function createRegionOptions(){
 
     }
   );
-
 }
 
 
@@ -2097,7 +1962,6 @@ function createTownshipOptions(){
     );
 
   const townships =
-
     allFeedback
 
       .map(
@@ -2140,7 +2004,6 @@ function createTownshipOptions(){
 
     }
   );
-
 }
 
 
@@ -2164,7 +2027,11 @@ function renderStars(rating){
     html += `
 
       <span
-        class="star ${i <= Math.round(value) ? "on" : ""}"
+        class="star ${
+          i <= Math.round(value)
+            ? "on"
+            : ""
+        }"
       >
         ★
       </span>
@@ -2174,15 +2041,173 @@ function renderStars(rating){
   }
 
   return html;
+}
+
+
+/* =====================================================
+   COMMENT LIST
+===================================================== */
+
+async function loadComments(
+  feedbackId
+){
+
+  const list =
+    document.getElementById(
+      `comments-${feedbackId}`
+    );
+
+  if(!list){
+    return;
+  }
+
+  if(
+    loadedComments.has(
+      String(feedbackId)
+    )
+  ){
+
+    return;
+
+  }
+
+
+  list.innerHTML = `
+
+    <div class="comment-loading">
+      Comments ရယူနေပါသည်...
+    </div>
+
+  `;
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+
+      await supabaseClient
+
+        .from(
+          "restaurant_comments"
+        )
+
+        .select(
+          "id, feedback_id, comment, user_id, created_at"
+        )
+
+        .eq(
+          "feedback_id",
+          feedbackId
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    loadedComments.add(
+      String(feedbackId)
+    );
+
+
+    if(
+      !data ||
+      !data.length
+    ){
+
+      list.innerHTML = `
+
+        <div class="no-comments">
+          မှတ်ချက် မရှိသေးပါ။
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    list.innerHTML =
+      data
+        .map(
+          comment => {
+
+            const username =
+              comment.user_id
+                ? "Member"
+                : "Guest";
+
+            return `
+
+              <div
+                class="comment-item"
+              >
+
+                <div class="comment-user">
+                  👤 ${escapeHtml(username)}
+                </div>
+
+                <div class="comment-text">
+                  ${escapeHtml(
+                    comment.comment
+                  )}
+                </div>
+
+                <div class="comment-time">
+                  ${formatCommentDate(
+                    comment.created_at
+                  )}
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+  }
+  catch(error){
+
+    console.error(
+      "Comment loading error:",
+      error
+    );
+
+    list.innerHTML = `
+
+      <div class="no-comments">
+        Comments ရယူ၍ မရပါ။
+      </div>
+
+    `;
+
+  }
 
 }
 
 
 /* =====================================================
-   POST CARD
+   CREATE POST
 ===================================================== */
 
-function createPost(item,index){
+function createPost(
+  item,
+  index
+){
 
   const images =
     getImages(item);
@@ -2190,12 +2215,18 @@ function createPost(item,index){
   const image =
     images[0] || "";
 
+
+  const id =
+    item.id || index;
+
+
   const name =
     escapeHtml(
       item.restaurant_name ||
       item.title ||
       "Restaurant"
     );
+
 
   const review =
     escapeHtml(
@@ -2205,6 +2236,7 @@ function createPost(item,index){
       ""
     );
 
+
   const region =
     escapeHtml(
       item.region ||
@@ -2213,11 +2245,13 @@ function createPost(item,index){
       "Myanmar"
     );
 
+
   const township =
     escapeHtml(
       item.township ||
       ""
     );
+
 
   const type =
     escapeHtml(
@@ -2226,25 +2260,30 @@ function createPost(item,index){
       "Restaurant"
     );
 
+
   const rating =
     Number(
       item.rating || 0
     );
+
 
   const likes =
     Number(
       item.likes || 0
     );
 
+
   const dislikes =
     Number(
       item.dislikes || 0
     );
 
+
   const comments =
     Number(
       item.comments_count || 0
     );
+
 
   const imageHTML = image
 
@@ -2286,9 +2325,7 @@ function createPost(item,index){
 
     <article
       class="post"
-      data-id="${escapeHtml(
-        item.id || index
-      )}"
+      data-id="${escapeHtml(id)}"
     >
 
 
@@ -2298,12 +2335,15 @@ function createPost(item,index){
 
 
         <div class="region-badge">
+
           📍 ${region}
+
           ${
             township
-            ? " • " + township
-            : ""
+              ? " • " + township
+              : ""
           }
+
         </div>
 
 
@@ -2354,16 +2394,12 @@ function createPost(item,index){
 
         <div class="restaurant-location">
 
-          📍
-
-          ${region}
+          📍 ${region}
 
           ${
             township
-            ?
-            " • " + township
-            :
-            ""
+              ? " • " + township
+              : ""
           }
 
         </div>
@@ -2415,14 +2451,20 @@ function createPost(item,index){
         </div>
 
 
+        <!-- ACTIONS -->
+
         <div class="post-actions">
 
 
           <button
             class="action"
-            onclick="reactToPost('${escapeHtml(
-              item.id || index
-            )}','like',this)"
+            onclick="
+              reactToPost(
+                '${escapeHtml(id)}',
+                'like',
+                this
+              )
+            "
           >
 
             👍
@@ -2436,9 +2478,13 @@ function createPost(item,index){
 
           <button
             class="action"
-            onclick="reactToPost('${escapeHtml(
-              item.id || index
-            )}','dislike',this)"
+            onclick="
+              reactToPost(
+                '${escapeHtml(id)}',
+                'dislike',
+                this
+              )
+            "
           >
 
             👎
@@ -2452,14 +2498,18 @@ function createPost(item,index){
 
           <button
             class="action comment"
-            onclick="toggleComment('${escapeHtml(
-              item.id || index
-            )}')"
+            onclick="
+              toggleComment(
+                '${escapeHtml(id)}'
+              )
+            "
           >
 
             💬
 
-            <span>
+            <span
+              id="comment-count-${escapeHtml(id)}"
+            >
               ${comments}
             </span>
 
@@ -2469,32 +2519,49 @@ function createPost(item,index){
         </div>
 
 
+        <!-- COMMENTS -->
+
         <div
-          id="comment-${escapeHtml(
-            item.id || index
-          )}"
+          id="comment-${escapeHtml(id)}"
           class="comment-area"
         >
+
 
           <div class="comment-form">
 
             <input
               type="text"
+              maxlength="500"
               placeholder="သင့်အမြင်ကို မှတ်ချက်ပေးပါ..."
-              id="commentInput-${escapeHtml(
-                item.id || index
-              )}"
+              id="commentInput-${escapeHtml(id)}"
+              onkeydown="
+                if(event.key === 'Enter'){
+                  submitComment('${escapeHtml(id)}');
+                }
+              "
             >
 
+
             <button
-              onclick="submitComment('${escapeHtml(
-                item.id || index
-              )}')"
+              onclick="
+                submitComment(
+                  '${escapeHtml(id)}'
+                )
+              "
             >
               Send
             </button>
 
           </div>
+
+
+          <div
+            id="comments-${escapeHtml(id)}"
+            class="comment-list"
+          >
+
+          </div>
+
 
         </div>
 
@@ -2509,7 +2576,7 @@ function createPost(item,index){
 
 
 /* =====================================================
-   LOAD
+   LOAD FEEDBACK
 ===================================================== */
 
 async function loadFeedback(){
@@ -2523,6 +2590,10 @@ async function loadFeedback(){
     document.getElementById(
       "resultCount"
     );
+
+
+  loadedComments.clear();
+
 
   feed.innerHTML = `
 
@@ -2541,10 +2612,8 @@ async function loadFeedback(){
   try{
 
     const {
-
       data,
       error
-
     } =
 
       await supabaseClient
@@ -2575,10 +2644,8 @@ async function loadFeedback(){
 
     allFeedback =
       Array.isArray(data)
-      ?
-      data
-      :
-      [];
+        ? data
+        : [];
 
 
     createTownshipOptions();
@@ -2627,7 +2694,7 @@ async function loadFeedback(){
 
 
 /* =====================================================
-   RENDER
+   RENDER FEEDBACK
 ===================================================== */
 
 function renderFeedback(){
@@ -2691,6 +2758,8 @@ function renderFeedback(){
     [...allFeedback];
 
 
+  /* SEARCH */
+
   if(keyword){
 
     filtered =
@@ -2700,22 +2769,15 @@ function renderFeedback(){
           const text = [
 
             item.restaurant_name,
-
             item.title,
-
             item.review,
-
             item.description,
-
             item.feedback,
-
             item.region,
-
             item.city,
-
             item.township,
-
-            item.restaurant_type
+            item.restaurant_type,
+            item.type
 
           ]
 
@@ -2735,6 +2797,8 @@ function renderFeedback(){
 
   }
 
+
+  /* REGION */
 
   if(region){
 
@@ -2758,16 +2822,22 @@ function renderFeedback(){
   }
 
 
+  /* TOWNSHIP */
+
   if(township){
 
     filtered =
       filtered.filter(
         item =>
-          item.township === township
+          String(
+            item.township || ""
+          ) === township
       );
 
   }
 
+
+  /* TYPE */
 
   if(type){
 
@@ -2792,6 +2862,8 @@ function renderFeedback(){
   }
 
 
+  /* RATING */
+
   if(rating){
 
     filtered =
@@ -2799,9 +2871,7 @@ function renderFeedback(){
         item =>
           Number(
             item.rating || 0
-          )
-          >=
-          rating
+          ) >= rating
       );
 
   }
@@ -2940,11 +3010,13 @@ function resetFilters(){
     )
     .value = "";
 
+
   document
     .getElementById(
       "regionFilter"
     )
     .value = "";
+
 
   document
     .getElementById(
@@ -2952,17 +3024,22 @@ function resetFilters(){
     )
     .value = "";
 
+
   document
     .getElementById(
       "restaurantTypeFilter"
     )
     .value = "";
 
+
   document
     .getElementById(
       "ratingFilter"
     )
     .value = "";
+
+
+  currentRegion = "";
 
 
   document
@@ -3006,26 +3083,31 @@ async function reactToPost(
       feedback =>
         String(
           feedback.id
-        )
-        ===
-        String(id)
+        ) === String(id)
     );
 
 
   if(!item){
-
     return;
-
   }
+
+
+  const originalLikes =
+    Number(
+      item.likes || 0
+    );
+
+
+  const originalDislikes =
+    Number(
+      item.dislikes || 0
+    );
 
 
   if(type === "like"){
 
     item.likes =
-      Number(
-        item.likes || 0
-      )
-      + 1;
+      originalLikes + 1;
 
     button.classList.add(
       "liked"
@@ -3035,10 +3117,7 @@ async function reactToPost(
   else{
 
     item.dislikes =
-      Number(
-        item.dislikes || 0
-      )
-      + 1;
+      originalDislikes + 1;
 
     button.classList.add(
       "disliked"
@@ -3052,29 +3131,27 @@ async function reactToPost(
       "span"
     );
 
+
   if(span){
 
     span.textContent =
       type === "like"
-      ?
-      item.likes
-      :
-      item.dislikes;
+        ? item.likes
+        : item.dislikes;
 
   }
 
 
-  /*
-    Database update.
+  if(!item.id){
+    return;
+  }
 
-    If your table uses likes/dislikes
-    columns, this will persist the
-    reaction.
-  */
 
-  if(item.id){
+  try{
 
-    try{
+    const {
+      error
+    } =
 
       await supabaseClient
 
@@ -3097,13 +3174,40 @@ async function reactToPost(
           item.id
         );
 
-    }
-    catch(error){
 
-      console.error(
-        "Reaction update error:",
-        error
-      );
+    if(error){
+      throw error;
+    }
+
+  }
+  catch(error){
+
+    console.error(
+      "Reaction update error:",
+      error
+    );
+
+
+    if(type === "like"){
+
+      item.likes =
+        originalLikes;
+
+    }
+    else{
+
+      item.dislikes =
+        originalDislikes;
+
+    }
+
+
+    if(span){
+
+      span.textContent =
+        type === "like"
+          ? item.likes
+          : item.dislikes;
 
     }
 
@@ -3113,23 +3217,36 @@ async function reactToPost(
 
 
 /* =====================================================
-   COMMENT
+   TOGGLE COMMENT
 ===================================================== */
 
-function toggleComment(id){
+async function toggleComment(id){
 
   const area =
     document.getElementById(
       `comment-${id}`
     );
 
+
   if(!area){
     return;
   }
 
+
   area.classList.toggle(
     "open"
   );
+
+
+  if(
+    area.classList.contains(
+      "open"
+    )
+  ){
+
+    await loadComments(id);
+
+  }
 
 }
 
@@ -3156,26 +3273,51 @@ async function submitComment(id){
 
 
   if(!text){
+
+    alert(
+      "Comment ရေးပေးပါ။"
+    );
+
+    input.focus();
+
     return;
+
   }
 
 
-  /*
-    This is ready for a
-    restaurant_comments table.
+  if(text.length > 500){
 
-    Example fields:
+    alert(
+      "Comment ကို စာလုံး 500 ထက် မပိုစေပါနှင့်။"
+    );
 
-    feedback_id
-    comment
-    created_at
-    user_id
+    return;
 
-  */
+  }
+
+
+  const button =
+    input
+      .parentElement
+      .querySelector(
+        "button"
+      );
+
+
+  if(button){
+
+    button.disabled = true;
+
+    button.textContent =
+      "Sending...";
+
+  }
+
 
   try{
 
     const {
+      data,
       error
     } =
 
@@ -3191,17 +3333,68 @@ async function submitComment(id){
 
           comment:text
 
-        });
+        })
+
+        .select()
+        .single();
 
 
     if(error){
-
       throw error;
-
     }
 
 
     input.value = "";
+
+
+    /* COMMENT COUNT */
+
+    const item =
+      allFeedback.find(
+        feedback =>
+          String(
+            feedback.id
+          ) === String(id)
+      );
+
+
+    if(item){
+
+      item.comments_count =
+        Number(
+          item.comments_count || 0
+        ) + 1;
+
+    }
+
+
+    const countElement =
+      document.getElementById(
+        `comment-count-${id}`
+      );
+
+
+    if(countElement){
+
+      countElement.textContent =
+        item
+          ? item.comments_count
+          : Number(
+              countElement.textContent || 0
+            ) + 1;
+
+    }
+
+
+    /* FORCE RELOAD COMMENTS */
+
+    loadedComments.delete(
+      String(id)
+    );
+
+
+    await loadComments(id);
+
 
     alert(
       "Comment တင်ပြီးပါပြီ။"
@@ -3215,9 +3408,22 @@ async function submitComment(id){
       error
     );
 
+
     alert(
       "Comment တင်ရာတွင် အခက်အခဲရှိပါသည်။"
     );
+
+  }
+  finally{
+
+    if(button){
+
+      button.disabled = false;
+
+      button.textContent =
+        "Send";
+
+    }
 
   }
 
@@ -3248,6 +3454,59 @@ document
 
       currentRegion =
         this.value;
+
+      document
+        .querySelectorAll(
+          ".quick"
+        )
+        .forEach(
+          button =>
+            button.classList.remove(
+              "active"
+            )
+        );
+
+
+      if(!this.value){
+
+        document
+          .querySelector(
+            ".quick"
+          )
+          ?.classList.add(
+            "active"
+          );
+
+      }
+      else{
+
+        document
+          .querySelectorAll(
+            ".quick"
+          )
+          .forEach(
+            button => {
+
+              if(
+                button.textContent
+                  .trim()
+                  .toLowerCase()
+                  .includes(
+                    this.value.toLowerCase()
+                  )
+              ){
+
+                button.classList.add(
+                  "active"
+                );
+
+              }
+
+            }
+          );
+
+      }
+
 
       renderFeedback();
 
