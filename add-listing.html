@@ -3,252 +3,446 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <title>Myanmar Elite Connect - Add Listing</title>
+  <title>Add Listing - Myanmar Elite Connect</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase.js"></script>
 
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #071b3a;
+      --navy2: #102d59;
+      --green: #19a974;
+      --green2: #0f8f60;
+      --gold: #d9a441;
+      --bg: #f4f7fb;
+      --white: #ffffff;
+      --text: #172033;
+      --muted: #697386;
+      --border: #dfe5ee;
+      --danger: #b42318;
+      --success: #167344;
+      --shadow: 0 12px 35px rgba(7, 27, 58, .09);
     }
 
     body {
-      margin: 0;
-      background: #f4f6f9;
-      color: #172033;
-      font-family: Arial, "Noto Sans Myanmar", sans-serif;
+      font-family:
+        Arial,
+        "Noto Sans Myanmar",
+        sans-serif;
+
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
     }
 
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
     header {
-      background: #071b3a;
+      background: var(--navy);
       color: white;
-      padding: 17px 20px;
+      padding: 15px 5%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow:
+        0 3px 18px rgba(0, 0, 0, .12);
     }
 
     .header-inner {
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       gap: 15px;
     }
 
-    .brand {
-      font-size: 21px;
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .logo span {
+      color: #65d6a7;
+    }
+
+    .home-btn {
+      color: white;
+      text-decoration: none;
+
+      padding: 9px 14px;
+
+      border-radius: 9px;
+
+      background:
+        rgba(255, 255, 255, .1);
+
+      font-size: 13px;
       font-weight: 800;
     }
 
-    .home-link {
-      color: white;
-      text-decoration: none;
-      padding: 9px 14px;
-      border-radius: 8px;
-      background: rgba(255,255,255,.1);
-    }
+    /* =========================
+       CONTAINER
+    ========================= */
 
     .container {
-      max-width: 850px;
-      margin: 30px auto;
-      padding: 0 18px 50px;
+      width: min(900px, 92%);
+      margin: 35px auto 70px;
     }
 
     .card {
       background: white;
-      border-radius: 20px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
       padding: 30px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+
+      box-shadow: var(--shadow);
     }
 
     h1 {
-      margin: 0 0 8px;
-      color: #071b3a;
+      color: var(--navy);
+      font-size: 30px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
-      color: #687386;
-      line-height: 1.7;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
       margin-bottom: 25px;
     }
 
+    /* =========================
+       MESSAGE
+    ========================= */
+
     #message {
       display: none;
+
       padding: 14px 16px;
-      margin: 18px 0;
-      border-radius: 10px;
+      margin-bottom: 20px;
+
+      border-radius: 11px;
+
       line-height: 1.7;
       word-break: break-word;
     }
 
     #message.success {
       display: block;
-      background: #e9f8ef;
-      color: #176b38;
-      border: 1px solid #bce8cb;
+
+      background: #eaf8f0;
+      color: var(--success);
+      border: 1px solid #bee8ce;
     }
 
     #message.error {
       display: block;
-      background: #fff0f0;
-      color: #b42318;
-      border: 1px solid #ffd0d0;
+
+      background: #fff1f1;
+      color: var(--danger);
+      border: 1px solid #ffd2d2;
     }
+
+    /* =========================
+       FORM
+    ========================= */
 
     label {
       display: block;
-      margin-top: 19px;
-      margin-bottom: 7px;
+
+      margin:
+        20px 0 7px;
+
       font-size: 14px;
       font-weight: 800;
+      color: var(--navy);
+    }
+
+    .required {
+      color: var(--danger);
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      padding: 13px 14px;
-      border: 1px solid #d7dce5;
-      border-radius: 10px;
+
+      border: 1px solid var(--border);
+
       background: white;
-      color: #172033;
-      font-family: inherit;
+      color: var(--text);
+
+      border-radius: 10px;
+
+      padding: 13px 14px;
+
       font-size: 15px;
+
       outline: none;
+
+      transition: .2s;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #071b3a;
-      box-shadow: 0 0 0 3px rgba(7,27,58,.08);
+      border-color: var(--navy);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(7, 27, 58, .08);
     }
 
     textarea {
       min-height: 150px;
       resize: vertical;
+      line-height: 1.7;
     }
 
     .two-column {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr 1fr;
+
       gap: 15px;
     }
 
     .price-row {
-      display: flex;
+      display: grid;
+
+      grid-template-columns:
+        1fr 110px;
+
       gap: 10px;
     }
 
     .currency {
-      width: 110px;
-      background: #f1f3f6;
       text-align: center;
-      font-weight: 800;
+      font-weight: 900;
+      background: #f2f4f7;
     }
 
-    /* IMAGE UPLOAD */
+    /* =========================
+       UPLOAD
+    ========================= */
 
     .upload-box {
       margin-top: 10px;
-      border: 2px dashed #b9c3d4;
-      border-radius: 15px;
-      padding: 25px 18px;
+
+      border:
+        2px dashed
+        #b9c3d4;
+
+      border-radius: 16px;
+
+      padding: 28px 20px;
+
       text-align: center;
+
       background: #fafbfe;
+
       cursor: pointer;
+
       transition: .2s;
     }
 
     .upload-box:hover,
     .upload-box.dragover {
-      border-color: #071b3a;
-      background: #f1f5fb;
+      border-color: var(--green);
+
+      background:
+        #f0faf6;
     }
 
     .upload-icon {
-      font-size: 42px;
+      font-size: 45px;
       margin-bottom: 8px;
     }
 
     .upload-title {
-      font-weight: 800;
-      color: #071b3a;
-      margin-bottom: 6px;
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 17px;
+      margin-bottom: 7px;
     }
 
     .upload-help {
-      color: #697386;
+      color: var(--muted);
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     #imageInput {
       display: none;
     }
 
+    /* =========================
+       PREVIEW
+    ========================= */
+
     .preview-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 12px;
+
       margin-top: 15px;
     }
 
     .preview-item {
       position: relative;
+
       height: 150px;
-      border-radius: 12px;
+
       overflow: hidden;
+
+      border-radius: 12px;
+
       background: #e9edf4;
-      border: 1px solid #dde3ed;
+
+      border:
+        1px solid
+        var(--border);
     }
 
     .preview-item img {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       display: block;
+    }
+
+    .image-number {
+      position: absolute;
+
+      left: 7px;
+      bottom: 7px;
+
+      background:
+        rgba(0, 0, 0, .65);
+
+      color: white;
+
+      padding: 4px 7px;
+
+      border-radius: 6px;
+
+      font-size: 11px;
+
+      font-weight: 800;
     }
 
     .remove-image {
       position: absolute;
-      top: 7px;
+
       right: 7px;
+      top: 7px;
+
       width: 30px;
       height: 30px;
-      border: none;
+
+      border: 0;
       border-radius: 50%;
-      background: rgba(0,0,0,.72);
+
+      background:
+        rgba(0, 0, 0, .72);
+
       color: white;
+
+      font-size: 18px;
+      font-weight: 900;
+
       cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
     }
 
     .image-count {
-      margin-top: 10px;
-      color: #697386;
+      margin-top: 9px;
+
+      color: var(--muted);
+
       font-size: 13px;
     }
 
+    /* =========================
+       NOTE
+    ========================= */
+
+    .note {
+      margin-top: 15px;
+
+      padding: 13px 15px;
+
+      background: #f4f7fb;
+
+      border-radius: 10px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      line-height: 1.7;
+    }
+
+    /* =========================
+       SUBMIT
+    ========================= */
+
     .publish-btn {
       width: 100%;
-      margin-top: 28px;
+
+      border: 0;
+
+      margin-top: 25px;
+
       padding: 16px;
-      border: none;
+
       border-radius: 11px;
-      background: #071b3a;
+
+      background: var(--navy);
+
       color: white;
+
       font-size: 16px;
-      font-weight: 800;
+
+      font-weight: 900;
+
       cursor: pointer;
+
       transition: .2s;
     }
 
     .publish-btn:hover {
-      background: #0d2b58;
+      background: var(--navy2);
     }
 
     .publish-btn:disabled {
@@ -258,47 +452,68 @@
 
     .back {
       display: block;
-      margin-top: 20px;
+
       text-align: center;
-      color: #071b3a;
+
+      margin-top: 20px;
+
+      color: var(--navy);
+
       text-decoration: none;
-      font-weight: 700;
+
+      font-weight: 800;
     }
+
+    /* =========================
+       LOGIN
+    ========================= */
 
     .login-box {
       text-align: center;
-      padding: 30px 5px;
+      padding: 30px 10px;
+    }
+
+    .login-box h2 {
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .login-box p {
+      color: var(--muted);
+      line-height: 1.7;
     }
 
     .login-button {
       display: inline-block;
-      margin-top: 15px;
+
+      margin-top: 18px;
+
       padding: 12px 25px;
-      background: #071b3a;
+
+      border-radius: 9px;
+
+      background: var(--navy);
+
       color: white;
+
       text-decoration: none;
-      border-radius: 9px;
-      font-weight: bold;
+
+      font-weight: 900;
     }
 
-    .required {
-      color: #d92d20;
-    }
+    /* =========================
+       MOBILE
+    ========================= */
 
-    .note {
-      margin-top: 10px;
-      padding: 12px;
-      background: #f5f7fb;
-      border-radius: 9px;
-      color: #697386;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 700px) {
+    @media(max-width:700px) {
 
       .card {
         padding: 21px;
+        border-radius: 17px;
+      }
+
+      h1 {
+        font-size: 25px;
       }
 
       .two-column {
@@ -307,28 +522,25 @@
       }
 
       .price-row {
-        flex-direction: column;
-      }
-
-      .currency {
-        width: 100%;
+        grid-template-columns: 1fr;
       }
 
       .preview-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .preview-item {
         height: 145px;
       }
 
-      .brand {
-        font-size: 17px;
+      .logo {
+        font-size: 16px;
       }
+
     }
   </style>
 </head>
-
 
 <body>
 
@@ -336,15 +548,19 @@
 
   <div class="header-inner">
 
-    <div class="brand">
-      Myanmar Elite Connect
-    </div>
+    <a
+      href="./index.html"
+      class="logo"
+    >
+      Myanmar
+      <span>Elite Connect</span>
+    </a>
 
     <a
       href="./index.html"
-      class="home-link"
+      class="home-btn"
     >
-      Home
+      ← Home
     </a>
 
   </div>
@@ -363,7 +579,8 @@
     <p class="subtitle">
       🚗 ကား · 🏠 အိမ်ခြံမြေ · 💎 ကျောက်မျက်
       <br>
-      ရောင်းရန် / ငှားရန် ကြော်ငြာတင်ပါ။
+      သင်ရောင်းချလိုသော သို့မဟုတ် ငှားလိုသော
+      ပစ္စည်းကို တင်နိုင်ပါသည်။
     </p>
 
 
@@ -372,11 +589,10 @@
 
     <form id="listingForm">
 
-
       <!-- LISTING TYPE -->
 
       <label for="listingType">
-        ရောင်း/ငှား / Listing Type
+        ရောင်း / ငှား
         <span class="required">*</span>
       </label>
 
@@ -403,7 +619,7 @@
       <!-- CATEGORY -->
 
       <label for="category">
-        အမျိုးအစား / Category
+        အမျိုးအစား
         <span class="required">*</span>
       </label>
 
@@ -434,7 +650,7 @@
       <!-- TITLE -->
 
       <label for="title">
-        ခေါင်းစဉ် / Title
+        ခေါင်းစဉ်
         <span class="required">*</span>
       </label>
 
@@ -449,15 +665,14 @@
 
       <!-- PRICE -->
 
-      <label>
-        ဈေးနှုန်း / Price
+      <label for="price">
+        ဈေးနှုန်း
       </label>
 
       <div class="price-row">
 
         <input
           id="price"
-          class="price-input"
           type="number"
           min="0"
           step="0.01"
@@ -466,7 +681,6 @@
 
         <input
           class="currency"
-          type="text"
           value="MMK"
           readonly
         >
@@ -492,7 +706,6 @@
 
         </div>
 
-
         <div>
 
           <label for="township">
@@ -513,7 +726,7 @@
       <!-- ADDRESS -->
 
       <label for="address">
-        လိပ်စာ / Address
+        လိပ်စာ
       </label>
 
       <input
@@ -539,7 +752,7 @@
       <!-- PHONE -->
 
       <label for="phone">
-        ဖုန်းနံပါတ် / Phone
+        ဖုန်းနံပါတ်
       </label>
 
       <input
@@ -553,7 +766,7 @@
       <!-- DESCRIPTION -->
 
       <label for="description">
-        အသေးစိတ် / Description
+        အသေးစိတ်အချက်အလက်
       </label>
 
       <textarea
@@ -563,10 +776,10 @@
       ></textarea>
 
 
-      <!-- IMAGE -->
+      <!-- IMAGE UPLOAD -->
 
       <label>
-        ပုံများ / Listing Images
+        ပုံများ
       </label>
 
       <div
@@ -579,13 +792,23 @@
         </div>
 
         <div class="upload-title">
-          ပုံများ ရွေးချယ်ပါ
+          ပုံများရွေးချယ်ပါ
         </div>
 
         <div class="upload-help">
-          နှိပ်ပြီး ပုံများရွေးနိုင်ပါသည်
+
+          ဒီနေရာကိုနှိပ်ပြီး
+          ပုံများရွေးနိုင်ပါသည်။
+
           <br>
-          JPG / PNG / WEBP · တစ်ပုံ 5MB အထိ
+
+          JPG / PNG / WEBP
+
+          <br>
+
+          တစ်ပုံလျှင် 5MB အထိ ·
+          အများဆုံး 10 ပုံ
+
         </div>
 
         <input
@@ -603,6 +826,7 @@
         class="preview-grid"
       ></div>
 
+
       <div
         id="imageCount"
         class="image-count"
@@ -612,10 +836,16 @@
 
 
       <div class="note">
-        💡 ပုံများကို Supabase Storage ရှိ
-        <strong>listing-images</strong>
-        bucket ထဲသို့ upload လုပ်ပြီး
-        Listing နဲ့ ချိတ်ဆက်ပေးပါမည်။
+
+        💡 Listing တင်ပြီးနောက်
+        <strong>Pending Review</strong>
+        အခြေအနေဖြင့် သိမ်းဆည်းပါမည်။
+
+        <br>
+
+        Admin မှ အတည်ပြုပြီးမှ
+        Marketplace တွင် ပေါ်လာပါမည်။
+
       </div>
 
 
@@ -623,10 +853,10 @@
 
       <button
         id="publishButton"
-        class="publish-btn"
         type="submit"
+        class="publish-btn"
       >
-        Publish Listing
+        Submit Listing
       </button>
 
     </form>
@@ -646,35 +876,26 @@
 
 <script>
 
-/* =========================================
-   ELEMENTS
-========================================= */
+/* =====================================================
+   SUPABASE
+===================================================== */
 
-const form =
-  document.getElementById("listingForm");
+const SUPABASE_URL =
+  "https://ikjwisfsdcupibgjiuvp.supabase.co";
 
-const message =
-  document.getElementById("message");
+const SUPABASE_KEY =
+  "sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
 
-const publishButton =
-  document.getElementById("publishButton");
-
-const imageInput =
-  document.getElementById("imageInput");
-
-const uploadBox =
-  document.getElementById("uploadBox");
-
-const previewGrid =
-  document.getElementById("previewGrid");
-
-const imageCount =
-  document.getElementById("imageCount");
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-/* =========================================
+/* =====================================================
    SETTINGS
-========================================= */
+===================================================== */
 
 const STORAGE_BUCKET =
   "listing-images";
@@ -686,42 +907,90 @@ const MAX_FILE_SIZE =
   5 * 1024 * 1024;
 
 
-/* =========================================
-   SELECTED IMAGES
-========================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const form =
+  document.getElementById(
+    "listingForm"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+const uploadBox =
+  document.getElementById(
+    "uploadBox"
+  );
+
+const imageInput =
+  document.getElementById(
+    "imageInput"
+  );
+
+const previewGrid =
+  document.getElementById(
+    "previewGrid"
+  );
+
+const imageCount =
+  document.getElementById(
+    "imageCount"
+  );
+
+const publishButton =
+  document.getElementById(
+    "publishButton"
+  );
+
+
+/* =====================================================
+   FILES
+===================================================== */
 
 let selectedFiles = [];
 
 
-/* =========================================
+/* =====================================================
    MESSAGE
-========================================= */
+===================================================== */
 
-function showMessage(text, type) {
+function showMessage(
+  text,
+  type
+) {
 
-  message.textContent = text;
+  message.textContent =
+    text;
 
-  message.className = type;
+  message.className =
+    type;
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
 function clearMessage() {
 
-  message.textContent = "";
+  message.textContent =
+    "";
 
-  message.className = "";
+  message.className =
+    "";
 
 }
 
 
-/* =========================================
-   CURRENT USER
-========================================= */
+/* =====================================================
+   USER
+===================================================== */
 
 async function getCurrentUser() {
 
@@ -729,7 +998,9 @@ async function getCurrentUser() {
     data,
     error
   } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient
+      .auth
+      .getSession();
 
   if (error) {
     throw error;
@@ -740,16 +1011,19 @@ async function getCurrentUser() {
     !data.session ||
     !data.session.user
   ) {
+
     return null;
+
   }
 
   return data.session.user;
+
 }
 
 
-/* =========================================
+/* =====================================================
    LOGIN CHECK
-========================================= */
+===================================================== */
 
 async function checkLogin() {
 
@@ -765,7 +1039,7 @@ async function checkLogin() {
         <div class="login-box">
 
           <h2>
-            Login လိုအပ်ပါတယ်
+            🔐 Login လိုအပ်ပါတယ်
           </h2>
 
           <p>
@@ -784,28 +1058,38 @@ async function checkLogin() {
 
       `;
 
+      return false;
+
     }
+
+    return true;
 
   }
   catch (error) {
 
     showMessage(
-      "❌ " + error.message,
+      "❌ " +
+      (
+        error.message ||
+        "Login စစ်၍မရပါ။"
+      ),
       "error"
     );
+
+    return false;
 
   }
 
 }
 
 
-/* =========================================
-   IMAGE INPUT
-========================================= */
+/* =====================================================
+   FILE PICKER
+===================================================== */
 
 uploadBox.addEventListener(
   "click",
-  function() {
+  () => {
 
     imageInput.click();
 
@@ -815,25 +1099,28 @@ uploadBox.addEventListener(
 
 imageInput.addEventListener(
   "change",
-  function() {
+  () => {
 
     addFiles(
-      Array.from(imageInput.files)
+      Array.from(
+        imageInput.files
+      )
     );
 
-    imageInput.value = "";
+    imageInput.value =
+      "";
 
   }
 );
 
 
-/* =========================================
-   DRAG & DROP
-========================================= */
+/* =====================================================
+   DRAG DROP
+===================================================== */
 
 uploadBox.addEventListener(
   "dragover",
-  function(event) {
+  event => {
 
     event.preventDefault();
 
@@ -847,7 +1134,7 @@ uploadBox.addEventListener(
 
 uploadBox.addEventListener(
   "dragleave",
-  function() {
+  () => {
 
     uploadBox.classList.remove(
       "dragover"
@@ -859,7 +1146,7 @@ uploadBox.addEventListener(
 
 uploadBox.addEventListener(
   "drop",
-  function(event) {
+  event => {
 
     event.preventDefault();
 
@@ -877,9 +1164,9 @@ uploadBox.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================================
    ADD FILES
-========================================= */
+===================================================== */
 
 function addFiles(files) {
 
@@ -897,7 +1184,7 @@ function addFiles(files) {
       showMessage(
         "အများဆုံး " +
         MAX_IMAGES +
-        " ပုံအထိသာ ရွေးနိုင်ပါသည်။",
+        " ပုံအထိသာ တင်နိုင်ပါသည်။",
         "error"
       );
 
@@ -906,19 +1193,22 @@ function addFiles(files) {
     }
 
 
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+
     if (
-      ![
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-      ].includes(
+      !allowedTypes.includes(
         file.type
       )
     ) {
 
       showMessage(
         file.name +
-        " သည် JPG, PNG သို့မဟုတ် WEBP မဟုတ်ပါ။",
+        " သည် JPG, PNG, WEBP မဟုတ်ပါ။",
         "error"
       );
 
@@ -945,14 +1235,11 @@ function addFiles(files) {
 
     const duplicate =
       selectedFiles.some(
-        function(existing) {
-
-          return (
-            existing.name === file.name &&
-            existing.size === file.size
-          );
-
-        }
+        existing =>
+          existing.name ===
+            file.name &&
+          existing.size ===
+            file.size
       );
 
 
@@ -961,7 +1248,9 @@ function addFiles(files) {
     }
 
 
-    selectedFiles.push(file);
+    selectedFiles.push(
+      file
+    );
 
   }
 
@@ -971,20 +1260,23 @@ function addFiles(files) {
 }
 
 
-/* =========================================
-   RENDER PREVIEWS
-========================================= */
+/* =====================================================
+   PREVIEW
+===================================================== */
 
 function renderPreviews() {
 
-  previewGrid.innerHTML = "";
+  previewGrid.innerHTML =
+    "";
 
 
   selectedFiles.forEach(
-    function(file, index) {
+    (file, index) => {
 
-      const url =
-        URL.createObjectURL(file);
+      const objectUrl =
+        URL.createObjectURL(
+          file
+        );
 
 
       const item =
@@ -999,14 +1291,17 @@ function renderPreviews() {
       item.innerHTML = `
 
         <img
-          src="${url}"
+          src="${objectUrl}"
           alt="Listing image"
         >
+
+        <div class="image-number">
+          ${index + 1}
+        </div>
 
         <button
           type="button"
           class="remove-image"
-          data-index="${index}"
         >
           ×
         </button>
@@ -1020,11 +1315,17 @@ function renderPreviews() {
         )
         .addEventListener(
           "click",
-          function() {
+          event => {
+
+            event.stopPropagation();
 
             selectedFiles.splice(
               index,
               1
+            );
+
+            URL.revokeObjectURL(
+              objectUrl
             );
 
             renderPreviews();
@@ -1033,7 +1334,9 @@ function renderPreviews() {
         );
 
 
-      previewGrid.appendChild(item);
+      previewGrid.appendChild(
+        item
+      );
 
     }
   );
@@ -1051,6 +1354,8 @@ function renderPreviews() {
 
     imageCount.textContent =
       selectedFiles.length +
+      " / " +
+      MAX_IMAGES +
       " ပုံ ရွေးထားပါသည်။";
 
   }
@@ -1058,16 +1363,18 @@ function renderPreviews() {
 }
 
 
-/* =========================================
+/* =====================================================
    SAFE FILE NAME
-========================================= */
+===================================================== */
 
-function safeFileName(name) {
+function safeFileName(
+  name
+) {
 
   return name
     .toLowerCase()
     .replace(
-      /[^a-z0-9.]+/g,
+      /[^a-z0-9]+/g,
       "-"
     )
     .replace(
@@ -1078,16 +1385,17 @@ function safeFileName(name) {
 }
 
 
-/* =========================================
-   UPLOAD IMAGES
-========================================= */
+/* =====================================================
+   UPLOAD IMAGE
+===================================================== */
 
 async function uploadImages(
   userId,
   listingId
 ) {
 
-  const imageUrls = [];
+  const uploadedUrls =
+    [];
 
 
   for (
@@ -1101,7 +1409,7 @@ async function uploadImages(
 
 
     publishButton.textContent =
-      "Uploading image " +
+      "Uploading " +
       (i + 1) +
       " / " +
       selectedFiles.length +
@@ -1115,20 +1423,25 @@ async function uploadImages(
         .toLowerCase();
 
 
+    const originalName =
+      file.name
+        .replace(
+          /\.[^/.]+$/,
+          ""
+        );
+
+
     const cleanName =
       safeFileName(
-        file.name
-          .replace(
-            /\.[^/.]+$/,
-            ""
-          )
-      );
+        originalName
+      ) ||
+      "image";
 
 
     const uniqueName =
       Date.now() +
       "-" +
-      i +
+      crypto.randomUUID() +
       "-" +
       cleanName +
       "." +
@@ -1144,7 +1457,7 @@ async function uploadImages(
 
 
     const {
-      error: uploadError
+      error
     } =
       await supabaseClient
         .storage
@@ -1155,19 +1468,23 @@ async function uploadImages(
           filePath,
           file,
           {
-            cacheControl: "3600",
-            upsert: false,
+            cacheControl:
+              "3600",
+
+            upsert:
+              false,
+
             contentType:
               file.type
           }
         );
 
 
-    if (uploadError) {
+    if (error) {
 
       throw new Error(
-        "Image upload failed: " +
-        uploadError.message
+        "ပုံ upload မအောင်မြင်ပါ: " +
+        error.message
       );
 
     }
@@ -1192,68 +1509,74 @@ async function uploadImages(
     ) {
 
       throw new Error(
-        "Image URL မရရှိပါ။"
+        "ပုံ URL မရရှိပါ။"
       );
 
     }
 
 
-    imageUrls.push(
+    uploadedUrls.push(
       data.publicUrl
     );
 
   }
 
 
-  return imageUrls;
+  return uploadedUrls;
 
 }
 
 
-/* =========================================
-   DELETE UPLOADED FILES
-   If DB insert/update fails
-========================================= */
+/* =====================================================
+   DELETE STORAGE FILES
+===================================================== */
 
-async function deleteUploadedImages(
-  userId,
-  listingId,
+async function deleteStorageFiles(
   urls
 ) {
 
-  if (!urls.length) {
+  if (
+    !urls ||
+    !urls.length
+  ) {
+
     return;
+
   }
 
 
+  const marker =
+    "/storage/v1/object/public/" +
+    STORAGE_BUCKET +
+    "/";
+
+
   const paths =
-    urls.map(
-      function(url) {
+    urls
+      .map(
+        url => {
 
-        const marker =
-          "/storage/v1/object/public/" +
-          STORAGE_BUCKET +
-          "/";
+          const index =
+            url.indexOf(
+              marker
+            );
 
+          if (
+            index === -1
+          ) {
 
-        const index =
-          url.indexOf(marker);
+            return null;
 
+          }
 
-        if (
-          index === -1
-        ) {
-          return null;
+          return url.substring(
+            index +
+            marker.length
+          );
+
         }
-
-
-        return url.substring(
-          index + marker.length
-        );
-
-      }
-    )
-    .filter(Boolean);
+      )
+      .filter(Boolean);
 
 
   if (!paths.length) {
@@ -1261,23 +1584,38 @@ async function deleteUploadedImages(
   }
 
 
-  await supabaseClient
-    .storage
-    .from(
-      STORAGE_BUCKET
-    )
-    .remove(paths);
+  const {
+    error
+  } =
+    await supabaseClient
+      .storage
+      .from(
+        STORAGE_BUCKET
+      )
+      .remove(
+        paths
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Storage cleanup error:",
+      error
+    );
+
+  }
 
 }
 
 
-/* =========================================
+/* =====================================================
    SUBMIT
-========================================= */
+===================================================== */
 
 form.addEventListener(
   "submit",
-  async function(event) {
+  async event => {
 
     event.preventDefault();
 
@@ -1294,7 +1632,8 @@ form.addEventListener(
     let createdListingId =
       null;
 
-    let uploadedUrls = [];
+    let uploadedUrls =
+      [];
 
 
     try {
@@ -1407,12 +1746,16 @@ form.addEventListener(
       /* VALIDATION */
 
       if (
-        listingType !== "sale" &&
-        listingType !== "rent"
+        ![
+          "sale",
+          "rent"
+        ].includes(
+          listingType
+        )
       ) {
 
         throw new Error(
-          "ရောင်းရန် သို့မဟုတ် ငှားရန် ရွေးပါ။"
+          "ရောင်းရန် သို့မဟုတ် ငှားရန် ရွေးချယ်ပါ။"
         );
 
       }
@@ -1423,11 +1766,13 @@ form.addEventListener(
           "car",
           "property",
           "gem"
-        ].includes(category)
+        ].includes(
+          category
+        )
       ) {
 
         throw new Error(
-          "မှန်ကန်သော Category ရွေးပါ။"
+          "Category မှန်ကန်စွာ ရွေးချယ်ပါ။"
         );
 
       }
@@ -1436,7 +1781,7 @@ form.addEventListener(
       if (!title) {
 
         throw new Error(
-          "Title ထည့်ပေးပါ။"
+          "Listing Title ထည့်ပေးပါ။"
         );
 
       }
@@ -1444,17 +1789,22 @@ form.addEventListener(
 
       /* PRICE */
 
-      let price = null;
+      let price =
+        null;
 
 
-      if (priceText !== "") {
+      if (priceText) {
 
         price =
-          Number(priceText);
+          Number(
+            priceText
+          );
 
 
         if (
-          !Number.isFinite(price) ||
+          !Number.isFinite(
+            price
+          ) ||
           price < 0
         ) {
 
@@ -1467,9 +1817,9 @@ form.addEventListener(
       }
 
 
-      /* =================================
-         INSERT LISTING FIRST
-      ================================= */
+      /* =================================================
+         CREATE LISTING
+      ================================================= */
 
       publishButton.textContent =
         "Creating listing...";
@@ -1522,27 +1872,27 @@ form.addEventListener(
           phone ||
           null,
 
-        images:
-          [],
+        status:
+          "pending",
 
         featured:
-          false
+          false,
+
+        images:
+          []
 
       };
 
 
-      console.log(
-        "Creating listing:",
-        listingData
-      );
-
-
       const {
         data: listing,
-        error: insertError
+        error:
+          listingError
       } =
         await supabaseClient
-          .from("listings")
+          .from(
+            "listings"
+          )
           .insert(
             listingData
           )
@@ -1550,14 +1900,14 @@ form.addEventListener(
           .single();
 
 
-      if (insertError) {
+      if (listingError) {
 
         console.error(
-          "LISTING INSERT ERROR:",
-          insertError
+          "Listing creation error:",
+          listingError
         );
 
-        throw insertError;
+        throw listingError;
 
       }
 
@@ -1566,12 +1916,12 @@ form.addEventListener(
         listing.id;
 
 
-      /* =================================
+      /* =================================================
          UPLOAD IMAGES
-      ================================= */
+      ================================================= */
 
       if (
-        selectedFiles.length > 0
+        selectedFiles.length
       ) {
 
         uploadedUrls =
@@ -1581,19 +1931,22 @@ form.addEventListener(
           );
 
 
-        /* =================================
-           UPDATE LISTING WITH IMAGE URLS
-        ================================= */
+        /* =================================================
+           SAVE URLs TO listings.images
+        ================================================= */
 
         publishButton.textContent =
-          "Saving image information...";
+          "Saving listing images...";
 
 
         const {
-          error: updateError
+          error:
+            updateListingError
         } =
           await supabaseClient
-            .from("listings")
+            .from(
+              "listings"
+            )
             .update({
               images:
                 uploadedUrls
@@ -1604,54 +1957,102 @@ form.addEventListener(
             );
 
 
-        if (updateError) {
+        if (
+          updateListingError
+        ) {
 
-          console.error(
-            "IMAGE URL UPDATE ERROR:",
-            updateError
+          throw updateListingError;
+
+        }
+
+
+        /* =================================================
+           SAVE TO listing_images TABLE
+        ================================================= */
+
+        const imageRows =
+          uploadedUrls.map(
+            (
+              url,
+              index
+            ) => ({
+
+              listing_id:
+                createdListingId,
+
+              image_url:
+                url,
+
+              sort_order:
+                index
+
+            })
           );
 
-          throw updateError;
+
+        const {
+          error:
+            imageTableError
+        } =
+          await supabaseClient
+            .from(
+              "listing_images"
+            )
+            .insert(
+              imageRows
+            );
+
+
+        if (
+          imageTableError
+        ) {
+
+          console.error(
+            "listing_images error:",
+            imageTableError
+          );
+
+          throw imageTableError;
 
         }
 
       }
 
 
-      /* =================================
+      /* =================================================
          SUCCESS
-      ================================= */
+      ================================================= */
 
       publishButton.textContent =
-        "Published ✓";
+        "Submitted ✓";
 
 
       showMessage(
-        "✅ Listing အောင်မြင်စွာ တင်ပြီးပါပြီ။",
+        "✅ Listing အောင်မြင်စွာ တင်ပြီးပါပြီ။ Admin စစ်ဆေးပြီးနောက် Marketplace တွင် ပေါ်လာပါမည်။",
         "success"
       );
 
 
       form.reset();
 
-      selectedFiles = [];
+      selectedFiles =
+        [];
 
       renderPreviews();
 
 
       setTimeout(
-        function() {
+        () => {
 
           window.location.href =
             "./index.html";
 
         },
-        1500
+        1800
       );
 
+
     }
-
-
     catch (error) {
 
       console.error(
@@ -1660,41 +2061,34 @@ form.addEventListener(
       );
 
 
-      /*
-        If images uploaded but
-        something failed afterwards,
-        remove uploaded images.
-      */
+      /* =================================================
+         CLEANUP
+      ================================================= */
 
       if (
-        uploadedUrls.length &&
+        uploadedUrls.length
+      ) {
+
+        await deleteStorageFiles(
+          uploadedUrls
+        );
+
+      }
+
+
+      if (
         createdListingId
       ) {
 
-        try {
-
-          const user =
-            await getCurrentUser();
-
-          if (user) {
-
-            await deleteUploadedImages(
-              user.id,
-              createdListingId,
-              uploadedUrls
-            );
-
-          }
-
-        }
-        catch (cleanupError) {
-
-          console.error(
-            "Cleanup error:",
-            cleanupError
+        await supabaseClient
+          .from(
+            "listings"
+          )
+          .delete()
+          .eq(
+            "id",
+            createdListingId
           );
-
-        }
 
       }
 
@@ -1713,7 +2107,7 @@ form.addEventListener(
         false;
 
       publishButton.textContent =
-        "Publish Listing";
+        "Submit Listing";
 
     }
 
@@ -1721,9 +2115,9 @@ form.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================================
    START
-========================================= */
+===================================================== */
 
 checkLogin();
 
