@@ -1,729 +1,263 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-<title>Myanmar Elite Connect — General</title>
+<title>Myanmar Elite Connect</title>
 
-<meta name="description"
-content="Myanmar Elite Connect — Myanmar Cars, Property & Gems Marketplace">
+<meta
+  name="description"
+  content="Myanmar Elite Connect - Cars, Property & Gems Marketplace"
+>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+<link rel="stylesheet" href="./css/style.css">
 
-:root{
-  --navy:#071b3a;
-  --navy2:#102d59;
-  --green:#19a974;
-  --green2:#0f8f60;
-  --gold:#d9a441;
-  --bg:#f4f7fb;
-  --white:#ffffff;
-  --text:#172033;
-  --muted:#697386;
-  --border:#e2e7ef;
-  --danger:#b42318;
-  --shadow:0 10px 30px rgba(7,27,58,.08);
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Arial,"Noto Sans Myanmar",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  padding-bottom:82px;
-}
-
-button,
-input{
-  font-family:inherit;
-}
-
-/* =========================
-   TOP HEADER
-========================= */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(7,27,58,.97);
-  backdrop-filter:blur(14px);
-  color:white;
-  box-shadow:0 4px 20px rgba(0,0,0,.15);
-}
-
-.header-inner{
-  max-width:1200px;
-  margin:auto;
-  padding:14px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.logo{
-  text-decoration:none;
-  color:white;
-  font-size:20px;
-  font-weight:900;
-}
-
-.logo span{
-  color:#65d6a7;
-}
-
-.header-actions{
-  display:flex;
-  gap:8px;
-}
-
-.header-btn{
-  border:0;
-  text-decoration:none;
-  padding:9px 13px;
-  border-radius:9px;
-  color:white;
-  background:rgba(255,255,255,.1);
-  font-size:13px;
-  font-weight:800;
-}
-
-.header-btn.green{
-  background:var(--green);
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-  background:
-    radial-gradient(
-      circle at 85% 10%,
-      #17467e 0,
-      #071b3a 45%,
-      #041126 100%
-    );
-
-  color:white;
-  padding:58px 20px 70px;
-  text-align:center;
-}
-
-.hero-badge{
-  display:inline-block;
-  padding:7px 13px;
-  border-radius:30px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);
-  font-size:12px;
-  margin-bottom:16px;
-}
-
-.hero h1{
-  font-size:clamp(34px,6vw,58px);
-  font-weight:900;
-  margin-bottom:12px;
-}
-
-.hero h1 span{
-  color:#65d6a7;
-}
-
-.hero p{
-  max-width:700px;
-  margin:auto;
-  color:rgba(255,255,255,.8);
-  line-height:1.9;
-  font-size:14px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-area{
-  max-width:900px;
-  margin:-25px auto 0;
-  padding:0 20px;
-  position:relative;
-  z-index:5;
-}
-
-.search-box{
-  background:white;
-  padding:8px;
-  border-radius:16px;
-  box-shadow:0 15px 45px rgba(0,0,0,.18);
-  display:flex;
-  gap:8px;
-}
-
-.search-box input{
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
-  padding:14px;
-  font-size:15px;
-  color:var(--text);
-}
-
-.search-button{
-  border:0;
-  background:var(--navy);
-  color:white;
-  padding:0 23px;
-  border-radius:10px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-main{
-  max-width:1200px;
-  margin:auto;
-  padding:45px 20px;
-}
-
-.section-title{
-  text-align:center;
-  margin-bottom:24px;
-}
-
-.section-title h2{
-  color:var(--navy);
-  font-size:28px;
-  margin-bottom:7px;
-}
-
-.section-title p{
-  color:var(--muted);
-  font-size:13px;
-}
-
-/* =========================
-   CATEGORY CARDS
-========================= */
-
-.category-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-bottom:45px;
-}
-
-.category-card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:27px 18px;
-  text-align:center;
-  text-decoration:none;
-  color:var(--text);
-  box-shadow:var(--shadow);
-  transition:.25s;
-}
-
-.category-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 18px 40px rgba(7,27,58,.13);
-}
-
-.category-icon{
-  width:72px;
-  height:72px;
-  margin:auto auto 14px;
-  border-radius:20px;
-  background:#f1f5fa;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:38px;
-}
-
-.category-card h3{
-  color:var(--navy);
-  margin-bottom:6px;
-  font-size:18px;
-}
-
-.category-card p{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-}
-
-/* =========================
-   QUICK ACTIONS
-========================= */
-
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-bottom:45px;
-}
-
-.quick-card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:17px 12px;
-  text-align:center;
-  text-decoration:none;
-  color:var(--navy);
-  font-weight:900;
-  box-shadow:var(--shadow);
-  transition:.2s;
-}
-
-.quick-card:hover{
-  transform:translateY(-3px);
-}
-
-.quick-icon{
-  font-size:27px;
-  display:block;
-  margin-bottom:7px;
-}
-
-.quick-card small{
-  display:block;
-  color:var(--muted);
-  font-weight:600;
-  margin-top:4px;
-}
-
-/* =========================
-   LISTING SECTION
-========================= */
-
-.listing-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:18px;
-}
-
-.listing-header h2{
-  color:var(--navy);
-  font-size:25px;
-}
-
-.listing-count{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
-}
-
-.view-all{
-  color:var(--navy);
-  text-decoration:none;
-  font-size:13px;
-  font-weight:900;
-}
-
-/* =========================
-   LISTING GRID
-========================= */
-
-.listing-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.listing-card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:17px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-
-.listing-image{
-  height:200px;
-  background:
-    linear-gradient(
-      135deg,
-      #071b3a,
-      #24548d
-    );
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.listing-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-.no-image{
-  font-size:58px;
-}
-
-.image-count{
-  position:absolute;
-  right:9px;
-  bottom:9px;
-  padding:5px 8px;
-  border-radius:7px;
-  background:rgba(0,0,0,.65);
-  color:white;
-  font-size:11px;
-}
-
-.featured{
-  position:absolute;
-  top:10px;
-  left:10px;
-  background:var(--gold);
-  color:white;
-  padding:5px 8px;
-  border-radius:6px;
-  font-size:10px;
-  font-weight:900;
-}
-
-.listing-body{
-  padding:16px;
-}
-
-.listing-type{
-  display:inline-block;
-  background:#e8f7ef;
-  color:#167344;
-  padding:5px 8px;
-  border-radius:6px;
-  font-size:10px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.listing-title{
-  color:var(--navy);
-  font-size:17px;
-  font-weight:900;
-  line-height:1.4;
-  margin-bottom:7px;
-}
-
-.listing-price{
-  color:var(--navy);
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:7px;
-}
-
-.listing-location{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-}
-
-.empty{
-  grid-column:1/-1;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:50px 20px;
-  text-align:center;
-  color:var(--muted);
-}
-
-.empty-icon{
-  font-size:45px;
-  margin-bottom:10px;
-}
-
-/* =========================
-   FEATURES
-========================= */
-
-.features{
-  margin-top:50px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.feature{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
-}
-
-.feature strong{
-  display:block;
-  color:var(--navy);
-  margin-bottom:7px;
-}
-
-.feature p{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
-}
-
-/* =========================
-   BOTTOM NAVIGATION
-========================= */
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:70px;
-  background:white;
-  border-top:1px solid var(--border);
-  box-shadow:0 -5px 20px rgba(0,0,0,.08);
-  z-index:2000;
-  display:flex;
-  justify-content:center;
-}
-
-.bottom-inner{
-  width:100%;
-  max-width:650px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-}
-
-.bottom-item{
-  border:0;
-  background:white;
-  text-decoration:none;
-  color:var(--muted);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-  font-size:11px;
-  font-weight:800;
-}
-
-.bottom-item span{
-  font-size:23px;
-}
-
-.bottom-item.active{
-  color:var(--navy);
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  background:var(--navy);
-  color:white;
-  text-align:center;
-  padding:28px 20px 90px;
-}
-
-footer strong{
-  font-size:16px;
-}
-
-footer p{
-  margin-top:6px;
-  color:rgba(255,255,255,.68);
-  font-size:12px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:950px){
-
-  .listing-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .quick-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-}
-
-@media(max-width:700px){
-
-  .header-actions .desktop{
-    display:none;
-  }
-
-  .hero{
-    padding:48px 20px 60px;
-  }
-
-  .hero h1{
-    font-size:34px;
-  }
-
-  .search-box{
-    flex-direction:column;
-  }
-
-  .search-button{
-    padding:14px;
-  }
-
-  .category-grid,
-  .listing-grid,
-  .features{
-    grid-template-columns:1fr;
-  }
-
-  .listing-header{
-    align-items:flex-start;
-  }
-
-  .listing-header h2{
-    font-size:22px;
-  }
-
-  .listing-image{
-    height:220px;
-  }
-
-}
-</style>
 </head>
 
 <body>
 
-<!-- =========================
+
+<!-- ==================================================
      HEADER
-========================= -->
+================================================== -->
 
-<header>
+<header class="site-header">
 
-  <div class="header-inner">
+  <div class="container header-inner">
 
-    <a href="./index.html" class="logo">
-      Myanmar <span>Elite Connect</span>
+    <a
+      href="./index.html"
+      class="site-logo"
+    >
+
+      <div class="logo-mark">
+        M
+      </div>
+
+      Myanmar
+      <span>Elite Connect</span>
+
     </a>
 
-    <div class="header-actions">
+
+    <!-- DESKTOP NAV -->
+
+    <nav class="main-nav">
+
+      <a href="./index.html">
+        Home
+      </a>
+
+      <a href="./car.html">
+        🚗 Cars
+      </a>
+
+      <a href="./property.html">
+        🏠 Property
+      </a>
+
+      <a href="./gem.html">
+        💎 Gems
+      </a>
+
+      <a href="./buy.html">
+        🛒 Buy
+      </a>
 
       <a
-        href="./add-listing.html"
-        class="header-btn green"
+        href="./sell.html"
+        class="nav-sell"
       >
         + Sell
       </a>
 
-      <a
-        href="./auth.html"
-        class="header-btn desktop"
-      >
-        Login
+      <a href="./chat.html">
+        💬 Chat
       </a>
 
-    </div>
+      <a
+        href="./profile.html"
+        class="nav-profile"
+      >
+        👤 Profile
+      </a>
+
+    </nav>
+
+
+    <!-- MOBILE MENU BUTTON -->
+
+    <button
+      class="menu-button"
+      onclick="toggleMobileMenu()"
+      aria-label="Menu"
+    >
+      ☰
+    </button>
+
+  </div>
+
+
+  <!-- MOBILE NAV -->
+
+  <div
+    id="mobileNav"
+    class="mobile-nav"
+  >
+
+    <a
+      href="./index.html"
+      onclick="closeMobileMenu()"
+    >
+      🏠 Home
+    </a>
+
+    <a
+      href="./car.html"
+      onclick="closeMobileMenu()"
+    >
+      🚗 Cars
+    </a>
+
+    <a
+      href="./property.html"
+      onclick="closeMobileMenu()"
+    >
+      🏠 Property
+    </a>
+
+    <a
+      href="./gem.html"
+      onclick="closeMobileMenu()"
+    >
+      💎 Gems
+    </a>
+
+    <a
+      href="./buy.html"
+      onclick="closeMobileMenu()"
+    >
+      🛒 Buy
+    </a>
+
+    <a
+      href="./sell.html"
+      onclick="closeMobileMenu()"
+    >
+      🏷️ Sell
+    </a>
+
+    <a
+      href="./chat.html"
+      onclick="closeMobileMenu()"
+    >
+      💬 Chat
+    </a>
+
+    <a
+      href="./profile.html"
+      onclick="closeMobileMenu()"
+    >
+      👤 Profile
+    </a>
+
+    <a
+      href="./auth.html"
+      onclick="closeMobileMenu()"
+    >
+      🔐 Login
+    </a>
 
   </div>
 
 </header>
 
 
-<!-- =========================
+<!-- ==================================================
      HERO
-========================= -->
+================================================== -->
 
 <section class="hero">
 
-  <div class="hero-badge">
-    🛡️ Trusted Myanmar Marketplace
+  <div class="container">
+
+    <div class="hero-badge">
+      🛡️ Trusted Myanmar Marketplace
+    </div>
+
+
+    <h1>
+      Myanmar
+      <span>Elite Connect</span>
+    </h1>
+
+
+    <p>
+
+      မြန်မာနိုင်ငံအတွင်း
+      ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်များကို
+      ရှာဖွေ၊ ဝယ်ယူ၊ ရောင်းချနိုင်သော
+      Marketplace
+
+      <br>
+
+      Find.
+      Connect.
+      Trade.
+
+    </p>
+
+
+    <!-- SEARCH -->
+
+    <form
+      class="search-box"
+      onsubmit="searchMarketplace(event)"
+    >
+
+      <input
+        id="homeSearch"
+        type="search"
+        placeholder="ကား၊ အိမ်၊ ကျောက်မျက်၊ Yangon..."
+        autocomplete="off"
+      >
+
+      <button type="submit">
+        🔎 Search
+      </button>
+
+    </form>
+
   </div>
-
-  <h1>
-    Myanmar <span>Elite Connect</span>
-  </h1>
-
-  <p>
-    ကား၊ အိမ်ခြံမြေ နှင့် ကျောက်မျက်များကို
-    တစ်နေရာတည်းတွင် ရှာဖွေ၊ ဝယ်ယူ၊ ရောင်းချနိုင်ပါသည်။
-    <br>
-    Find • Connect • Trade
-  </p>
 
 </section>
 
 
-<!-- =========================
-     SEARCH
-========================= -->
-
-<div class="search-area">
-
-  <div class="search-box">
-
-    <input
-      id="searchInput"
-      type="text"
-      placeholder="ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်၊ Yangon..."
-      autocomplete="off"
-    >
-
-    <button
-      class="search-button"
-      onclick="searchListings()"
-    >
-      🔎 Search
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     MAIN
-========================= -->
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
 
 <main>
 
+<section class="section">
 
-  <!-- CATEGORY -->
-
-  <section>
+  <div class="container">
 
     <div class="section-title">
 
       <h2>
-        Marketplace
+        Browse Categories
       </h2>
 
       <p>
-        သင်အသုံးပြုလိုသော Marketplace ကိုရွေးပါ
+        သင်ရှာဖွေလိုသော အမျိုးအစားကို ရွေးချယ်ပါ
       </p>
 
     </div>
@@ -731,6 +265,8 @@ footer p{
 
     <div class="category-grid">
 
+
+      <!-- CAR -->
 
       <a
         href="./car.html"
@@ -742,15 +278,17 @@ footer p{
         </div>
 
         <h3>
-          Car Marketplace
+          Cars
         </h3>
 
         <p>
-          ကားဝယ်ရန် / ရောင်းရန်
+          ကားများ ရောင်းဝယ်ရန်
         </p>
 
       </a>
 
+
+      <!-- PROPERTY -->
 
       <a
         href="./property.html"
@@ -762,7 +300,7 @@ footer p{
         </div>
 
         <h3>
-          Property Marketplace
+          Property
         </h3>
 
         <p>
@@ -771,6 +309,8 @@ footer p{
 
       </a>
 
+
+      <!-- GEM -->
 
       <a
         href="./gem.html"
@@ -782,7 +322,7 @@ footer p{
         </div>
 
         <h3>
-          Gem Marketplace
+          Gems
         </h3>
 
         <p>
@@ -794,894 +334,238 @@ footer p{
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- QUICK ACTIONS -->
+<!-- ==================================================
+     QUICK ACTIONS
+================================================== -->
 
-  <section>
+<section class="section">
+
+  <div class="container">
 
     <div class="section-title">
 
       <h2>
-        Quick Access
+        What do you want to do?
       </h2>
 
       <p>
-        အမြန်ဝင်ရောက်နိုင်သော စာမျက်နှာများ
+        သင့်လိုအပ်ချက်အလိုက် ရွေးချယ်ပါ
       </p>
 
     </div>
 
 
-    <div class="quick-grid">
+    <div class="category-grid">
 
 
       <a
         href="./buy.html"
-        class="quick-card"
+        class="category-card"
       >
 
-        <span class="quick-icon">
-          🔎
-        </span>
+        <div class="category-icon">
+          🛒
+        </div>
 
-        Buy
+        <h3>
+          Buy
+        </h3>
 
-        <small>
-          ဝယ်လိုသူများ
-        </small>
+        <p>
+          ပစ္စည်းများ ရှာဖွေဝယ်ယူရန်
+        </p>
 
       </a>
 
 
       <a
         href="./sell.html"
-        class="quick-card"
+        class="category-card"
       >
 
-        <span class="quick-icon">
+        <div class="category-icon">
           🏷️
-        </span>
+        </div>
 
-        Sell
+        <h3>
+          Sell
+        </h3>
 
-        <small>
-          ရောင်းလိုသူများ
-        </small>
+        <p>
+          သင့်ပစ္စည်းကို Listing တင်ရန်
+        </p>
 
       </a>
 
 
       <a
         href="./chat.html"
-        class="quick-card"
+        class="category-card"
       >
 
-        <span class="quick-icon">
+        <div class="category-icon">
           💬
-        </span>
-
-        Chat
-
-        <small>
-          စကားပြောရန်
-        </small>
-
-      </a>
-
-
-      <a
-        href="./profile.html"
-        class="quick-card"
-      >
-
-        <span class="quick-icon">
-          👤
-        </span>
-
-        Profile
-
-        <small>
-          ကိုယ်ရေးအချက်အလက်
-        </small>
-
-      </a>
-
-
-    </div>
-
-  </section>
-
-
-  <!-- LATEST LISTINGS -->
-
-  <section id="latest">
-
-    <div class="listing-header">
-
-      <div>
-
-        <h2>
-          Latest Approved Listings
-        </h2>
-
-        <div
-          id="listingCount"
-          class="listing-count"
-        >
-          Loading...
         </div>
 
-      </div>
+        <h3>
+          Chat
+        </h3>
 
+        <p>
+          Seller / Buyer များနှင့် ဆက်သွယ်ရန်
+        </p>
 
-      <a
-        href="./car.html"
-        class="view-all"
-      >
-        View Marketplace →
       </a>
 
-    </div>
-
-
-    <div
-      id="listingGrid"
-      class="listing-grid"
-    >
-
-      <div class="empty">
-
-        <div class="empty-icon">
-          ⏳
-        </div>
-
-        Listings များကို ရယူနေပါသည်...
-
-      </div>
 
     </div>
-
-  </section>
-
-
-  <!-- FEATURES -->
-
-  <section class="features">
-
-
-    <div class="feature">
-
-      <strong>
-        🛡️ Approved Listings
-      </strong>
-
-      <p>
-        Admin approval ရရှိပြီးသော
-        listing များကိုသာ General Page တွင်
-        ပြသပေးပါသည်။
-      </p>
-
-    </div>
-
-
-    <div class="feature">
-
-      <strong>
-        📍 Location Search
-      </strong>
-
-      <p>
-        City နှင့် Township အလိုက်
-        listing များကို ရှာဖွေနိုင်ပါသည်။
-      </p>
-
-    </div>
-
-
-    <div class="feature">
-
-      <strong>
-        💬 Easy Connection
-      </strong>
-
-      <p>
-        Buyer နှင့် Seller များ
-        လွယ်ကူစွာ ဆက်သွယ်နိုင်ရန်
-        Chat နှင့် Contact system ပါဝင်ပါမည်။
-      </p>
-
-    </div>
-
-
-  </section>
-
-</main>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-  <strong>
-    Myanmar Elite Connect
-  </strong>
-
-  <p>
-    Cars • Property • Gems
-  </p>
-
-  <p>
-    © 2026 Myanmar Elite Connect
-  </p>
-
-</footer>
-
-
-<!-- =========================
-     BOTTOM NAVIGATION
-========================= -->
-
-<nav class="bottom-nav">
-
-  <div class="bottom-inner">
-
-
-    <a
-      href="./index.html"
-      class="bottom-item active"
-    >
-
-      <span>📋</span>
-
-      General
-
-    </a>
-
-
-    <a
-      href="./chat.html"
-      class="bottom-item"
-    >
-
-      <span>💬</span>
-
-      Chat
-
-    </a>
-
-
-    <a
-      href="./profile.html"
-      class="bottom-item"
-    >
-
-      <span>👤</span>
-
-      Profile
-
-    </a>
-
 
   </div>
 
-</nav>
+</section>
 
 
-<script>
+<!-- ==================================================
+     FEATURES
+================================================== -->
 
-/* =========================================
-   SUPABASE
-========================================= */
+<section class="section">
 
-const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
+  <div class="container">
 
-const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
+    <div class="section-title">
 
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+      <h2>
+        Why Myanmar Elite Connect?
+      </h2>
 
+    </div>
 
-/* =========================================
-   GLOBAL
-========================================= */
 
-let allListings = [];
+    <div class="category-grid">
 
 
-/* =========================================
-   ESCAPE HTML
-========================================= */
+      <div class="card">
 
-function escapeHtml(value){
+        <h3>
+          🔎 Easy Search
+        </h3>
 
-  if(
-    value === null ||
-    value === undefined
-  ){
-    return "";
-  }
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
-   CATEGORY ICON
-========================================= */
-
-function getIcon(category){
-
-  if(category === "car"){
-    return "🚗";
-  }
-
-  if(category === "property"){
-    return "🏠";
-  }
-
-  if(category === "gem"){
-    return "💎";
-  }
-
-  return "📦";
-
-}
-
-
-/* =========================================
-   CATEGORY NAME
-========================================= */
-
-function getCategoryName(category){
-
-  if(category === "car"){
-    return "Car";
-  }
-
-  if(category === "property"){
-    return "Property";
-  }
-
-  if(category === "gem"){
-    return "Gem";
-  }
-
-  return "Listing";
-
-}
-
-
-/* =========================================
-   TYPE NAME
-========================================= */
-
-function getTypeName(type){
-
-  if(type === "sale"){
-    return "ရောင်းရန်";
-  }
-
-  if(type === "rent"){
-    return "ငှားရန်";
-  }
-
-  return "Listing";
-
-}
-
-
-/* =========================================
-   PRICE
-========================================= */
-
-function formatPrice(price,currency){
-
-  if(
-    price === null ||
-    price === undefined ||
-    price === ""
-  ){
-    return "ဈေးနှုန်း မဖော်ပြပါ";
-  }
-
-  const number =
-    Number(price);
-
-  if(
-    !Number.isFinite(number)
-  ){
-    return String(price);
-  }
-
-  return (
-    number.toLocaleString("en-US") +
-    " " +
-    (currency || "MMK")
-  );
-
-}
-
-
-/* =========================================
-   LOCATION
-========================================= */
-
-function getLocation(item){
-
-  const parts = [];
-
-  if(item.city){
-    parts.push(item.city);
-  }
-
-  if(item.township){
-    parts.push(item.township);
-  }
-
-  if(
-    item.location &&
-    item.location !== item.township
-  ){
-    parts.push(item.location);
-  }
-
-  return parts.length
-    ? [...new Set(parts)].join(" • ")
-    : "တည်နေရာ မဖော်ပြပါ";
-
-}
-
-
-/* =========================================
-   IMAGE PARSER
-========================================= */
-
-function getImages(item){
-
-  if(!item.images){
-    return [];
-  }
-
-  if(Array.isArray(item.images)){
-    return item.images.filter(Boolean);
-  }
-
-  if(typeof item.images === "string"){
-
-    try{
-
-      const parsed =
-        JSON.parse(item.images);
-
-      if(Array.isArray(parsed)){
-        return parsed.filter(Boolean);
-      }
-
-    }
-    catch(error){
-
-      if(
-        item.images.startsWith("http")
-      ){
-        return [item.images];
-      }
-
-    }
-
-  }
-
-  return [];
-
-}
-
-
-/* =========================================
-   CREATE CARD
-========================================= */
-
-function createCard(item){
-
-  const images =
-    getImages(item);
-
-  const image =
-    images.length
-      ? images[0]
-      : "";
-
-  const icon =
-    getIcon(item.category);
-
-  const title =
-    escapeHtml(
-      item.title ||
-      "Untitled Listing"
-    );
-
-  const location =
-    escapeHtml(
-      getLocation(item)
-    );
-
-  const price =
-    escapeHtml(
-      formatPrice(
-        item.price,
-        item.currency
-      )
-    );
-
-  let imageHtml;
-
-
-  if(image){
-
-    imageHtml = `
-
-      <img
-        src="${escapeHtml(image)}"
-        alt="${title}"
-        loading="lazy"
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-      <div
-        class="no-image"
-        style="display:none"
-      >
-        ${icon}
-      </div>
-
-    `;
-
-  }
-  else{
-
-    imageHtml = `
-
-      <div class="no-image">
-        ${icon}
-      </div>
-
-    `;
-
-  }
-
-
-  const featured =
-    item.featured
-      ? `
-        <div class="featured">
-          ⭐ FEATURED
-        </div>
-      `
-      : "";
-
-
-  const imageCount =
-    images.length > 1
-      ? `
-        <div class="image-count">
-          🖼️ ${images.length}
-        </div>
-      `
-      : "";
-
-
-  return `
-
-    <article class="listing-card">
-
-      <div class="listing-image">
-
-        ${imageHtml}
-
-        ${featured}
-
-        ${imageCount}
-
-      </div>
-
-
-      <div class="listing-body">
-
-        <span class="listing-type">
-
-          ${escapeHtml(
-            getTypeName(
-              item.listing_type
-            )
-          )}
-
-          ·
-
-          ${escapeHtml(
-            getCategoryName(
-              item.category
-            )
-          )}
-
-        </span>
-
-
-        <div class="listing-title">
-          ${title}
-        </div>
-
-
-        <div class="listing-price">
-          ${price}
-        </div>
-
-
-        <div class="listing-location">
-          📍 ${location}
-        </div>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================
-   RENDER
-========================================= */
-
-function renderListings(){
-
-  const grid =
-    document.getElementById(
-      "listingGrid"
-    );
-
-  const count =
-    document.getElementById(
-      "listingCount"
-    );
-
-  const input =
-    document.getElementById(
-      "searchInput"
-    );
-
-  const keyword =
-    input.value
-      .trim()
-      .toLowerCase();
-
-
-  let filtered =
-    [...allListings];
-
-
-  if(keyword){
-
-    filtered =
-      filtered.filter(
-        item => {
-
-          const searchable = [
-
-            item.title,
-            item.description,
-            item.category,
-            item.listing_type,
-            item.city,
-            item.township,
-            item.address,
-            item.location
-
-          ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-
-          return searchable
-            .includes(keyword);
-
-        }
-      );
-
-  }
-
-
-  count.textContent =
-    `${filtered.length} listings ရှိပါသည်`;
-
-
-  if(!filtered.length){
-
-    grid.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">
-          🔍
-        </div>
-
-        <strong>
-          Listing မတွေ့ပါ
-        </strong>
-
-        <p style="margin-top:7px">
-          Search keyword ကို
-          ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။
+        <p style="margin-top:8px;color:var(--muted);line-height:1.7;font-size:13px;">
+          ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်များကို
+          လွယ်ကူစွာ ရှာဖွေနိုင်ပါသည်။
         </p>
 
       </div>
 
-    `;
+
+      <div class="card">
+
+        <h3>
+          📱 Direct Contact
+        </h3>
+
+        <p style="margin-top:8px;color:var(--muted);line-height:1.7;font-size:13px;">
+          Buyer နှင့် Seller များ
+          တိုက်ရိုက်ဆက်သွယ်နိုင်ပါသည်။
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          🛡️ Trusted Marketplace
+        </h3>
+
+        <p style="margin-top:8px;color:var(--muted);line-height:1.7;font-size:13px;">
+          Approved Listing များကို
+          Marketplace တွင် ပြသပေးပါသည်။
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="site-footer">
+
+  <div class="container footer-inner">
+
+    <strong>
+      Myanmar Elite Connect
+    </strong>
+
+    <p>
+      Cars • Property • Gems
+    </p>
+
+    <p>
+      © 2026 Myanmar Elite Connect
+    </p>
+
+  </div>
+
+</footer>
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="./js/supabase.js"></script>
+<script src="./js/common.js"></script>
+
+
+<script>
+
+function searchMarketplace(event){
+
+  event.preventDefault();
+
+  const input =
+    document.getElementById(
+      "homeSearch"
+    );
+
+  const keyword =
+    input.value.trim();
+
+
+  if(!keyword){
+
+    input.focus();
 
     return;
 
   }
 
 
-  /*
-    General page မှာ
-    အများဆုံး 6 ခုသာ ပြမယ်။
-    Category page တွေမှာ
-    full listings ပြမယ်။
-  */
-
-  grid.innerHTML =
-    filtered
-      .slice(0,6)
-      .map(createCard)
-      .join("");
+  window.location.href =
+    "./buy.html?search="
+    + encodeURIComponent(keyword);
 
 }
-
-
-/* =========================================
-   LOAD APPROVED LISTINGS
-========================================= */
-
-async function loadListings(){
-
-  const grid =
-    document.getElementById(
-      "listingGrid"
-    );
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-      .from("listings")
-      .select("*")
-      .eq(
-        "status",
-        "approved"
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-
-    if(error){
-      throw error;
-    }
-
-
-    allListings =
-      Array.isArray(data)
-        ? data
-        : [];
-
-
-    renderListings();
-
-  }
-  catch(error){
-
-    console.error(
-      "Listing loading error:",
-      error
-    );
-
-
-    grid.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">
-          ⚠️
-        </div>
-
-        <strong>
-          Listing များကို ရယူ၍မရပါ
-        </strong>
-
-        <p style="margin-top:8px">
-          ${escapeHtml(
-            error.message ||
-            "Database connection error"
-          )}
-        </p>
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =========================================
-   SEARCH
-========================================= */
-
-function searchListings(){
-
-  document
-    .getElementById("latest")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
-
-  renderListings();
-
-}
-
-
-/* =========================================
-   LIVE SEARCH
-========================================= */
-
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    renderListings
-  );
-
-
-/* =========================================
-   START
-========================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    loadListings();
-
-  }
-);
 
 </script>
+
 
 </body>
 </html>
