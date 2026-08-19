@@ -9,11 +9,14 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Login - Myanmar Elite Connect</title>
+  <title>Login | Myanmar Elite Connect</title>
 
-  <!-- Supabase -->
+  <!-- Supabase Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Our Supabase Connection -->
   <script src="./supabase.js"></script>
+
 
   <style>
 
@@ -35,9 +38,9 @@
 
       display: flex;
 
-      align-items: center;
-
       justify-content: center;
+
+      align-items: center;
 
       padding: 20px;
     }
@@ -59,7 +62,7 @@
     }
 
     .brand p {
-      opacity: 0.8;
+      opacity: .8;
       font-size: 14px;
     }
 
@@ -67,30 +70,43 @@
       background: white;
       border-radius: 20px;
       padding: 30px;
+
       box-shadow:
-        0 20px 50px rgba(0,0,0,0.25);
+        0 20px 50px rgba(0,0,0,.25);
     }
 
     .tabs {
       display: flex;
+      gap: 5px;
+
       background: #f1f4f8;
+
       padding: 5px;
+
       border-radius: 10px;
+
       margin-bottom: 25px;
     }
 
-    .tabs button {
-      width: 50%;
+    .tab {
+      flex: 1;
+
       border: none;
+
       padding: 12px;
+
       border-radius: 8px;
+
       background: transparent;
+
       cursor: pointer;
+
       font-weight: 700;
+
       color: #667085;
     }
 
-    .tabs button.active {
+    .tab.active {
       background: #071b3a;
       color: white;
     }
@@ -101,18 +117,27 @@
 
     label {
       display: block;
-      font-size: 14px;
-      font-weight: 700;
+
       margin-bottom: 7px;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
       color: #172033;
     }
 
     input {
       width: 100%;
+
       padding: 13px;
+
       border: 1px solid #d9dee8;
+
       border-radius: 9px;
+
       outline: none;
+
       font-size: 15px;
     }
 
@@ -122,50 +147,71 @@
 
     .submit-btn {
       width: 100%;
+
       border: none;
+
       background: #071b3a;
+
       color: white;
+
       padding: 14px;
+
       border-radius: 10px;
+
       font-size: 16px;
+
       font-weight: 700;
+
       cursor: pointer;
-      margin-top: 5px;
     }
 
     .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+      opacity: .6;
     }
 
     .message {
       display: none;
+
       padding: 12px;
+
       border-radius: 9px;
+
       margin-bottom: 18px;
+
       font-size: 14px;
-      line-height: 1.6;
+
+      line-height: 1.7;
     }
 
     .message.success {
       display: block;
+
       background: #e9f8ef;
+
       color: #176b38;
     }
 
     .message.error {
       display: block;
+
       background: #fff0f0;
+
       color: #b42318;
     }
 
     .back {
       display: block;
+
       text-align: center;
+
       margin-top: 20px;
+
       color: #071b3a;
+
       text-decoration: none;
+
       font-size: 14px;
+
       font-weight: 700;
     }
 
@@ -189,9 +235,12 @@
 
 </head>
 
+
 <body>
 
+
   <div class="container">
+
 
     <div class="brand">
 
@@ -214,15 +263,18 @@
       <div class="tabs">
 
         <button
+          type="button"
           id="loginTab"
-          class="active"
+          class="tab active"
           onclick="showLogin()"
         >
           Login
         </button>
 
         <button
+          type="button"
           id="registerTab"
+          class="tab"
           onclick="showRegister()"
         >
           Register
@@ -239,11 +291,10 @@
       ></div>
 
 
-      <!-- LOGIN FORM -->
+      <!-- LOGIN -->
 
       <form
         id="loginForm"
-        onsubmit="loginUser(event)"
       >
 
         <div class="form-group">
@@ -289,12 +340,11 @@
       </form>
 
 
-      <!-- REGISTER FORM -->
+      <!-- REGISTER -->
 
       <form
         id="registerForm"
         class="hidden"
-        onsubmit="registerUser(event)"
       >
 
         <div class="form-group">
@@ -379,6 +429,7 @@
         ← Back to Marketplace
       </a>
 
+
     </div>
 
   </div>
@@ -388,53 +439,38 @@
 
 
     /* =========================
-       TAB SWITCH
+       CHECK SUPABASE
     ========================= */
 
-    function showLogin() {
+    if (
+      typeof supabaseClient === "undefined"
+    ) {
 
-      document
-        .getElementById("loginForm")
-        .classList.remove("hidden");
-
-      document
-        .getElementById("registerForm")
-        .classList.add("hidden");
-
-      document
-        .getElementById("loginTab")
-        .classList.add("active");
-
-      document
-        .getElementById("registerTab")
-        .classList.remove("active");
-
-      clearMessage();
+      console.error(
+        "Supabase client is not available."
+      );
 
     }
 
 
-    function showRegister() {
+    /* =========================
+       ELEMENTS
+    ========================= */
 
-      document
-        .getElementById("loginForm")
-        .classList.add("hidden");
+    const loginForm =
+      document.getElementById(
+        "loginForm"
+      );
 
-      document
-        .getElementById("registerForm")
-        .classList.remove("hidden");
+    const registerForm =
+      document.getElementById(
+        "registerForm"
+      );
 
-      document
-        .getElementById("loginTab")
-        .classList.remove("active");
-
-      document
-        .getElementById("registerTab")
-        .classList.add("active");
-
-      clearMessage();
-
-    }
+    const message =
+      document.getElementById(
+        "message"
+      );
 
 
     /* =========================
@@ -446,11 +482,6 @@
       type
     ) {
 
-      const message =
-        document.getElementById(
-          "message"
-        );
-
       message.textContent = text;
 
       message.className =
@@ -461,11 +492,6 @@
 
     function clearMessage() {
 
-      const message =
-        document.getElementById(
-          "message"
-        );
-
       message.textContent = "";
 
       message.className =
@@ -475,297 +501,354 @@
 
 
     /* =========================
-       REGISTER
+       SHOW LOGIN
     ========================= */
 
-    async function registerUser(event) {
+    function showLogin() {
 
-      event.preventDefault();
+      loginForm.classList.remove(
+        "hidden"
+      );
 
+      registerForm.classList.add(
+        "hidden"
+      );
 
-      const button =
-        document.getElementById(
-          "registerButton"
-        );
+      document
+        .getElementById("loginTab")
+        .classList.add("active");
 
-
-      const name =
-        document.getElementById(
-          "registerName"
-        ).value.trim();
-
-
-      const email =
-        document.getElementById(
-          "registerEmail"
-        ).value.trim();
-
-
-      const password =
-        document.getElementById(
-          "registerPassword"
-        ).value;
-
-
-      const phone =
-        document.getElementById(
-          "registerPhone"
-        ).value.trim();
-
-
-      button.disabled = true;
-
-      button.textContent =
-        "Creating Account...";
-
+      document
+        .getElementById("registerTab")
+        .classList.remove("active");
 
       clearMessage();
 
-
-      try {
-
-        const {
-          data,
-          error
-        } = await supabaseClient.auth.signUp({
-
-          email: email,
-
-          password: password,
-
-          options: {
-
-            data: {
-
-              full_name: name,
-
-              phone: phone
-
-            }
-
-          }
-
-        });
+    }
 
 
-        if (error) {
+    /* =========================
+       SHOW REGISTER
+    ========================= */
 
-          throw error;
+    function showRegister() {
+
+      loginForm.classList.add(
+        "hidden"
+      );
+
+      registerForm.classList.remove(
+        "hidden"
+      );
+
+      document
+        .getElementById("loginTab")
+        .classList.remove("active");
+
+      document
+        .getElementById("registerTab")
+        .classList.add("active");
+
+      clearMessage();
+
+    }
+
+
+    /* =========================
+       REGISTER
+    ========================= */
+
+    registerForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        clearMessage();
+
+
+        if (
+          typeof supabaseClient === "undefined"
+        ) {
+
+          showMessage(
+            "Supabase connection မရပါ။ supabase.js ကို ပြန်စစ်ပေးပါ။",
+            "error"
+          );
+
+          return;
 
         }
 
 
-        /*
-          Create profile after signup
-          when session is available.
-        */
+        const name =
+          document
+            .getElementById(
+              "registerName"
+            )
+            .value
+            .trim();
 
-        if (data.user && data.session) {
 
-          const {
-            error: profileError
-          } = await supabaseClient
-            .from("profiles")
-            .upsert({
+        const email =
+          document
+            .getElementById(
+              "registerEmail"
+            )
+            .value
+            .trim();
 
-              id: data.user.id,
 
-              full_name: name,
+        const password =
+          document
+            .getElementById(
+              "registerPassword"
+            )
+            .value;
 
-              phone: phone
+
+        const phone =
+          document
+            .getElementById(
+              "registerPhone"
+            )
+            .value
+            .trim();
+
+
+        const button =
+          document.getElementById(
+            "registerButton"
+          );
+
+
+        button.disabled = true;
+
+        button.textContent =
+          "Creating Account...";
+
+
+        try {
+
+          const result =
+            await supabaseClient.auth.signUp({
+
+              email: email,
+
+              password: password,
+
+              options: {
+
+                data: {
+
+                  full_name: name,
+
+                  phone: phone
+
+                }
+
+              }
 
             });
 
 
-          if (profileError) {
+          if (result.error) {
 
-            console.error(
-              profileError
+            throw result.error;
+
+          }
+
+
+          /*
+             IMPORTANT:
+
+             We don't insert into profiles
+             yet.
+
+             We will create the profile system
+             properly in the next step.
+          */
+
+
+          if (result.data.session) {
+
+            showMessage(
+              "Account ဖန်တီးပြီးပါပြီ။ Login ဝင်နေပါသည်...",
+              "success"
+            );
+
+
+            setTimeout(
+              function() {
+
+                window.location.href =
+                  "./index.html";
+
+              },
+              1200
+            );
+
+          } else {
+
+            showMessage(
+              "Account ဖန်တီးပြီးပါပြီ။ Email ထဲကိုဝင်ပြီး Confirmation Link ကိုနှိပ်ပါ။ ပြီးရင် Login ပြန်ဝင်နိုင်ပါပြီ။",
+              "success"
             );
 
           }
 
-        }
 
+        } catch (error) {
 
-        if (data.session) {
-
-          showMessage(
-            "Account ဖန်တီးပြီးပါပြီ။ Marketplace သို့ ဝင်ရောက်နေပါသည်...",
-            "success"
+          console.error(
+            "SIGN UP ERROR:",
+            error
           );
 
 
-          setTimeout(() => {
-
-            window.location.href =
-              "./index.html";
-
-          }, 1200);
-
-        } else {
-
           showMessage(
-            "Account ဖန်တီးပြီးပါပြီ။ သင့် Email ကိုစစ်ပြီး Confirmation Link ကိုနှိပ်ပါ။",
-            "success"
+            error.message ||
+            "Sign Up မအောင်မြင်ပါ။",
+            "error"
           );
 
+
+        } finally {
+
+          button.disabled = false;
+
+          button.textContent =
+            "Create Account";
+
         }
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-          error.message ||
-          "Account ဖန်တီးရာတွင် အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့ပါသည်။",
-          "error"
-        );
-
-      } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-          "Create Account";
 
       }
-
-    }
+    );
 
 
     /* =========================
        LOGIN
     ========================= */
 
-    async function loginUser(event) {
+    loginForm.addEventListener(
+      "submit",
+      async function(event) {
 
-      event.preventDefault();
+        event.preventDefault();
 
-
-      const button =
-        document.getElementById(
-          "loginButton"
-        );
+        clearMessage();
 
 
-      const email =
-        document.getElementById(
-          "loginEmail"
-        ).value.trim();
+        if (
+          typeof supabaseClient === "undefined"
+        ) {
 
-
-      const password =
-        document.getElementById(
-          "loginPassword"
-        ).value;
-
-
-      button.disabled = true;
-
-      button.textContent =
-        "Logging in...";
-
-
-      clearMessage();
-
-
-      try {
-
-        const {
-          data,
-          error
-        } = await supabaseClient.auth
-          .signInWithPassword({
-
-            email: email,
-
-            password: password
-
-          });
-
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        showMessage(
-          "Login အောင်မြင်ပါသည်။ Marketplace သို့ ဝင်ရောက်နေပါသည်...",
-          "success"
-        );
-
-
-        setTimeout(() => {
-
-          window.location.href =
-            "./index.html";
-
-        }, 1000);
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-          error.message ||
-          "Login မအောင်မြင်ပါ။ Email နှင့် Password ကို ပြန်စစ်ပါ။",
-          "error"
-        );
-
-      } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-          "Login";
-
-      }
-
-    }
-
-
-    /* =========================
-       CHECK CURRENT SESSION
-    ========================= */
-
-    async function checkSession() {
-
-      try {
-
-        const {
-          data
-        } =
-          await supabaseClient.auth
-            .getSession();
-
-
-        if (data.session) {
-
-          console.log(
-            "User already logged in."
+          showMessage(
+            "Supabase connection မရပါ။ supabase.js ကို ပြန်စစ်ပေးပါ။",
+            "error"
           );
 
+          return;
+
         }
 
-      } catch (error) {
 
-        console.error(error);
+        const email =
+          document
+            .getElementById(
+              "loginEmail"
+            )
+            .value
+            .trim();
+
+
+        const password =
+          document
+            .getElementById(
+              "loginPassword"
+            )
+            .value;
+
+
+        const button =
+          document.getElementById(
+            "loginButton"
+          );
+
+
+        button.disabled = true;
+
+        button.textContent =
+          "Logging in...";
+
+
+        try {
+
+          const result =
+            await supabaseClient.auth
+              .signInWithPassword({
+
+                email: email,
+
+                password: password
+
+              });
+
+
+          if (result.error) {
+
+            throw result.error;
+
+          }
+
+
+          showMessage(
+            "Login အောင်မြင်ပါသည်။ Marketplace သို့ ဝင်နေပါသည်...",
+            "success"
+          );
+
+
+          setTimeout(
+            function() {
+
+              window.location.href =
+                "./index.html";
+
+            },
+            1000
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "LOGIN ERROR:",
+            error
+          );
+
+
+          showMessage(
+            error.message ||
+            "Login မအောင်မြင်ပါ။",
+            "error"
+          );
+
+
+        } finally {
+
+          button.disabled = false;
+
+          button.textContent =
+            "Login";
+
+        }
 
       }
-
-    }
-
-
-    checkSession();
+    );
 
 
   </script>
 
-</body>
 
+</body>
 </html>
