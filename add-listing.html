@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="my">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Add Listing - Myanmar Elite Connect</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="./supabase.js"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6f9;
+      font-family: Arial, "Noto Sans Myanmar", sans-serif;
+      color: #222;
+    }
+
+    header {
+      background: #071b3a;
+      color: white;
+      padding: 18px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+    }
+
+    h2 {
+      color: #071b3a;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 16px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d9dde5;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: 0;
+      border-radius: 9px;
+      background: #071b3a;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit:disabled {
+      opacity: .6;
+    }
+
+    .message {
+      display: none;
+      padding: 13px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .success {
+      display: block;
+      background: #e8f7ee;
+      color: #176b38;
+    }
+
+    .error {
+      display: block;
+      background: #fff0f0;
+      color: #b42318;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #071b3a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <h1>
+    Myanmar Elite Connect
+  </h1>
+
+</header>
+
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>
+      Add New Listing
+    </h2>
+
+    <p>
+      ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက် ရောင်းရန် ကြော်ငြာတင်ပါ။
+    </p>
+
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+
+    <form id="listingForm">
+
+
+      <label>
+        Category
+      </label>
+
+      <select id="category" required>
+
+        <option value="">
+          -- Select Category --
+        </option>
+
+        <option value="car">
+          🚗 Car / ကား
+        </option>
+
+        <option value="property">
+          🏠 Property / အိမ်ခြံမြေ
+        </option>
+
+        <option value="gem">
+          💎 Gem / ကျောက်မျက်
+        </option>
+
+      </select>
+
+
+      <label>
+        Title / ခေါင်းစဉ်
+      </label>
+
+      <input
+        id="title"
+        type="text"
+        placeholder="ဥပမာ - Toyota Alphard 2022"
+        required
+      >
+
+
+      <label>
+        Price / ဈေးနှုန်း
+      </label>
+
+      <input
+        id="price"
+        type="number"
+        min="0"
+        placeholder="ဥပမာ - 85000000"
+      >
+
+
+      <label>
+        Location / တည်နေရာ
+      </label>
+
+      <input
+        id="location"
+        type="text"
+        placeholder="ဥပမာ - Yangon"
+      >
+
+
+      <label>
+        Phone / ဆက်သွယ်ရန်
+      </label>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="09xxxxxxxxx"
+      >
+
+
+      <label>
+        Description / အသေးစိတ်
+      </label>
+
+      <textarea
+        id="description"
+        placeholder="ပစ္စည်းအကြောင်း အသေးစိတ်ရေးပါ..."
+      ></textarea>
+
+
+      <button
+        id="submitButton"
+        class="submit"
+        type="submit"
+      >
+        Publish Listing
+      </button>
+
+
+    </form>
+
+
+    <a
+      class="back"
+      href="./index.html"
+    >
+      ← Back to Marketplace
+    </a>
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================
+   CHECK LOGIN
+===================================== */
+
+async function checkUser() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (
+    error ||
+    !data.session
+  ) {
+
+    window.location.href =
+      "./auth.html";
+
+    return null;
+
+  }
+
+
+  return data.session.user;
+
+}
+
+
+/* =====================================
+   SUBMIT LISTING
+===================================== */
+
+document
+  .getElementById("listingForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const message =
+        document.getElementById(
+          "message"
+        );
+
+
+      const button =
+        document.getElementById(
+          "submitButton"
+        );
+
+
+      message.className =
+        "message";
+
+      message.textContent =
+        "";
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Publishing...";
+
+
+      try {
+
+
+        const user =
+          await checkUser();
+
+
+        if (!user) {
+
+          return;
+
+        }
+
+
+        const category =
+          document
+            .getElementById(
+              "category"
+            )
+            .value;
+
+
+        const title =
+          document
+            .getElementById(
+              "title"
+            )
+            .value
+            .trim();
+
+
+        const priceValue =
+          document
+            .getElementById(
+              "price"
+            )
+            .value;
+
+
+        const location =
+          document
+            .getElementById(
+              "location"
+            )
+            .value
+            .trim();
+
+
+        const phone =
+          document
+            .getElementById(
+              "phone"
+            )
+            .value
+            .trim();
+
+
+        const description =
+          document
+            .getElementById(
+              "description"
+            )
+            .value
+            .trim();
+
+
+        const price =
+          priceValue
+            ? Number(priceValue)
+            : null;
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("listings")
+            .insert({
+
+              seller_id:
+                user.id,
+
+              category:
+                category,
+
+              title:
+                title,
+
+              price:
+                price,
+
+              currency:
+                "MMK",
+
+              location:
+                location,
+
+              phone:
+                phone,
+
+              description:
+                description,
+
+              status:
+                "active"
+
+            })
+            .select()
+            .single();
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        message.className =
+          "message success";
+
+
+        message.textContent =
+          "✅ Listing အောင်မြင်စွာ တင်ပြီးပါပြီ။";
+
+
+        document
+          .getElementById(
+            "listingForm"
+          )
+          .reset();
+
+
+        console.log(
+          "LISTING:",
+          data
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        message.className =
+          "message error";
+
+
+        message.textContent =
+          "❌ " +
+          error.message;
+
+
+      } finally {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Publish Listing";
+
+      }
+
+    }
+  );
+
+
+</script>
+
+
+</body>
+
+</html>
