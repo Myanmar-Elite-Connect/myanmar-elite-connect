@@ -1,2023 +1,1645 @@
 <!DOCTYPE html>
-<html lang="my">
-
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>My Profile - Myanmar Elite Connect</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
- box-sizing:border-box;
- margin:0;
- padding:0;
-}
-
-:root{
- --navy:#071b3a;
- --navy2:#102d59;
- --green:#19a974;
- --green2:#0f8f60;
- --gold:#d9a441;
- --bg:#f4f7fb;
- --white:#fff;
- --text:#172033;
- --muted:#697386;
- --border:#e3e8f0;
- --danger:#b42318;
- --shadow:0 10px 30px rgba(7,27,58,.08);
-}
-
-body{
- font-family:Arial,"Noto Sans Myanmar",sans-serif;
- background:var(--bg);
- color:var(--text);
- min-height:100vh;
- transition:.25s;
-}
-
-body.dark{
- --bg:#07111f;
- --white:#101c2d;
- --text:#f2f5f9;
- --muted:#aab4c3;
- --border:#26364b;
- --shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-button,
-input,
-textarea{
- font-family:inherit;
-}
-
-/* ================= HEADER ================= */
-
-header{
- position:sticky;
- top:0;
- z-index:1000;
- background:rgba(7,27,58,.97);
- color:white;
- box-shadow:0 3px 15px rgba(0,0,0,.12);
-}
-
-.header-inner{
- max-width:1100px;
- margin:auto;
- padding:14px 5%;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
-}
-
-.logo{
- color:white;
- text-decoration:none;
- font-size:20px;
- font-weight:900;
-}
-
-.logo span{
- color:#65d6a7;
-}
-
-.back-btn{
- color:white;
- text-decoration:none;
- padding:9px 13px;
- border-radius:8px;
- background:rgba(255,255,255,.1);
- font-size:14px;
-}
-
-/* ================= MAIN ================= */
-
-main{
- max-width:1100px;
- margin:auto;
- padding:35px 5% 60px;
-}
-
-/* ================= MESSAGE ================= */
-
-.message{
- display:none;
- padding:13px 15px;
- border-radius:10px;
- margin-bottom:20px;
- line-height:1.6;
-}
-
-.message.success{
- display:block;
- background:#e9f8ef;
- color:#176b38;
- border:1px solid #bce8cb;
-}
-
-.message.error{
- display:block;
- background:#fff0f0;
- color:#b42318;
- border:1px solid #ffd0d0;
-}
-
-/* ================= PROFILE HERO ================= */
-
-.profile-card{
- background:var(--white);
- border:1px solid var(--border);
- border-radius:22px;
- box-shadow:var(--shadow);
- padding:30px;
- display:flex;
- align-items:center;
- gap:25px;
- margin-bottom:25px;
-}
-
-.avatar{
- width:110px;
- height:110px;
- flex:none;
- border-radius:50%;
- background:linear-gradient(135deg,#071b3a,#19a974);
- color:white;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:42px;
- font-weight:900;
- overflow:hidden;
-}
-
-.avatar img{
- width:100%;
- height:100%;
- object-fit:cover;
-}
-
-.profile-info{
- flex:1;
-}
-
-.profile-info h1{
- color:var(--text);
- font-size:30px;
- margin-bottom:7px;
-}
-
-.profile-email{
- color:var(--muted);
- font-size:14px;
- margin-bottom:12px;
- word-break:break-word;
-}
-
-.role-badge{
- display:inline-block;
- padding:7px 11px;
- border-radius:20px;
- background:#e8f7ef;
- color:#167344;
- font-size:12px;
- font-weight:900;
-}
-
-.owner-badge{
- background:#fff5d9;
- color:#956b00;
-}
-
-.edit-btn{
- border:0;
- background:var(--navy);
- color:white;
- padding:11px 17px;
- border-radius:9px;
- cursor:pointer;
- font-weight:800;
-}
-
-/* ================= GRID ================= */
-
-.layout{
- display:grid;
- grid-template-columns:320px 1fr;
- gap:25px;
-}
-
-/* ================= SIDE CARD ================= */
-
-.side-card,
-.content-card{
- background:var(--white);
- border:1px solid var(--border);
- border-radius:18px;
- box-shadow:var(--shadow);
-}
-
-.side-card{
- padding:22px;
-}
-
-.side-title{
- color:var(--text);
- font-size:18px;
- font-weight:900;
- margin-bottom:15px;
-}
-
-.info-row{
- padding:12px 0;
- border-bottom:1px solid var(--border);
-}
-
-.info-row:last-child{
- border-bottom:0;
-}
-
-.info-label{
- color:var(--muted);
- font-size:12px;
- margin-bottom:4px;
-}
-
-.info-value{
- color:var(--text);
- font-size:14px;
- line-height:1.6;
- word-break:break-word;
-}
-
-/* ================= SETTINGS ================= */
-
-.setting{
- width:100%;
- border:0;
- background:transparent;
- color:var(--text);
- padding:13px 0;
- display:flex;
- align-items:center;
- justify-content:space-between;
- cursor:pointer;
- border-bottom:1px solid var(--border);
- text-align:left;
-}
-
-.setting:last-child{
- border-bottom:0;
-}
-
-.setting-left{
- display:flex;
- align-items:center;
- gap:10px;
-}
-
-.setting-icon{
- font-size:20px;
-}
-
-.setting-title{
- font-weight:700;
-}
-
-.toggle{
- width:45px;
- height:24px;
- background:#cbd3df;
- border-radius:20px;
- position:relative;
- transition:.2s;
-}
-
-.toggle::after{
- content:"";
- position:absolute;
- width:18px;
- height:18px;
- background:white;
- border-radius:50%;
- top:3px;
- left:3px;
- transition:.2s;
-}
-
-body.dark .toggle{
- background:var(--green);
-}
-
-body.dark .toggle::after{
- left:24px;
-}
-
-/* ================= CONTENT ================= */
-
-.content-card{
- padding:25px;
-}
-
-.content-header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- margin-bottom:20px;
-}
-
-.content-header h2{
- color:var(--text);
- font-size:22px;
-}
-
-.listing-count{
- color:var(--muted);
- font-size:13px;
-}
-
-/* ================= LISTINGS ================= */
-
-.listings{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:17px;
-}
-
-.listing{
- border:1px solid var(--border);
- border-radius:15px;
- overflow:hidden;
- background:var(--white);
-}
-
-.listing-image{
- height:170px;
- background:linear-gradient(135deg,#071b3a,#24548d);
- position:relative;
- display:flex;
- align-items:center;
- justify-content:center;
- color:white;
- font-size:55px;
- overflow:hidden;
-}
-
-.listing-image img{
- width:100%;
- height:100%;
- object-fit:cover;
-}
-
-.listing-status{
- position:absolute;
- top:9px;
- left:9px;
- padding:5px 8px;
- border-radius:6px;
- font-size:10px;
- font-weight:900;
- background:#fff;
- color:#172033;
-}
-
-.status-approved{
- color:#167344;
-}
-
-.status-pending{
- color:#956b00;
-}
-
-.status-rejected{
- color:#b42318;
-}
-
-.listing-body{
- padding:15px;
-}
-
-.listing-title{
- color:var(--text);
- font-weight:900;
- font-size:16px;
- line-height:1.4;
- margin-bottom:6px;
-}
-
-.listing-price{
- color:var(--navy);
- font-size:17px;
- font-weight:900;
- margin-bottom:7px;
-}
-
-body.dark .listing-price{
- color:#65d6a7;
-}
-
-.listing-location{
- color:var(--muted);
- font-size:12px;
- margin-bottom:12px;
-}
-
-.delete-btn{
- width:100%;
- border:1px solid #ffd0d0;
- background:#fff5f5;
- color:var(--danger);
- padding:9px;
- border-radius:8px;
- cursor:pointer;
- font-weight:800;
-}
-
-.delete-btn:hover{
- background:#ffe8e8;
-}
-
-/* ================= EMPTY ================= */
-
-.empty{
- padding:45px 20px;
- text-align:center;
- color:var(--muted);
-}
-
-.empty-icon{
- font-size:45px;
- margin-bottom:10px;
-}
-
-.sell-btn{
- display:inline-block;
- margin-top:15px;
- text-decoration:none;
- background:var(--navy);
- color:white;
- padding:11px 18px;
- border-radius:9px;
- font-weight:800;
-}
-
-/* ================= MODAL ================= */
-
-.modal{
- display:none;
- position:fixed;
- inset:0;
- z-index:3000;
- background:rgba(0,0,0,.65);
- padding:20px;
- align-items:center;
- justify-content:center;
-}
-
-.modal.show{
- display:flex;
-}
-
-.modal-box{
- width:min(520px,100%);
- max-height:90vh;
- overflow:auto;
- background:var(--white);
- border-radius:18px;
- padding:25px;
-}
-
-.modal-header{
- display:flex;
- align-items:center;
- justify-content:space-between;
- margin-bottom:20px;
-}
-
-.modal-header h2{
- color:var(--text);
-}
-
-.close-btn{
- border:0;
- background:transparent;
- color:var(--muted);
- font-size:25px;
- cursor:pointer;
-}
-
-label{
- display:block;
- color:var(--text);
- font-size:13px;
- font-weight:800;
- margin:15px 0 7px;
-}
-
-input,
-textarea{
- width:100%;
- border:1px solid var(--border);
- background:var(--white);
- color:var(--text);
- padding:12px 13px;
- border-radius:9px;
- outline:none;
-}
-
-textarea{
- min-height:120px;
- resize:vertical;
-}
-
-.save-btn{
- width:100%;
- margin-top:20px;
- border:0;
- background:var(--navy);
- color:white;
- padding:13px;
- border-radius:9px;
- font-weight:900;
- cursor:pointer;
-}
-
-.logout-btn{
- width:100%;
- margin-top:10px;
- border:0;
- background:#fff0f0;
- color:var(--danger);
- padding:13px;
- border-radius:9px;
- font-weight:900;
- cursor:pointer;
-}
-
-/* ================= LOGIN ================= */
-
-.login-state{
- max-width:550px;
- margin:70px auto;
- background:var(--white);
- border:1px solid var(--border);
- border-radius:20px;
- padding:45px 25px;
- text-align:center;
- box-shadow:var(--shadow);
-}
-
-.login-state-icon{
- font-size:55px;
- margin-bottom:15px;
-}
-
-.login-state h2{
- color:var(--text);
- margin-bottom:8px;
-}
-
-.login-state p{
- color:var(--muted);
- line-height:1.7;
-}
-
-.login-link{
- display:inline-block;
- margin-top:20px;
- padding:12px 22px;
- background:var(--navy);
- color:white;
- text-decoration:none;
- border-radius:9px;
- font-weight:900;
-}
-
-/* ================= LOADING ================= */
-
-.loading{
- padding:60px 20px;
- text-align:center;
- color:var(--muted);
-}
-
-.spinner{
- width:38px;
- height:38px;
- border:4px solid #e5eaf2;
- border-top-color:var(--navy);
- border-radius:50%;
- animation:spin .8s linear infinite;
- margin:0 auto 15px;
-}
-
-@keyframes spin{
- to{
-  transform:rotate(360deg);
- }
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:800px){
-
- .profile-card{
-  flex-direction:column;
-  text-align:center;
- }
-
- .profile-info{
-  width:100%;
- }
-
- .layout{
-  grid-template-columns:1fr;
- }
-
- .listings{
-  grid-template-columns:1fr;
- }
-
- .edit-btn{
-  width:100%;
- }
-
-}
-
-@media(max-width:500px){
-
- main{
-  padding:25px 4% 45px;
- }
-
- .profile-card{
-  padding:23px 17px;
- }
-
- .content-card,
- .side-card{
-  padding:18px;
- }
-
- .profile-info h1{
-  font-size:25px;
- }
-
- .header-inner{
-  padding:12px 4%;
- }
-
- .logo{
-  font-size:16px;
- }
-
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Profile — Myanmar Elite Connect</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    :root{
+      --bg:#f6f8fb;
+      --surface:#fff;
+      --surface2:#eef2f6;
+      --text:#10233f;
+      --muted:#758298;
+      --gold:#d7b35a;
+      --border:rgba(16,35,63,.09);
+      --danger:#c84b4b;
+      --shadow:0 18px 55px rgba(16,35,63,.08);
+    }
+
+    body.dark{
+      --bg:#071321;
+      --surface:#0d1d31;
+      --surface2:#12263d;
+      --text:#f4f7fb;
+      --muted:#9baabd;
+      --border:rgba(255,255,255,.09);
+      --danger:#ef7777;
+      --shadow:0 18px 55px rgba(0,0,0,.28);
+    }
+
+    body{
+      min-height:100vh;
+      background:var(--bg);
+      color:var(--text);
+      font-family:
+        Inter,
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      transition:.2s ease;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      height:74px;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.88);
+      backdrop-filter:blur(18px);
+    }
+
+    body.dark .header{
+      background:rgba(13,29,49,.93);
+    }
+
+    .header-inner{
+      width:min(1200px,calc(100% - 32px));
+      height:100%;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+
+    .logo{
+      width:43px;
+      height:43px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:var(--surface);
+    }
+
+    .logo img{
+      width:82%;
+      height:82%;
+      object-fit:contain;
+    }
+
+    .brand-name{
+      font-size:14px;
+      font-weight:950;
+      letter-spacing:-.4px;
+    }
+
+    .brand-name span{
+      color:var(--gold);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .nav a{
+      padding:9px 12px;
+      border-radius:9px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:850;
+    }
+
+    .nav a:hover,
+    .nav a.active{
+      background:var(--surface2);
+      color:var(--text);
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:7px;
+    }
+
+    .icon-btn,
+    .profile-link{
+      width:39px;
+      height:39px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--border);
+      border-radius:11px;
+      background:var(--surface);
+      color:var(--text);
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .profile-link{
+      border-radius:50%;
+      border-color:var(--gold);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main{
+      width:min(850px,calc(100% - 32px));
+      margin:auto;
+      padding:45px 0 80px;
+    }
+
+    .page-head{
+      margin-bottom:24px;
+    }
+
+    .eyebrow{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      color:var(--gold);
+      font-size:9px;
+      font-weight:950;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:21px;
+      height:1px;
+      background:var(--gold);
+    }
+
+    h1{
+      font-size:clamp(32px,5vw,48px);
+      line-height:1;
+      letter-spacing:-2px;
+    }
+
+    .page-description{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.7;
+    }
+
+    /* =========================
+       PROFILE CARD
+    ========================= */
+
+    .profile-card{
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:var(--surface);
+      box-shadow:var(--shadow);
+    }
+
+    .profile-top{
+      position:relative;
+      padding:28px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--surface2),
+          var(--surface)
+        );
+      border-bottom:1px solid var(--border);
+    }
+
+    .profile-main{
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .avatar{
+      width:88px;
+      height:88px;
+      flex-shrink:0;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:3px solid var(--gold);
+      border-radius:50%;
+      background:var(--surface);
+      color:var(--gold);
+      font-size:28px;
+      font-weight:950;
+    }
+
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .profile-name{
+      font-size:22px;
+      font-weight:950;
+      line-height:1.25;
+    }
+
+    .profile-email{
+      margin-top:5px;
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .member-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      margin-top:9px;
+      padding:5px 8px;
+      border-radius:6px;
+      background:rgba(215,179,90,.15);
+      color:var(--gold);
+      font-size:7px;
+      font-weight:950;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .section{
+      padding:25px 28px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .section:last-child{
+      border-bottom:0;
+    }
+
+    .section-title{
+      margin-bottom:16px;
+      font-size:13px;
+      font-weight:950;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:13px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      color:var(--muted);
+      font-size:8px;
+      font-weight:900;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+    }
+
+    .field input{
+      width:100%;
+      height:43px;
+      padding:0 12px;
+      outline:0;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:var(--surface2);
+      color:var(--text);
+      font-size:10px;
+    }
+
+    .field input:focus{
+      border-color:rgba(215,179,90,.8);
+    }
+
+    .field input:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+
+    .save-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-top:17px;
+    }
+
+    .status{
+      min-height:20px;
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    .status.success{
+      color:#4f9b72;
+    }
+
+    .status.error{
+      color:var(--danger);
+    }
+
+    .save-btn{
+      min-width:130px;
+      height:40px;
+      border:0;
+      border-radius:9px;
+      background:var(--text);
+      color:var(--bg);
+      font-size:9px;
+      font-weight:950;
+    }
+
+    body.dark .save-btn{
+      background:var(--gold);
+      color:#071a34;
+    }
+
+    .save-btn:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    /* =========================
+       ACCOUNT INFO
+    ========================= */
+
+    .account-list{
+      display:grid;
+      gap:8px;
+    }
+
+    .account-row{
+      min-height:47px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:var(--surface2);
+    }
+
+    .account-label{
+      color:var(--muted);
+      font-size:8px;
+      font-weight:850;
+      text-transform:uppercase;
+    }
+
+    .account-value{
+      max-width:65%;
+      overflow:hidden;
+      color:var(--text);
+      font-size:9px;
+      font-weight:800;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    /* =========================
+       ACTIONS
+    ========================= */
+
+    .actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+    }
+
+    .action-btn{
+      height:43px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:var(--surface2);
+      color:var(--text);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .action-btn:hover{
+      border-color:var(--gold);
+    }
+
+    .action-btn.danger{
+      color:var(--danger);
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading-screen{
+      position:fixed;
+      inset:0;
+      z-index:500;
+      display:grid;
+      place-items:center;
+      background:var(--bg);
+    }
+
+    .loading-screen.hide{
+      display:none;
+    }
+
+    .loading-box{
+      text-align:center;
+    }
+
+    .spinner{
+      width:30px;
+      height:30px;
+      margin:0 auto 11px;
+      border:2px solid var(--border);
+      border-top-color:var(--gold);
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+    }
+
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    .loading-box p{
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    /* =========================
+       MOBILE NAV
+    ========================= */
+
+    .bottom-nav{
+      display:none;
+    }
+
+    @media(max-width:950px){
+
+      .nav{
+        display:none;
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .header{
+        height:68px;
+      }
+
+      .header-inner{
+        width:calc(100% - 22px);
+      }
+
+      .brand-name{
+        display:none;
+      }
+
+      .main{
+        width:calc(100% - 22px);
+        padding-top:28px;
+        padding-bottom:100px;
+      }
+
+      .profile-top{
+        padding:22px;
+      }
+
+      .profile-main{
+        align-items:flex-start;
+      }
+
+      .avatar{
+        width:70px;
+        height:70px;
+        font-size:22px;
+      }
+
+      .profile-name{
+        font-size:18px;
+      }
+
+      .section{
+        padding:21px;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+
+      .save-row{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .save-btn{
+        width:100%;
+      }
+
+      .actions{
+        grid-template-columns:1fr;
+      }
+
+      .bottom-nav{
+        position:fixed;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        z-index:200;
+        height:62px;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        padding:6px;
+        border:1px solid var(--border);
+        border-radius:17px;
+        background:rgba(255,255,255,.94);
+        backdrop-filter:blur(18px);
+        box-shadow:0 15px 40px rgba(0,0,0,.12);
+      }
+
+      body.dark .bottom-nav{
+        background:rgba(13,29,49,.95);
+      }
+
+      .bottom-nav a{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:3px;
+        border-radius:11px;
+        color:var(--muted);
+        font-size:8px;
+        font-weight:850;
+      }
+
+      .bottom-nav a.active{
+        color:var(--gold);
+        background:var(--surface2);
+      }
+
+      .bottom-nav b{
+        font-size:17px;
+        font-weight:500;
+      }
+
+    }
+  </style>
 </head>
-
 
 <body>
 
-<header>
+  <!-- =========================
+       LOADING
+  ========================== -->
 
-<div class="header-inner">
+  <div
+    id="loadingScreen"
+    class="loading-screen">
 
-<a href="./index.html" class="logo">
-Myanmar <span>Elite Connect</span>
-</a>
+    <div class="loading-box">
 
-<a href="./index.html" class="back-btn">
-← General
-</a>
-
-</div>
-
-</header>
-
-
-<main>
-
-<div id="message" class="message"></div>
-
-
-<div id="pageContent">
-
-<div class="loading">
-
-<div class="spinner"></div>
-
-Profile ကို ရယူနေပါသည်...
-
-</div>
-
-</div>
-
-</main>
-
-
-<!-- EDIT PROFILE MODAL -->
-
-<div id="editModal" class="modal">
-
-<div class="modal-box">
-
-<div class="modal-header">
-
-<h2>✏️ Edit Profile</h2>
-
-<button
- class="close-btn"
- onclick="closeEditModal()"
->
-×
-</button>
-
-</div>
-
-
-<label for="editName">
-Name / အမည်
-</label>
-
-<input
- id="editName"
- type="text"
- maxlength="100"
- placeholder="သင့်အမည်"
->
-
-
-<label for="editCity">
-City / မြို့
-</label>
-
-<input
- id="editCity"
- type="text"
- maxlength="100"
- placeholder="ဥပမာ - Yangon"
->
-
-
-<label for="editBio">
-Bio
-</label>
-
-<textarea
- id="editBio"
- maxlength="500"
- placeholder="ကိုယ့်အကြောင်း အနည်းငယ်ရေးပါ..."
-></textarea>
-
-
-<button
- class="save-btn"
- onclick="saveProfile()"
->
-Save Changes
-</button>
-
-
-<button
- class="logout-btn"
- onclick="logout()"
->
-🚪 Logout
-</button>
-
-</div>
-
-</div>
-
-
-<script>
-
-/* =================================================
-   SUPABASE
-================================================= */
-
-const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
-const supabaseClient =
-window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
-
-
-/* =================================================
-   GLOBAL
-================================================= */
-
-let currentUser = null;
-let currentProfile = null;
-
-
-/* =================================================
-   HELPERS
-================================================= */
-
-function escapeHtml(value){
-
- if(
-  value === null ||
-  value === undefined
- ){
-  return "";
- }
-
- return String(value)
- .replace(/&/g,"&amp;")
- .replace(/</g,"&lt;")
- .replace(/>/g,"&gt;")
- .replace(/"/g,"&quot;")
- .replace(/'/g,"&#039;");
-}
-
-
-function getInitial(name){
-
- if(!name){
-  return "👤";
- }
-
- return name
- .trim()
- .charAt(0)
- .toUpperCase();
-}
-
-
-function getRoleName(role){
-
- const roles = {
-
-  user:"User",
-
-  owner:"👑 Owner",
-
-  moderator:"🛡️ Moderator",
-
-  car_seller:"🚗 Car Seller",
-
-  property_seller:"🏠 House Seller",
-
-  gem_seller:"💎 Gem Seller"
-
- };
-
- return roles[role] || role || "User";
-}
-
-
-function getCategoryIcon(category){
-
- if(category === "car") return "🚗";
- if(category === "property") return "🏠";
- if(category === "gem") return "💎";
-
- return "📦";
-}
-
-
-function formatPrice(price,currency){
-
- if(
-  price === null ||
-  price === undefined ||
-  price === ""
- ){
-  return "ဈေးနှုန်း မဖော်ပြပါ";
- }
-
- const number =
- Number(price);
-
- if(!Number.isFinite(number)){
-  return escapeHtml(price);
- }
-
- return (
-  number.toLocaleString("en-US") +
-  " " +
-  (currency || "MMK")
- );
-}
-
-
-function showMessage(text,type){
-
- const box =
- document.getElementById("message");
-
- box.textContent = text;
-
- box.className =
- "message " + type;
-
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-
-}
-
-
-function clearMessage(){
-
- const box =
- document.getElementById("message");
-
- box.textContent = "";
-
- box.className = "message";
-
-}
-
-
-/* =================================================
-   GET USER
-================================================= */
-
-async function getCurrentUser(){
-
- const {
-  data,
-  error
- } =
- await supabaseClient.auth.getUser();
-
- if(error){
-  throw error;
- }
-
- return data.user;
-
-}
-
-
-/* =================================================
-   LOAD PROFILE
-================================================= */
-
-async function loadProfile(){
-
- try{
-
-  currentUser =
-  await getCurrentUser();
-
-
-  if(!currentUser){
-
-   showLogin();
-
-   return;
-
-  }
-
-
-  const {
-   data:profile,
-   error:profileError
-  } =
-  await supabaseClient
-  .from("profiles")
-  .select("*")
-  .eq("id",currentUser.id)
-  .maybeSingle();
-
-
-  if(profileError){
-   throw profileError;
-  }
-
-
-  currentProfile =
-  profile || {
-
-   id:currentUser.id,
-
-   full_name:
-   currentUser.user_metadata?.full_name ||
-   "",
-
-   phone:
-   currentUser.phone ||
-   "",
-
-   avatar_url:
-   currentUser.user_metadata?.avatar_url ||
-   "",
-
-   city:"",
-   bio:"",
-   role:"user"
-
-  };
-
-
-  renderProfile();
-
-
-  await loadMyListings();
-
- }
- catch(error){
-
-  console.error(error);
-
-  document.getElementById(
-   "pageContent"
-  ).innerHTML = `
-
-   <div class="error">
-    ❌ Profile ရယူ၍မရပါ။
-    <br><br>
-    ${escapeHtml(error.message)}
-   </div>
-
-  `;
-
- }
-
-}
-
-
-/* =================================================
-   LOGIN STATE
-================================================= */
-
-function showLogin(){
-
- document.getElementById(
-  "pageContent"
- ).innerHTML = `
-
-  <div class="login-state">
-
-   <div class="login-state-icon">
-    👤
-   </div>
-
-   <h2>
-    Login လိုအပ်ပါတယ်
-   </h2>
-
-   <p>
-    Profile ကိုကြည့်ရန်
-    အရင် Login ဝင်ပေးပါ။
-   </p>
-
-   <a
-    href="./auth.html"
-    class="login-link"
-   >
-    Login / Register
-   </a>
-
-  </div>
-
- `;
-
-}
-
-
-/* =================================================
-   RENDER PROFILE
-================================================= */
-
-function renderProfile(){
-
- const p =
- currentProfile;
-
-
- const name =
- p.full_name ||
- currentUser.email ||
- "Myanmar Elite User";
-
-
- const role =
- p.role ||
- "user";
-
-
- let avatarHtml;
-
-
- if(p.avatar_url){
-
-  avatarHtml = `
-
-   <img
-    src="${escapeHtml(p.avatar_url)}"
-    alt="Profile"
-    onerror="this.parentElement.innerHTML='${escapeHtml(getInitial(name))}'"
-   >
-
-  `;
-
- }
- else{
-
-  avatarHtml =
-  escapeHtml(
-   getInitial(name)
-  );
-
- }
-
-
- const roleClass =
- role === "owner"
- ? "role-badge owner-badge"
- : "role-badge";
-
-
- document.getElementById(
-  "pageContent"
- ).innerHTML = `
-
-  <section class="profile-card">
-
-   <div class="avatar">
-
-    ${avatarHtml}
-
-   </div>
-
-
-   <div class="profile-info">
-
-    <h1>
-     ${escapeHtml(name)}
-    </h1>
-
-    <div class="profile-email">
-
-     ${escapeHtml(
-      currentUser.email ||
-      p.phone ||
-      "Account"
-     )}
-
-    </div>
-
-    <span class="${roleClass}">
-
-     ${escapeHtml(
-      getRoleName(role)
-     )}
-
-    </span>
-
-   </div>
-
-
-   <button
-    class="edit-btn"
-    onclick="openEditModal()"
-   >
-    ✏️ Edit Profile
-   </button>
-
-  </section>
-
-
-  <div class="layout">
-
-   <aside>
-
-    <div class="side-card">
-
-     <div class="side-title">
-      👤 Personal Information
-     </div>
-
-
-     <div class="info-row">
-
-      <div class="info-label">
-       Name
-      </div>
-
-      <div class="info-value">
-       ${escapeHtml(
-        p.full_name || "မသတ်မှတ်ရသေးပါ"
-       )}
-      </div>
-
-     </div>
-
-
-     <div class="info-row">
-
-      <div class="info-label">
-       Phone
-      </div>
-
-      <div class="info-value">
-       ${escapeHtml(
-        p.phone ||
-        currentUser.phone ||
-        "မသတ်မှတ်ရသေးပါ"
-       )}
-      </div>
-
-     </div>
-
-
-     <div class="info-row">
-
-      <div class="info-label">
-       City
-      </div>
-
-      <div class="info-value">
-       ${escapeHtml(
-        p.city ||
-        "မသတ်မှတ်ရသေးပါ"
-       )}
-      </div>
-
-     </div>
-
-
-     <div class="info-row">
-
-      <div class="info-label">
-       Bio
-      </div>
-
-      <div class="info-value">
-       ${escapeHtml(
-        p.bio ||
-        "Bio မရှိသေးပါ"
-       )}
-      </div>
-
-     </div>
-
-
-     <div class="info-row">
-
-      <div class="info-label">
-       Role
-      </div>
-
-      <div class="info-value">
-       ${escapeHtml(
-        getRoleName(role)
-       )}
-      </div>
-
-     </div>
-
-    </div>
-
-
-    <div
-     class="side-card"
-     style="margin-top:20px"
-    >
-
-     <div class="side-title">
-      ⚙️ Settings
-     </div>
-
-
-     <button
-      class="setting"
-      onclick="toggleDarkMode()"
-     >
-
-      <div class="setting-left">
-
-       <span class="setting-icon">
-        🌙
-       </span>
-
-       <span class="setting-title">
-        Dark Mode
-       </span>
-
-      </div>
-
-      <div class="toggle"></div>
-
-     </button>
-
-
-     <button
-      class="setting"
-      onclick="logout()"
-     >
-
-      <div class="setting-left">
-
-       <span class="setting-icon">
-        🚪
-       </span>
-
-       <span class="setting-title">
-        Logout
-       </span>
-
-      </div>
-
-     </button>
-
-    </div>
-
-   </aside>
-
-
-   <section class="content-card">
-
-    <div class="content-header">
-
-     <h2>
-      📋 My Listings
-     </h2>
-
-     <span
-      id="myListingCount"
-      class="listing-count"
-     >
-      Loading...
-     </span>
-
-    </div>
-
-
-    <div
-     id="myListings"
-     class="listings"
-    >
-
-     <div class="loading">
       <div class="spinner"></div>
-      Listings ရယူနေပါသည်...
-     </div>
+
+      <p>
+        Loading your profile...
+      </p>
 
     </div>
-
-   </section>
 
   </div>
 
- `;
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="header">
+
+    <div class="header-inner">
+
+      <a
+        class="brand"
+        href="./general.html">
+
+        <div class="logo">
+
+          <img
+            src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+            alt="Myanmar Elite Connect">
+
+        </div>
+
+        <div class="brand-name">
+          Myanmar <span>Elite</span> Connect
+        </div>
+
+      </a>
 
 
- restoreDarkMode();
+      <nav class="nav">
 
-}
+        <a href="./general.html">
+          Home
+        </a>
 
+        <a href="./buy.html">
+          Buy
+        </a>
 
-/* =================================================
-   LOAD MY LISTINGS
-================================================= */
+        <a href="./sell.html">
+          Sell
+        </a>
 
-async function loadMyListings(){
+        <a href="./car.html">
+          Cars
+        </a>
 
- const container =
- document.getElementById(
-  "myListings"
- );
+        <a href="./property.html">
+          Property
+        </a>
 
- const count =
- document.getElementById(
-  "myListingCount"
- );
+        <a href="./chat.html">
+          Chat
+        </a>
 
-
- try{
-
-  const {
-   data,
-   error
-  } =
-  await supabaseClient
-  .from("listings")
-  .select("*")
-  .eq(
-   "user_id",
-   currentUser.id
-  )
-  .order(
-   "created_at",
-   {
-    ascending:false
-   }
-  );
+      </nav>
 
 
-  if(error){
-   throw error;
-  }
+      <div class="header-actions">
 
+        <button
+          id="languageBtn"
+          class="icon-btn">
+          MM
+        </button>
 
-  const listings =
-  Array.isArray(data)
-  ? data
-  : [];
+        <button
+          id="themeBtn"
+          class="icon-btn">
+          ☾
+        </button>
 
+        <a
+          href="./profile.html"
+          id="profileLink"
+          class="profile-link">
+          U
+        </a>
 
-  count.textContent =
-  listings.length +
-  " listings";
-
-
-  if(!listings.length){
-
-   container.innerHTML = `
-
-    <div class="empty">
-
-     <div class="empty-icon">
-      📦
-     </div>
-
-     <h3>
-      Listing မရှိသေးပါ
-     </h3>
-
-     <p>
-      သင့်ရဲ့ ပထမဆုံး Listing ကို
-      စတင်တင်လိုက်ပါ။
-     </p>
-
-     <a
-      href="./sell.html"
-      class="sell-btn"
-     >
-      + Sell / Listing တင်မည်
-     </a>
+      </div>
 
     </div>
 
-   `;
+  </header>
 
-   return;
 
-  }
+  <!-- =========================
+       MAIN
+  ========================== -->
 
+  <main class="main">
 
-  container.innerHTML =
-  listings
-  .map(createMyListingCard)
-  .join("");
+    <section class="page-head">
 
- }
- catch(error){
+      <div class="eyebrow">
+        Account
+      </div>
 
-  console.error(error);
+      <h1>
+        My Profile
+      </h1>
 
-  container.innerHTML = `
+      <p class="page-description">
+        Manage your personal information and account settings.
+      </p>
 
-   <div class="empty">
+    </section>
 
-    ❌ Listings ရယူ၍မရပါ။
 
-    <br><br>
+    <section class="profile-card">
 
-    ${escapeHtml(error.message)}
+      <!-- PROFILE SUMMARY -->
 
-   </div>
+      <div class="profile-top">
 
-  `;
+        <div class="profile-main">
 
- }
+          <div
+            id="avatar"
+            class="avatar">
+            U
+          </div>
 
-}
+          <div>
 
+            <div
+              id="displayName"
+              class="profile-name">
+              User
+            </div>
 
-/* =================================================
-   LISTING IMAGE
-================================================= */
+            <div
+              id="displayEmail"
+              class="profile-email">
+              —
+            </div>
 
-function getFirstImage(item){
+            <div class="member-badge">
+              ● Verified Account
+            </div>
 
- if(
-  item.images &&
-  Array.isArray(item.images) &&
-  item.images.length
- ){
-  return item.images[0];
- }
+          </div>
 
- if(
-  typeof item.images === "string"
- ){
+        </div>
 
-  try{
+      </div>
 
-   const parsed =
-   JSON.parse(item.images);
 
-   if(
-    Array.isArray(parsed) &&
-    parsed.length
-   ){
-    return parsed[0];
-   }
+      <!-- PERSONAL INFORMATION -->
 
-  }
-  catch(e){
+      <section class="section">
 
-   if(
-    item.images.startsWith("http")
-   ){
-    return item.images;
-   }
+        <h2 class="section-title">
+          Personal Information
+        </h2>
 
-  }
+        <div class="form-grid">
 
- }
+          <div class="field">
 
- return "";
+            <label for="fullName">
+              Full Name
+            </label>
 
-}
+            <input
+              id="fullName"
+              type="text"
+              autocomplete="name"
+              placeholder="Your full name">
 
+          </div>
 
-/* =================================================
-   CREATE MY LISTING
-================================================= */
 
-function createMyListingCard(item){
+          <div class="field">
 
- const image =
- getFirstImage(item);
+            <label for="phone">
+              Phone Number
+            </label>
 
+            <input
+              id="phone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="09xxxxxxxxx">
 
- const icon =
- getCategoryIcon(
-  item.category
- );
+          </div>
 
 
- let imageHtml;
+          <div class="field full">
 
+            <label for="bio">
+              About You
+            </label>
 
- if(image){
+            <input
+              id="bio"
+              type="text"
+              maxlength="160"
+              placeholder="A short description about you">
 
-  imageHtml = `
+          </div>
 
-   <img
-    src="${escapeHtml(image)}"
-    alt="${escapeHtml(item.title)}"
-    loading="lazy"
-    onerror="this.style.display='none'"
-   >
+        </div>
 
-  `;
 
- }
- else{
+        <div class="save-row">
 
-  imageHtml =
-  icon;
+          <div
+            id="saveStatus"
+            class="status">
+          </div>
 
- }
+          <button
+            id="saveBtn"
+            class="save-btn">
 
+            Save Changes
 
- let statusText =
- item.status ||
- "pending";
+          </button>
 
+        </div>
 
- let statusClass =
- "status-pending";
+      </section>
 
 
- if(statusText === "approved"){
-  statusClass = "status-approved";
- }
+      <!-- ACCOUNT INFORMATION -->
 
- if(statusText === "rejected"){
-  statusClass = "status-rejected";
- }
+      <section class="section">
 
+        <h2 class="section-title">
+          Account Information
+        </h2>
 
- const location =
- [
-  item.city,
-  item.township
- ]
- .filter(Boolean)
- .join(" • ");
+        <div class="account-list">
 
+          <div class="account-row">
 
- return `
+            <span class="account-label">
+              Email
+            </span>
 
-  <article class="listing">
+            <span
+              id="accountEmail"
+              class="account-value">
+              —
+            </span>
 
-   <div class="listing-image">
+          </div>
 
-    ${imageHtml}
 
-    <span class="listing-status ${statusClass}">
-     ${escapeHtml(
-      statusText.toUpperCase()
-     )}
-    </span>
+          <div class="account-row">
 
-   </div>
+            <span class="account-label">
+              Account ID
+            </span>
 
+            <span
+              id="accountId"
+              class="account-value">
+              —
+            </span>
 
-   <div class="listing-body">
+          </div>
 
-    <div class="listing-title">
-     ${escapeHtml(
-      item.title ||
-      "Untitled Listing"
-     )}
-    </div>
 
+          <div class="account-row">
 
-    <div class="listing-price">
+            <span class="account-label">
+              Joined
+            </span>
 
-     ${escapeHtml(
-      formatPrice(
-       item.price,
-       item.currency
+            <span
+              id="accountCreated"
+              class="account-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ACCOUNT ACTIONS -->
+
+      <section class="section">
+
+        <h2 class="section-title">
+          Account Actions
+        </h2>
+
+        <div class="actions">
+
+          <button
+            id="signOutBtn"
+            class="action-btn danger">
+
+            Sign Out
+
+          </button>
+
+
+          <a
+            href="./general.html"
+            class="action-btn"
+            style="
+              display:grid;
+              place-items:center;
+            ">
+
+            Back to Home
+
+          </a>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       MOBILE NAV
+  ========================== -->
+
+  <nav class="bottom-nav">
+
+    <a href="./general.html">
+
+      <b>⌂</b>
+      Home
+
+    </a>
+
+
+    <a href="./buy.html">
+
+      <b>⌕</b>
+      Buy
+
+    </a>
+
+
+    <a href="./sell.html">
+
+      <b>＋</b>
+      Sell
+
+    </a>
+
+
+    <a
+      href="./profile.html"
+      class="active">
+
+      <b>●</b>
+      Profile
+
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    /* =====================================
+       THEME
+    ====================================== */
+
+    function applyTheme(theme){
+
+      document.body.classList.toggle(
+        "dark",
+        theme === "dark"
+      );
+
+      document.getElementById(
+        "themeBtn"
+      ).textContent =
+        theme === "dark"
+          ? "☀"
+          : "☾";
+
+      localStorage.setItem(
+        "mec_theme",
+        theme
+      );
+
+    }
+
+
+    applyTheme(
+      localStorage.getItem(
+        "mec_theme"
+      ) || "light"
+    );
+
+
+    document
+      .getElementById(
+        "themeBtn"
       )
-     )}
+      .addEventListener(
+        "click",
+        () => {
 
-    </div>
+          const dark =
+            document.body.classList.contains(
+              "dark"
+            );
 
+          applyTheme(
+            dark
+              ? "light"
+              : "dark"
+          );
 
-    <div class="listing-location">
+        }
+      );
 
-     ${location
-      ? "📍 " + escapeHtml(location)
-      : "📍 Location မဖော်ပြပါ"
-     }
 
-    </div>
+    /* =====================================
+       LANGUAGE
+    ====================================== */
 
+    let language =
+      localStorage.getItem(
+        "mec_language"
+      ) || "en";
 
-    <button
-     class="delete-btn"
-     onclick="deleteListing('${item.id}')"
-    >
-     🗑️ Delete Listing
-    </button>
 
-   </div>
+    const languageBtn =
+      document.getElementById(
+        "languageBtn"
+      );
 
-  </article>
 
- `;
+    languageBtn.textContent =
+      language === "en"
+        ? "MM"
+        : "EN";
 
-}
 
+    languageBtn.addEventListener(
+      "click",
+      () => {
 
-/* =================================================
-   DELETE LISTING
-================================================= */
+        language =
+          language === "en"
+            ? "mm"
+            : "en";
 
-async function deleteListing(id){
+        localStorage.setItem(
+          "mec_language",
+          language
+        );
 
- const confirmDelete =
- confirm(
-  "ဒီ Listing ကို ဖျက်မှာသေချာပါသလား?"
- );
+        languageBtn.textContent =
+          language === "en"
+            ? "MM"
+            : "EN";
 
- if(!confirmDelete){
-  return;
- }
+      }
+    );
 
 
- try{
+    /* =====================================
+       HELPERS
+    ====================================== */
 
-  clearMessage();
+    function setStatus(
+      message,
+      type = ""
+    ){
 
+      const status =
+        document.getElementById(
+          "saveStatus"
+        );
 
-  const {
-   error
-  } =
-  await supabaseClient
-  .from("listings")
-  .delete()
-  .eq("id",id)
-  .eq(
-   "user_id",
-   currentUser.id
-  );
+      status.textContent =
+        message;
 
+      status.className =
+        "status " + type;
 
-  if(error){
-   throw error;
-  }
+    }
 
 
-  showMessage(
-   "✅ Listing ကို အောင်မြင်စွာဖျက်ပြီးပါပြီ။",
-   "success"
-  );
+    function formatDate(
+      value
+    ){
 
+      if (!value){
+        return "—";
+      }
 
-  await loadMyListings();
+      const date =
+        new Date(value);
 
- }
- catch(error){
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ){
+        return "—";
+      }
 
-  console.error(error);
+      return date.toLocaleDateString(
+        "en-GB",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
+        }
+      );
 
-  showMessage(
-   "❌ Listing ဖျက်မရပါ။ " +
-   error.message,
-   "error"
-  );
+    }
 
- }
 
-}
+    function getInitial(
+      name,
+      email
+    ){
 
+      const source =
+        name ||
+        email ||
+        "U";
 
-/* =================================================
-   EDIT MODAL
-================================================= */
+      return String(
+        source
+      )
+        .trim()
+        .charAt(0)
+        .toUpperCase();
 
-function openEditModal(){
+    }
 
- const p =
- currentProfile;
 
+    /* =====================================
+       LOAD CURRENT USER
+    ====================================== */
 
- document.getElementById(
-  "editName"
- ).value =
- p.full_name || "";
+    async function loadProfile(){
 
+      try{
 
- document.getElementById(
-  "editCity"
- ).value =
- p.city || "";
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getUser();
 
 
- document.getElementById(
-  "editBio"
- ).value =
- p.bio || "";
+        if(error){
+          throw error;
+        }
 
 
- document.getElementById(
-  "editModal"
- ).classList.add(
-  "show"
- );
+        const user =
+          data?.user;
 
-}
 
+        /*
+          IMPORTANT:
+          No logged-in user =
+          return to auth page.
+        */
 
-function closeEditModal(){
+        if(!user){
 
- document.getElementById(
-  "editModal"
- ).classList.remove(
-  "show"
- );
+          window.location.replace(
+            "./auth.html"
+          );
 
-}
+          return;
 
+        }
 
-/* =================================================
-   SAVE PROFILE
-================================================= */
 
-async function saveProfile(){
+        const metadata =
+          user.user_metadata || {};
 
- try{
 
-  const name =
-  document
-  .getElementById("editName")
-  .value
-  .trim();
+        const fullName =
+          metadata.full_name ||
+          metadata.name ||
+          "";
 
 
-  const city =
-  document
-  .getElementById("editCity")
-  .value
-  .trim();
+        const phone =
+          metadata.phone ||
+          "";
 
 
-  const bio =
-  document
-  .getElementById("editBio")
-  .value
-  .trim();
+        const bio =
+          metadata.bio ||
+          "";
 
 
-  const {
-   error
-  } =
-  await supabaseClient
-  .from("profiles")
-  .upsert({
+        const initial =
+          getInitial(
+            fullName,
+            user.email
+          );
 
-   id:currentUser.id,
 
-   full_name:
-   name || null,
+        /* SUMMARY */
 
-   city:
-   city || null,
+        document.getElementById(
+          "displayName"
+        ).textContent =
+          fullName ||
+          "Myanmar Elite Member";
 
-   bio:
-   bio || null
 
-  });
+        document.getElementById(
+          "displayEmail"
+        ).textContent =
+          user.email ||
+          "—";
 
 
-  if(error){
-   throw error;
-  }
+        document.getElementById(
+          "accountEmail"
+        ).textContent =
+          user.email ||
+          "—";
 
 
-  currentProfile.full_name =
-  name;
+        document.getElementById(
+          "accountId"
+        ).textContent =
+          user.id ||
+          "—";
 
-  currentProfile.city =
-  city;
 
-  currentProfile.bio =
-  bio;
+        document.getElementById(
+          "accountCreated"
+        ).textContent =
+          formatDate(
+            user.created_at
+          );
 
 
-  closeEditModal();
+        /* FORM */
 
+        document.getElementById(
+          "fullName"
+        ).value =
+          fullName;
 
-  showMessage(
-   "✅ Profile ကို အောင်မြင်စွာ ပြင်ပြီးပါပြီ။",
-   "success"
-  );
 
+        document.getElementById(
+          "phone"
+        ).value =
+          phone;
 
-  renderProfile();
 
+        document.getElementById(
+          "bio"
+        ).value =
+          bio;
 
-  await loadMyListings();
 
- }
- catch(error){
+        /* AVATAR */
 
-  console.error(error);
+        const avatar =
+          document.getElementById(
+            "avatar"
+          );
 
-  showMessage(
-   "❌ Profile ပြင်မရပါ။ " +
-   error.message,
-   "error"
-  );
 
- }
+        const avatarUrl =
+          metadata.avatar_url ||
+          metadata.picture ||
+          "";
 
-}
 
+        if(avatarUrl){
 
-/* =================================================
-   DARK MODE
-================================================= */
+          avatar.innerHTML = `
+            <img
+              src="${avatarUrl}"
+              alt="Profile photo"
+              onerror="
+                this.parentElement.innerHTML='${initial}';
+              ">
+          `;
 
-function toggleDarkMode(){
+        }else{
 
- document.body.classList.toggle(
-  "dark"
- );
+          avatar.textContent =
+            initial;
 
+        }
 
- localStorage.setItem(
-  "mec-dark-mode",
-  document.body.classList.contains(
-   "dark"
-  )
-  ? "on"
-  : "off"
- );
 
-}
+        document.getElementById(
+          "profileLink"
+        ).textContent =
+          initial;
 
 
-function restoreDarkMode(){
+        document.getElementById(
+          "loadingScreen"
+        ).classList.add(
+          "hide"
+        );
 
- const mode =
- localStorage.getItem(
-  "mec-dark-mode"
- );
 
- if(mode === "on"){
+      }catch(error){
 
-  document.body.classList.add(
-   "dark"
-  );
+        console.error(
+          "Profile error:",
+          error
+        );
 
- }
 
-}
+        window.location.replace(
+          "./auth.html"
+        );
 
+      }
 
-/* =================================================
-   LOGOUT
-================================================= */
+    }
 
-async function logout(){
 
- const yes =
- confirm(
-  "Logout လုပ်မှာသေချာပါသလား?"
- );
+    /* =====================================
+       SAVE PROFILE
+    ====================================== */
 
- if(!yes){
-  return;
- }
+    document
+      .getElementById(
+        "saveBtn"
+      )
+      .addEventListener(
+        "click",
+        async () => {
 
+          const button =
+            document.getElementById(
+              "saveBtn"
+            );
 
- try{
 
-  const {
-   error
-  } =
-  await supabaseClient.auth.signOut();
+          const fullName =
+            document.getElementById(
+              "fullName"
+            ).value.trim();
 
 
-  if(error){
-   throw error;
-  }
+          const phone =
+            document.getElementById(
+              "phone"
+            ).value.trim();
 
 
-  window.location.href =
-  "./index.html";
+          const bio =
+            document.getElementById(
+              "bio"
+            ).value.trim();
 
- }
- catch(error){
 
-  showMessage(
-   "❌ Logout မအောင်မြင်ပါ။ " +
-   error.message,
-   "error"
-  );
+          button.disabled =
+            true;
 
- }
 
-}
+          button.textContent =
+            "Saving...";
 
 
-/* =================================================
-   CLOSE MODAL OUTSIDE
-================================================= */
+          setStatus(
+            "Saving your changes..."
+          );
 
-document
-.getElementById("editModal")
-.addEventListener(
- "click",
- function(event){
 
-  if(
-   event.target === this
-  ){
+          try{
 
-   closeEditModal();
+            const {
+              data,
+              error
+            } =
+              await supabaseClient.auth.updateUser({
 
-  }
+                data:{
+                  full_name:fullName,
+                  phone:phone,
+                  bio:bio
+                }
 
- }
-);
+              });
 
 
-/* =================================================
-   START
-================================================= */
+            if(error){
+              throw error;
+            }
 
-document.addEventListener(
- "DOMContentLoaded",
- function(){
 
-  restoreDarkMode();
+            const user =
+              data?.user;
 
-  loadProfile();
 
- }
-);
+            document.getElementById(
+              "displayName"
+            ).textContent =
+              fullName ||
+              "Myanmar Elite Member";
 
-</script>
+
+            const initial =
+              getInitial(
+                fullName,
+                user?.email
+              );
+
+
+            document.getElementById(
+              "avatar"
+            ).textContent =
+              initial;
+
+
+            document.getElementById(
+              "profileLink"
+            ).textContent =
+              initial;
+
+
+            setStatus(
+              "Profile updated successfully.",
+              "success"
+            );
+
+
+          }catch(error){
+
+            console.error(
+              "Save profile error:",
+              error
+            );
+
+
+            setStatus(
+              error.message ||
+              "Could not save your profile.",
+              "error"
+            );
+
+          }finally{
+
+            button.disabled =
+              false;
+
+            button.textContent =
+              "Save Changes";
+
+          }
+
+        }
+      );
+
+
+    /* =====================================
+       SIGN OUT
+    ====================================== */
+
+    document
+      .getElementById(
+        "signOutBtn"
+      )
+      .addEventListener(
+        "click",
+        async () => {
+
+          const button =
+            document.getElementById(
+              "signOutBtn"
+            );
+
+
+          const confirmed =
+            confirm(
+              "Are you sure you want to sign out?"
+            );
+
+
+          if(!confirmed){
+            return;
+          }
+
+
+          button.disabled =
+            true;
+
+          button.textContent =
+            "Signing out...";
+
+
+          try{
+
+            const {
+              error
+            } =
+              await supabaseClient.auth.signOut();
+
+
+            if(error){
+              throw error;
+            }
+
+
+            window.location.replace(
+              "./auth.html"
+            );
+
+
+          }catch(error){
+
+            console.error(
+              "Sign out error:",
+              error
+            );
+
+
+            button.disabled =
+              false;
+
+            button.textContent =
+              "Sign Out";
+
+
+            alert(
+              error.message ||
+              "Unable to sign out."
+            );
+
+          }
+
+        }
+      );
+
+
+    /* =====================================
+       AUTH STATE
+    ====================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      (
+        event
+      ) => {
+
+        if(
+          event ===
+          "SIGNED_OUT"
+        ){
+
+          window.location.replace(
+            "./auth.html"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       INIT
+    ====================================== */
+
+    loadProfile();
+
+  </script>
 
 </body>
 </html>
