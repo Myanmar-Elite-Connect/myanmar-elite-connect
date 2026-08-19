@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="my">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>My Profile - Myanmar Elite Connect</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+}
+
+:root{
+ --navy:#071b3a;
+ --navy2:#102d59;
+ --green:#19a974;
+ --green2:#0f8f60;
+ --gold:#d9a441;
+ --bg:#f4f7fb;
+ --white:#fff;
+ --text:#172033;
+ --muted:#697386;
+ --border:#e3e8f0;
+ --danger:#b42318;
+ --shadow:0 10px 30px rgba(7,27,58,.08);
+}
+
+body{
+ font-family:Arial,"Noto Sans Myanmar",sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ min-height:100vh;
+ transition:.25s;
+}
+
+body.dark{
+ --bg:#07111f;
+ --white:#101c2d;
+ --text:#f2f5f9;
+ --muted:#aab4c3;
+ --border:#26364b;
+ --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+button,
+input,
+textarea{
+ font-family:inherit;
+}
+
+/* ================= HEADER ================= */
+
+header{
+ position:sticky;
+ top:0;
+ z-index:1000;
+ background:rgba(7,27,58,.97);
+ color:white;
+ box-shadow:0 3px 15px rgba(0,0,0,.12);
+}
+
+.header-inner{
+ max-width:1100px;
+ margin:auto;
+ padding:14px 5%;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+}
+
+.logo{
+ color:white;
+ text-decoration:none;
+ font-size:20px;
+ font-weight:900;
+}
+
+.logo span{
+ color:#65d6a7;
+}
+
+.back-btn{
+ color:white;
+ text-decoration:none;
+ padding:9px 13px;
+ border-radius:8px;
+ background:rgba(255,255,255,.1);
+ font-size:14px;
+}
+
+/* ================= MAIN ================= */
+
+main{
+ max-width:1100px;
+ margin:auto;
+ padding:35px 5% 60px;
+}
+
+/* ================= MESSAGE ================= */
+
+.message{
+ display:none;
+ padding:13px 15px;
+ border-radius:10px;
+ margin-bottom:20px;
+ line-height:1.6;
+}
+
+.message.success{
+ display:block;
+ background:#e9f8ef;
+ color:#176b38;
+ border:1px solid #bce8cb;
+}
+
+.message.error{
+ display:block;
+ background:#fff0f0;
+ color:#b42318;
+ border:1px solid #ffd0d0;
+}
+
+/* ================= PROFILE HERO ================= */
+
+.profile-card{
+ background:var(--white);
+ border:1px solid var(--border);
+ border-radius:22px;
+ box-shadow:var(--shadow);
+ padding:30px;
+ display:flex;
+ align-items:center;
+ gap:25px;
+ margin-bottom:25px;
+}
+
+.avatar{
+ width:110px;
+ height:110px;
+ flex:none;
+ border-radius:50%;
+ background:linear-gradient(135deg,#071b3a,#19a974);
+ color:white;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:42px;
+ font-weight:900;
+ overflow:hidden;
+}
+
+.avatar img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+}
+
+.profile-info{
+ flex:1;
+}
+
+.profile-info h1{
+ color:var(--text);
+ font-size:30px;
+ margin-bottom:7px;
+}
+
+.profile-email{
+ color:var(--muted);
+ font-size:14px;
+ margin-bottom:12px;
+ word-break:break-word;
+}
+
+.role-badge{
+ display:inline-block;
+ padding:7px 11px;
+ border-radius:20px;
+ background:#e8f7ef;
+ color:#167344;
+ font-size:12px;
+ font-weight:900;
+}
+
+.owner-badge{
+ background:#fff5d9;
+ color:#956b00;
+}
+
+.edit-btn{
+ border:0;
+ background:var(--navy);
+ color:white;
+ padding:11px 17px;
+ border-radius:9px;
+ cursor:pointer;
+ font-weight:800;
+}
+
+/* ================= GRID ================= */
+
+.layout{
+ display:grid;
+ grid-template-columns:320px 1fr;
+ gap:25px;
+}
+
+/* ================= SIDE CARD ================= */
+
+.side-card,
+.content-card{
+ background:var(--white);
+ border:1px solid var(--border);
+ border-radius:18px;
+ box-shadow:var(--shadow);
+}
+
+.side-card{
+ padding:22px;
+}
+
+.side-title{
+ color:var(--text);
+ font-size:18px;
+ font-weight:900;
+ margin-bottom:15px;
+}
+
+.info-row{
+ padding:12px 0;
+ border-bottom:1px solid var(--border);
+}
+
+.info-row:last-child{
+ border-bottom:0;
+}
+
+.info-label{
+ color:var(--muted);
+ font-size:12px;
+ margin-bottom:4px;
+}
+
+.info-value{
+ color:var(--text);
+ font-size:14px;
+ line-height:1.6;
+ word-break:break-word;
+}
+
+/* ================= SETTINGS ================= */
+
+.setting{
+ width:100%;
+ border:0;
+ background:transparent;
+ color:var(--text);
+ padding:13px 0;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ cursor:pointer;
+ border-bottom:1px solid var(--border);
+ text-align:left;
+}
+
+.setting:last-child{
+ border-bottom:0;
+}
+
+.setting-left{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+
+.setting-icon{
+ font-size:20px;
+}
+
+.setting-title{
+ font-weight:700;
+}
+
+.toggle{
+ width:45px;
+ height:24px;
+ background:#cbd3df;
+ border-radius:20px;
+ position:relative;
+ transition:.2s;
+}
+
+.toggle::after{
+ content:"";
+ position:absolute;
+ width:18px;
+ height:18px;
+ background:white;
+ border-radius:50%;
+ top:3px;
+ left:3px;
+ transition:.2s;
+}
+
+body.dark .toggle{
+ background:var(--green);
+}
+
+body.dark .toggle::after{
+ left:24px;
+}
+
+/* ================= CONTENT ================= */
+
+.content-card{
+ padding:25px;
+}
+
+.content-header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:20px;
+}
+
+.content-header h2{
+ color:var(--text);
+ font-size:22px;
+}
+
+.listing-count{
+ color:var(--muted);
+ font-size:13px;
+}
+
+/* ================= LISTINGS ================= */
+
+.listings{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:17px;
+}
+
+.listing{
+ border:1px solid var(--border);
+ border-radius:15px;
+ overflow:hidden;
+ background:var(--white);
+}
+
+.listing-image{
+ height:170px;
+ background:linear-gradient(135deg,#071b3a,#24548d);
+ position:relative;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:white;
+ font-size:55px;
+ overflow:hidden;
+}
+
+.listing-image img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+}
+
+.listing-status{
+ position:absolute;
+ top:9px;
+ left:9px;
+ padding:5px 8px;
+ border-radius:6px;
+ font-size:10px;
+ font-weight:900;
+ background:#fff;
+ color:#172033;
+}
+
+.status-approved{
+ color:#167344;
+}
+
+.status-pending{
+ color:#956b00;
+}
+
+.status-rejected{
+ color:#b42318;
+}
+
+.listing-body{
+ padding:15px;
+}
+
+.listing-title{
+ color:var(--text);
+ font-weight:900;
+ font-size:16px;
+ line-height:1.4;
+ margin-bottom:6px;
+}
+
+.listing-price{
+ color:var(--navy);
+ font-size:17px;
+ font-weight:900;
+ margin-bottom:7px;
+}
+
+body.dark .listing-price{
+ color:#65d6a7;
+}
+
+.listing-location{
+ color:var(--muted);
+ font-size:12px;
+ margin-bottom:12px;
+}
+
+.delete-btn{
+ width:100%;
+ border:1px solid #ffd0d0;
+ background:#fff5f5;
+ color:var(--danger);
+ padding:9px;
+ border-radius:8px;
+ cursor:pointer;
+ font-weight:800;
+}
+
+.delete-btn:hover{
+ background:#ffe8e8;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+ padding:45px 20px;
+ text-align:center;
+ color:var(--muted);
+}
+
+.empty-icon{
+ font-size:45px;
+ margin-bottom:10px;
+}
+
+.sell-btn{
+ display:inline-block;
+ margin-top:15px;
+ text-decoration:none;
+ background:var(--navy);
+ color:white;
+ padding:11px 18px;
+ border-radius:9px;
+ font-weight:800;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:3000;
+ background:rgba(0,0,0,.65);
+ padding:20px;
+ align-items:center;
+ justify-content:center;
+}
+
+.modal.show{
+ display:flex;
+}
+
+.modal-box{
+ width:min(520px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:var(--white);
+ border-radius:18px;
+ padding:25px;
+}
+
+.modal-header{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ margin-bottom:20px;
+}
+
+.modal-header h2{
+ color:var(--text);
+}
+
+.close-btn{
+ border:0;
+ background:transparent;
+ color:var(--muted);
+ font-size:25px;
+ cursor:pointer;
+}
+
+label{
+ display:block;
+ color:var(--text);
+ font-size:13px;
+ font-weight:800;
+ margin:15px 0 7px;
+}
+
+input,
+textarea{
+ width:100%;
+ border:1px solid var(--border);
+ background:var(--white);
+ color:var(--text);
+ padding:12px 13px;
+ border-radius:9px;
+ outline:none;
+}
+
+textarea{
+ min-height:120px;
+ resize:vertical;
+}
+
+.save-btn{
+ width:100%;
+ margin-top:20px;
+ border:0;
+ background:var(--navy);
+ color:white;
+ padding:13px;
+ border-radius:9px;
+ font-weight:900;
+ cursor:pointer;
+}
+
+.logout-btn{
+ width:100%;
+ margin-top:10px;
+ border:0;
+ background:#fff0f0;
+ color:var(--danger);
+ padding:13px;
+ border-radius:9px;
+ font-weight:900;
+ cursor:pointer;
+}
+
+/* ================= LOGIN ================= */
+
+.login-state{
+ max-width:550px;
+ margin:70px auto;
+ background:var(--white);
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:45px 25px;
+ text-align:center;
+ box-shadow:var(--shadow);
+}
+
+.login-state-icon{
+ font-size:55px;
+ margin-bottom:15px;
+}
+
+.login-state h2{
+ color:var(--text);
+ margin-bottom:8px;
+}
+
+.login-state p{
+ color:var(--muted);
+ line-height:1.7;
+}
+
+.login-link{
+ display:inline-block;
+ margin-top:20px;
+ padding:12px 22px;
+ background:var(--navy);
+ color:white;
+ text-decoration:none;
+ border-radius:9px;
+ font-weight:900;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+ padding:60px 20px;
+ text-align:center;
+ color:var(--muted);
+}
+
+.spinner{
+ width:38px;
+ height:38px;
+ border:4px solid #e5eaf2;
+ border-top-color:var(--navy);
+ border-radius:50%;
+ animation:spin .8s linear infinite;
+ margin:0 auto 15px;
+}
+
+@keyframes spin{
+ to{
+  transform:rotate(360deg);
+ }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+ .profile-card{
+  flex-direction:column;
+  text-align:center;
+ }
+
+ .profile-info{
+  width:100%;
+ }
+
+ .layout{
+  grid-template-columns:1fr;
+ }
+
+ .listings{
+  grid-template-columns:1fr;
+ }
+
+ .edit-btn{
+  width:100%;
+ }
+
+}
+
+@media(max-width:500px){
+
+ main{
+  padding:25px 4% 45px;
+ }
+
+ .profile-card{
+  padding:23px 17px;
+ }
+
+ .content-card,
+ .side-card{
+  padding:18px;
+ }
+
+ .profile-info h1{
+  font-size:25px;
+ }
+
+ .header-inner{
+  padding:12px 4%;
+ }
+
+ .logo{
+  font-size:16px;
+ }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<a href="./index.html" class="logo">
+Myanmar <span>Elite Connect</span>
+</a>
+
+<a href="./index.html" class="back-btn">
+← General
+</a>
+
+</div>
+
+</header>
+
+
+<main>
+
+<div id="message" class="message"></div>
+
+
+<div id="pageContent">
+
+<div class="loading">
+
+<div class="spinner"></div>
+
+Profile ကို ရယူနေပါသည်...
+
+</div>
+
+</div>
+
+</main>
+
+
+<!-- EDIT PROFILE MODAL -->
+
+<div id="editModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2>✏️ Edit Profile</h2>
+
+<button
+ class="close-btn"
+ onclick="closeEditModal()"
+>
+×
+</button>
+
+</div>
+
+
+<label for="editName">
+Name / အမည်
+</label>
+
+<input
+ id="editName"
+ type="text"
+ maxlength="100"
+ placeholder="သင့်အမည်"
+>
+
+
+<label for="editCity">
+City / မြို့
+</label>
+
+<input
+ id="editCity"
+ type="text"
+ maxlength="100"
+ placeholder="ဥပမာ - Yangon"
+>
+
+
+<label for="editBio">
+Bio
+</label>
+
+<textarea
+ id="editBio"
+ maxlength="500"
+ placeholder="ကိုယ့်အကြောင်း အနည်းငယ်ရေးပါ..."
+></textarea>
+
+
+<button
+ class="save-btn"
+ onclick="saveProfile()"
+>
+Save Changes
+</button>
+
+
+<button
+ class="logout-btn"
+ onclick="logout()"
+>
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =================================================
+   SUPABASE
+================================================= */
+
+const SUPABASE_URL =
+"https://ikjwisfsdcupibgjiuvp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
+
+const supabaseClient =
+window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+
+/* =================================================
+   GLOBAL
+================================================= */
+
+let currentUser = null;
+let currentProfile = null;
+
+
+/* =================================================
+   HELPERS
+================================================= */
+
+function escapeHtml(value){
+
+ if(
+  value === null ||
+  value === undefined
+ ){
+  return "";
+ }
+
+ return String(value)
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+}
+
+
+function getInitial(name){
+
+ if(!name){
+  return "👤";
+ }
+
+ return name
+ .trim()
+ .charAt(0)
+ .toUpperCase();
+}
+
+
+function getRoleName(role){
+
+ const roles = {
+
+  user:"User",
+
+  owner:"👑 Owner",
+
+  moderator:"🛡️ Moderator",
+
+  car_seller:"🚗 Car Seller",
+
+  property_seller:"🏠 House Seller",
+
+  gem_seller:"💎 Gem Seller"
+
+ };
+
+ return roles[role] || role || "User";
+}
+
+
+function getCategoryIcon(category){
+
+ if(category === "car") return "🚗";
+ if(category === "property") return "🏠";
+ if(category === "gem") return "💎";
+
+ return "📦";
+}
+
+
+function formatPrice(price,currency){
+
+ if(
+  price === null ||
+  price === undefined ||
+  price === ""
+ ){
+  return "ဈေးနှုန်း မဖော်ပြပါ";
+ }
+
+ const number =
+ Number(price);
+
+ if(!Number.isFinite(number)){
+  return escapeHtml(price);
+ }
+
+ return (
+  number.toLocaleString("en-US") +
+  " " +
+  (currency || "MMK")
+ );
+}
+
+
+function showMessage(text,type){
+
+ const box =
+ document.getElementById("message");
+
+ box.textContent = text;
+
+ box.className =
+ "message " + type;
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+}
+
+
+function clearMessage(){
+
+ const box =
+ document.getElementById("message");
+
+ box.textContent = "";
+
+ box.className = "message";
+
+}
+
+
+/* =================================================
+   GET USER
+================================================= */
+
+async function getCurrentUser(){
+
+ const {
+  data,
+  error
+ } =
+ await supabaseClient.auth.getUser();
+
+ if(error){
+  throw error;
+ }
+
+ return data.user;
+
+}
+
+
+/* =================================================
+   LOAD PROFILE
+================================================= */
+
+async function loadProfile(){
+
+ try{
+
+  currentUser =
+  await getCurrentUser();
+
+
+  if(!currentUser){
+
+   showLogin();
+
+   return;
+
+  }
+
+
+  const {
+   data:profile,
+   error:profileError
+  } =
+  await supabaseClient
+  .from("profiles")
+  .select("*")
+  .eq("id",currentUser.id)
+  .maybeSingle();
+
+
+  if(profileError){
+   throw profileError;
+  }
+
+
+  currentProfile =
+  profile || {
+
+   id:currentUser.id,
+
+   full_name:
+   currentUser.user_metadata?.full_name ||
+   "",
+
+   phone:
+   currentUser.phone ||
+   "",
+
+   avatar_url:
+   currentUser.user_metadata?.avatar_url ||
+   "",
+
+   city:"",
+   bio:"",
+   role:"user"
+
+  };
+
+
+  renderProfile();
+
+
+  await loadMyListings();
+
+ }
+ catch(error){
+
+  console.error(error);
+
+  document.getElementById(
+   "pageContent"
+  ).innerHTML = `
+
+   <div class="error">
+    ❌ Profile ရယူ၍မရပါ။
+    <br><br>
+    ${escapeHtml(error.message)}
+   </div>
+
+  `;
+
+ }
+
+}
+
+
+/* =================================================
+   LOGIN STATE
+================================================= */
+
+function showLogin(){
+
+ document.getElementById(
+  "pageContent"
+ ).innerHTML = `
+
+  <div class="login-state">
+
+   <div class="login-state-icon">
+    👤
+   </div>
+
+   <h2>
+    Login လိုအပ်ပါတယ်
+   </h2>
+
+   <p>
+    Profile ကိုကြည့်ရန်
+    အရင် Login ဝင်ပေးပါ။
+   </p>
+
+   <a
+    href="./auth.html"
+    class="login-link"
+   >
+    Login / Register
+   </a>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =================================================
+   RENDER PROFILE
+================================================= */
+
+function renderProfile(){
+
+ const p =
+ currentProfile;
+
+
+ const name =
+ p.full_name ||
+ currentUser.email ||
+ "Myanmar Elite User";
+
+
+ const role =
+ p.role ||
+ "user";
+
+
+ let avatarHtml;
+
+
+ if(p.avatar_url){
+
+  avatarHtml = `
+
+   <img
+    src="${escapeHtml(p.avatar_url)}"
+    alt="Profile"
+    onerror="this.parentElement.innerHTML='${escapeHtml(getInitial(name))}'"
+   >
+
+  `;
+
+ }
+ else{
+
+  avatarHtml =
+  escapeHtml(
+   getInitial(name)
+  );
+
+ }
+
+
+ const roleClass =
+ role === "owner"
+ ? "role-badge owner-badge"
+ : "role-badge";
+
+
+ document.getElementById(
+  "pageContent"
+ ).innerHTML = `
+
+  <section class="profile-card">
+
+   <div class="avatar">
+
+    ${avatarHtml}
+
+   </div>
+
+
+   <div class="profile-info">
+
+    <h1>
+     ${escapeHtml(name)}
+    </h1>
+
+    <div class="profile-email">
+
+     ${escapeHtml(
+      currentUser.email ||
+      p.phone ||
+      "Account"
+     )}
+
+    </div>
+
+    <span class="${roleClass}">
+
+     ${escapeHtml(
+      getRoleName(role)
+     )}
+
+    </span>
+
+   </div>
+
+
+   <button
+    class="edit-btn"
+    onclick="openEditModal()"
+   >
+    ✏️ Edit Profile
+   </button>
+
+  </section>
+
+
+  <div class="layout">
+
+   <aside>
+
+    <div class="side-card">
+
+     <div class="side-title">
+      👤 Personal Information
+     </div>
+
+
+     <div class="info-row">
+
+      <div class="info-label">
+       Name
+      </div>
+
+      <div class="info-value">
+       ${escapeHtml(
+        p.full_name || "မသတ်မှတ်ရသေးပါ"
+       )}
+      </div>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <div class="info-label">
+       Phone
+      </div>
+
+      <div class="info-value">
+       ${escapeHtml(
+        p.phone ||
+        currentUser.phone ||
+        "မသတ်မှတ်ရသေးပါ"
+       )}
+      </div>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <div class="info-label">
+       City
+      </div>
+
+      <div class="info-value">
+       ${escapeHtml(
+        p.city ||
+        "မသတ်မှတ်ရသေးပါ"
+       )}
+      </div>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <div class="info-label">
+       Bio
+      </div>
+
+      <div class="info-value">
+       ${escapeHtml(
+        p.bio ||
+        "Bio မရှိသေးပါ"
+       )}
+      </div>
+
+     </div>
+
+
+     <div class="info-row">
+
+      <div class="info-label">
+       Role
+      </div>
+
+      <div class="info-value">
+       ${escapeHtml(
+        getRoleName(role)
+       )}
+      </div>
+
+     </div>
+
+    </div>
+
+
+    <div
+     class="side-card"
+     style="margin-top:20px"
+    >
+
+     <div class="side-title">
+      ⚙️ Settings
+     </div>
+
+
+     <button
+      class="setting"
+      onclick="toggleDarkMode()"
+     >
+
+      <div class="setting-left">
+
+       <span class="setting-icon">
+        🌙
+       </span>
+
+       <span class="setting-title">
+        Dark Mode
+       </span>
+
+      </div>
+
+      <div class="toggle"></div>
+
+     </button>
+
+
+     <button
+      class="setting"
+      onclick="logout()"
+     >
+
+      <div class="setting-left">
+
+       <span class="setting-icon">
+        🚪
+       </span>
+
+       <span class="setting-title">
+        Logout
+       </span>
+
+      </div>
+
+     </button>
+
+    </div>
+
+   </aside>
+
+
+   <section class="content-card">
+
+    <div class="content-header">
+
+     <h2>
+      📋 My Listings
+     </h2>
+
+     <span
+      id="myListingCount"
+      class="listing-count"
+     >
+      Loading...
+     </span>
+
+    </div>
+
+
+    <div
+     id="myListings"
+     class="listings"
+    >
+
+     <div class="loading">
+      <div class="spinner"></div>
+      Listings ရယူနေပါသည်...
+     </div>
+
+    </div>
+
+   </section>
+
+  </div>
+
+ `;
+
+
+ restoreDarkMode();
+
+}
+
+
+/* =================================================
+   LOAD MY LISTINGS
+================================================= */
+
+async function loadMyListings(){
+
+ const container =
+ document.getElementById(
+  "myListings"
+ );
+
+ const count =
+ document.getElementById(
+  "myListingCount"
+ );
+
+
+ try{
+
+  const {
+   data,
+   error
+  } =
+  await supabaseClient
+  .from("listings")
+  .select("*")
+  .eq(
+   "user_id",
+   currentUser.id
+  )
+  .order(
+   "created_at",
+   {
+    ascending:false
+   }
+  );
+
+
+  if(error){
+   throw error;
+  }
+
+
+  const listings =
+  Array.isArray(data)
+  ? data
+  : [];
+
+
+  count.textContent =
+  listings.length +
+  " listings";
+
+
+  if(!listings.length){
+
+   container.innerHTML = `
+
+    <div class="empty">
+
+     <div class="empty-icon">
+      📦
+     </div>
+
+     <h3>
+      Listing မရှိသေးပါ
+     </h3>
+
+     <p>
+      သင့်ရဲ့ ပထမဆုံး Listing ကို
+      စတင်တင်လိုက်ပါ။
+     </p>
+
+     <a
+      href="./sell.html"
+      class="sell-btn"
+     >
+      + Sell / Listing တင်မည်
+     </a>
+
+    </div>
+
+   `;
+
+   return;
+
+  }
+
+
+  container.innerHTML =
+  listings
+  .map(createMyListingCard)
+  .join("");
+
+ }
+ catch(error){
+
+  console.error(error);
+
+  container.innerHTML = `
+
+   <div class="empty">
+
+    ❌ Listings ရယူ၍မရပါ။
+
+    <br><br>
+
+    ${escapeHtml(error.message)}
+
+   </div>
+
+  `;
+
+ }
+
+}
+
+
+/* =================================================
+   LISTING IMAGE
+================================================= */
+
+function getFirstImage(item){
+
+ if(
+  item.images &&
+  Array.isArray(item.images) &&
+  item.images.length
+ ){
+  return item.images[0];
+ }
+
+ if(
+  typeof item.images === "string"
+ ){
+
+  try{
+
+   const parsed =
+   JSON.parse(item.images);
+
+   if(
+    Array.isArray(parsed) &&
+    parsed.length
+   ){
+    return parsed[0];
+   }
+
+  }
+  catch(e){
+
+   if(
+    item.images.startsWith("http")
+   ){
+    return item.images;
+   }
+
+  }
+
+ }
+
+ return "";
+
+}
+
+
+/* =================================================
+   CREATE MY LISTING
+================================================= */
+
+function createMyListingCard(item){
+
+ const image =
+ getFirstImage(item);
+
+
+ const icon =
+ getCategoryIcon(
+  item.category
+ );
+
+
+ let imageHtml;
+
+
+ if(image){
+
+  imageHtml = `
+
+   <img
+    src="${escapeHtml(image)}"
+    alt="${escapeHtml(item.title)}"
+    loading="lazy"
+    onerror="this.style.display='none'"
+   >
+
+  `;
+
+ }
+ else{
+
+  imageHtml =
+  icon;
+
+ }
+
+
+ let statusText =
+ item.status ||
+ "pending";
+
+
+ let statusClass =
+ "status-pending";
+
+
+ if(statusText === "approved"){
+  statusClass = "status-approved";
+ }
+
+ if(statusText === "rejected"){
+  statusClass = "status-rejected";
+ }
+
+
+ const location =
+ [
+  item.city,
+  item.township
+ ]
+ .filter(Boolean)
+ .join(" • ");
+
+
+ return `
+
+  <article class="listing">
+
+   <div class="listing-image">
+
+    ${imageHtml}
+
+    <span class="listing-status ${statusClass}">
+     ${escapeHtml(
+      statusText.toUpperCase()
+     )}
+    </span>
+
+   </div>
+
+
+   <div class="listing-body">
+
+    <div class="listing-title">
+     ${escapeHtml(
+      item.title ||
+      "Untitled Listing"
+     )}
+    </div>
+
+
+    <div class="listing-price">
+
+     ${escapeHtml(
+      formatPrice(
+       item.price,
+       item.currency
+      )
+     )}
+
+    </div>
+
+
+    <div class="listing-location">
+
+     ${location
+      ? "📍 " + escapeHtml(location)
+      : "📍 Location မဖော်ပြပါ"
+     }
+
+    </div>
+
+
+    <button
+     class="delete-btn"
+     onclick="deleteListing('${item.id}')"
+    >
+     🗑️ Delete Listing
+    </button>
+
+   </div>
+
+  </article>
+
+ `;
+
+}
+
+
+/* =================================================
+   DELETE LISTING
+================================================= */
+
+async function deleteListing(id){
+
+ const confirmDelete =
+ confirm(
+  "ဒီ Listing ကို ဖျက်မှာသေချာပါသလား?"
+ );
+
+ if(!confirmDelete){
+  return;
+ }
+
+
+ try{
+
+  clearMessage();
+
+
+  const {
+   error
+  } =
+  await supabaseClient
+  .from("listings")
+  .delete()
+  .eq("id",id)
+  .eq(
+   "user_id",
+   currentUser.id
+  );
+
+
+  if(error){
+   throw error;
+  }
+
+
+  showMessage(
+   "✅ Listing ကို အောင်မြင်စွာဖျက်ပြီးပါပြီ။",
+   "success"
+  );
+
+
+  await loadMyListings();
+
+ }
+ catch(error){
+
+  console.error(error);
+
+  showMessage(
+   "❌ Listing ဖျက်မရပါ။ " +
+   error.message,
+   "error"
+  );
+
+ }
+
+}
+
+
+/* =================================================
+   EDIT MODAL
+================================================= */
+
+function openEditModal(){
+
+ const p =
+ currentProfile;
+
+
+ document.getElementById(
+  "editName"
+ ).value =
+ p.full_name || "";
+
+
+ document.getElementById(
+  "editCity"
+ ).value =
+ p.city || "";
+
+
+ document.getElementById(
+  "editBio"
+ ).value =
+ p.bio || "";
+
+
+ document.getElementById(
+  "editModal"
+ ).classList.add(
+  "show"
+ );
+
+}
+
+
+function closeEditModal(){
+
+ document.getElementById(
+  "editModal"
+ ).classList.remove(
+  "show"
+ );
+
+}
+
+
+/* =================================================
+   SAVE PROFILE
+================================================= */
+
+async function saveProfile(){
+
+ try{
+
+  const name =
+  document
+  .getElementById("editName")
+  .value
+  .trim();
+
+
+  const city =
+  document
+  .getElementById("editCity")
+  .value
+  .trim();
+
+
+  const bio =
+  document
+  .getElementById("editBio")
+  .value
+  .trim();
+
+
+  const {
+   error
+  } =
+  await supabaseClient
+  .from("profiles")
+  .upsert({
+
+   id:currentUser.id,
+
+   full_name:
+   name || null,
+
+   city:
+   city || null,
+
+   bio:
+   bio || null
+
+  });
+
+
+  if(error){
+   throw error;
+  }
+
+
+  currentProfile.full_name =
+  name;
+
+  currentProfile.city =
+  city;
+
+  currentProfile.bio =
+  bio;
+
+
+  closeEditModal();
+
+
+  showMessage(
+   "✅ Profile ကို အောင်မြင်စွာ ပြင်ပြီးပါပြီ။",
+   "success"
+  );
+
+
+  renderProfile();
+
+
+  await loadMyListings();
+
+ }
+ catch(error){
+
+  console.error(error);
+
+  showMessage(
+   "❌ Profile ပြင်မရပါ။ " +
+   error.message,
+   "error"
+  );
+
+ }
+
+}
+
+
+/* =================================================
+   DARK MODE
+================================================= */
+
+function toggleDarkMode(){
+
+ document.body.classList.toggle(
+  "dark"
+ );
+
+
+ localStorage.setItem(
+  "mec-dark-mode",
+  document.body.classList.contains(
+   "dark"
+  )
+  ? "on"
+  : "off"
+ );
+
+}
+
+
+function restoreDarkMode(){
+
+ const mode =
+ localStorage.getItem(
+  "mec-dark-mode"
+ );
+
+ if(mode === "on"){
+
+  document.body.classList.add(
+   "dark"
+  );
+
+ }
+
+}
+
+
+/* =================================================
+   LOGOUT
+================================================= */
+
+async function logout(){
+
+ const yes =
+ confirm(
+  "Logout လုပ်မှာသေချာပါသလား?"
+ );
+
+ if(!yes){
+  return;
+ }
+
+
+ try{
+
+  const {
+   error
+  } =
+  await supabaseClient.auth.signOut();
+
+
+  if(error){
+   throw error;
+  }
+
+
+  window.location.href =
+  "./index.html";
+
+ }
+ catch(error){
+
+  showMessage(
+   "❌ Logout မအောင်မြင်ပါ။ " +
+   error.message,
+   "error"
+  );
+
+ }
+
+}
+
+
+/* =================================================
+   CLOSE MODAL OUTSIDE
+================================================= */
+
+document
+.getElementById("editModal")
+.addEventListener(
+ "click",
+ function(event){
+
+  if(
+   event.target === this
+  ){
+
+   closeEditModal();
+
+  }
+
+ }
+);
+
+
+/* =================================================
+   START
+================================================= */
+
+document.addEventListener(
+ "DOMContentLoaded",
+ function(){
+
+  restoreDarkMode();
+
+  loadProfile();
+
+ }
+);
+
+</script>
+
+</body>
+</html>
