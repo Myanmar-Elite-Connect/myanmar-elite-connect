@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Buy — Myanmar Elite Connect</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --navy:#071b3a;
+  --navy2:#102d59;
+  --green:#19a974;
+  --gold:#d9a441;
+  --bg:#f4f7fb;
+  --white:#fff;
+  --text:#172033;
+  --muted:#697386;
+  --border:#e3e8f0;
+  --danger:#b42318;
+  --shadow:0 10px 30px rgba(7,27,58,.08);
+}
+
+body{
+  font-family:Arial,"Noto Sans Myanmar",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* ================= HEADER ================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(7,27,58,.97);
+  backdrop-filter:blur(12px);
+  color:white;
+  box-shadow:0 3px 15px rgba(0,0,0,.15);
+}
+
+.header-inner{
+  max-width:1350px;
+  margin:auto;
+  padding:13px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  color:white;
+  text-decoration:none;
+  font-size:20px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#65d6a7;
+}
+
+nav{
+  display:flex;
+  gap:6px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  padding:9px 12px;
+  border-radius:8px;
+  font-size:13px;
+}
+
+nav a:hover{
+  background:rgba(255,255,255,.1);
+}
+
+.sell-btn{
+  background:var(--green);
+  font-weight:800;
+}
+
+.profile-btn{
+  background:white;
+  color:var(--navy);
+  font-weight:800;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  background:
+  radial-gradient(
+    circle at 85% 10%,
+    #17467e 0,
+    #071b3a 45%,
+    #041126 100%
+  );
+
+  color:white;
+  padding:55px 5%;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:clamp(32px,5vw,50px);
+  margin-bottom:10px;
+}
+
+.hero h1 span{
+  color:#65d6a7;
+}
+
+.hero p{
+  color:rgba(255,255,255,.8);
+  line-height:1.8;
+  font-size:14px;
+}
+
+/* ================= MAIN ================= */
+
+main{
+  max-width:1350px;
+  margin:auto;
+  padding:35px 5% 80px;
+}
+
+/* ================= FILTER PANEL ================= */
+
+.filter-panel{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  margin-bottom:30px;
+}
+
+.filter-title{
+  color:var(--navy);
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:15px;
+}
+
+.category-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.category-btn{
+  border:1px solid var(--border);
+  background:white;
+  color:var(--text);
+  padding:10px 15px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.category-btn.active{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:white;
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr auto;
+  gap:10px;
+}
+
+input,
+select{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  outline:none;
+  background:white;
+  color:var(--text);
+  font-family:inherit;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--navy);
+  box-shadow:0 0 0 3px rgba(7,27,58,.08);
+}
+
+.reset-btn{
+  border:0;
+  background:#eef2f7;
+  color:var(--navy);
+  padding:0 17px;
+  border-radius:9px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* ================= RESULTS ================= */
+
+.results-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:18px;
+}
+
+.results-head h2{
+  color:var(--navy);
+  font-size:25px;
+}
+
+.count{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(7,27,58,.13);
+}
+
+.card-image{
+  height:220px;
+  position:relative;
+  background:linear-gradient(135deg,#071b3a,#24548d);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.card-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.no-image{
+  font-size:65px;
+}
+
+.category-label{
+  position:absolute;
+  left:10px;
+  top:10px;
+  background:rgba(7,27,58,.88);
+  color:white;
+  padding:6px 9px;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.image-count{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  background:rgba(0,0,0,.7);
+  color:white;
+  padding:5px 8px;
+  border-radius:7px;
+  font-size:11px;
+}
+
+.card-body{
+  padding:17px;
+}
+
+.type{
+  display:inline-block;
+  background:#e8f7ef;
+  color:#167344;
+  padding:5px 9px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.title{
+  color:var(--navy);
+  font-size:18px;
+  font-weight:900;
+  line-height:1.4;
+  margin-bottom:8px;
+}
+
+.price{
+  color:var(--navy);
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.location{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:9px;
+}
+
+.description{
+  color:#596476;
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:14px;
+
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.card-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.contact-btn,
+.favorite-btn{
+  text-align:center;
+  text-decoration:none;
+  padding:11px 8px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.contact-btn{
+  background:var(--navy);
+  color:white;
+}
+
+.favorite-btn{
+  border:1px solid var(--border);
+  background:white;
+  color:var(--navy);
+}
+
+/* ================= STATES ================= */
+
+.state{
+  grid-column:1/-1;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:55px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.state-icon{
+  font-size:48px;
+  margin-bottom:10px;
+}
+
+.state h3{
+  color:var(--navy);
+  margin-bottom:7px;
+}
+
+.spinner{
+  width:38px;
+  height:38px;
+  border:4px solid #e5eaf2;
+  border-top-color:var(--navy);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 15px;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.error{
+  grid-column:1/-1;
+  background:#fff1f1;
+  color:var(--danger);
+  border:1px solid #ffd2d2;
+  border-radius:14px;
+  padding:22px;
+  line-height:1.7;
+}
+
+.retry{
+  margin-top:12px;
+  border:0;
+  background:var(--navy);
+  color:white;
+  padding:10px 17px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:var(--navy);
+  color:white;
+  text-align:center;
+  padding:30px 5%;
+}
+
+footer strong{
+  font-size:17px;
+}
+
+footer p{
+  margin-top:7px;
+  color:rgba(255,255,255,.7);
+  font-size:13px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1050px){
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .filters{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .search-filter{
+    grid-column:1/-1;
+  }
+
+}
+
+@media(max-width:700px){
+
+  nav a{
+    display:none;
+  }
+
+  nav .sell-btn,
+  nav .profile-btn{
+    display:block;
+  }
+
+  .hero{
+    padding:45px 5%;
+  }
+
+  main{
+    padding:25px 4% 60px;
+  }
+
+  .filters{
+    grid-template-columns:1fr;
+  }
+
+  .search-filter{
+    grid-column:auto;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .card-image{
+    height:230px;
+  }
+
+  .results-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<a href="./index.html" class="logo">
+Myanmar <span>Elite Connect</span>
+</a>
+
+<nav>
+
+<a href="./index.html">
+General
+</a>
+
+<a href="./car.html">
+🚗 Car
+</a>
+
+<a href="./property.html">
+🏠 Property
+</a>
+
+<a href="./gem.html">
+💎 Gem
+</a>
+
+<a href="./sell.html" class="sell-btn">
++ Sell
+</a>
+
+<a href="./profile.html" class="profile-btn">
+👤 Profile
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<h1>
+🛒 <span>Buy</span> Marketplace
+</h1>
+
+<p>
+ကား၊ အိမ်ခြံမြေ နှင့် ကျောက်မျက်များကို
+ရှာဖွေပြီး ရောင်းသူများနှင့် ဆက်သွယ်နိုင်ပါသည်။
+</p>
+
+</section>
+
+
+<main>
+
+<section class="filter-panel">
+
+<div class="filter-title">
+🔎 ရှာဖွေပြီး စစ်ထုတ်ရန်
+</div>
+
+
+<div class="category-buttons">
+
+<button
+class="category-btn active"
+data-category="all"
+onclick="setCategory('all')"
+>
+All
+</button>
+
+<button
+class="category-btn"
+data-category="car"
+onclick="setCategory('car')"
+>
+🚗 Cars
+</button>
+
+<button
+class="category-btn"
+data-category="property"
+onclick="setCategory('property')"
+>
+🏠 Property
+</button>
+
+<button
+class="category-btn"
+data-category="gem"
+onclick="setCategory('gem')"
+>
+💎 Gems
+</button>
+
+</div>
+
+
+<div class="filters">
+
+<input
+id="searchInput"
+class="search-filter"
+type="text"
+placeholder="🔎 ကား၊ အိမ်၊ ကျောက်မျက်၊ Yangon..."
+>
+
+<input
+id="minPrice"
+type="number"
+min="0"
+placeholder="အနည်းဆုံးဈေး"
+>
+
+<input
+id="maxPrice"
+type="number"
+min="0"
+placeholder="အများဆုံးဈေး"
+>
+
+<input
+id="locationInput"
+type="text"
+placeholder="📍 City / Township"
+>
+
+<button
+class="reset-btn"
+onclick="resetFilters()"
+>
+Reset
+</button>
+
+</div>
+
+</section>
+
+
+<section>
+
+<div class="results-head">
+
+<div>
+
+<h2>
+Latest Buy Listings
+</h2>
+
+<div id="listingCount" class="count">
+Listings များကို ရယူနေပါသည်...
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="listingsGrid"
+class="grid"
+>
+
+<div class="state">
+
+<div class="spinner"></div>
+
+Listings များကို ရယူနေပါသည်...
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<strong>
+Myanmar Elite Connect
+</strong>
+
+<p>
+Cars • Property • Gems
+</p>
+
+<p>
+© 2026 Myanmar Elite Connect
+</p>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://ikjwisfsdcupibgjiuvp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+let allListings = [];
+
+let currentCategory = "all";
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+    return "";
+  }
+
+  return String(value)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+function getIcon(category){
+
+  if(category === "car"){
+    return "🚗";
+  }
+
+  if(category === "property"){
+    return "🏠";
+  }
+
+  if(category === "gem"){
+    return "💎";
+  }
+
+  return "📦";
+}
+
+
+/* =====================================================
+   CATEGORY NAME
+===================================================== */
+
+function getCategoryName(category){
+
+  if(category === "car"){
+    return "Car";
+  }
+
+  if(category === "property"){
+    return "Property";
+  }
+
+  if(category === "gem"){
+    return "Gem";
+  }
+
+  return "Listing";
+}
+
+
+/* =====================================================
+   PRICE
+===================================================== */
+
+function formatPrice(
+  price,
+  currency
+){
+
+  if(
+    price === null ||
+    price === undefined ||
+    price === ""
+  ){
+    return "ဈေးနှုန်း မဖော်ပြပါ";
+  }
+
+  const number =
+    Number(price);
+
+  if(
+    !Number.isFinite(number)
+  ){
+    return escapeHtml(price);
+  }
+
+  return (
+    number.toLocaleString("en-US") +
+    " " +
+    (
+      currency ||
+      "MMK"
+    )
+  );
+}
+
+
+/* =====================================================
+   LOCATION
+===================================================== */
+
+function getLocation(item){
+
+  const parts = [];
+
+  if(item.city){
+    parts.push(item.city);
+  }
+
+  if(item.township){
+    parts.push(item.township);
+  }
+
+  if(
+    item.location &&
+    item.location !== item.township
+  ){
+    parts.push(item.location);
+  }
+
+  const unique =
+    [...new Set(parts)];
+
+  if(!unique.length){
+    return "တည်နေရာ မဖော်ပြပါ";
+  }
+
+  return unique.join(" • ");
+}
+
+
+/* =====================================================
+   IMAGE PARSER
+===================================================== */
+
+function getImages(item){
+
+  if(!item.images){
+    return [];
+  }
+
+
+  if(Array.isArray(item.images)){
+
+    return item.images
+    .filter(Boolean);
+
+  }
+
+
+  if(typeof item.images === "string"){
+
+    try{
+
+      const parsed =
+        JSON.parse(item.images);
+
+      if(
+        Array.isArray(parsed)
+      ){
+        return parsed
+        .filter(Boolean);
+      }
+
+    }
+    catch(error){
+
+      if(
+        item.images
+        .startsWith("http")
+      ){
+        return [
+          item.images
+        ];
+      }
+
+    }
+
+  }
+
+
+  return [];
+}
+
+
+/* =====================================================
+   CREATE CARD
+===================================================== */
+
+function createCard(item){
+
+  const images =
+    getImages(item);
+
+  const image =
+    images.length
+    ? images[0]
+    : "";
+
+  const icon =
+    getIcon(item.category);
+
+  const title =
+    escapeHtml(
+      item.title ||
+      "Untitled Listing"
+    );
+
+  const description =
+    escapeHtml(
+      item.description ||
+      ""
+    );
+
+  const location =
+    escapeHtml(
+      getLocation(item)
+    );
+
+  const price =
+    escapeHtml(
+      formatPrice(
+        item.price,
+        item.currency
+      )
+    );
+
+
+  let imageHTML = "";
+
+
+  if(image){
+
+    imageHTML = `
+
+      <img
+        src="${escapeHtml(image)}"
+        alt="${title}"
+        loading="lazy"
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='flex';
+        "
+      >
+
+      <div
+        class="no-image"
+        style="display:none"
+      >
+        ${icon}
+      </div>
+
+    `;
+
+  }
+  else{
+
+    imageHTML = `
+
+      <div class="no-image">
+        ${icon}
+      </div>
+
+    `;
+
+  }
+
+
+  const imageCount =
+    images.length > 1
+    ? `
+
+      <div class="image-count">
+        🖼️ ${images.length}
+      </div>
+
+    `
+    : "";
+
+
+  const phone =
+    item.phone
+    ? escapeHtml(item.phone)
+    : "";
+
+
+  const contact =
+    phone
+    ? `
+
+      <a
+        href="tel:${encodeURIComponent(item.phone)}"
+        class="contact-btn"
+      >
+        📞 Contact
+      </a>
+
+    `
+    : `
+
+      <button
+        class="contact-btn"
+        onclick="loginContact()"
+      >
+        📞 Contact
+      </button>
+
+    `;
+
+
+  return `
+
+    <article class="card">
+
+      <div class="card-image">
+
+        ${imageHTML}
+
+        <div class="category-label">
+          ${icon}
+          ${escapeHtml(
+            getCategoryName(
+              item.category
+            )
+          )}
+        </div>
+
+        ${imageCount}
+
+      </div>
+
+
+      <div class="card-body">
+
+        <span class="type">
+          BUY · ${escapeHtml(
+            getCategoryName(
+              item.category
+            )
+          )}
+        </span>
+
+
+        <div class="title">
+          ${title}
+        </div>
+
+
+        <div class="price">
+          ${price}
+        </div>
+
+
+        <div class="location">
+          📍 ${location}
+        </div>
+
+
+        ${
+          description
+          ? `
+            <div class="description">
+              ${description}
+            </div>
+          `
+          : ""
+        }
+
+
+        <div class="card-actions">
+
+          ${contact}
+
+          <button
+            class="favorite-btn"
+            onclick="addFavorite('${item.id}')"
+          >
+            ❤️ Favorite
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =====================================================
+   LOAD LISTINGS
+===================================================== */
+
+async function loadListings(){
+
+  const grid =
+    document.getElementById(
+      "listingsGrid"
+    );
+
+  const count =
+    document.getElementById(
+      "listingCount"
+    );
+
+
+  grid.innerHTML = `
+
+    <div class="state">
+
+      <div class="spinner"></div>
+
+      Listings များကို
+      ရယူနေပါသည်...
+
+    </div>
+
+  `;
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+    .from("listings")
+    .select("*")
+    .eq(
+      "status",
+      "approved"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    allListings =
+      Array.isArray(data)
+      ? data
+      : [];
+
+
+    count.textContent =
+      `${allListings.length} listings ရှိပါသည်`;
+
+
+    renderListings();
+
+  }
+  catch(error){
+
+    console.error(
+      error
+    );
+
+
+    count.textContent =
+      "Database Error";
+
+
+    grid.innerHTML = `
+
+      <div class="error">
+
+        <strong>
+          ❌ Listing များကို ရယူ၍မရပါ။
+        </strong>
+
+        <br><br>
+
+        ${escapeHtml(
+          error.message ||
+          "Unknown error"
+        )}
+
+        <br>
+
+        <button
+          class="retry"
+          onclick="loadListings()"
+        >
+          ↻ ပြန်စမ်းမည်
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER LISTINGS
+===================================================== */
+
+function renderListings(){
+
+  const grid =
+    document.getElementById(
+      "listingsGrid"
+    );
+
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const minPriceText =
+    document.getElementById(
+      "minPrice"
+    ).value;
+
+
+  const maxPriceText =
+    document.getElementById(
+      "maxPrice"
+    ).value;
+
+
+  const location =
+    document.getElementById(
+      "locationInput"
+    )
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const minPrice =
+    minPriceText
+    ? Number(minPriceText)
+    : null;
+
+
+  const maxPrice =
+    maxPriceText
+    ? Number(maxPriceText)
+    : null;
+
+
+  let filtered =
+    [...allListings];
+
+
+  /* CATEGORY */
+
+  if(
+    currentCategory !== "all"
+  ){
+
+    filtered =
+      filtered.filter(
+        item =>
+        item.category ===
+        currentCategory
+      );
+
+  }
+
+
+  /* SEARCH */
+
+  if(search){
+
+    filtered =
+      filtered.filter(
+        item => {
+
+          const searchable = [
+
+            item.title,
+            item.description,
+            item.category,
+            item.city,
+            item.township,
+            item.location
+
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+
+          return searchable
+          .includes(search);
+
+        }
+      );
+
+  }
+
+
+  /* LOCATION */
+
+  if(location){
+
+    filtered =
+      filtered.filter(
+        item => {
+
+          const searchable = [
+
+            item.city,
+            item.township,
+            item.location,
+            item.address
+
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+
+          return searchable
+          .includes(location);
+
+        }
+      );
+
+  }
+
+
+  /* MIN PRICE */
+
+  if(
+    minPrice !== null &&
+    Number.isFinite(minPrice)
+  ){
+
+    filtered =
+      filtered.filter(
+        item =>
+        Number(item.price || 0)
+        >=
+        minPrice
+      );
+
+  }
+
+
+  /* MAX PRICE */
+
+  if(
+    maxPrice !== null &&
+    Number.isFinite(maxPrice)
+  ){
+
+    filtered =
+      filtered.filter(
+        item =>
+        Number(item.price || 0)
+        <=
+        maxPrice
+      );
+
+  }
+
+
+  /* EMPTY */
+
+  if(!filtered.length){
+
+    grid.innerHTML = `
+
+      <div class="state">
+
+        <div class="state-icon">
+          🔍
+        </div>
+
+        <h3>
+          Listing မတွေ့ပါ
+        </h3>
+
+        <p>
+          Filter သို့မဟုတ် Search
+          ကို ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  /* CARDS */
+
+  grid.innerHTML =
+    filtered
+    .map(createCard)
+    .join("");
+
+}
+
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+function setCategory(category){
+
+  currentCategory =
+    category;
+
+
+  document
+  .querySelectorAll(
+    ".category-btn"
+  )
+  .forEach(
+    button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.category ===
+        category
+      );
+
+    }
+  );
+
+
+  renderListings();
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetFilters(){
+
+  currentCategory =
+    "all";
+
+
+  document
+  .getElementById(
+    "searchInput"
+  )
+  .value = "";
+
+
+  document
+  .getElementById(
+    "minPrice"
+  )
+  .value = "";
+
+
+  document
+  .getElementById(
+    "maxPrice"
+  )
+  .value = "";
+
+
+  document
+  .getElementById(
+    "locationInput"
+  )
+  .value = "";
+
+
+  document
+  .querySelectorAll(
+    ".category-btn"
+  )
+  .forEach(
+    button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.category ===
+        "all"
+      );
+
+    }
+  );
+
+
+  renderListings();
+
+}
+
+
+/* =====================================================
+   FAVORITE
+===================================================== */
+
+async function addFavorite(
+  listingId
+){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+    .auth
+    .getUser();
+
+
+    if(
+      error ||
+      !data ||
+      !data.user
+    ){
+
+      alert(
+        "❤️ Favorite အသုံးပြုရန် Login ဝင်ပါ။"
+      );
+
+      window.location.href =
+        "./auth.html";
+
+      return;
+
+    }
+
+
+    const user =
+      data.user;
+
+
+    const {
+      error: favoriteError
+    } =
+    await supabaseClient
+    .from("favorites")
+    .insert({
+
+      user_id:
+        user.id,
+
+      listing_id:
+        listingId
+
+    });
+
+
+    if(favoriteError){
+
+      if(
+        favoriteError.code ===
+        "23505"
+      ){
+
+        alert(
+          "❤️ ဒီ Listing ကို Favorite ထဲမှာ ရှိပြီးသားပါ။"
+        );
+
+        return;
+
+      }
+
+      throw favoriteError;
+
+    }
+
+
+    alert(
+      "❤️ Favorite ထဲသို့ ထည့်ပြီးပါပြီ။"
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Favorite ထည့်၍မရပါ။"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   CONTACT WITHOUT PHONE
+===================================================== */
+
+function loginContact(){
+
+  const answer =
+    confirm(
+      "📞 Contact လုပ်ရန် Login ဝင်ရန်လိုအပ်ပါသည်။\n\nLogin သို့သွားမလား?"
+    );
+
+
+  if(answer){
+
+    window.location.href =
+      "./auth.html";
+
+  }
+
+}
+
+
+/* =====================================================
+   LIVE SEARCH
+===================================================== */
+
+[
+  "searchInput",
+  "minPrice",
+  "maxPrice",
+  "locationInput"
+]
+.forEach(
+  id => {
+
+    document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      renderListings
+    );
+
+  }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    loadListings();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
