@@ -6,10 +6,8 @@
 
 <title>Myanmar Elite Connect</title>
 
-<meta name="description"
-content="Myanmar Elite Connect - Cars, Property & Gems Marketplace">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase.js"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -18,18 +16,14 @@ content="Myanmar Elite Connect - Cars, Property & Gems Marketplace">
  --navy:#071b3a;
  --navy2:#102d59;
  --green:#19a974;
- --green2:#0f8f60;
  --gold:#d9a441;
  --bg:#f4f7fb;
  --white:#fff;
  --text:#172033;
  --muted:#697386;
  --border:#e3e8f0;
- --danger:#b42318;
  --shadow:0 10px 30px rgba(7,27,58,.08);
 }
-
-html{scroll-behavior:smooth}
 
 body{
  font-family:Arial,"Noto Sans Myanmar",sans-serif;
@@ -38,17 +32,17 @@ body{
  min-height:100vh;
 }
 
-button,input,select{font-family:inherit}
+button,input{font-family:inherit}
 
 /* HEADER */
+
 header{
  position:sticky;
  top:0;
  z-index:1000;
  background:rgba(7,27,58,.97);
- backdrop-filter:blur(12px);
- color:#fff;
- box-shadow:0 3px 15px rgba(0,0,0,.12);
+ color:white;
+ box-shadow:0 3px 15px rgba(0,0,0,.15);
 }
 
 .header-inner{
@@ -62,19 +56,18 @@ header{
 }
 
 .logo{
- color:#fff;
+ color:white;
  text-decoration:none;
  font-size:21px;
  font-weight:900;
- white-space:nowrap;
 }
 
 .logo span{color:#65d6a7}
 
 nav{
  display:flex;
+ gap:7px;
  align-items:center;
- gap:6px;
 }
 
 nav a{
@@ -85,42 +78,45 @@ nav a{
  font-size:14px;
 }
 
-nav a:hover{background:rgba(255,255,255,.1)}
-
-.nav-sell{
- background:var(--green);
- font-weight:800;
+nav a:hover{
+ background:rgba(255,255,255,.1);
 }
 
-.nav-login{
+.sell{
+ background:var(--green);
+ font-weight:900;
+}
+
+.login{
  background:white;
  color:var(--navy);
- font-weight:800;
+ font-weight:900;
 }
 
 /* HERO */
+
 .hero{
  background:
  radial-gradient(circle at 85% 10%,#17467e 0,#071b3a 45%,#041126 100%);
- color:#fff;
- padding:72px 5% 85px;
+ color:white;
  text-align:center;
+ padding:70px 5% 80px;
 }
 
-.badge{
+.hero-badge{
  display:inline-block;
  padding:7px 13px;
- border-radius:30px;
+ border:1px solid rgba(255,255,255,.15);
  background:rgba(255,255,255,.08);
- border:1px solid rgba(255,255,255,.14);
+ border-radius:30px;
  font-size:13px;
  margin-bottom:18px;
 }
 
 .hero h1{
- font-size:clamp(36px,6vw,62px);
+ font-size:clamp(35px,6vw,60px);
  font-weight:900;
- margin-bottom:16px;
+ margin-bottom:15px;
 }
 
 .hero h1 span{color:#65d6a7}
@@ -130,42 +126,41 @@ nav a:hover{background:rgba(255,255,255,.1)}
  margin:0 auto 28px;
  color:rgba(255,255,255,.82);
  line-height:1.9;
- font-size:15px;
 }
 
-.search-box{
- max-width:920px;
+.search{
+ max-width:900px;
  margin:auto;
- padding:8px;
  background:white;
+ padding:8px;
  border-radius:16px;
- box-shadow:0 18px 50px rgba(0,0,0,.25);
  display:flex;
  gap:8px;
+ box-shadow:0 18px 50px rgba(0,0,0,.25);
 }
 
-.search-box input{
+.search input{
  flex:1;
  min-width:0;
  border:0;
  outline:0;
- padding:15px 17px;
+ padding:15px;
  font-size:15px;
  border-radius:10px;
- color:var(--text);
 }
 
-.search-btn{
+.search button{
  border:0;
  background:var(--navy);
- color:#fff;
+ color:white;
  padding:0 25px;
  border-radius:10px;
- font-weight:800;
+ font-weight:900;
  cursor:pointer;
 }
 
 /* MAIN */
+
 main{
  max-width:1350px;
  margin:auto;
@@ -179,7 +174,7 @@ main{
 
 .section-title h2{
  color:var(--navy);
- font-size:32px;
+ font-size:31px;
  margin-bottom:7px;
 }
 
@@ -188,7 +183,8 @@ main{
  font-size:14px;
 }
 
-/* CATEGORY */
+/* CATEGORIES */
+
 .categories{
  display:grid;
  grid-template-columns:repeat(3,1fr);
@@ -197,7 +193,7 @@ main{
 }
 
 .category{
- background:#fff;
+ background:white;
  border:1px solid var(--border);
  border-radius:20px;
  padding:30px 20px;
@@ -209,19 +205,18 @@ main{
 
 .category:hover{
  transform:translateY(-5px);
- box-shadow:0 18px 40px rgba(7,27,58,.13);
 }
 
 .category-icon{
- width:72px;
- height:72px;
- margin:0 auto 15px;
- border-radius:20px;
+ width:75px;
+ height:75px;
+ margin:auto auto 15px;
+ border-radius:22px;
  background:#f1f5fa;
  display:flex;
  align-items:center;
  justify-content:center;
- font-size:38px;
+ font-size:40px;
 }
 
 .category h3{
@@ -235,13 +230,14 @@ main{
 }
 
 /* LISTING HEADER */
+
 .listing-head{
  display:flex;
  justify-content:space-between;
  align-items:center;
  gap:15px;
- margin-bottom:22px;
  flex-wrap:wrap;
+ margin-bottom:22px;
 }
 
 .listing-head h2{
@@ -252,7 +248,7 @@ main{
 .count{
  color:var(--muted);
  font-size:13px;
- margin-top:4px;
+ margin-top:5px;
 }
 
 .filters{
@@ -268,8 +264,7 @@ main{
  padding:9px 13px;
  border-radius:9px;
  cursor:pointer;
- font-weight:700;
- font-size:13px;
+ font-weight:800;
 }
 
 .filter.active{
@@ -279,17 +274,20 @@ main{
 }
 
 /* GRID */
+
 .grid{
  display:grid;
  grid-template-columns:repeat(3,1fr);
  gap:22px;
 }
 
+/* CARD */
+
 .card{
- overflow:hidden;
  background:white;
  border:1px solid var(--border);
  border-radius:18px;
+ overflow:hidden;
  box-shadow:var(--shadow);
  transition:.25s;
 }
@@ -300,13 +298,10 @@ main{
 }
 
 .card-image{
- height:210px;
+ height:220px;
  background:linear-gradient(135deg,#071b3a,#24548d);
  position:relative;
  overflow:hidden;
- display:flex;
- align-items:center;
- justify-content:center;
 }
 
 .card-image img{
@@ -317,33 +312,40 @@ main{
 }
 
 .no-image{
+ width:100%;
+ height:100%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
  font-size:65px;
 }
 
-.badge-featured{
+.featured{
  position:absolute;
  top:12px;
  left:12px;
  background:var(--gold);
- color:#fff;
+ color:white;
  padding:6px 9px;
  border-radius:7px;
  font-size:11px;
  font-weight:900;
 }
 
-.image-number{
+.photo-count{
  position:absolute;
  right:10px;
  bottom:10px;
- background:rgba(0,0,0,.65);
+ background:rgba(0,0,0,.7);
  color:white;
- padding:5px 8px;
+ padding:6px 9px;
  border-radius:7px;
  font-size:11px;
 }
 
-.card-body{padding:18px}
+.card-body{
+ padding:18px;
+}
 
 .type{
  display:inline-block;
@@ -383,9 +385,13 @@ main{
  font-size:13px;
  line-height:1.65;
  margin-bottom:14px;
+ display:-webkit-box;
+ -webkit-line-clamp:3;
+ -webkit-box-orient:vertical;
+ overflow:hidden;
 }
 
-.phone{
+.contact{
  display:block;
  width:100%;
  text-align:center;
@@ -394,26 +400,29 @@ main{
  color:white;
  padding:11px;
  border-radius:9px;
+ font-weight:900;
  font-size:14px;
- font-weight:800;
 }
 
-.phone:hover{background:var(--navy2)}
+.contact:hover{
+ background:var(--navy2);
+}
 
 /* STATES */
+
 .state{
  grid-column:1/-1;
  background:white;
  border:1px solid var(--border);
  border-radius:16px;
- padding:55px 20px;
+ padding:60px 20px;
  text-align:center;
  color:var(--muted);
 }
 
 .state-icon{
- font-size:48px;
- margin-bottom:10px;
+ font-size:50px;
+ margin-bottom:12px;
 }
 
 .state h3{
@@ -421,10 +430,24 @@ main{
  margin-bottom:7px;
 }
 
+.spinner{
+ width:38px;
+ height:38px;
+ margin:0 auto 15px;
+ border:4px solid #e5eaf2;
+ border-top-color:var(--navy);
+ border-radius:50%;
+ animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+
 .error{
  grid-column:1/-1;
  background:#fff1f1;
- color:var(--danger);
+ color:#b42318;
  border:1px solid #ffd2d2;
  border-radius:14px;
  padding:22px;
@@ -439,24 +462,11 @@ main{
  padding:10px 17px;
  border-radius:8px;
  cursor:pointer;
- font-weight:800;
-}
-
-.spinner{
- width:38px;
- height:38px;
- border:4px solid #e5eaf2;
- border-top-color:var(--navy);
- border-radius:50%;
- animation:spin .8s linear infinite;
- margin:0 auto 15px;
-}
-
-@keyframes spin{
- to{transform:rotate(360deg)}
+ font-weight:900;
 }
 
 /* FEATURES */
+
 .features{
  margin-top:80px;
  display:grid;
@@ -465,7 +475,7 @@ main{
 }
 
 .feature{
- background:#fff;
+ background:white;
  border:1px solid var(--border);
  border-radius:16px;
  padding:25px;
@@ -485,6 +495,7 @@ main{
 }
 
 /* FOOTER */
+
 footer{
  margin-top:30px;
  background:var(--navy);
@@ -493,44 +504,56 @@ footer{
  padding:32px 5%;
 }
 
-footer strong{font-size:17px}
-
 footer p{
  margin-top:6px;
  color:rgba(255,255,255,.7);
  font-size:13px;
- line-height:1.8;
 }
 
 /* MOBILE */
+
 @media(max-width:1000px){
  .grid{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:750px){
 
- .header-inner{padding:13px 4%}
+ .header-inner{
+  padding:13px 4%;
+ }
 
- .logo{font-size:16px}
+ .logo{
+  font-size:16px;
+ }
 
- nav a{display:none}
+ nav a{
+  display:none;
+ }
 
- nav .nav-sell,
- nav .nav-login{display:block}
+ nav .sell,
+ nav .login{
+  display:block;
+ }
 
- .hero{padding:55px 5% 65px}
+ .hero{
+  padding:55px 5% 65px;
+ }
 
- .hero h1{font-size:34px}
+ .hero h1{
+  font-size:34px;
+ }
 
- .search-box{
+ .search{
   flex-direction:column;
  }
 
- .search-btn{
+ .search button{
   padding:14px;
  }
 
- main{padding:40px 5%}
+ main{
+  padding:40px 5%;
+ }
 
  .categories,
  .features,
@@ -538,16 +561,8 @@ footer p{
   grid-template-columns:1fr;
  }
 
- .listing-head{
-  align-items:flex-start;
- }
-
- .listing-head h2{
-  font-size:24px;
- }
-
  .card-image{
-  height:220px;
+  height:230px;
  }
 }
 </style>
@@ -566,8 +581,8 @@ Myanmar <span>Elite Connect</span>
 <a href="#home">Home</a>
 <a href="#categories">Categories</a>
 <a href="#listings">Listings</a>
-<a href="./add-listing.html" class="nav-sell">+ Sell</a>
-<a href="./auth.html" class="nav-login">Login</a>
+<a href="./add-listing.html" class="sell">+ Sell</a>
+<a href="./auth.html" class="login">Login</a>
 </nav>
 
 </div>
@@ -575,7 +590,9 @@ Myanmar <span>Elite Connect</span>
 
 <section class="hero" id="home">
 
-<div class="badge">🛡️ Trusted Marketplace</div>
+<div class="hero-badge">
+🛡️ Trusted Marketplace
+</div>
 
 <h1>
 Myanmar <span>Elite Connect</span>
@@ -588,7 +605,7 @@ Myanmar <span>Elite Connect</span>
 Find. Connect. Trade.
 </p>
 
-<div class="search-box">
+<div class="search">
 
 <input
  id="searchInput"
@@ -597,10 +614,7 @@ Find. Connect. Trade.
  autocomplete="off"
 >
 
-<button
- class="search-btn"
- onclick="searchListings()"
->
+<button onclick="searchListings()">
 🔎 Search
 </button>
 
@@ -647,40 +661,46 @@ Find. Connect. Trade.
 
 <div>
 <h2>Latest Listings</h2>
+
 <div id="listingCount" class="count">
-Listings များကို ရယူနေပါသည်...
+Loading...
 </div>
+
 </div>
 
 <div class="filters">
 
-<button id="allBtn"
-class="filter active"
-onclick="filterCategory('all')">
+<button
+ id="allBtn"
+ class="filter active"
+ onclick="filterCategory('all')">
 All
 </button>
 
-<button id="carBtn"
-class="filter"
-onclick="filterCategory('car')">
+<button
+ id="carBtn"
+ class="filter"
+ onclick="filterCategory('car')">
 🚗 Cars
 </button>
 
-<button id="propertyBtn"
-class="filter"
-onclick="filterCategory('property')">
+<button
+ id="propertyBtn"
+ class="filter"
+ onclick="filterCategory('property')">
 🏠 Property
 </button>
 
-<button id="gemBtn"
-class="filter"
-onclick="filterCategory('gem')">
+<button
+ id="gemBtn"
+ class="filter"
+ onclick="filterCategory('gem')">
 💎 Gems
 </button>
 
 <button
-class="filter"
-onclick="loadListings()">
+ class="filter"
+ onclick="loadListings()">
 ↻ Refresh
 </button>
 
@@ -719,7 +739,7 @@ Seller များနှင့် တိုက်ရိုက်ဆက်သွ
 <div class="feature">
 <strong>🛡️ Trusted Marketplace</strong>
 <span>
-Approved Listing များကိုသာ
+Admin Approved Listing များကိုသာ
 Marketplace တွင် ပြသပေးပါသည်။
 </span>
 </div>
@@ -744,17 +764,8 @@ Marketplace တွင် ပြသပေးပါသည်။
    SUPABASE
 ========================================= */
 
-const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
 const supabaseClient =
-window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
+window.supabaseClient;
 
 
 /* =========================================
@@ -823,14 +834,14 @@ function formatPrice(price,currency){
   return "ဈေးနှုန်း မဖော်ပြပါ";
  }
 
- const n = Number(price);
+ const number = Number(price);
 
- if(!Number.isFinite(n)){
+ if(!Number.isFinite(number)){
   return escapeHtml(price);
  }
 
  return (
-  n.toLocaleString("en-US") +
+  number.toLocaleString("en-US") +
   " " +
   (currency || "MMK")
  );
@@ -839,67 +850,109 @@ function formatPrice(price,currency){
 
 function getLocation(item){
 
- const parts=[];
+ const parts = [];
 
  if(item.city) parts.push(item.city);
  if(item.township) parts.push(item.township);
+ if(item.location) parts.push(item.location);
 
- if(
-  item.location &&
-  item.location !== item.township
- ){
-  parts.push(item.location);
- }
-
- if(
-  item.address &&
-  item.address !== item.location
- ){
-  parts.push(item.address);
- }
-
- const unique=[...new Set(parts)];
+ const unique =
+ [...new Set(parts.filter(Boolean))];
 
  return unique.length
- ? unique.join(" • ")
- : "တည်နေရာ မဖော်ပြပါ";
+  ? unique.join(" • ")
+  : "တည်နေရာ မဖော်ပြပါ";
 }
 
 
 /* =========================================
-   IMAGE PARSER
+   LOAD IMAGES FROM listing_images
 ========================================= */
 
-function getImages(item){
+async function getListingImages(listingIds){
 
- if(!item.images){
+ if(!listingIds.length){
+  return {};
+ }
+
+ const {
+  data,
+  error
+ } =
+ await supabaseClient
+ .from("listing_images")
+ .select(
+  "id,listing_id,image_url,sort_order"
+ )
+ .in(
+  "listing_id",
+  listingIds
+ )
+ .order(
+  "sort_order",
+  {ascending:true}
+ );
+
+ if(error){
+  console.warn(
+   "listing_images error:",
+   error
+  );
+
+  return {};
+ }
+
+ const imageMap = {};
+
+ (data || []).forEach(image => {
+
+  if(!imageMap[image.listing_id]){
+   imageMap[image.listing_id] = [];
+  }
+
+  if(image.image_url){
+   imageMap[image.listing_id].push(
+    image.image_url
+   );
+  }
+
+ });
+
+ return imageMap;
+}
+
+
+/* =========================================
+   FALLBACK IMAGES FIELD
+========================================= */
+
+function parseOldImages(images){
+
+ if(!images){
   return [];
  }
 
- if(Array.isArray(item.images)){
-  return item.images.filter(Boolean);
+ if(Array.isArray(images)){
+  return images.filter(Boolean);
  }
 
- if(typeof item.images === "string"){
+ if(typeof images === "string"){
 
   try{
 
    const parsed =
-   JSON.parse(item.images);
+   JSON.parse(images);
 
    if(Array.isArray(parsed)){
     return parsed.filter(Boolean);
    }
 
-  }catch(e){
-
-   /* Some old records may contain
-      a single URL */
+  }catch(error){
 
    if(
-    item.images.startsWith("http")
+    images.startsWith("http")
    ){
-    return [item.images];
+    return [images];
    }
 
   }
@@ -917,12 +970,10 @@ function getImages(item){
 function createCard(item){
 
  const images =
- getImages(item);
+ item._images || [];
 
  const image =
- images.length
- ? images[0]
- : "";
+ images[0] || "";
 
  const icon =
  getIcon(item.category);
@@ -955,23 +1006,23 @@ function createCard(item){
   item.phone || ""
  );
 
- let imageHtml;
+
+ let imageHtml = "";
 
  if(image){
 
-  imageHtml=`
+  imageHtml = `
 
   <img
    src="${escapeHtml(image)}"
    alt="${title}"
    loading="lazy"
-   onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+   onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex';"
   >
 
   <div
-   class="no-image"
-   style="display:none"
-  >
+   class="no-image fallback"
+   style="display:none">
    ${icon}
   </div>
 
@@ -979,7 +1030,7 @@ function createCard(item){
 
  }else{
 
-  imageHtml=`
+  imageHtml = `
 
   <div class="no-image">
    ${icon}
@@ -993,31 +1044,30 @@ function createCard(item){
  const featured =
  item.featured
  ? `
- <div class="badge-featured">
-  ⭐ FEATURED
+ <div class="featured">
+ ⭐ FEATURED
  </div>
  `
  : "";
 
 
- const imageCount =
- images.length > 1
+ const photoCount =
+ images.length > 0
  ? `
- <div class="image-number">
-  🖼️ ${images.length}
+ <div class="photo-count">
+ 🖼️ ${images.length}
  </div>
  `
  : "";
 
 
- const phoneButton =
+ const contact =
  item.phone
  ? `
  <a
-  class="phone"
-  href="tel:${encodeURIComponent(item.phone)}"
- >
-  📞 ${phone}
+  class="contact"
+  href="tel:${encodeURIComponent(item.phone)}">
+  📞 Contact
  </a>
  `
  : "";
@@ -1033,24 +1083,20 @@ function createCard(item){
 
    ${featured}
 
-   ${imageCount}
+   ${photoCount}
 
   </div>
 
   <div class="card-body">
 
    <span class="type">
-
     ${escapeHtml(
      getTypeName(item.listing_type)
     )}
-
     ·
-
     ${escapeHtml(
      getCategoryName(item.category)
     )}
-
    </span>
 
    <div class="title">
@@ -1075,7 +1121,7 @@ function createCard(item){
     : ""
    }
 
-   ${phoneButton}
+   ${contact}
 
   </div>
 
@@ -1102,7 +1148,8 @@ async function loadListings(){
   "listingCount"
  );
 
- grid.innerHTML=`
+
+ grid.innerHTML = `
 
  <div class="state">
 
@@ -1115,7 +1162,21 @@ async function loadListings(){
 
  `;
 
+
  try{
+
+  if(!supabaseClient){
+
+   throw new Error(
+    "Supabase client မတွေ့ပါ။ supabase.js ကို စစ်ပါ။"
+   );
+
+  }
+
+
+  /* =====================================
+     1. GET APPROVED LISTINGS
+  ===================================== */
 
   const {
    data,
@@ -1132,31 +1193,77 @@ async function loadListings(){
    }
   );
 
+
   if(error){
    throw error;
   }
+
 
   allListings =
   Array.isArray(data)
   ? data
   : [];
 
+
+  /* =====================================
+     2. GET listing_images
+  ===================================== */
+
+  const ids =
+  allListings
+  .map(item => item.id)
+  .filter(Boolean);
+
+
+  const imageMap =
+  await getListingImages(ids);
+
+
+  /* =====================================
+     3. ATTACH IMAGES
+  ===================================== */
+
+  allListings =
+  allListings.map(item => {
+
+   const newImages =
+    imageMap[item.id] || [];
+
+   const oldImages =
+    parseOldImages(item.images);
+
+
+   item._images =
+    newImages.length
+    ? newImages
+    : oldImages;
+
+
+   return item;
+
+  });
+
+
   count.textContent =
-  `${allListings.length} listings ရှိပါသည်`;
+   `${allListings.length} listings ရှိပါသည်`;
+
 
   renderListings();
+
 
  }catch(error){
 
   console.error(
-   "Supabase listing error:",
+   "LOAD ERROR:",
    error
   );
 
-  count.textContent =
-  "Database error";
 
-  grid.innerHTML=`
+  count.textContent =
+   "Database Error";
+
+
+  grid.innerHTML = `
 
   <div class="error">
 
@@ -1175,8 +1282,7 @@ async function loadListings(){
 
    <button
     class="retry"
-    onclick="loadListings()"
-   >
+    onclick="loadListings()">
     ↻ ပြန်စမ်းမည်
    </button>
 
@@ -1200,13 +1306,13 @@ function renderListings(){
   "listingsGrid"
  );
 
- const input =
+ const searchInput =
  document.getElementById(
   "searchInput"
  );
 
  const keyword =
- input.value
+ searchInput.value
  .trim()
  .toLowerCase();
 
@@ -1215,9 +1321,7 @@ function renderListings(){
  [...allListings];
 
 
- if(
-  currentCategory !== "all"
- ){
+ if(currentCategory !== "all"){
 
   filtered =
   filtered.filter(
@@ -1232,37 +1336,37 @@ function renderListings(){
  if(keyword){
 
   filtered =
-  filtered.filter(
-   item => {
+  filtered.filter(item => {
 
-    const searchable=[
+   const searchable = [
 
-     item.title,
-     item.description,
-     item.category,
-     item.listing_type,
-     item.city,
-     item.township,
-     item.address,
-     item.location
+    item.title,
+    item.description,
+    item.category,
+    item.listing_type,
+    item.city,
+    item.township,
+    item.address,
+    item.location
 
-    ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
+   ]
+   .filter(Boolean)
+   .join(" ")
+   .toLowerCase();
 
-    return searchable
-    .includes(keyword);
 
-   }
-  );
+   return searchable.includes(
+    keyword
+   );
+
+  });
 
  }
 
 
  if(!filtered.length){
 
-  grid.innerHTML=`
+  grid.innerHTML = `
 
   <div class="state">
 
@@ -1278,7 +1382,7 @@ function renderListings(){
     ${
      keyword
      ? "ရှာဖွေမှုကို ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။"
-     : "လက်ရှိတွင် Listing မရှိသေးပါ။"
+     : "လက်ရှိတွင် Approved Listing မရှိသေးပါ။"
     }
    </p>
 
@@ -1304,9 +1408,7 @@ function renderListings(){
 ========================================= */
 
 function searchListings(){
-
  renderListings();
-
 }
 
 
@@ -1346,7 +1448,7 @@ function filterCategory(category){
 
 function updateButtons(){
 
- const buttons={
+ const buttons = {
 
   all:
   document.getElementById("allBtn"),
@@ -1362,8 +1464,8 @@ function updateButtons(){
 
  };
 
- Object.keys(buttons)
- .forEach(
+
+ Object.keys(buttons).forEach(
   key => {
 
    if(buttons[key]){
