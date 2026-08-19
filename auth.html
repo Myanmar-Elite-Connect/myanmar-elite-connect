@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="my">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Myanmar Elite Connect</title>
 
@@ -10,9 +15,6 @@
   <script src="./supabase.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
 
     body {
       margin: 0;
@@ -25,595 +27,253 @@
       padding: 20px;
     }
 
-    .box {
+    .card {
       width: 100%;
-      max-width: 430px;
+      max-width: 420px;
       background: white;
-      border-radius: 20px;
       padding: 30px;
+      border-radius: 20px;
     }
 
     h1 {
       text-align: center;
       color: #071b3a;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #777;
-      margin-bottom: 25px;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 20px;
-    }
-
-    .tabs button {
-      flex: 1;
-      padding: 12px;
-      border: 0;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .active {
-      background: #071b3a;
-      color: white;
-    }
-
-    .inactive {
-      background: #eee;
-      color: #333;
     }
 
     input {
       width: 100%;
       padding: 13px;
       margin: 7px 0 15px;
+      box-sizing: border-box;
       border: 1px solid #ddd;
       border-radius: 8px;
-      font-size: 15px;
     }
 
-    label {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .submit {
+    button {
       width: 100%;
       padding: 14px;
       border: 0;
-      border-radius: 9px;
+      border-radius: 8px;
       background: #071b3a;
       color: white;
-      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .submit:disabled {
-      opacity: .6;
-    }
-
-    #message {
-      display: none;
+    #result {
+      margin-top: 20px;
       padding: 12px;
       border-radius: 8px;
-      margin-bottom: 18px;
       line-height: 1.6;
-      font-size: 14px;
+      word-break: break-word;
     }
 
-    .success {
-      display: block !important;
-      background: #e8f7ee;
-      color: #176b38;
-    }
-
-    .error {
-      display: block !important;
-      background: #fff0f0;
-      color: #b42318;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      text-decoration: none;
-      color: #071b3a;
-      font-weight: bold;
-    }
   </style>
 </head>
 
+
 <body>
 
-<div class="box">
+<div class="card">
 
   <h1>Myanmar Elite Connect</h1>
 
-  <div class="subtitle">
-    Find. Connect. Trade.
-  </div>
-
-  <div class="tabs">
-
-    <button
-      id="loginTab"
-      class="active"
-      onclick="loginMode()"
-    >
-      Login
-    </button>
-
-    <button
-      id="registerTab"
-      class="inactive"
-      onclick="registerMode()"
-    >
-      Register
-    </button>
-
-  </div>
-
-  <div id="message"></div>
+  <p>
+    Create your account
+  </p>
 
 
-  <!-- LOGIN -->
+  <label>Full Name</label>
 
-  <form id="loginForm">
-
-    <label>Email</label>
-
-    <input
-      id="loginEmail"
-      type="email"
-      required
-      placeholder="Email"
-    >
-
-    <label>Password</label>
-
-    <input
-      id="loginPassword"
-      type="password"
-      required
-      placeholder="Password"
-    >
-
-    <button
-      class="submit"
-      id="loginButton"
-      type="submit"
-    >
-      Login
-    </button>
-
-  </form>
-
-
-  <!-- REGISTER -->
-
-  <form
-    id="registerForm"
-    class="hidden"
+  <input
+    id="name"
+    type="text"
+    placeholder="Your Name"
   >
 
-    <label>Full Name</label>
 
-    <input
-      id="registerName"
-      type="text"
-      required
-      placeholder="Your Name"
-    >
+  <label>Email</label>
 
-    <label>Email</label>
-
-    <input
-      id="registerEmail"
-      type="email"
-      required
-      placeholder="Email"
-    >
-
-    <label>Password</label>
-
-    <input
-      id="registerPassword"
-      type="password"
-      minlength="6"
-      required
-      placeholder="At least 6 characters"
-    >
-
-    <label>Phone</label>
-
-    <input
-      id="registerPhone"
-      type="tel"
-      placeholder="09xxxxxxxxx"
-    >
-
-    <button
-      class="submit"
-      id="registerButton"
-      type="submit"
-    >
-      Create Account
-    </button>
-
-  </form>
-
-
-  <a
-    class="back"
-    href="./index.html"
+  <input
+    id="email"
+    type="email"
+    placeholder="your@email.com"
   >
-    ← Back to Marketplace
-  </a>
+
+
+  <label>Password</label>
+
+  <input
+    id="password"
+    type="password"
+    placeholder="At least 6 characters"
+  >
+
+
+  <label>Phone</label>
+
+  <input
+    id="phone"
+    type="tel"
+    placeholder="09xxxxxxxxx"
+  >
+
+
+  <button id="signup">
+    Create Account
+  </button>
+
+
+  <div id="result"></div>
 
 </div>
 
 
 <script>
 
-  const message =
-    document.getElementById("message");
+const result =
+  document.getElementById("result");
 
 
-  function showMessage(text, type) {
+document
+  .getElementById("signup")
+  .addEventListener(
+    "click",
+    async function () {
 
-    message.textContent = text;
-
-    message.className = type;
-
-  }
-
-
-  function clearMessage() {
-
-    message.textContent = "";
-
-    message.className = "";
-
-  }
+      result.textContent =
+        "Creating Account...";
 
 
-  function loginMode() {
+      try {
 
-    clearMessage();
-
-    document
-      .getElementById("loginForm")
-      .classList.remove("hidden");
-
-    document
-      .getElementById("registerForm")
-      .classList.add("hidden");
-
-    document
-      .getElementById("loginTab")
-      .className = "active";
-
-    document
-      .getElementById("registerTab")
-      .className = "inactive";
-
-  }
+        const name =
+          document
+            .getElementById("name")
+            .value
+            .trim();
 
 
-  function registerMode() {
-
-    clearMessage();
-
-    document
-      .getElementById("loginForm")
-      .classList.add("hidden");
-
-    document
-      .getElementById("registerForm")
-      .classList.remove("hidden");
-
-    document
-      .getElementById("loginTab")
-      .className = "inactive";
-
-    document
-      .getElementById("registerTab")
-      .className = "active";
-
-  }
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
 
-  /* =========================
-     REGISTER
-  ========================= */
+        const password =
+          document
+            .getElementById("password")
+            .value;
 
-  document
-    .getElementById("registerForm")
-    .addEventListener(
-      "submit",
-      async function(event) {
 
-        event.preventDefault();
+        const phone =
+          document
+            .getElementById("phone")
+            .value
+            .trim();
 
-        clearMessage();
 
-        const button =
-          document.getElementById(
-            "registerButton"
+        if (!name) {
+
+          throw new Error(
+            "Name ထည့်ပါ။"
           );
-
-        button.disabled = true;
-
-        button.textContent =
-          "Creating Account...";
-
-
-        try {
-
-          if (
-            typeof supabaseClient ===
-            "undefined"
-          ) {
-
-            throw new Error(
-              "Supabase client မတွေ့ပါ။ supabase.js ကို စစ်ပါ။"
-            );
-
-          }
-
-
-          const name =
-            document.getElementById(
-              "registerName"
-            ).value.trim();
-
-
-          const email =
-            document.getElementById(
-              "registerEmail"
-            ).value.trim();
-
-
-          const password =
-            document.getElementById(
-              "registerPassword"
-            ).value;
-
-
-          const phone =
-            document.getElementById(
-              "registerPhone"
-            ).value.trim();
-
-
-          /*
-            15 seconds timeout
-          */
-
-          const signupPromise =
-            supabaseClient.auth.signUp({
-
-              email: email,
-
-              password: password,
-
-              options: {
-
-                data: {
-
-                  full_name: name,
-
-                  phone: phone
-
-                }
-
-              }
-
-            });
-
-
-          const timeoutPromise =
-            new Promise(
-              function(_, reject) {
-
-                setTimeout(
-                  function() {
-
-                    reject(
-                      new Error(
-                        "Supabase server မှ response မရသေးပါ။ Internet သို့မဟုတ် Supabase connection ကို စစ်ပါ။"
-                      )
-                    );
-
-                  },
-                  15000
-                );
-
-              }
-            );
-
-
-          const result =
-            await Promise.race([
-              signupPromise,
-              timeoutPromise
-            ]);
-
-
-          if (result.error) {
-
-            throw result.error;
-
-          }
-
-
-          console.log(
-            "SIGN UP RESULT:",
-            result
-          );
-
-
-          showMessage(
-            "Account ဖန်တီးပြီးပါပြီ။ Email ကိုစစ်ပြီး Confirmation Link ကိုနှိပ်ပါ။",
-            "success"
-          );
-
-
-          button.textContent =
-            "Account Created";
-
-
-        } catch (error) {
-
-          console.error(
-            "SIGN UP ERROR:",
-            error
-          );
-
-
-          showMessage(
-            error.message ||
-            "Sign Up မအောင်မြင်ပါ။",
-            "error"
-          );
-
-
-          button.disabled = false;
-
-          button.textContent =
-            "Create Account";
 
         }
 
-      }
-    );
 
+        if (!email) {
 
-  /* =========================
-     LOGIN
-  ========================= */
-
-  document
-    .getElementById("loginForm")
-    .addEventListener(
-      "submit",
-      async function(event) {
-
-        event.preventDefault();
-
-        clearMessage();
-
-        const button =
-          document.getElementById(
-            "loginButton"
+          throw new Error(
+            "Email ထည့်ပါ။"
           );
-
-        button.disabled = true;
-
-        button.textContent =
-          "Logging in...";
-
-
-        try {
-
-          if (
-            typeof supabaseClient ===
-            "undefined"
-          ) {
-
-            throw new Error(
-              "Supabase client မတွေ့ပါ။"
-            );
-
-          }
-
-
-          const email =
-            document.getElementById(
-              "loginEmail"
-            ).value.trim();
-
-
-          const password =
-            document.getElementById(
-              "loginPassword"
-            ).value;
-
-
-          const result =
-            await supabaseClient.auth
-              .signInWithPassword({
-
-                email: email,
-
-                password: password
-
-              });
-
-
-          if (result.error) {
-
-            throw result.error;
-
-          }
-
-
-          showMessage(
-            "Login အောင်မြင်ပါသည်။",
-            "success"
-          );
-
-
-          setTimeout(
-            function() {
-
-              window.location.href =
-                "./index.html";
-
-            },
-            1000
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "LOGIN ERROR:",
-            error
-          );
-
-
-          showMessage(
-            error.message ||
-            "Login မအောင်မြင်ပါ။",
-            "error"
-          );
-
-
-          button.disabled = false;
-
-          button.textContent =
-            "Login";
 
         }
 
+
+        if (password.length < 6) {
+
+          throw new Error(
+            "Password အနည်းဆုံး 6 လုံး ထည့်ပါ။"
+          );
+
+        }
+
+
+        if (
+          typeof supabaseClient ===
+          "undefined"
+        ) {
+
+          throw new Error(
+            "Supabase client မတွေ့ပါ။"
+          );
+
+        }
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.signUp({
+
+            email: email,
+
+            password: password,
+
+            options: {
+
+              data: {
+
+                full_name: name,
+
+                phone: phone
+
+              }
+
+            }
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        result.textContent =
+          "✅ Account ဖန်တီးပြီးပါပြီ။";
+
+
+        console.log(
+          "SIGNUP SUCCESS:",
+          data
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "SIGNUP ERROR:",
+          error
+        );
+
+
+        result.textContent =
+          "❌ " +
+          error.message;
+
       }
-    );
+
+    }
+  );
 
 </script>
 
 </body>
+
 </html>
