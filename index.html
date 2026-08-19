@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Myanmar Elite Connect</title>
+
+  <meta
+    name="description"
+    content="Myanmar Elite Connect - Cars, Property & Gems Marketplace"
+  >
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, "Noto Sans Myanmar", sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      background: #071b3a;
+      color: white;
+      padding: 18px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .login-btn {
+      background: white;
+      color: #071b3a;
+      font-weight: 700;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      background:
+        linear-gradient(
+          rgba(7, 27, 58, 0.94),
+          rgba(7, 27, 58, 0.94)
+        );
+      color: white;
+      padding: 75px 6% 85px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      opacity: 0.9;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .search-box {
+      max-width: 850px;
+      margin: auto;
+      background: white;
+      padding: 8px;
+      border-radius: 14px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 15px;
+      font-size: 15px;
+      border-radius: 10px;
+      color: #172033;
+    }
+
+    .search-box button {
+      border: none;
+      background: #071b3a;
+      color: white;
+      padding: 0 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 55px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+      font-size: 30px;
+      color: #071b3a;
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: #697386;
+    }
+
+    /* =========================
+       CATEGORY
+    ========================= */
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 70px;
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 18px;
+      padding: 35px 20px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(7, 27, 58, 0.07);
+      cursor: pointer;
+      transition: 0.25s;
+      border: 1px solid #e9edf5;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(7, 27, 58, 0.12);
+    }
+
+    .category-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .category-card h3 {
+      color: #071b3a;
+      margin-bottom: 7px;
+      font-size: 21px;
+    }
+
+    .category-card p {
+      color: #697386;
+      font-size: 14px;
+    }
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      border: 1px solid #e9edf5;
+    }
+
+    .feature strong {
+      display: block;
+      color: #071b3a;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature span {
+      color: #697386;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      background: #071b3a;
+      color: white;
+      text-align: center;
+      padding: 30px 6%;
+      margin-top: 20px;
+    }
+
+    footer p {
+      opacity: 0.8;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      header {
+        padding: 15px 4%;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      nav a:not(.login-btn) {
+        display: none;
+      }
+
+      .hero {
+        padding: 55px 5% 65px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .search-box {
+        flex-direction: column;
+        padding: 8px;
+      }
+
+      .search-box button {
+        padding: 14px;
+      }
+
+      main {
+        padding: 40px 5%;
+      }
+
+      .categories,
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+
+    <div class="logo">
+      Myanmar Elite Connect
+    </div>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#about">About</a>
+      <a href="#" class="login-btn">Login</a>
+    </nav>
+
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <h1>Myanmar Elite Connect</h1>
+
+    <p>
+      မြန်မာနိုင်ငံအတွင်း
+      ကား၊ အိမ်ခြံမြေ နှင့် ကျောက်မျက်များကို
+      ရှာဖွေ၊ ရောင်းချ၊ ဝယ်ယူနိုင်သော Marketplace
+      <br>
+      Find. Connect. Trade.
+    </p>
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="ကား၊ အိမ်၊ ကျောက်မျက် ရှာရန်..."
+      >
+
+      <button onclick="searchListing()">
+        Search
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- CATEGORIES -->
+
+    <section id="categories">
+
+      <div class="section-title">
+
+        <h2>Categories</h2>
+
+        <p>
+          သင်ရှာဖွေလိုသော အမျိုးအစားကို ရွေးချယ်ပါ
+        </p>
+
+      </div>
+
+
+      <div class="categories">
+
+        <div
+          class="category-card"
+          onclick="selectCategory('car')"
+        >
+
+          <div class="category-icon">
+            🚗
+          </div>
+
+          <h3>Cars</h3>
+
+          <p>
+            ကားများ ရောင်းဝယ်ရန်
+          </p>
+
+        </div>
+
+
+        <div
+          class="category-card"
+          onclick="selectCategory('property')"
+        >
+
+          <div class="category-icon">
+            🏠
+          </div>
+
+          <h3>Property</h3>
+
+          <p>
+            အိမ်၊ ခြံ၊ မြေ၊ Condo များ
+          </p>
+
+        </div>
+
+
+        <div
+          class="category-card"
+          onclick="selectCategory('gem')"
+        >
+
+          <div class="category-icon">
+            💎
+          </div>
+
+          <h3>Gems</h3>
+
+          <p>
+            ကျောက်မျက်နှင့် အဖိုးတန်ပစ္စည်းများ
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section id="about">
+
+      <div class="section-title">
+
+        <h2>Why Myanmar Elite Connect?</h2>
+
+        <p>
+          လူတိုင်းအတွက် လွယ်ကူပြီး ယုံကြည်စိတ်ချရသော Marketplace
+        </p>
+
+      </div>
+
+
+      <div class="features">
+
+        <div class="feature">
+
+          <strong>
+            🔎 Easy Search
+          </strong>
+
+          <span>
+            သင်လိုချင်သော ကား၊ အိမ်ခြံမြေ၊
+            ကျောက်မျက်များကို လွယ်ကူစွာ ရှာဖွေနိုင်ပါသည်။
+          </span>
+
+        </div>
+
+
+        <div class="feature">
+
+          <strong>
+            📱 Easy Contact
+          </strong>
+
+          <span>
+            Seller များနှင့် တိုက်ရိုက်ဆက်သွယ်ပြီး
+            အရောင်းအဝယ် ပြုလုပ်နိုင်ပါသည်။
+          </span>
+
+        </div>
+
+
+        <div class="feature">
+
+          <strong>
+            🛡️ Trusted Marketplace
+          </strong>
+
+          <span>
+            Listing များကို စနစ်တကျ စီမံခန့်ခွဲနိုင်ရန်
+            Admin system ထည့်သွင်းပေးမည်။
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <p>
+      © 2026 Myanmar Elite Connect
+    </p>
+
+    <p>
+      Cars • Property • Gems
+    </p>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    function searchListing() {
+
+      const input =
+        document.getElementById("searchInput");
+
+      const keyword =
+        input.value.trim();
+
+      if (!keyword) {
+
+        alert(
+          "ရှာဖွေလိုသော အရာကို ရိုက်ထည့်ပါ။"
+        );
+
+        return;
+      }
+
+      alert(
+        "Search system ကို Database ချိတ်ပြီးနောက် အသုံးပြုနိုင်ပါမည်။\n\nရှာဖွေမှု: "
+        + keyword
+      );
+
+    }
+
+
+    function selectCategory(category) {
+
+      const names = {
+
+        car: "Cars",
+
+        property: "Property",
+
+        gem: "Gems"
+
+      };
+
+      alert(
+        names[category]
+        + " category ကို ရွေးချယ်ထားပါသည်။\n\n"
+        + "Listing system ကို နောက်အဆင့်တွင် ချိတ်ဆက်ပေးမည်။"
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
