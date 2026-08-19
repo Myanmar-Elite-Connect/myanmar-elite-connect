@@ -2,333 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-  <title>Myanmar Elite Connect • System Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Myanmar Elite Connect</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 25px;
-      display: grid;
-      place-items: center;
-      font-family:
-        Inter,
-        "Noto Sans Myanmar",
-        "Myanmar Text",
-        system-ui,
-        sans-serif;
-      color: #10233f;
-      background: #f5f7fb;
-    }
-    .card {
-      width: min(520px, 100%);
-      padding: 28px;
-      border: 1px solid rgba(16, 35, 63, .09);
-      border-radius: 24px;
-      background: #fff;
-      box-shadow:
-        0 25px 70px rgba(16, 35, 63, .10);
-    }
-    h1 {
-      margin: 0;
-      font-size: 23px;
-    }
-    .subtitle {
-      margin-top: 7px;
-      color: #7a8799;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    .tests {
-      margin-top: 22px;
-      display: grid;
-      gap: 10px;
-    }
-    .test {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 14px;
-      border: 1px solid #e7ebf1;
-      border-radius: 13px;
-      background: #fafbfd;
-    }
-    .test-name {
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .status {
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .waiting {
-      color: #8a95a5;
-    }
-    .success {
-      color: #23875c;
-    }
-    .error {
-      color: #c94b4b;
-    }
-    button {
-      width: 100%;
-      height: 50px;
-      margin-top: 20px;
-      border: 0;
-      border-radius: 13px;
-      color: #071a34;
-      background:
-        linear-gradient(
-          135deg,
-          #f4d98a,
-          #d8b45c
-        );
-      font-size: 12px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-    button:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
-    #overall {
-      margin-top: 18px;
-      padding: 13px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 900;
-      background: #f5f7fb;
-    }
-  </style>
-</head>
-<body>
-  <main class="card">
-    <h1>
-      Myanmar Elite Connect
-    </h1>
-    <div class="subtitle">
-      Supabase system connection test
-    </div>
-    <div class="tests">
-      <div class="test">
-        <div class="test-name">
-          Supabase Client
-        </div>
-        <div
-          id="clientStatus"
-          class="status waiting">
-          Waiting
-        </div>
-      </div>
-      <div class="test">
-        <div class="test-name">
-          Authentication
-        </div>
-        <div
-          id="authStatus"
-          class="status waiting">
-          Waiting
-        </div>
-      </div>
-      <div class="test">
-        <div class="test-name">
-          Listings Database
-        </div>
-        <div
-          id="listingStatus"
-          class="status waiting">
-          Waiting
-        </div>
-      </div>
-    </div>
-    <button
-      id="testButton"
-      type="button">
-      Run System Test
-    </button>
-    <div
-      id="overall"
-      class="waiting">
-      Ready to test
-    </div>
-  </main>
+
   <script>
-    const clientStatus =
-      document.getElementById(
-        "clientStatus"
+    const SUPABASE_URL =
+      "https://ikjwisfsdcupibgjiuvp.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
+
+    window.supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
       );
-    const authStatus =
-      document.getElementById(
-        "authStatus"
-      );
-    const listingStatus =
-      document.getElementById(
-        "listingStatus"
-      );
-    const overall =
-      document.getElementById(
-        "overall"
-      );
-    const testButton =
-      document.getElementById(
-        "testButton"
-      );
-    function setStatus(
-      element,
-      type,
-      text
-    ) {
-      element.className =
-        "status " + type;
-      element.textContent =
-        text;
-    }
-    async function runTest() {
-      testButton.disabled =
-        true;
-      overall.className =
-        "waiting";
-      overall.textContent =
-        "Testing system...";
-      /*
-       * 1. CLIENT
-       */
-      try {
-        if (
-          !window.supabase
-        ) {
-          throw new Error(
-            "Supabase library was not loaded."
-          );
-        }
-        if (
-          !window.supabaseClient
-        ) {
-          throw new Error(
-            "supabaseClient was not created."
-          );
-        }
-        setStatus(
-          clientStatus,
-          "success",
-          "Connected"
-        );
-      }
-      catch (error) {
-        setStatus(
-          clientStatus,
-          "error",
-          "Failed"
-        );
-        overall.className =
-          "error";
-        overall.textContent =
-          error.message;
-        testButton.disabled =
-          false;
-        return;
-      }
-      /*
-       * 2. AUTH
-       */
-      try {
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.getSession();
-        if (error) {
-          throw error;
-        }
-        setStatus(
-          authStatus,
-          "success",
-          "Working"
-        );
-      }
-      catch (error) {
-        console.error(
-          "Auth test:",
-          error
-        );
-        setStatus(
-          authStatus,
-          "error",
-          "Failed"
-        );
-        overall.className =
-          "error";
-        overall.textContent =
-          "Authentication: " +
-          error.message;
-        testButton.disabled =
-          false;
-        return;
-      }
-      /*
-       * 3. LISTINGS TABLE
-       */
-      try {
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from("listings")
-            .select("*")
-            .limit(1);
-        if (error) {
-          throw error;
-        }
-        setStatus(
-          listingStatus,
-          "success",
-          "Connected"
-        );
-      }
-      catch (error) {
-        console.error(
-          "Listings test:",
-          error
-        );
-        setStatus(
-          listingStatus,
-          "error",
-          "Failed"
-        );
-        overall.className =
-          "error";
-        overall.textContent =
-          "Listings Database: " +
-          error.message;
-        testButton.disabled =
-          false;
-        return;
-      }
-      /*
-       * EVERYTHING PASSED
-       */
-      overall.className =
-        "success";
-      overall.textContent =
-        "✓ Supabase system is ready.";
-      testButton.disabled =
-        false;
-    }
-    testButton.addEventListener(
-      "click",
-      runTest
-    );
   </script>
+</head>
+
+<body>
+
+  <h2>Myanmar Elite Connect</h2>
+
+  <p id="status">Testing...</p>
+
+  <script>
+    async function testSystem() {
+
+      const status =
+        document.getElementById("status");
+
+      try {
+
+        if (!window.supabase) {
+          throw new Error(
+            "Supabase library not loaded."
+          );
+        }
+
+        if (!window.supabaseClient) {
+          throw new Error(
+            "Supabase client not created."
+          );
+        }
+
+        const {
+          data,
+          error
+        } =
+          await window.supabaseClient.auth.getSession();
+
+        if (error) {
+          throw error;
+        }
+
+        status.textContent =
+          "SUCCESS — Supabase is connected.";
+
+      } catch (error) {
+
+        status.textContent =
+          "ERROR — " + error.message;
+
+        console.error(error);
+      }
+    }
+
+    testSystem();
+  </script>
+
 </body>
 </html>
