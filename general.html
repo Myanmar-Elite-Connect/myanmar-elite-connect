@@ -2,18 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>General • Myanmar Elite Connect</title>
+  <title>Myanmar Elite Connect</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
 
   <style>
-
-    /* =========================================================
-       CORE
-    ========================================================= */
-
     * {
       margin: 0;
       padding: 0;
@@ -23,54 +19,35 @@
     :root {
       --bg: #f6f8fb;
       --surface: #ffffff;
-      --surface-soft: #f0f3f7;
-
+      --surface2: #f0f3f7;
       --text: #10233f;
-      --muted: #718097;
-
+      --muted: #728096;
       --navy: #071a34;
-      --navy-2: #102b4d;
-
-      --gold: #d8b45c;
-      --gold-light: #f4d98a;
-
+      --blue: #173b62;
+      --gold: #d7b35a;
+      --gold2: #f0d17f;
       --border: rgba(16,35,63,.09);
-
-      --danger: #d9534f;
-
-      --shadow:
-        0 18px 50px rgba(16,35,63,.08);
-
-      --header-shadow:
-        0 8px 30px rgba(16,35,63,.06);
+      --danger: #c94a4a;
+      --success: #26845b;
+      --shadow: 0 18px 55px rgba(16,35,63,.08);
     }
 
     body.dark {
       --bg: #071321;
-      --surface: #0e1e32;
-      --surface-soft: #12263e;
-
-      --text: #f3f6fa;
-      --muted: #91a0b4;
-
-      --navy: #f3f6fa;
-      --navy-2: #dce3eb;
-
+      --surface: #0d1d31;
+      --surface2: #12263d;
+      --text: #f4f7fb;
+      --muted: #94a3b7;
+      --navy: #f4f7fb;
+      --blue: #dce5ef;
       --border: rgba(255,255,255,.09);
-
-      --shadow:
-        0 18px 50px rgba(0,0,0,.28);
-
-      --header-shadow:
-        0 8px 30px rgba(0,0,0,.25);
-    }
-
-    html {
-      scroll-behavior: smooth;
+      --shadow: 0 18px 55px rgba(0,0,0,.25);
     }
 
     body {
       min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
 
       font-family:
         Inter,
@@ -82,12 +59,7 @@
         "Segoe UI",
         sans-serif;
 
-      color: var(--text);
-      background: var(--bg);
-
-      transition:
-        background .3s ease,
-        color .3s ease;
+      transition: .25s ease;
     }
 
     button,
@@ -95,9 +67,8 @@
       font: inherit;
     }
 
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
+    button {
+      cursor: pointer;
     }
 
     a {
@@ -105,73 +76,53 @@
       text-decoration: none;
     }
 
-
-    /* =========================================================
-       APP SHELL
-    ========================================================= */
-
-    .app {
-      min-height: 100vh;
-    }
-
-    .container {
-      width: min(1180px, calc(100% - 36px));
-      margin: auto;
-    }
-
-
-    /* =========================================================
+    /* =========================
        HEADER
-    ========================================================= */
+    ========================= */
 
     .header {
+      height: 76px;
+
       position: sticky;
       top: 0;
       z-index: 100;
 
-      height: 74px;
+      background: rgba(255,255,255,.84);
 
-      background:
-        color-mix(
-          in srgb,
-          var(--surface) 90%,
-          transparent
-        );
+      backdrop-filter: blur(18px);
 
-      border-bottom: 1px solid var(--border);
+      border-bottom:
+        1px solid var(--border);
+    }
 
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-
-      box-shadow: var(--header-shadow);
+    body.dark .header {
+      background: rgba(13,29,49,.88);
     }
 
     .header-inner {
+      width: min(1200px, calc(100% - 34px));
+
       height: 100%;
+
+      margin: auto;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 20px;
     }
-
-
-    /* =========================================================
-       BRAND
-    ========================================================= */
 
     .brand {
       display: flex;
       align-items: center;
       gap: 11px;
 
-      min-width: max-content;
+      flex-shrink: 0;
     }
 
-    .brand-logo {
-      width: 42px;
-      height: 42px;
+    .logo {
+      width: 43px;
+      height: 43px;
 
       display: grid;
       place-items: center;
@@ -185,170 +136,139 @@
       overflow: hidden;
     }
 
-    .brand-logo img {
-      width: 86%;
-      height: 86%;
+    .logo img {
+      width: 82%;
+      height: 82%;
       object-fit: contain;
     }
 
-    .brand-name {
-      font-size: 16px;
-      font-weight: 850;
-      letter-spacing: -.4px;
+    .brand-title {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -.3px;
     }
 
-    .brand-name span {
+    .brand-title span {
       color: var(--gold);
     }
 
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-    /* =========================================================
-       HEADER ACTIONS
-    ========================================================= */
+    .nav-link {
+      padding: 9px 12px;
+
+      border-radius: 9px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      transition: .2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      background: var(--surface2);
+    }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
-    .icon-button {
-      width: 40px;
-      height: 40px;
+    .round-btn {
+      width: 39px;
+      height: 39px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 12px;
-
       border: 1px solid var(--border);
+      border-radius: 11px;
 
       color: var(--text);
       background: var(--surface);
 
-      cursor: pointer;
-
-      transition: .22s ease;
+      transition: .2s ease;
     }
 
-    .icon-button:hover {
+    .round-btn:hover {
       transform: translateY(-2px);
-
-      border-color:
-        rgba(216,180,92,.55);
+      border-color: rgba(215,179,90,.5);
     }
 
-    .profile-button {
-      width: 40px;
-      height: 40px;
+    .profile-btn {
+      width: 39px;
+      height: 39px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 50%;
-
-      color: #071a34;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--gold-light),
-          var(--gold)
-        );
-
-      font-size: 13px;
-      font-weight: 900;
-
-      border: none;
-    }
-
-
-    /* =========================================================
-       MAIN
-    ========================================================= */
-
-    main {
-      padding: 38px 0 110px;
-    }
-
-
-    /* =========================================================
-       WELCOME
-    ========================================================= */
-
-    .welcome {
-      position: relative;
-
       overflow: hidden;
 
-      min-height: 230px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 30px;
-
-      padding: 40px;
-
-      border-radius: 28px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #071a34 0%,
-          #102b4d 55%,
-          #173d63 100%
-        );
-
-      box-shadow:
-        0 25px 60px rgba(7,26,52,.20);
-
-      color: #fff;
-    }
-
-    .welcome::after {
-      content: "";
-
-      position: absolute;
-
-      width: 360px;
-      height: 360px;
-
-      right: -100px;
-      top: -170px;
-
+      border: 1px solid var(--border);
       border-radius: 50%;
 
-      border:
-        55px solid
-        rgba(216,180,92,.10);
+      color: var(--text);
+      background: var(--surface);
 
-      pointer-events: none;
+      font-size: 12px;
+      font-weight: 900;
     }
 
-    .welcome-copy {
-      position: relative;
-      z-index: 2;
+    .profile-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-      max-width: 650px;
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      width: min(1200px, calc(100% - 34px));
+
+      margin: auto;
+
+      padding:
+        42px 0 70px;
+    }
+
+    /* =========================
+       WELCOME
+    ========================= */
+
+    .welcome {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+
+      margin-bottom: 31px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-
       gap: 7px;
 
-      margin-bottom: 14px;
+      margin-bottom: 11px;
 
-      color: var(--gold-light);
+      color: var(--gold);
 
-      font-size: 11px;
-      font-weight: 850;
+      font-size: 10px;
+      font-weight: 900;
 
-      letter-spacing: 1.1px;
       text-transform: uppercase;
+      letter-spacing: 1.4px;
     }
 
     .eyebrow::before {
@@ -361,379 +281,546 @@
     }
 
     .welcome h1 {
-      font-size: clamp(28px, 5vw, 44px);
+      font-size:
+        clamp(28px, 4vw, 44px);
 
       line-height: 1.08;
 
-      letter-spacing: -1.5px;
+      letter-spacing: -1.7px;
 
-      margin-bottom: 13px;
+      margin-bottom: 10px;
     }
 
     .welcome h1 span {
-      color: var(--gold-light);
+      color: var(--gold);
     }
 
     .welcome p {
-      max-width: 590px;
+      max-width: 560px;
 
-      color: rgba(255,255,255,.72);
+      color: var(--muted);
 
-      font-size: 14px;
-
+      font-size: 13px;
       line-height: 1.75;
     }
 
-    .welcome-logo {
-      position: relative;
-      z-index: 2;
+    .sell-btn {
+      flex-shrink: 0;
 
-      width: 130px;
-      height: 130px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
 
-      flex: 0 0 auto;
+      min-width: 150px;
+      height: 46px;
 
-      display: grid;
-      place-items: center;
+      padding: 0 18px;
 
-      border-radius: 34px;
+      border: 0;
+      border-radius: 12px;
+
+      color: #fff;
 
       background:
-        rgba(255,255,255,.07);
+        linear-gradient(
+          135deg,
+          var(--navy),
+          var(--blue)
+        );
 
-      border:
-        1px solid rgba(255,255,255,.13);
+      font-size: 12px;
+      font-weight: 900;
 
-      backdrop-filter: blur(12px);
+      box-shadow:
+        0 12px 25px rgba(7,26,52,.14);
+
+      transition: .2s ease;
     }
 
-    .welcome-logo img {
-      width: 76%;
-      height: 76%;
+    body.dark .sell-btn {
+      color: #071a34;
 
-      object-fit: contain;
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold2),
+          var(--gold)
+        );
     }
 
+    .sell-btn:hover {
+      transform: translateY(-2px);
+    }
 
-    /* =========================================================
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      width: 100%;
+      height: 58px;
+
+      padding: 0 17px;
+
+      margin-bottom: 35px;
+
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .search-icon {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 100%;
+
+      border: 0;
+      outline: 0;
+
+      color: var(--text);
+
+      background: transparent;
+
+      font-size: 13px;
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-btn {
+      flex-shrink: 0;
+
+      height: 38px;
+
+      padding: 0 16px;
+
+      border: 0;
+      border-radius: 9px;
+
+      color: #fff;
+
+      background: var(--navy);
+
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    body.dark .search-btn {
+      color: #071a34;
+      background: var(--gold);
+    }
+
+    /* =========================
        SECTION
-    ========================================================= */
+    ========================= */
 
     .section {
-      margin-top: 35px;
+      margin-bottom: 39px;
     }
 
-    .section-heading {
+    .section-head {
       display: flex;
-      align-items: end;
+      align-items: center;
       justify-content: space-between;
 
-      gap: 20px;
-
-      margin-bottom: 17px;
+      margin-bottom: 16px;
     }
 
     .section-title {
-      font-size: 21px;
-      font-weight: 850;
+      font-size: 17px;
+      font-weight: 900;
+
       letter-spacing: -.5px;
     }
 
     .section-subtitle {
+      margin-top: 4px;
+
       color: var(--muted);
-      font-size: 12px;
-      margin-top: 5px;
+
+      font-size: 10px;
     }
 
+    .view-all {
+      color: var(--gold);
 
-    /* =========================================================
-       SERVICE GRID
-    ========================================================= */
+      font-size: 10px;
+      font-weight: 900;
+    }
 
-    .service-grid {
+    /* =========================
+       CATEGORY
+    ========================= */
+
+    .categories {
       display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(5, 1fr);
 
-      gap: 14px;
+      gap: 12px;
     }
 
-    .service {
-      position: relative;
+    .category {
+      min-height: 126px;
 
-      min-height: 145px;
-
-      padding: 22px;
+      padding: 18px;
 
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
-      border-radius: 21px;
-
-      background: var(--surface);
+      border-radius: 16px;
 
       border: 1px solid var(--border);
 
-      box-shadow: var(--shadow);
+      background: var(--surface);
 
-      overflow: hidden;
+      box-shadow: 0 10px 35px rgba(16,35,63,.045);
 
-      transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
+      transition: .22s ease;
     }
 
-    .service:hover {
-      transform: translateY(-5px);
+    .category:hover {
+      transform: translateY(-4px);
 
       border-color:
-        rgba(216,180,92,.45);
+        rgba(215,179,90,.45);
 
-      box-shadow:
-        0 24px 55px rgba(16,35,63,.12);
+      box-shadow: var(--shadow);
     }
 
-    .service::after {
-      content: "";
-
-      position: absolute;
-
-      width: 100px;
-      height: 100px;
-
-      right: -45px;
-      bottom: -45px;
-
-      border-radius: 50%;
-
-      background:
-        rgba(216,180,92,.07);
-    }
-
-    .service-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .service-icon {
-      width: 45px;
-      height: 45px;
+    .category-icon {
+      width: 39px;
+      height: 39px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 14px;
+      border-radius: 11px;
 
-      color: var(--navy);
+      color: var(--gold);
 
       background:
-        rgba(216,180,92,.16);
-
-      font-size: 20px;
-    }
-
-    .service-arrow {
-      color: var(--muted);
+        rgba(215,179,90,.10);
 
       font-size: 18px;
-
-      transition: .25s ease;
     }
 
-    .service:hover .service-arrow {
-      color: var(--gold);
-      transform: translateX(4px);
+    .category strong {
+      display: block;
+
+      margin-top: 14px;
+
+      font-size: 12px;
+      font-weight: 900;
     }
 
-    .service h3 {
-      position: relative;
-      z-index: 2;
+    .category small {
+      display: block;
 
-      font-size: 15px;
-
-      margin-top: 17px;
-    }
-
-    .service p {
-      position: relative;
-      z-index: 2;
+      margin-top: 4px;
 
       color: var(--muted);
 
-      font-size: 11px;
-
-      margin-top: 4px;
+      font-size: 9px;
     }
 
-
-    /* =========================================================
+    /* =========================
        QUICK ACTIONS
-    ========================================================= */
+    ========================= */
 
-    .quick-grid {
+    .actions {
       display: grid;
 
       grid-template-columns:
-        repeat(2, 1fr);
+        repeat(3, 1fr);
 
-      gap: 14px;
+      gap: 13px;
     }
 
-    .quick {
-      min-height: 90px;
+    .action {
+      min-height: 110px;
 
-      display: flex;
-      align-items: center;
+      padding: 20px;
 
-      gap: 16px;
-
-      padding: 18px 20px;
-
-      border-radius: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
 
       background: var(--surface);
 
-      border: 1px solid var(--border);
-
-      transition: .25s ease;
+      transition: .2s ease;
     }
 
-    .quick:hover {
+    .action:hover {
       transform: translateY(-3px);
 
-      border-color:
-        rgba(216,180,92,.45);
+      box-shadow: var(--shadow);
     }
 
-    .quick-icon {
-      width: 45px;
-      height: 45px;
+    .action-icon {
+      font-size: 19px;
 
-      flex: 0 0 auto;
+      margin-bottom: 14px;
+    }
+
+    .action strong {
+      display: block;
+
+      font-size: 12px;
+
+      margin-bottom: 5px;
+    }
+
+    .action span {
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    /* =========================
+       LISTING PREVIEW
+    ========================= */
+
+    .listing-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 13px;
+    }
+
+    .listing {
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      background: var(--surface);
+
+      transition: .2s ease;
+    }
+
+    .listing:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .listing-image {
+      height: 145px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 13px;
+      background:
+        linear-gradient(
+          145deg,
+          var(--surface2),
+          var(--surface)
+        );
 
-      background: var(--surface-soft);
-
-      font-size: 18px;
-    }
-
-    .quick-content {
-      flex: 1;
-    }
-
-    .quick-content h3 {
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    .quick-content p {
       color: var(--muted);
-      font-size: 11px;
+
+      font-size: 10px;
     }
 
-    .quick-arrow {
+    .listing-body {
+      padding: 14px;
+    }
+
+    .listing-type {
+      color: var(--gold);
+
+      font-size: 8px;
+      font-weight: 900;
+
+      text-transform: uppercase;
+
+      letter-spacing: .8px;
+    }
+
+    .listing-title {
+      margin-top: 6px;
+
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .listing-price {
+      margin-top: 8px;
+
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+
+      padding: 42px 20px;
+
+      text-align: center;
+
+      border: 1px dashed var(--border);
+
+      border-radius: 16px;
+
       color: var(--muted);
-      font-size: 17px;
+
+      background: var(--surface);
     }
 
+    .empty strong {
+      display: block;
 
-    /* =========================================================
-       BOTTOM NAV
-    ========================================================= */
+      margin-bottom: 6px;
+
+      color: var(--text);
+
+      font-size: 13px;
+    }
+
+    .empty span {
+      font-size: 10px;
+    }
+
+    /* =========================
+       MOBILE NAV
+    ========================= */
 
     .bottom-nav {
       display: none;
     }
 
+    /* =========================
+       RESPONSIVE
+    ========================= */
 
-    /* =========================================================
-       MOBILE
-    ========================================================= */
+    @media (max-width: 950px) {
 
-    @media (max-width: 800px) {
-
-      .container {
-        width: min(
-          100% - 26px,
-          650px
-        );
-      }
-
-      .header {
-        height: 67px;
-      }
-
-      .brand-name {
+      .nav {
         display: none;
       }
 
-      main {
-        padding-top: 24px;
-        padding-bottom: 95px;
+      .categories {
+        grid-template-columns:
+          repeat(3, 1fr);
+      }
+
+      .listing-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      .header {
+        height: 68px;
+      }
+
+      .main {
+        width: min(100% - 24px, 560px);
+
+        padding-top: 28px;
+      }
+
+      .brand-title {
+        display: none;
       }
 
       .welcome {
-        min-height: auto;
-
-        padding: 29px;
-
-        border-radius: 24px;
+        display: block;
       }
 
-      .welcome-logo {
+      .welcome h1 {
+        font-size: 34px;
+      }
+
+      .sell-btn {
+        margin-top: 18px;
+
+        width: 100%;
+      }
+
+      .search-box {
+        height: 53px;
+      }
+
+      .search-btn {
         display: none;
       }
 
-      .service-grid {
+      .categories {
         grid-template-columns:
           repeat(2, 1fr);
       }
 
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .listing-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .listing-image {
+        height: 125px;
+      }
+
       .bottom-nav {
         position: fixed;
-
         left: 10px;
         right: 10px;
         bottom: 10px;
 
         z-index: 200;
 
-        height: 67px;
+        height: 62px;
 
         display: grid;
 
         grid-template-columns:
           repeat(4, 1fr);
 
-        padding: 7px;
+        padding: 6px;
 
-        border-radius: 19px;
+        border:
+          1px solid var(--border);
+
+        border-radius: 17px;
 
         background:
-          color-mix(
-            in srgb,
-            var(--surface) 94%,
-            transparent
-          );
+          rgba(255,255,255,.92);
 
-        border: 1px solid var(--border);
-
-        backdrop-filter: blur(22px);
-        -webkit-backdrop-filter: blur(22px);
+        backdrop-filter: blur(18px);
 
         box-shadow:
-          0 15px 45px rgba(0,0,0,.12);
+          0 15px 40px rgba(0,0,0,.12);
       }
 
-      .bottom-item {
+      body.dark .bottom-nav {
+        background:
+          rgba(13,29,49,.94);
+      }
+
+      .bottom-link {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -741,135 +828,130 @@
 
         gap: 3px;
 
+        border-radius: 11px;
+
         color: var(--muted);
 
-        border-radius: 13px;
-
-        font-size: 10px;
-        font-weight: 700;
+        font-size: 8px;
+        font-weight: 800;
       }
 
-      .bottom-item span:first-child {
-        font-size: 18px;
+      .bottom-link.active {
+        color: var(--gold);
+        background: var(--surface2);
       }
 
-      .bottom-item.active {
-        color: var(--navy);
-
-        background:
-          rgba(216,180,92,.17);
-      }
-    }
-
-    @media (max-width: 470px) {
-
-      .header-actions {
-        gap: 5px;
+      .bottom-link b {
+        font-size: 17px;
+        font-weight: 500;
       }
 
-      .icon-button,
-      .profile-button {
-        width: 37px;
-        height: 37px;
-      }
-
-      .welcome {
-        padding: 25px;
-      }
-
-      .welcome h1 {
-        font-size: 29px;
-      }
-
-      .welcome p {
-        font-size: 12px;
-      }
-
-      .service-grid {
-        gap: 9px;
-      }
-
-      .service {
-        min-height: 135px;
-        padding: 17px;
-      }
-
-      .service h3 {
-        font-size: 13px;
-      }
-
-      .service p {
-        font-size: 10px;
-      }
-
-      .quick-grid {
-        grid-template-columns: 1fr;
+      .footer-space {
+        height: 75px;
       }
     }
-
   </style>
 </head>
 
-
 <body>
 
-<div class="app">
-
-
-  <!-- =======================================================
+  <!-- =========================
        HEADER
-  ======================================================== -->
+  ========================= -->
 
   <header class="header">
 
-    <div class="container header-inner">
-
-
-      <!-- BRAND -->
+    <div class="header-inner">
 
       <a
         href="./general.html"
         class="brand">
 
-        <div class="brand-logo">
+        <div class="logo">
 
           <img
-            src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd”
+            src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
             alt="Myanmar Elite Connect">
 
         </div>
 
-        <div class="brand-name">
+        <div class="brand-title">
           Myanmar <span>Elite</span> Connect
         </div>
 
       </a>
 
 
-      <!-- ACTIONS -->
+      <nav class="nav">
+
+        <a
+          class="nav-link active"
+          href="./general.html">
+          Home
+        </a>
+
+        <a
+          class="nav-link"
+          href="./buy.html">
+          Buy
+        </a>
+
+        <a
+          class="nav-link"
+          href="./sell.html">
+          Sell
+        </a>
+
+        <a
+          class="nav-link"
+          href="./car.html">
+          Cars
+        </a>
+
+        <a
+          class="nav-link"
+          href="./property.html">
+          Property
+        </a>
+
+        <a
+          class="nav-link"
+          href="./chat.html">
+          Chat
+        </a>
+
+      </nav>
+
 
       <div class="header-actions">
 
         <button
-          class="icon-button"
-          id="themeButton"
-          onclick="toggleTheme()"
-          aria-label="Toggle theme">
-          ☾
+          class="round-btn"
+          id="languageBtn"
+          title="Language">
+
+          EN
+
         </button>
 
         <button
-          class="icon-button"
-          onclick="openChat()"
-          aria-label="Chat">
-          ♢
+          class="round-btn"
+          id="themeBtn"
+          title="Theme">
+
+          ☾
+
         </button>
 
         <a
           href="./profile.html"
-          class="profile-button"
-          aria-label="Profile">
-          ME
+          class="profile-btn"
+          id="profileBtn">
+
+          <span id="profileInitial">
+            U
+          </span>
+
         </a>
 
       </div>
@@ -879,949 +961,816 @@
   </header>
 
 
-  <!-- =======================================================
+  <!-- =========================
        MAIN
-  ======================================================== -->
+  ========================= -->
 
-  <main>
-
-    <div class="container">
+  <main class="main">
 
 
-      <!-- ===================================================
-           WELCOME
-      ==================================================== -->
+    <!-- WELCOME -->
 
-      <section class="welcome">
+    <section class="welcome">
 
-        <div class="welcome-copy">
+      <div>
 
-          <div
-            class="eyebrow"
-            id="eyebrow">
-            GENERAL
-          </div>
-
-          <h1 id="welcomeTitle">
-            Everything you need,
-            <span>in one place.</span>
-          </h1>
-
-          <p id="welcomeText">
-            Explore vehicles, properties, gems and
-            marketplace listings through a clean,
-            organized experience built for Myanmar.
-          </p>
-
+        <div
+          class="eyebrow"
+          id="eyebrow">
+          Myanmar Elite Marketplace
         </div>
 
+        <h1 id="welcomeTitle">
+          Welcome,
+          <span id="userName">
+            User
+          </span>
+        </h1>
 
-        <div class="welcome-logo">
+        <p id="welcomeText">
+          Discover products, vehicles and properties,
+          or create your own listing and connect
+          directly with people.
+        </p>
 
-          <img
-            src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd”
-            alt="Myanmar Elite Connect">
+      </div>
 
-        </div>
 
-      </section>
+      <a
+        href="./sell.html"
+        class="sell-btn">
 
+        <span>＋</span>
+        <span id="sellButtonText">
+          Post a Listing
+        </span>
 
-      <!-- ===================================================
-           EXPLORE
-      ==================================================== -->
+      </a>
 
-      <section class="section">
+    </section>
 
-        <div class="section-heading">
 
-          <div>
+    <!-- SEARCH -->
 
-            <h2
-              class="section-title"
-              id="exploreTitle">
-              Explore
-            </h2>
+    <div class="search-box">
 
-            <p
-              class="section-subtitle"
-              id="exploreSubtitle">
-              Choose a category to continue.
-            </p>
+      <span class="search-icon">
+        ⌕
+      </span>
 
-          </div>
+      <input
+        class="search-input"
+        id="searchInput"
+        type="search"
+        placeholder="Search products, cars, properties...">
 
-        </div>
+      <button
+        class="search-btn"
+        id="searchBtn">
 
+        Search
 
-        <div class="service-grid">
-
-
-          <!-- CAR -->
-
-          <a
-            href="./car.html"
-            class="service">
-
-            <div class="service-top">
-
-              <div class="service-icon">
-                🚗
-              </div>
-
-              <div class="service-arrow">
-                →
-              </div>
-
-            </div>
-
-            <div>
-
-              <h3 id="carTitle">
-                Cars
-              </h3>
-
-              <p id="carText">
-                Vehicles and automotive listings
-              </p>
-
-            </div>
-
-          </a>
-
-
-          <!-- PROPERTY -->
-
-          <a
-            href="./property.html"
-            class="service">
-
-            <div class="service-top">
-
-              <div class="service-icon">
-                🏠
-              </div>
-
-              <div class="service-arrow">
-                →
-              </div>
-
-            </div>
-
-            <div>
-
-              <h3 id="propertyTitle">
-                Property
-              </h3>
-
-              <p id="propertyText">
-                Homes, land and commercial spaces
-              </p>
-
-            </div>
-
-          </a>
-
-
-          <!-- GEM -->
-
-          <a
-            href="./gem.html"
-            class="service">
-
-            <div class="service-top">
-
-              <div class="service-icon">
-                💎
-              </div>
-
-              <div class="service-arrow">
-                →
-              </div>
-
-            </div>
-
-            <div>
-
-              <h3 id="gemTitle">
-                Gems
-              </h3>
-
-              <p id="gemText">
-                Precious stones and collectibles
-              </p>
-
-            </div>
-
-          </a>
-
-
-          <!-- BUY -->
-
-          <a
-            href="./buy.html"
-            class="service">
-
-            <div class="service-top">
-
-              <div class="service-icon">
-                🛒
-              </div>
-
-              <div class="service-arrow">
-                →
-              </div>
-
-            </div>
-
-            <div>
-
-              <h3 id="buyTitle">
-                Buy
-              </h3>
-
-              <p id="buyText">
-                Discover available listings
-              </p>
-
-            </div>
-
-          </a>
-
-
-          <!-- SELL -->
-
-          <a
-            href="./sell.html"
-            class="service">
-
-            <div class="service-top">
-
-              <div class="service-icon">
-                🏷️
-              </div>
-
-              <div class="service-arrow">
-                →
-              </div>
-
-            </div>
-
-            <div>
-
-              <h3 id="sellTitle">
-                Sell
-              </h3>
-
-              <p id="sellText">
-                Create and manage your listings
-              </p>
-
-            </div>
-
-          </a>
-
-
-          <!-- CHAT -->
-
-          <a
-            href="./chat.html"
-            class="service">
-
-            <div class="service-top">
-
-              <div class="service-icon">
-                💬
-              </div>
-
-              <div class="service-arrow">
-                →
-              </div>
-
-            </div>
-
-            <div>
-
-              <h3 id="chatTitle">
-                Chat
-              </h3>
-
-              <p id="chatText">
-                Connect with other members
-              </p>
-
-            </div>
-
-          </a>
-
-        </div>
-
-      </section>
-
-
-      <!-- ===================================================
-           QUICK ACCESS
-      ==================================================== -->
-
-      <section class="section">
-
-        <div class="section-heading">
-
-          <div>
-
-            <h2
-              class="section-title"
-              id="quickTitle">
-              Quick Access
-            </h2>
-
-            <p
-              class="section-subtitle"
-              id="quickSubtitle">
-              Your account and activity.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="quick-grid">
-
-
-          <!-- PROFILE -->
-
-          <a
-            href="./profile.html"
-            class="quick">
-
-            <div class="quick-icon">
-              👤
-            </div>
-
-            <div class="quick-content">
-
-              <h3 id="profileTitle">
-                My Profile
-              </h3>
-
-              <p id="profileText">
-                Account information and settings
-              </p>
-
-            </div>
-
-            <div class="quick-arrow">
-              →
-            </div>
-
-          </a>
-
-
-          <!-- ADD LISTING -->
-
-          <a
-            href="./add-listing.html"
-            class="quick">
-
-            <div class="quick-icon">
-              ＋
-            </div>
-
-            <div class="quick-content">
-
-              <h3 id="addTitle">
-                Add Listing
-              </h3>
-
-              <p id="addText">
-                Put an item or property up for sale
-              </p>
-
-            </div>
-
-            <div class="quick-arrow">
-              →
-            </div>
-
-          </a>
-
-
-          <!-- CHAT -->
-
-          <a
-            href="./chat.html"
-            class="quick">
-
-            <div class="quick-icon">
-              💬
-            </div>
-
-            <div class="quick-content">
-
-              <h3 id="messageTitle">
-                Messages
-              </h3>
-
-              <p id="messageText">
-                Continue your conversations
-              </p>
-
-            </div>
-
-            <div class="quick-arrow">
-              →
-            </div>
-
-          </a>
-
-
-          <!-- SELL -->
-
-          <a
-            href="./sell.html"
-            class="quick">
-
-            <div class="quick-icon">
-              📦
-            </div>
-
-            <div class="quick-content">
-
-              <h3 id="manageTitle">
-                My Listings
-              </h3>
-
-              <p id="manageText">
-                View and manage your listings
-              </p>
-
-            </div>
-
-            <div class="quick-arrow">
-              →
-            </div>
-
-          </a>
-
-        </div>
-
-      </section>
+      </button>
 
     </div>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================= -->
+
+    <section class="section">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-title">
+            Explore Categories
+          </div>
+
+          <div class="section-subtitle">
+            Find what you need
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="categories">
+
+
+        <a
+          href="./buy.html?category=products"
+          class="category">
+
+          <div class="category-icon">
+            ◈
+          </div>
+
+          <div>
+
+            <strong>
+              Products
+            </strong>
+
+            <small>
+              Buy & sell
+            </small>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="./car.html"
+          class="category">
+
+          <div class="category-icon">
+            ◉
+          </div>
+
+          <div>
+
+            <strong>
+              Cars
+            </strong>
+
+            <small>
+              Vehicles
+            </small>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="./property.html"
+          class="category">
+
+          <div class="category-icon">
+            ⌂
+          </div>
+
+          <div>
+
+            <strong>
+              Property
+            </strong>
+
+            <small>
+              Home & land
+            </small>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="./buy.html?category=services"
+          class="category">
+
+          <div class="category-icon">
+            ✦
+          </div>
+
+          <div>
+
+            <strong>
+              Services
+            </strong>
+
+            <small>
+              Local services
+            </small>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="./buy.html?category=all"
+          class="category">
+
+          <div class="category-icon">
+            ◎
+          </div>
+
+          <div>
+
+            <strong>
+              All Listings
+            </strong>
+
+            <small>
+              Explore everything
+            </small>
+
+          </div>
+
+        </a>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================= -->
+
+    <section class="section">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-title">
+            Quick Access
+          </div>
+
+          <div class="section-subtitle">
+            Everything you need in one place
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+
+        <a
+          href="./buy.html"
+          class="action">
+
+          <div class="action-icon">
+            🔎
+          </div>
+
+          <strong>
+            Find Something
+          </strong>
+
+          <span>
+            Browse available listings
+          </span>
+
+        </a>
+
+
+        <a
+          href="./sell.html"
+          class="action">
+
+          <div class="action-icon">
+            ＋
+          </div>
+
+          <strong>
+            Sell Something
+          </strong>
+
+          <span>
+            Create a new listing
+          </span>
+
+        </a>
+
+
+        <a
+          href="./chat.html"
+          class="action">
+
+          <div class="action-icon">
+            ◌
+          </div>
+
+          <strong>
+            Messages
+          </strong>
+
+          <span>
+            Chat with buyers and sellers
+          </span>
+
+        </a>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         RECENT LISTINGS
+    ========================= -->
+
+    <section class="section">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-title">
+            Recent Listings
+          </div>
+
+          <div class="section-subtitle">
+            Latest items from the marketplace
+          </div>
+
+        </div>
+
+        <a
+          href="./buy.html"
+          class="view-all">
+
+          View all →
+
+        </a>
+
+      </div>
+
+
+      <div
+        class="listing-grid"
+        id="listingGrid">
+
+        <div class="empty">
+
+          <strong>
+            No listings yet
+          </strong>
+
+          <span>
+            New listings will appear here when they are added.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div class="footer-space"></div>
 
   </main>
 
 
-  <!-- =======================================================
+  <!-- =========================
        MOBILE NAV
-  ======================================================== -->
+  ========================= -->
 
   <nav class="bottom-nav">
 
     <a
       href="./general.html"
-      class="bottom-item active">
+      class="bottom-link active">
 
-      <span>⌂</span>
-      <span id="navHome">Home</span>
+      <b>⌂</b>
+      Home
 
     </a>
 
     <a
       href="./buy.html"
-      class="bottom-item">
+      class="bottom-link">
 
-      <span>⌕</span>
-      <span id="navBuy">Buy</span>
+      <b>⌕</b>
+      Buy
 
     </a>
 
     <a
       href="./chat.html"
-      class="bottom-item">
+      class="bottom-link">
 
-      <span>♢</span>
-      <span id="navChat">Chat</span>
+      <b>◌</b>
+      Chat
 
     </a>
 
     <a
       href="./profile.html"
-      class="bottom-item">
+      class="bottom-link">
 
-      <span>◯</span>
-      <span id="navProfile">Profile</span>
+      <b>◯</b>
+      Profile
 
     </a>
 
   </nav>
 
-</div>
 
+  <script>
 
-<script>
+    /* =====================================================
+       SUPABASE SESSION
+    ===================================================== */
 
-  /* =========================================================
-     LANGUAGE DATA
-  ========================================================= */
+    async function protectPage() {
 
-  const translations = {
+      try {
 
-    en: {
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
 
-      eyebrow: "GENERAL",
 
-      welcomeTitle:
-        'Everything you need, <span>in one place.</span>',
+        if (error) {
+          throw error;
+        }
 
-      welcomeText:
-        'Explore vehicles, properties, gems and marketplace listings through a clean, organized experience built for Myanmar.',
 
-      exploreTitle:
-        'Explore',
+        if (!data?.session) {
 
-      exploreSubtitle:
-        'Choose a category to continue.',
+          window.location.replace(
+            "./auth.html"
+          );
 
-      carTitle:
-        'Cars',
+          return null;
 
-      carText:
-        'Vehicles and automotive listings',
+        }
 
-      propertyTitle:
-        'Property',
 
-      propertyText:
-        'Homes, land and commercial spaces',
+        return data.session;
 
-      gemTitle:
-        'Gems',
+      } catch (error) {
 
-      gemText:
-        'Precious stones and collectibles',
+        console.error(
+          "Session error:",
+          error
+        );
 
-      buyTitle:
-        'Buy',
+        window.location.replace(
+          "./auth.html"
+        );
 
-      buyText:
-        'Discover available listings',
-
-      sellTitle:
-        'Sell',
-
-      sellText:
-        'Create and manage your listings',
-
-      chatTitle:
-        'Chat',
-
-      chatText:
-        'Connect with other members',
-
-      quickTitle:
-        'Quick Access',
-
-      quickSubtitle:
-        'Your account and activity.',
-
-      profileTitle:
-        'My Profile',
-
-      profileText:
-        'Account information and settings',
-
-      addTitle:
-        'Add Listing',
-
-      addText:
-        'Put an item or property up for sale',
-
-      messageTitle:
-        'Messages',
-
-      messageText:
-        'Continue your conversations',
-
-      manageTitle:
-        'My Listings',
-
-      manageText:
-        'View and manage your listings',
-
-      navHome:
-        'Home',
-
-      navBuy:
-        'Buy',
-
-      navChat:
-        'Chat',
-
-      navProfile:
-        'Profile'
-
-    },
-
-
-    mm: {
-
-      eyebrow:
-        'အထွေထွေ',
-
-      welcomeTitle:
-        'လိုအပ်သမျှကို <span>တစ်နေရာတည်းမှာ။</span>',
-
-      welcomeText:
-        'ကား၊ အိမ်ခြံမြေ၊ ကျောက်မျက်နှင့် ရောင်းဝယ်ရေးစာရင်းများကို စနစ်တကျ ရှာဖွေ၊ ကြည့်ရှုနိုင်ပါသည်။',
-
-      exploreTitle:
-        'ရှာဖွေရန်',
-
-      exploreSubtitle:
-        'ဆက်လက်အသုံးပြုလိုသော အမျိုးအစားကို ရွေးချယ်ပါ။',
-
-      carTitle:
-        'ကား',
-
-      carText:
-        'ကားနှင့် မော်တော်ယာဉ်များ',
-
-      propertyTitle:
-        'အိမ်ခြံမြေ',
-
-      propertyText:
-        'အိမ်၊ မြေနှင့် စီးပွားရေးအဆောက်အအုံများ',
-
-      gemTitle:
-        'ကျောက်မျက်',
-
-      gemText:
-        'တန်ဖိုးရှိကျောက်မျက်နှင့် စုဆောင်းပစ္စည်းများ',
-
-      buyTitle:
-        'ဝယ်ရန်',
-
-      buyText:
-        'ရောင်းရန်တင်ထားသော ပစ္စည်းများကို ရှာဖွေပါ',
-
-      sellTitle:
-        'ရောင်းရန်',
-
-      sellText:
-        'ပစ္စည်းများကို ရောင်းရန်တင်ပြီး စီမံပါ',
-
-      chatTitle:
-        'Chat',
-
-      chatText:
-        'အခြားအသုံးပြုသူများနှင့် ဆက်သွယ်ပါ',
-
-      quickTitle:
-        'အမြန်ဝင်ရောက်ရန်',
-
-      quickSubtitle:
-        'သင့်အကောင့်နှင့် လုပ်ဆောင်ချက်များ',
-
-      profileTitle:
-        'ကျွန်ုပ်၏ Profile',
-
-      profileText:
-        'အကောင့်အချက်အလက်နှင့် Settings',
-
-      addTitle:
-        'Listing အသစ်တင်ရန်',
-
-      addText:
-        'ပစ္စည်း သို့မဟုတ် အိမ်ခြံမြေကို ရောင်းရန်တင်ပါ',
-
-      messageTitle:
-        'Messages',
-
-      messageText:
-        'သင်၏ စကားပြောမှုများကို ဆက်လက်ကြည့်ရှုပါ',
-
-      manageTitle:
-        'ကျွန်ုပ်၏ Listings',
-
-      manageText:
-        'သင်တင်ထားသော Listing များကို ကြည့်ရှုစီမံပါ',
-
-      navHome:
-        'ပင်မ',
-
-      navBuy:
-        'ဝယ်ရန်',
-
-      navChat:
-        'Chat',
-
-      navProfile:
-        'Profile'
+        return null;
+      }
 
     }
 
-  };
+
+    /* =====================================================
+       USER DATA
+    ===================================================== */
+
+    async function loadUser() {
+
+      const session =
+        await protectPage();
+
+      if (!session) {
+        return;
+      }
 
 
-  /* =========================================================
-     TEXT HELPER
-  ========================================================= */
-
-  function setText(id, value) {
-
-    const element =
-      document.getElementById(id);
-
-    if (!element) return;
-
-    element.innerHTML = value;
-  }
+      const user =
+        session.user;
 
 
-  /* =========================================================
-     LANGUAGE
-  ========================================================= */
-
-  function setLanguage(language) {
-
-    localStorage.setItem(
-      'mec_language',
-      language
-    );
-
-    const t =
-      translations[language];
-
-    setText('eyebrow', t.eyebrow);
-
-    setText(
-      'welcomeTitle',
-      t.welcomeTitle
-    );
-
-    setText(
-      'welcomeText',
-      t.welcomeText
-    );
-
-    setText(
-      'exploreTitle',
-      t.exploreTitle
-    );
-
-    setText(
-      'exploreSubtitle',
-      t.exploreSubtitle
-    );
-
-    setText(
-      'carTitle',
-      t.carTitle
-    );
-
-    setText(
-      'carText',
-      t.carText
-    );
-
-    setText(
-      'propertyTitle',
-      t.propertyTitle
-    );
-
-    setText(
-      'propertyText',
-      t.propertyText
-    );
-
-    setText(
-      'gemTitle',
-      t.gemTitle
-    );
-
-    setText(
-      'gemText',
-      t.gemText
-    );
-
-    setText(
-      'buyTitle',
-      t.buyTitle
-    );
-
-    setText(
-      'buyText',
-      t.buyText
-    );
-
-    setText(
-      'sellTitle',
-      t.sellTitle
-    );
-
-    setText(
-      'sellText',
-      t.sellText
-    );
-
-    setText(
-      'chatTitle',
-      t.chatTitle
-    );
-
-    setText(
-      'chatText',
-      t.chatText
-    );
-
-    setText(
-      'quickTitle',
-      t.quickTitle
-    );
-
-    setText(
-      'quickSubtitle',
-      t.quickSubtitle
-    );
-
-    setText(
-      'profileTitle',
-      t.profileTitle
-    );
-
-    setText(
-      'profileText',
-      t.profileText
-    );
-
-    setText(
-      'addTitle',
-      t.addTitle
-    );
-
-    setText(
-      'addText',
-      t.addText
-    );
-
-    setText(
-      'messageTitle',
-      t.messageTitle
-    );
-
-    setText(
-      'messageText',
-      t.messageText
-    );
-
-    setText(
-      'manageTitle',
-      t.manageTitle
-    );
-
-    setText(
-      'manageText',
-      t.manageText
-    );
-
-    setText(
-      'navHome',
-      t.navHome
-    );
-
-    setText(
-      'navBuy',
-      t.navBuy
-    );
-
-    setText(
-      'navChat',
-      t.navChat
-    );
-
-    setText(
-      'navProfile',
-      t.navProfile
-    );
-
-    document.documentElement.lang =
-      language === 'mm'
-        ? 'my'
-        : 'en';
-  }
+      const metadata =
+        user.user_metadata || {};
 
 
-  /* =========================================================
-     THEME
-  ========================================================= */
-
-  function applyTheme(theme) {
-
-    document.body.classList.toggle(
-      'dark',
-      theme === 'dark'
-    );
-
-    document.getElementById(
-      'themeButton'
-    ).textContent =
-      theme === 'dark'
-        ? '☀'
-        : '☾';
-
-    localStorage.setItem(
-      'mec_theme',
-      theme
-    );
-  }
+      const name =
+        metadata.full_name ||
+        metadata.name ||
+        user.email?.split("@")[0] ||
+        "User";
 
 
-  function toggleTheme() {
+      document.getElementById(
+        "userName"
+      ).textContent = name;
 
-    const isDark =
-      document.body.classList.contains(
-        'dark'
+
+      const initial =
+        name
+          .trim()
+          .charAt(0)
+          .toUpperCase();
+
+
+      document.getElementById(
+        "profileInitial"
+      ).textContent =
+        initial || "U";
+
+
+      /*
+        If profile avatar URL is later stored
+        in user metadata, display it automatically.
+      */
+
+      const avatar =
+        metadata.avatar_url ||
+        metadata.avatar ||
+        null;
+
+
+      if (avatar) {
+
+        const image =
+          document.createElement("img");
+
+        image.src = avatar;
+
+        image.alt = name;
+
+        image.onerror =
+          function() {
+            image.remove();
+          };
+
+        document.getElementById(
+          "profileBtn"
+        ).prepend(image);
+
+        document.getElementById(
+          "profileInitial"
+        ).style.display =
+          "none";
+      }
+
+    }
+
+
+    /* =====================================================
+       THEME
+    ===================================================== */
+
+    function applyTheme(theme) {
+
+      document.body.classList.toggle(
+        "dark",
+        theme === "dark"
       );
 
-    applyTheme(
-      isDark
-        ? 'light'
-        : 'dark'
+      document.getElementById(
+        "themeBtn"
+      ).textContent =
+        theme === "dark"
+          ? "☀"
+          : "☾";
+
+      localStorage.setItem(
+        "mec_theme",
+        theme
+      );
+
+    }
+
+
+    document.getElementById(
+      "themeBtn"
+    ).addEventListener(
+      "click",
+      function() {
+
+        const dark =
+          document.body.classList.contains(
+            "dark"
+          );
+
+        applyTheme(
+          dark
+            ? "light"
+            : "dark"
+        );
+
+      }
     );
-  }
 
 
-  /* =========================================================
-     CHAT
-  ========================================================= */
+    /* =====================================================
+       LANGUAGE
+    ===================================================== */
 
-  function openChat() {
+    let language =
+      localStorage.getItem(
+        "mec_language"
+      ) || "en";
 
-    window.location.href =
-      './chat.html';
-  }
+
+    const languageText = {
+
+      en: {
+        eyebrow:
+          "Myanmar Elite Marketplace",
+
+        title:
+          "Welcome, ",
+
+        welcome:
+          "Discover products, vehicles and properties, or create your own listing and connect directly with people.",
+
+        post:
+          "Post a Listing"
+      },
+
+      mm: {
+        eyebrow:
+          "Myanmar Elite Marketplace",
+
+        title:
+          "ကြိုဆိုပါတယ်၊ ",
+
+        welcome:
+          "ပစ္စည်းများ၊ ကားများနှင့် အိမ်ခြံမြေများကို ရှာဖွေဝယ်ယူနိုင်သလို ကိုယ်တိုင် Listing တင်ပြီး တိုက်ရိုက်ဆက်သွယ်နိုင်ပါသည်။",
+
+        post:
+          "Listing တင်ရန်"
+      }
+
+    };
 
 
-  /* =========================================================
-     INITIALIZE
-  ========================================================= */
+    function updateLanguage() {
 
-  const savedLanguage =
-    localStorage.getItem(
-      'mec_language'
-    ) || 'en';
+      const t =
+        languageText[language];
 
-  const savedTheme =
-    localStorage.getItem(
-      'mec_theme'
-    ) || 'light';
 
-  applyTheme(savedTheme);
-  setLanguage(savedLanguage);
+      document.getElementById(
+        "eyebrow"
+      ).textContent =
+        t.eyebrow;
 
-</script>
+
+      /*
+        Keep the user's name while changing
+        only the welcome text.
+      */
+
+      const name =
+        document.getElementById(
+          "userName"
+        ).textContent;
+
+
+      const title =
+        document.getElementById(
+          "welcomeTitle"
+        );
+
+
+      title.childNodes[0].nodeValue =
+        t.title;
+
+
+      document.getElementById(
+        "welcomeText"
+      ).textContent =
+        t.welcome;
+
+
+      document.getElementById(
+        "sellButtonText"
+      ).textContent =
+        t.post;
+
+
+      document.getElementById(
+        "languageBtn"
+      ).textContent =
+        language === "en"
+          ? "MM"
+          : "EN";
+
+    }
+
+
+    document.getElementById(
+      "languageBtn"
+    ).addEventListener(
+      "click",
+      function() {
+
+        language =
+          language === "en"
+            ? "mm"
+            : "en";
+
+        localStorage.setItem(
+          "mec_language",
+          language
+        );
+
+        updateLanguage();
+
+      }
+    );
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    function performSearch() {
+
+      const query =
+        document.getElementById(
+          "searchInput"
+        ).value.trim();
+
+
+      if (!query) {
+
+        window.location.href =
+          "./buy.html";
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "./buy.html?search=" +
+        encodeURIComponent(query);
+
+    }
+
+
+    document.getElementById(
+      "searchBtn"
+    ).addEventListener(
+      "click",
+      performSearch
+    );
+
+
+    document.getElementById(
+      "searchInput"
+    ).addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          event.preventDefault();
+
+          performSearch();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       REALTIME AUTH STATE
+    ===================================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      function(event, session) {
+
+        if (
+          event === "SIGNED_OUT" ||
+          !session
+        ) {
+
+          window.location.replace(
+            "./auth.html"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    applyTheme(
+      localStorage.getItem(
+        "mec_theme"
+      ) || "light"
+    );
+
+
+    updateLanguage();
+
+
+    loadUser();
+
+  </script>
 
 </body>
 </html>
