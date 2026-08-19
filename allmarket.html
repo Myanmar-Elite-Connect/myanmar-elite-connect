@@ -11,69 +11,91 @@
 
 <style>
 
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
 :root{
 
   --navy:#071b3a;
-  --navy2:#102d59;
+  --navy-2:#102d59;
+  --navy-3:#173f70;
 
   --green:#19a974;
+  --green-light:#65d6a7;
 
   --gold:#d9a441;
+  --gold-light:#f0ce7a;
 
-  --bg:#f4f7fb;
-
-  --white:#ffffff;
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface-soft:#f8fafc;
 
   --text:#172033;
+  --muted:#718096;
 
-  --muted:#697386;
-
-  --border:#e3e8f0;
+  --border:#e5eaf1;
 
   --danger:#b42318;
 
   --shadow:
-    0 10px 30px rgba(7,27,58,.08);
+    0 12px 35px rgba(7,27,58,.07);
 
+  --shadow-hover:
+    0 22px 55px rgba(7,27,58,.14);
+
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
 
+  min-height:100vh;
+
   font-family:
+    Inter,
     Arial,
     "Noto Sans Myanmar",
+    "Myanmar Text",
     sans-serif;
 
   background:var(--bg);
 
   color:var(--text);
 
-  min-height:100vh;
-
-  padding-bottom:75px;
+  padding-bottom:80px;
 
 }
 
 button,
 input,
 select{
+  font:inherit;
+}
 
-  font-family:inherit;
+button{
+  cursor:pointer;
+}
 
+a{
+  text-decoration:none;
+  color:inherit;
 }
 
 
-/* =====================================================
+/* =========================================================
    HEADER
-===================================================== */
+========================================================= */
 
-header{
+.header{
 
   position:sticky;
 
@@ -82,122 +104,218 @@ header{
   z-index:1000;
 
   background:
-    rgba(7,27,58,.97);
+    rgba(7,27,58,.96);
 
-  backdrop-filter:blur(12px);
+  backdrop-filter:
+    blur(18px);
 
-  color:white;
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.08);
 
   box-shadow:
-    0 3px 15px rgba(0,0,0,.12);
+    0 4px 22px rgba(0,0,0,.12);
 
 }
 
 .header-inner{
 
-  max-width:1350px;
+  width:
+    min(1240px,calc(100% - 34px));
+
+  height:68px;
 
   margin:auto;
 
-  padding:14px 5%;
-
   display:flex;
+
+  align-items:center;
 
   justify-content:space-between;
 
-  align-items:center;
+  gap:20px;
 
 }
 
 .logo{
 
-  color:white;
+  display:flex;
 
-  text-decoration:none;
+  align-items:center;
 
-  font-size:20px;
+  gap:7px;
+
+  color:#fff;
+
+  font-size:17px;
 
   font-weight:900;
+
+  letter-spacing:-.35px;
+
+  white-space:nowrap;
 
 }
 
 .logo span{
-
-  color:#65d6a7;
-
+  color:var(--green-light);
 }
 
 .top-nav{
 
   display:flex;
 
-  gap:7px;
+  align-items:center;
+
+  gap:4px;
 
 }
 
 .top-nav a{
 
-  color:white;
+  color:
+    rgba(255,255,255,.78);
 
-  text-decoration:none;
+  padding:
+    8px 11px;
 
-  padding:9px 12px;
+  border-radius:9px;
 
-  border-radius:8px;
+  font-size:12px;
 
-  font-size:13px;
+  font-weight:700;
+
+  transition:.2s;
 
 }
 
 .top-nav a:hover{
 
+  color:#fff;
+
   background:
-    rgba(255,255,255,.1);
+    rgba(255,255,255,.09);
+
+}
+
+.top-nav a.active{
+
+  color:#fff;
+
+  background:
+    rgba(25,169,116,.18);
 
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero{
+
+  position:relative;
+
+  overflow:hidden;
+
+  color:#fff;
 
   background:
 
     radial-gradient(
-      circle at 85% 10%,
-      #17467e 0,
-      #071b3a 45%,
+      circle at 88% 5%,
+      rgba(46,111,176,.42),
+      transparent 34%
+    ),
+
+    radial-gradient(
+      circle at 10% 100%,
+      rgba(25,169,116,.12),
+      transparent 32%
+    ),
+
+    linear-gradient(
+      135deg,
+      #071b3a 0%,
+      #0b2548 48%,
       #041126 100%
     );
 
-  color:white;
+}
 
-  padding:45px 5% 55px;
+.hero::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:360px;
+  height:360px;
+
+  right:-160px;
+  bottom:-220px;
+
+  border-radius:50%;
+
+  border:
+    1px solid
+    rgba(255,255,255,.07);
 
 }
 
 .hero-inner{
 
-  max-width:1350px;
+  position:relative;
+
+  z-index:2;
+
+  width:
+    min(1240px,calc(100% - 34px));
 
   margin:auto;
+
+  padding:
+    38px 0 48px;
 
 }
 
 .back{
 
-  display:inline-block;
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  margin-bottom:24px;
 
   color:
-    rgba(255,255,255,.8);
+    rgba(255,255,255,.65);
 
-  text-decoration:none;
+  font-size:12px;
 
-  margin-bottom:20px;
+  font-weight:700;
 
-  font-size:14px;
+  transition:.2s;
+
+}
+
+.back:hover{
+  color:#fff;
+}
+
+.hero-content{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:35px;
 
 }
 
@@ -207,163 +325,500 @@ header{
 
   align-items:center;
 
-  gap:18px;
+  gap:17px;
 
 }
 
 .hero-icon{
 
-  width:75px;
+  width:64px;
+  height:64px;
 
-  height:75px;
+  flex:0 0 64px;
 
-  display:flex;
+  display:grid;
 
-  align-items:center;
+  place-items:center;
 
-  justify-content:center;
+  border-radius:18px;
 
   background:
-    rgba(255,255,255,.1);
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.14),
+      rgba(255,255,255,.05)
+    );
 
   border:
     1px solid
     rgba(255,255,255,.15);
 
-  border-radius:20px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08);
 
-  font-size:42px;
+  font-size:34px;
 
 }
 
 .hero h1{
 
   font-size:
-    clamp(32px,5vw,52px);
+    clamp(31px,5vw,50px);
 
-  margin-bottom:7px;
+  line-height:1.05;
+
+  letter-spacing:-1.8px;
+
+  margin-bottom:8px;
 
 }
 
 .hero p{
 
+  max-width:650px;
+
   color:
-    rgba(255,255,255,.78);
+    rgba(255,255,255,.68);
+
+  font-size:13px;
 
   line-height:1.8;
 
 }
 
 
-/* =====================================================
+/* =========================================================
    MAIN
-===================================================== */
+========================================================= */
 
-main{
+.main{
 
-  max-width:1350px;
+  width:
+    min(1240px,calc(100% - 34px));
 
   margin:auto;
 
-  padding:35px 5% 40px;
+  padding:
+    24px 0 45px;
 
 }
 
 
-/* =====================================================
-   SEARCH PANEL
-===================================================== */
+/* =========================================================
+   SEARCH BAR
+========================================================= */
 
-.search-panel{
+.search-shell{
 
-  background:white;
+  position:relative;
+
+  z-index:20;
+
+  margin-top:-4px;
+
+  margin-bottom:20px;
+
+  background:
+    rgba(255,255,255,.96);
 
   border:
     1px solid
     var(--border);
 
-  border-radius:18px;
+  border-radius:16px;
 
-  padding:20px;
+  padding:10px;
 
-  box-shadow:var(--shadow);
-
-  margin-bottom:25px;
+  box-shadow:
+    0 14px 35px rgba(7,27,58,.09);
 
 }
 
-.search-row{
+.search-main{
 
   display:grid;
 
   grid-template-columns:
-    2fr 1fr 1fr;
+    minmax(0,1fr)
+    150px
+    125px
+    auto;
 
-  gap:10px;
+  gap:8px;
 
 }
 
-.search-row input,
-.search-row select{
+.search-box{
 
-  width:100%;
+  min-width:0;
 
-  padding:13px;
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:
+    0 14px;
+
+  height:46px;
 
   border:
     1px solid
     var(--border);
 
-  border-radius:10px;
+  border-radius:11px;
 
-  outline:none;
+  background:
+    var(--surface-soft);
 
-  background:white;
-
-  color:var(--text);
+  transition:.2s;
 
 }
 
-.search-row input:focus,
-.search-row select:focus{
+.search-box:focus-within{
+
+  border-color:
+    rgba(25,169,116,.55);
+
+  background:#fff;
+
+  box-shadow:
+    0 0 0 3px rgba(25,169,116,.08);
+
+}
+
+.search-icon{
+
+  color:var(--muted);
+
+  font-size:17px;
+
+}
+
+.search-box input{
+
+  width:100%;
+
+  border:0;
+
+  outline:0;
+
+  background:transparent;
+
+  color:var(--text);
+
+  font-size:13px;
+
+}
+
+.search-box input::placeholder{
+  color:#98a2b3;
+}
+
+.search-main select{
+
+  width:100%;
+
+  height:46px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:11px;
+
+  padding:
+    0 11px;
+
+  outline:0;
+
+  background:
+    var(--surface-soft);
+
+  color:var(--text);
+
+  font-size:12px;
+
+}
+
+.search-main select:focus{
+
+  border-color:
+    rgba(25,169,116,.55);
+
+}
+
+.filter-toggle{
+
+  height:46px;
+
+  padding:
+    0 15px;
+
+  border:0;
+
+  border-radius:11px;
+
+  background:
+    var(--navy);
+
+  color:#fff;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  transition:.2s;
+
+}
+
+.filter-toggle:hover{
+  background:var(--navy-2);
+}
+
+.filter-toggle.active{
+
+  background:
+    var(--green);
+
+}
+
+
+/* =========================================================
+   COMPACT CATEGORY BAR
+========================================================= */
+
+.category-strip{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  overflow-x:auto;
+
+  padding:
+    2px 1px 5px;
+
+  scrollbar-width:none;
+
+}
+
+.category-strip::-webkit-scrollbar{
+  display:none;
+}
+
+.category-chip{
+
+  flex:0 0 auto;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  height:34px;
+
+  padding:
+    0 12px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:9px;
+
+  background:#fff;
+
+  color:#526075;
+
+  font-size:11px;
+
+  font-weight:800;
+
+  white-space:nowrap;
+
+  transition:.2s;
+
+}
+
+.category-chip:hover{
+
+  border-color:
+    rgba(7,27,58,.25);
+
+  color:var(--navy);
+
+}
+
+.category-chip.active{
+
+  background:
+    var(--navy);
 
   border-color:
     var(--navy);
 
+  color:#fff;
+
+  box-shadow:
+    0 5px 14px rgba(7,27,58,.12);
+
 }
 
 
-/* =====================================================
-   BUY / SELL
-===================================================== */
+/* =========================================================
+   ADVANCED FILTER
+========================================================= */
 
-.mode-buttons{
+.advanced-filter{
 
-  display:flex;
+  display:none;
+
+  padding-top:11px;
+
+}
+
+.advanced-filter.open{
+  display:block;
+}
+
+.advanced-inner{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr 1fr;
 
   gap:8px;
 
-  margin-top:15px;
+  padding-top:10px;
+
+  border-top:
+    1px solid
+    var(--border);
+
+}
+
+.filter-field{
+
+  min-width:0;
+
+}
+
+.filter-field label{
+
+  display:block;
+
+  margin:
+    0 0 6px 2px;
+
+  color:#7b8798;
+
+  font-size:10px;
+
+  font-weight:800;
+
+}
+
+.filter-field input,
+.filter-field select{
+
+  width:100%;
+
+  height:40px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:9px;
+
+  padding:
+    0 10px;
+
+  outline:0;
+
+  background:
+    var(--surface-soft);
+
+  color:var(--text);
+
+  font-size:11px;
+
+}
+
+
+/* =========================================================
+   MODE SWITCH
+========================================================= */
+
+.mode-row{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin-top:11px;
+
+  padding-top:10px;
+
+  border-top:
+    1px solid
+    var(--border);
+
+}
+
+.mode-label{
+
+  color:#7b8798;
+
+  font-size:10px;
+
+  font-weight:800;
+
+}
+
+.mode-switch{
+
+  display:flex;
+
+  gap:4px;
+
+  padding:3px;
+
+  background:
+    var(--surface-soft);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:9px;
 
 }
 
 .mode{
 
-  flex:1;
+  height:30px;
 
-  border:
-    1px solid
-    var(--border);
+  padding:
+    0 12px;
 
-  background:white;
+  border:0;
 
-  color:var(--text);
+  border-radius:7px;
 
-  padding:12px;
+  background:transparent;
 
-  border-radius:10px;
+  color:#718096;
 
-  cursor:pointer;
+  font-size:10px;
 
   font-weight:800;
 
@@ -371,229 +826,177 @@ main{
 
 .mode.active{
 
-  background:
-    var(--navy);
-
-  color:white;
-
-  border-color:
-    var(--navy);
-
-}
-
-
-/* =====================================================
-   CATEGORY
-===================================================== */
-
-.category-title{
-
-  margin-top:20px;
-
-  margin-bottom:10px;
-
-  font-size:13px;
-
-  font-weight:900;
-
-  color:var(--navy);
-
-}
-
-.categories{
-
-  display:flex;
-
-  gap:8px;
-
-  flex-wrap:wrap;
-
-}
-
-.category{
-
-  border:
-    1px solid
-    var(--border);
-
-  background:white;
-
-  padding:9px 13px;
-
-  border-radius:9px;
-
-  cursor:pointer;
-
-  font-weight:700;
-
-  font-size:13px;
-
-}
-
-.category:hover{
-
-  border-color:
-    var(--navy);
-
-}
-
-.category.active{
+  color:#fff;
 
   background:
-    var(--navy2);
-
-  color:white;
-
-  border-color:
-    var(--navy2);
+    var(--navy);
 
 }
 
 
-/* =====================================================
-   PRICE + CONDITION
-===================================================== */
-
-.filter-row{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr 1fr;
-
-  gap:10px;
-
-  margin-top:15px;
-
-}
-
-.filter-row input,
-.filter-row select{
-
-  width:100%;
-
-  padding:12px;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:9px;
-
-  outline:none;
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LISTING HEADER
-===================================================== */
+========================================================= */
 
 .listing-head{
 
   display:flex;
 
+  align-items:flex-end;
+
   justify-content:space-between;
-
-  align-items:center;
-
-  margin-bottom:18px;
 
   gap:15px;
 
-  flex-wrap:wrap;
+  margin:
+    4px 0 15px;
 
 }
 
-.listing-head h2{
+.listing-title{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:9px;
+
+}
+
+.listing-title h2{
 
   color:var(--navy);
+
+  font-size:19px;
+
+  font-weight:900;
+
+  letter-spacing:-.4px;
+
+}
+
+.live-dot{
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:var(--green);
+
+  box-shadow:
+    0 0 0 4px rgba(25,169,116,.10);
 
 }
 
 .count{
 
+  margin-top:4px;
+
   color:var(--muted);
 
-  font-size:13px;
-
-  margin-top:5px;
+  font-size:11px;
 
 }
 
 .refresh{
 
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  height:34px;
+
+  padding:
+    0 11px;
+
   border:
     1px solid
     var(--border);
 
-  background:white;
+  border-radius:9px;
+
+  background:#fff;
 
   color:var(--navy);
 
-  padding:10px 14px;
-
-  border-radius:9px;
-
-  cursor:pointer;
+  font-size:11px;
 
   font-weight:800;
 
 }
 
+.refresh:hover{
+  border-color:#cbd4e0;
+}
 
-/* =====================================================
-   GRID
-===================================================== */
+
+/* =========================================================
+   LISTING GRID
+========================================================= */
 
 .grid{
 
   display:grid;
 
   grid-template-columns:
-    repeat(3,1fr);
+    repeat(4,minmax(0,1fr));
 
-  gap:22px;
+  gap:16px;
 
 }
 
 .card{
 
-  background:white;
+  min-width:0;
+
+  overflow:hidden;
+
+  background:#fff;
 
   border:
     1px solid
     var(--border);
 
-  border-radius:18px;
+  border-radius:15px;
 
-  overflow:hidden;
+  box-shadow:
+    0 7px 24px rgba(7,27,58,.055);
 
-  box-shadow:var(--shadow);
-
-  transition:.25s;
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
 
 }
 
 .card:hover{
 
   transform:
-    translateY(-5px);
+    translateY(-4px);
 
   box-shadow:
-    0 18px 40px
-    rgba(7,27,58,.14);
+    var(--shadow-hover);
+
+  border-color:
+    rgba(7,27,58,.13);
 
 }
 
 
-/* =====================================================
-   IMAGE
-===================================================== */
+/* =========================================================
+   CARD IMAGE
+========================================================= */
 
-.image{
+.card-image{
 
-  height:220px;
+  position:relative;
+
+  height:210px;
+
+  overflow:hidden;
 
   background:
     linear-gradient(
@@ -602,37 +1005,65 @@ main{
       #24548d
     );
 
-  position:relative;
-
-  overflow:hidden;
-
 }
 
-.image img{
+.card-image img{
 
   width:100%;
-
   height:100%;
-
-  object-fit:cover;
 
   display:block;
 
+  object-fit:cover;
+
+  transition:
+    transform .45s ease;
+
+}
+
+.card:hover .card-image img{
+  transform:scale(1.035);
 }
 
 .no-image{
 
   width:100%;
-
   height:100%;
 
-  display:flex;
+  display:grid;
 
-  align-items:center;
+  place-items:center;
 
-  justify-content:center;
+  color:rgba(255,255,255,.8);
 
-  font-size:65px;
+  font-size:54px;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      #24548d,
+      #071b3a
+    );
+
+}
+
+.image-overlay{
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:75px;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0,0,0,.45)
+    );
+
+  pointer-events:none;
 
 }
 
@@ -640,22 +1071,30 @@ main{
 
   position:absolute;
 
-  top:12px;
+  top:10px;
+  left:10px;
 
-  left:12px;
+  display:inline-flex;
 
-  background:
-    var(--gold);
+  align-items:center;
 
-  color:white;
+  gap:4px;
 
-  padding:6px 9px;
+  padding:
+    5px 8px;
 
   border-radius:7px;
 
-  font-size:11px;
+  background:
+    rgba(217,164,65,.96);
+
+  color:#fff;
+
+  font-size:9px;
 
   font-weight:900;
+
+  letter-spacing:.2px;
 
 }
 
@@ -663,51 +1102,87 @@ main{
 
   position:absolute;
 
-  bottom:10px;
+  right:9px;
+  bottom:9px;
 
-  right:10px;
-
-  background:
-    rgba(0,0,0,.65);
-
-  color:white;
-
-  padding:5px 8px;
+  padding:
+    5px 7px;
 
   border-radius:7px;
 
-  font-size:11px;
+  background:
+    rgba(0,0,0,.58);
+
+  color:#fff;
+
+  font-size:9px;
 
 }
 
 
-/* =====================================================
+/* =========================================================
    CARD BODY
-===================================================== */
+========================================================= */
 
-.body{
+.card-body{
 
-  padding:18px;
+  padding:
+    14px 14px 15px;
+
+}
+
+.card-meta{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:7px;
+
+  margin-bottom:8px;
 
 }
 
 .type{
 
-  display:inline-block;
+  display:inline-flex;
+
+  align-items:center;
+
+  max-width:78%;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+  padding:
+    5px 7px;
+
+  border-radius:6px;
 
   background:#eef4ff;
 
   color:#31558b;
 
-  padding:5px 9px;
-
-  border-radius:6px;
-
-  font-size:11px;
+  font-size:9px;
 
   font-weight:900;
 
-  margin-bottom:9px;
+}
+
+.status-badge{
+
+  flex:0 0 auto;
+
+  color:var(--green);
+
+  font-size:9px;
+
+  font-weight:900;
 
 }
 
@@ -715,13 +1190,23 @@ main{
 
   color:var(--navy);
 
-  font-size:19px;
+  font-size:15px;
 
   font-weight:900;
 
   line-height:1.4;
 
-  margin-bottom:8px;
+  display:-webkit-box;
+
+  -webkit-line-clamp:2;
+
+  -webkit-box-orient:vertical;
+
+  overflow:hidden;
+
+  min-height:42px;
+
+  margin-bottom:6px;
 
 }
 
@@ -729,98 +1214,160 @@ main{
 
   color:var(--navy);
 
-  font-size:20px;
+  font-size:18px;
 
   font-weight:900;
 
-  margin-bottom:8px;
+  line-height:1.25;
+
+  margin-bottom:7px;
 
 }
 
 .location{
 
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:4px;
+
   color:var(--muted);
 
-  font-size:13px;
+  font-size:10px;
 
-  line-height:1.6;
+  line-height:1.55;
 
-  margin-bottom:10px;
-
-}
-
-.description{
-
-  color:#596476;
-
-  font-size:13px;
-
-  line-height:1.65;
-
-  margin-bottom:14px;
+  margin-bottom:7px;
 
 }
 
 .condition{
 
-  color:var(--muted);
+  display:inline-flex;
 
-  font-size:12px;
+  align-items:center;
 
-  margin-bottom:12px;
+  gap:4px;
+
+  margin-bottom:8px;
+
+  color:#667085;
+
+  font-size:9px;
+
+  font-weight:700;
+
+}
+
+.description{
+
+  color:#687386;
+
+  font-size:10px;
+
+  line-height:1.6;
+
+  display:-webkit-box;
+
+  -webkit-line-clamp:2;
+
+  -webkit-box-orient:vertical;
+
+  overflow:hidden;
+
+  min-height:32px;
+
+  margin-bottom:11px;
+
+}
+
+.card-footer{
+
+  display:flex;
+
+  gap:6px;
 
 }
 
 .contact{
 
-  display:block;
+  flex:1;
 
-  width:100%;
+  min-width:0;
 
-  text-align:center;
+  display:flex;
 
-  text-decoration:none;
+  align-items:center;
+
+  justify-content:center;
+
+  height:37px;
+
+  border-radius:8px;
 
   background:var(--navy);
 
-  color:white;
+  color:#fff;
 
-  padding:11px;
+  font-size:10px;
 
-  border-radius:9px;
+  font-weight:900;
 
-  font-size:14px;
-
-  font-weight:800;
+  transition:.2s;
 
 }
 
 .contact:hover{
-
-  background:var(--navy2);
-
+  background:var(--navy-2);
 }
 
+.view-button{
 
-/* =====================================================
-   STATES
-===================================================== */
+  width:37px;
 
-.state{
+  height:37px;
 
-  grid-column:1/-1;
+  display:grid;
 
-  background:white;
+  place-items:center;
 
   border:
     1px solid
     var(--border);
 
-  border-radius:16px;
+  border-radius:8px;
 
-  padding:55px 20px;
+  background:#fff;
+
+  color:var(--navy);
+
+  font-size:13px;
+
+}
+
+
+/* =========================================================
+   EMPTY / ERROR STATE
+========================================================= */
+
+.state{
+
+  grid-column:
+    1 / -1;
+
+  padding:
+    65px 20px;
 
   text-align:center;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:15px;
+
+  background:#fff;
 
   color:var(--muted);
 
@@ -828,9 +1375,9 @@ main{
 
 .state-icon{
 
-  font-size:50px;
+  margin-bottom:11px;
 
-  margin-bottom:10px;
+  font-size:44px;
 
 }
 
@@ -838,30 +1385,39 @@ main{
 
   color:var(--navy);
 
-  margin-bottom:7px;
+  font-size:16px;
+
+  margin-bottom:6px;
+
+}
+
+.state p{
+
+  font-size:11px;
+
+  line-height:1.7;
 
 }
 
 .spinner{
 
-  width:38px;
+  width:34px;
+  height:34px;
 
-  height:38px;
+  margin:
+    0 auto 15px;
 
   border:
-    4px solid
-    #e5eaf2;
+    3px solid
+    #e6ebf2;
 
   border-top-color:
-    var(--navy);
+    var(--green);
 
   border-radius:50%;
 
   animation:
-    spin .8s linear infinite;
-
-  margin:
-    0 auto 15px;
+    spin .75s linear infinite;
 
 }
 
@@ -874,64 +1430,73 @@ main{
 }
 
 
-/* =====================================================
+/* =========================================================
    BOTTOM NAV
-===================================================== */
+========================================================= */
 
 .bottom-nav{
 
   position:fixed;
 
-  bottom:0;
-
   left:0;
-
   right:0;
+  bottom:0;
 
   z-index:2000;
 
-  background:white;
+  height:68px;
+
+  display:flex;
+
+  align-items:stretch;
+
+  justify-content:center;
+
+  background:
+    rgba(255,255,255,.97);
+
+  backdrop-filter:
+    blur(15px);
+
+  -webkit-backdrop-filter:
+    blur(15px);
 
   border-top:
     1px solid
     var(--border);
 
-  display:flex;
-
-  justify-content:center;
-
   box-shadow:
-    0 -5px 20px
-    rgba(0,0,0,.08);
+    0 -8px 25px rgba(7,27,58,.07);
 
 }
 
 .bottom-nav a{
 
-  flex:1;
+  width:110px;
 
-  max-width:180px;
+  display:flex;
 
-  padding:
-    10px 5px 8px;
+  flex-direction:column;
 
-  text-align:center;
+  align-items:center;
 
-  text-decoration:none;
+  justify-content:center;
 
-  color:var(--muted);
+  gap:2px;
 
-  font-size:11px;
+  color:#8a94a6;
+
+  font-size:9px;
+
+  font-weight:700;
 
 }
 
 .bottom-nav a strong{
 
-  display:block;
+  font-size:19px;
 
-  font-size:22px;
-
-  margin-bottom:2px;
+  line-height:1;
 
 }
 
@@ -939,104 +1504,242 @@ main{
 
   color:var(--navy);
 
-  font-weight:900;
+}
+
+.bottom-nav a.active strong{
+
+  filter:
+    drop-shadow(
+      0 3px 6px
+      rgba(7,27,58,.16)
+    );
 
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-@media(max-width:1000px){
+@media(max-width:1100px){
 
   .grid{
-
     grid-template-columns:
-      repeat(2,1fr);
+      repeat(3,minmax(0,1fr));
+  }
 
+  .search-main{
+    grid-template-columns:
+      minmax(0,1fr)
+      145px
+      120px
+      auto;
   }
 
 }
 
-@media(max-width:700px){
+@media(max-width:850px){
 
   .top-nav a{
-
     display:none;
-
   }
 
-  .hero{
-
+  .hero-inner{
     padding:
-      38px 5% 45px;
+      30px 0 38px;
+  }
 
+  .hero-content{
+    display:block;
   }
 
   .hero-title{
-
     align-items:flex-start;
-
   }
 
-  .hero-icon{
-
-    width:60px;
-
-    height:60px;
-
-    font-size:32px;
-
-  }
-
-  .hero h1{
-
-    font-size:31px;
-
-  }
-
-  main{
-
-    padding:
-      25px 4% 35px;
-
-  }
-
-  .search-row{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .filter-row{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .mode-buttons{
-
-    flex-direction:column;
-
+  .advanced-inner{
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
   .grid{
-
-    grid-template-columns:1fr;
-
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
   }
 
-  .image{
+}
 
-    height:230px;
+@media(max-width:650px){
 
+  .header-inner,
+  .hero-inner,
+  .main{
+    width:
+      calc(100% - 24px);
+  }
+
+  .header-inner{
+    height:62px;
   }
 
   .logo{
+    font-size:15px;
+  }
 
+  .hero-inner{
+    padding:
+      25px 0 32px;
+  }
+
+  .hero-icon{
+    width:55px;
+    height:55px;
+    flex-basis:55px;
+    font-size:29px;
+    border-radius:15px;
+  }
+
+  .hero h1{
+    font-size:29px;
+    letter-spacing:-1px;
+  }
+
+  .hero p{
+    font-size:11px;
+  }
+
+  .search-shell{
+    padding:8px;
+    border-radius:14px;
+  }
+
+  .search-main{
+    grid-template-columns:
+      minmax(0,1fr)
+      42px;
+  }
+
+  .search-main .city-select,
+  .search-main .type-select{
+    display:none;
+  }
+
+  .filter-toggle{
+
+    width:42px;
+
+    padding:0;
+
+    font-size:0;
+
+  }
+
+  .filter-toggle::before{
+    content:"⚙";
     font-size:16px;
+  }
 
+  .category-strip{
+    margin-top:8px;
+  }
+
+  .category-chip{
+    height:32px;
+    padding:0 10px;
+    font-size:10px;
+  }
+
+  .advanced-inner{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .mode-row{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .listing-head{
+    align-items:flex-start;
+  }
+
+  .listing-title h2{
+    font-size:17px;
+  }
+
+  .grid{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:10px;
+  }
+
+  .card{
+    border-radius:13px;
+  }
+
+  .card-image{
+    height:170px;
+  }
+
+  .card-body{
+    padding:11px;
+  }
+
+  .title{
+    font-size:13px;
+    min-height:37px;
+  }
+
+  .price{
+    font-size:15px;
+  }
+
+  .description{
+    display:none;
+  }
+
+  .contact{
+    height:34px;
+    font-size:9px;
+  }
+
+  .view-button{
+    width:34px;
+    height:34px;
+  }
+
+}
+
+@media(max-width:400px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .card-image{
+    height:215px;
+  }
+
+  .advanced-inner{
+    grid-template-columns:1fr;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto !important;
+    transition:none !important;
+    animation:none !important;
   }
 
 }
@@ -1048,448 +1751,568 @@ main{
 <body>
 
 
-<header>
+<!-- =======================================================
+     HEADER
+======================================================= -->
 
-<div class="header-inner">
+<header class="header">
 
-<a
- href="./index.html"
- class="logo"
->
-Myanmar <span>Elite Connect</span>
-</a>
+  <div class="header-inner">
+
+    <a
+      href="./index.html"
+      class="logo"
+    >
+      Myanmar <span>Elite Connect</span>
+    </a>
 
 
-<nav class="top-nav">
+    <nav class="top-nav">
 
-<a href="./index.html">
-General
-</a>
+      <a href="./index.html">
+        General
+      </a>
 
-<a href="./car.html">
-🚗 Car
-</a>
+      <a href="./car.html">
+        🚗 Car
+      </a>
 
-<a href="./property.html">
-🏠 Property
-</a>
+      <a href="./property.html">
+        🏠 Property
+      </a>
 
-<a href="./gem.html">
-💎 Gem
-</a>
+      <a href="./gem.html">
+        💎 Gem
+      </a>
 
-<a href="./allmarket.html">
-🛍️ All Market
-</a>
+      <a
+        href="./allmarket.html"
+        class="active"
+      >
+        🛍️ All Market
+      </a>
 
-<a href="./add-listing.html">
-+ Sell
-</a>
+      <a href="./add-listing.html">
+        + Sell
+      </a>
 
-</nav>
+    </nav>
 
-</div>
+  </div>
 
 </header>
 
 
+<!-- =======================================================
+     HERO
+======================================================= -->
+
 <section class="hero">
 
-<div class="hero-inner">
+  <div class="hero-inner">
 
-<a
- href="./index.html"
- class="back"
->
-← General သို့ပြန်သွားမည်
-</a>
-
-
-<div class="hero-title">
-
-<div class="hero-icon">
-🛍️
-</div>
+    <a
+      href="./index.html"
+      class="back"
+    >
+      ← General သို့ပြန်သွားမည်
+    </a>
 
 
-<div>
+    <div class="hero-content">
 
-<h1>
-All Market
-</h1>
+      <div class="hero-title">
 
-<p>
-နေ့စဉ်ဘဝအတွက် လိုအပ်သမျှ ပစ္စည်းများကို
-ရှာဖွေ၊ ဝယ်ယူ၊ ရောင်းချနိုင်သော Marketplace
-</p>
+        <div class="hero-icon">
+          🛍️
+        </div>
 
-</div>
+        <div>
 
-</div>
+          <h1>
+            All Market
+          </h1>
 
-</div>
+          <p>
+            နေ့စဉ်ဘဝအတွက် လိုအပ်သမျှ ပစ္စည်းများကို
+            ရှာဖွေ၊ ဝယ်ယူ၊ ရောင်းချနိုင်သော MEC Marketplace
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<main>
+<!-- =======================================================
+     MAIN
+======================================================= -->
 
+<main class="main">
 
-<section class="search-panel">
 
+  <!-- =====================================================
+       SEARCH + FILTER
+  ====================================================== -->
 
-<div class="search-row">
+  <section class="search-shell">
 
-<input
- id="searchInput"
- type="text"
- placeholder="ပစ္စည်းအမည်၊ Brand၊ Model..."
->
 
+    <div class="search-main">
 
-<select id="cityFilter">
 
-<option value="">
-မြို့အားလုံး
-</option>
+      <div class="search-box">
 
-</select>
+        <span class="search-icon">
+          ⌕
+        </span>
 
+        <input
+          id="searchInput"
+          type="text"
+          autocomplete="off"
+          placeholder="ပစ္စည်း၊ Brand၊ Model၊ စာအုပ်၊ ဖုန်း..."
+        >
 
-<select id="listingTypeFilter">
+      </div>
 
-<option value="">
-ရောင်း/ဝယ် အားလုံး
-</option>
 
-<option value="sale">
-ရောင်းရန်
-</option>
+      <select
+        id="cityFilter"
+        class="city-select"
+      >
+
+        <option value="">
+          မြို့အားလုံး
+        </option>
+
+      </select>
+
+
+      <select
+        id="listingTypeFilter"
+        class="type-select"
+      >
+
+        <option value="">
+          ရောင်း/ဝယ်
+        </option>
+
+        <option value="sale">
+          ရောင်းရန်
+        </option>
+
+        <option value="wanted">
+          ဝယ်လိုသည်
+        </option>
+
+      </select>
+
+
+      <button
+        id="filterToggle"
+        class="filter-toggle"
+        type="button"
+      >
+        ⚙ Filters
+      </button>
+
+    </div>
+
+
+    <!-- CATEGORY -->
+
+    <div
+      id="categoryStrip"
+      class="category-strip"
+    >
+
+      <button
+        class="category-chip active"
+        data-category=""
+        type="button"
+      >
+        🛍️ အားလုံး
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="phone"
+        type="button"
+      >
+        📱 ဖုန်း
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="antique"
+        type="button"
+      >
+        🏺 ရှေးဟောင်း
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="crop"
+        type="button"
+      >
+        🌾 သီးနှံ
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="book"
+        type="button"
+      >
+        📚 စာအုပ်
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="used"
+        type="button"
+      >
+        ♻️ Used
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="fancy"
+        type="button"
+      >
+        ✨ Fancy
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="clothing"
+        type="button"
+      >
+        👕 အဝတ်အထည်
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="furniture"
+        type="button"
+      >
+        🪑 Furniture
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="electronics"
+        type="button"
+      >
+        💻 Electronics
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="home"
+        type="button"
+      >
+        🏠 Home
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="game"
+        type="button"
+      >
+        🎮 Hobby
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="tools"
+        type="button"
+      >
+        🛠️ Tools
+      </button>
+
+      <button
+        class="category-chip"
+        data-category="other"
+        type="button"
+      >
+        📦 Other
+      </button>
+
+    </div>
+
+
+    <!-- ADVANCED FILTER -->
 
-<option value="wanted">
-ဝယ်လိုသည်
-</option>
+    <div
+      id="advancedFilter"
+      class="advanced-filter"
+    >
 
-</select>
+      <div class="advanced-inner">
 
-</div>
 
+        <div class="filter-field">
 
-<div class="mode-buttons">
+          <label>
+            CITY
+          </label>
+
+          <select id="advancedCityFilter">
 
-<button
- id="allMode"
- class="mode active"
- onclick="setMode('all')"
->
-🛍️ All
-</button>
+            <option value="">
+              မြို့အားလုံး
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="filter-field">
+
+          <label>
+            CONDITION
+          </label>
+
+          <select id="conditionFilter">
+
+            <option value="">
+              Condition အားလုံး
+            </option>
 
+            <option value="new">
+              အသစ်
+            </option>
 
-<button
- id="buyerMode"
- class="mode"
- onclick="setMode('buyer')"
->
-🛒 Buyer
-</button>
+            <option value="like_new">
+              အသစ်နီးပါး
+            </option>
 
+            <option value="good">
+              ကောင်း
+            </option>
 
-<button
- id="sellerMode"
- class="mode"
- onclick="setMode('seller')"
->
-🏪 Seller
-</button>
+            <option value="fair">
+              အသုံးပြုပြီး
+            </option>
 
-</div>
+            <option value="poor">
+              ပြုပြင်ရန်လို
+            </option>
 
+          </select>
 
-<div class="category-title">
-Category
-</div>
+        </div>
 
 
-<div class="categories">
+        <div class="filter-field">
 
+          <label>
+            MIN PRICE
+          </label>
 
-<button
- class="category active"
- onclick="setCategory('')"
->
-🛍️ အားလုံး
-</button>
+          <input
+            id="minPrice"
+            type="number"
+            min="0"
+            placeholder="အနည်းဆုံး"
+          >
 
+        </div>
 
-<button
- class="category"
- onclick="setCategory('phone')"
->
-📱 Second-hand Phone
-</button>
 
+        <div class="filter-field">
 
-<button
- class="category"
- onclick="setCategory('antique')"
->
-🏺 ရှေးဟောင်းပစ္စည်း
-</button>
+          <label>
+            MAX PRICE
+          </label>
 
+          <input
+            id="maxPrice"
+            type="number"
+            min="0"
+            placeholder="အများဆုံး"
+          >
 
-<button
- class="category"
- onclick="setCategory('crop')"
->
-🌾 ရာသီပေါ်သီးနှံ
-</button>
+        </div>
 
 
-<button
- class="category"
- onclick="setCategory('book')"
->
-📚 စာအုပ်
-</button>
+      </div>
 
 
-<button
- class="category"
- onclick="setCategory('used')"
->
-♻️ မလိုအပ်တော့သောပစ္စည်း
-</button>
+      <div class="mode-row">
 
+        <span class="mode-label">
+          POST TYPE
+        </span>
 
-<button
- class="category"
- onclick="setCategory('fancy')"
->
-✨ Fancy / Accessories
-</button>
 
+        <div class="mode-switch">
 
-<button
- class="category"
- onclick="setCategory('clothing')"
->
-👕 အဝတ်အထည်
-</button>
+          <button
+            class="mode active"
+            data-mode="all"
+            type="button"
+          >
+            🛍️ All
+          </button>
 
+          <button
+            class="mode"
+            data-mode="buyer"
+            type="button"
+          >
+            🛒 Buyer
+          </button>
 
-<button
- class="category"
- onclick="setCategory('furniture')"
->
-🪑 Furniture
-</button>
+          <button
+            class="mode"
+            data-mode="seller"
+            type="button"
+          >
+            🏪 Seller
+          </button>
 
+        </div>
 
-<button
- class="category"
- onclick="setCategory('electronics')"
->
-💻 Electronics
-</button>
+      </div>
 
+    </div>
 
-<button
- class="category"
- onclick="setCategory('home')"
->
-🏠 Home & Living
-</button>
+  </section>
 
 
-<button
- class="category"
- onclick="setCategory('game')"
->
-🎮 Game / Hobby
-</button>
+  <!-- =====================================================
+       LISTINGS
+  ====================================================== -->
 
+  <section>
 
-<button
- class="category"
- onclick="setCategory('tools')"
->
-🛠️ Tools
-</button>
+    <div class="listing-head">
 
+      <div>
 
-<button
- class="category"
- onclick="setCategory('other')"
->
-📦 Other
-</button>
+        <div class="listing-title">
 
-</div>
+          <span class="live-dot"></span>
 
+          <h2>
+            Marketplace
+          </h2>
 
-<div class="filter-row">
+        </div>
 
-<input
- id="minPrice"
- type="number"
- min="0"
- placeholder="အနည်းဆုံးဈေး"
->
+        <div
+          id="listingCount"
+          class="count"
+        >
+          Listings များကို ရယူနေပါသည်...
+        </div>
 
+      </div>
 
-<input
- id="maxPrice"
- type="number"
- min="0"
- placeholder="အများဆုံးဈေး"
->
 
+      <button
+        id="refreshButton"
+        class="refresh"
+        type="button"
+      >
+        ↻ Refresh
+      </button>
 
-<select id="conditionFilter">
+    </div>
 
-<option value="">
-Condition အားလုံး
-</option>
 
-<option value="new">
-အသစ်
-</option>
+    <div
+      id="listingsGrid"
+      class="grid"
+    >
 
-<option value="like_new">
-အသစ်နီးပါး
-</option>
+      <div class="state">
 
-<option value="good">
-ကောင်း
-</option>
+        <div class="spinner"></div>
 
-<option value="fair">
-အသုံးပြုပြီး
-</option>
+        Marketplace listings များကို
+        ရယူနေပါသည်...
 
-<option value="poor">
-ပြုပြင်ရန်လို
-</option>
+      </div>
 
-</select>
+    </div>
 
-</div>
+  </section>
 
-</section>
-
-
-<section>
-
-<div class="listing-head">
-
-<div>
-
-<h2>
-🛍️ Marketplace Listings
-</h2>
-
-<div
- id="listingCount"
- class="count"
->
-Listings များကို ရယူနေပါသည်...
-</div>
-
-</div>
-
-
-<button
- class="refresh"
- onclick="loadListings()"
->
-↻ Refresh
-</button>
-
-</div>
-
-
-<div
- id="listingsGrid"
- class="grid"
->
-
-<div class="state">
-
-<div class="spinner"></div>
-
-Marketplace listings များကို
-ရယူနေပါသည်...
-
-</div>
-
-</div>
-
-</section>
 
 </main>
 
 
+<!-- =======================================================
+     BOTTOM NAV
+======================================================= -->
+
 <nav class="bottom-nav">
 
-<a
- href="./index.html"
->
-<strong>📋</strong>
-General
-</a>
+  <a
+    href="./index.html"
+  >
+    <strong>📋</strong>
+    General
+  </a>
 
 
-<a
- href="./chat.html"
->
-<strong>💬</strong>
-Chat
-</a>
+  <a
+    href="./chat.html"
+  >
+    <strong>💬</strong>
+    Chat
+  </a>
 
 
-<a
- href="./add-listing.html"
->
-<strong>➕</strong>
-Post
-</a>
+  <a
+    href="./add-listing.html"
+  >
+    <strong>➕</strong>
+    Post
+  </a>
 
 
-<a
- href="./profile.html"
->
-<strong>👤</strong>
-Profile
-</a>
+  <a
+    href="./profile.html"
+  >
+    <strong>👤</strong>
+    Profile
+  </a>
 
 </nav>
 
 
 <script>
 
-
-/* =====================================================
+/* =========================================================
    SUPABASE
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
+  "https://ikjwisfsdcupibgjiuvp.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
+  "sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-/* =====================================================
+/* =========================================================
    STATE
-===================================================== */
+========================================================= */
 
 let allListings = [];
 
@@ -1498,9 +2321,69 @@ let currentMode = "all";
 let currentCategory = "";
 
 
-/* =====================================================
+/* =========================================================
+   DOM
+========================================================= */
+
+const searchInput =
+  document.getElementById(
+    "searchInput"
+  );
+
+const cityFilter =
+  document.getElementById(
+    "cityFilter"
+  );
+
+const advancedCityFilter =
+  document.getElementById(
+    "advancedCityFilter"
+  );
+
+const listingTypeFilter =
+  document.getElementById(
+    "listingTypeFilter"
+  );
+
+const conditionFilter =
+  document.getElementById(
+    "conditionFilter"
+  );
+
+const minPrice =
+  document.getElementById(
+    "minPrice"
+  );
+
+const maxPrice =
+  document.getElementById(
+    "maxPrice"
+  );
+
+const listingsGrid =
+  document.getElementById(
+    "listingsGrid"
+  );
+
+const listingCount =
+  document.getElementById(
+    "listingCount"
+  );
+
+const advancedFilter =
+  document.getElementById(
+    "advancedFilter"
+  );
+
+const filterToggle =
+  document.getElementById(
+    "filterToggle"
+  );
+
+
+/* =========================================================
    HELPERS
-===================================================== */
+========================================================= */
 
 function escapeHtml(value){
 
@@ -1543,10 +2426,8 @@ function formatPrice(
 
   }
 
-
   const number =
     Number(price);
-
 
   if(
     !Number.isFinite(number)
@@ -1556,37 +2437,29 @@ function formatPrice(
 
   }
 
-
   return (
-
     number.toLocaleString("en-US")
-
     +
     " "
-
     +
     (
       currency ||
       "MMK"
     )
-
   );
 
 }
 
 
-/* =====================================================
-   IMAGE PARSER
-===================================================== */
+/* =========================================================
+   IMAGES
+========================================================= */
 
 function getImages(item){
 
   if(!item.images){
-
     return [];
-
   }
-
 
   if(Array.isArray(item.images)){
 
@@ -1594,7 +2467,6 @@ function getImages(item){
       .filter(Boolean);
 
   }
-
 
   if(
     typeof item.images === "string"
@@ -1604,7 +2476,6 @@ function getImages(item){
 
       const parsed =
         JSON.parse(item.images);
-
 
       if(
         Array.isArray(parsed)
@@ -1619,11 +2490,13 @@ function getImages(item){
     catch(error){
 
       if(
-        item.images.startsWith("http")
+        item.images
+          .trim()
+          .startsWith("http")
       ){
 
         return [
-          item.images
+          item.images.trim()
         ];
 
       }
@@ -1632,48 +2505,34 @@ function getImages(item){
 
   }
 
-
   return [];
 
 }
 
 
-/* =====================================================
+/* =========================================================
    LOCATION
-===================================================== */
+========================================================= */
 
 function getLocation(item){
 
   const parts = [];
 
-
   if(item.city){
-
     parts.push(item.city);
-
   }
-
 
   if(item.township){
-
     parts.push(item.township);
-
   }
-
 
   if(item.location){
-
     parts.push(item.location);
-
   }
-
 
   if(item.address){
-
     parts.push(item.address);
-
   }
-
 
   return [
     ...new Set(parts)
@@ -1684,24 +2543,120 @@ function getLocation(item){
 }
 
 
-/* =====================================================
-   CATEGORY DETECTOR
-===================================================== */
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+const categoryLabels = {
+
+  phone:
+    "📱 Second-hand Phone",
+
+  antique:
+    "🏺 ရှေးဟောင်းပစ္စည်း",
+
+  crop:
+    "🌾 ရာသီပေါ်သီးနှံ",
+
+  book:
+    "📚 စာအုပ်",
+
+  used:
+    "♻️ မလိုအပ်တော့သောပစ္စည်း",
+
+  fancy:
+    "✨ Fancy / Accessories",
+
+  clothing:
+    "👕 အဝတ်အထည်",
+
+  furniture:
+    "🪑 Furniture",
+
+  electronics:
+    "💻 Electronics",
+
+  home:
+    "🏠 Home & Living",
+
+  game:
+    "🎮 Game / Hobby",
+
+  tools:
+    "🛠️ Tools",
+
+  other:
+    "📦 Other"
+
+};
+
+
+function normalizeCategory(value){
+
+  const text =
+    String(value || "")
+      .toLowerCase()
+      .trim();
+
+  const aliases = {
+
+    "secondhand":
+      "phone",
+
+    "second_hand_phone":
+      "phone",
+
+    "second-hand-phone":
+      "phone",
+
+    "smartphone":
+      "phone",
+
+    "mobile":
+      "phone",
+
+    "accessories":
+      "fancy",
+
+    "accessory":
+      "fancy",
+
+    "fashion":
+      "clothing",
+
+    "garment":
+      "clothing",
+
+    "household":
+      "home",
+
+    "home_living":
+      "home"
+
+  };
+
+  return aliases[text] || text;
+
+}
+
 
 function detectCategory(item){
 
-  const explicit =
-    String(
-      item.subcategory ||
-      item.market_category ||
-      item.item_category ||
-      ""
-    )
-    .toLowerCase()
-    .trim();
+  const explicit = normalizeCategory(
 
+    item.subcategory
+    ||
+    item.market_category
+    ||
+    item.item_category
+    ||
+    item.product_category
 
-  if(explicit){
+  );
+
+  if(
+    categoryLabels[explicit]
+  ){
 
     return explicit;
 
@@ -1715,16 +2670,37 @@ function detectCategory(item){
     " "
     +
     (item.description || "")
+    +
+    " "
+    +
+    (item.brand || "")
+    +
+    " "
+    +
+    (item.model || "")
 
   )
   .toLowerCase();
 
 
   if(
-    text.includes("iphone") ||
-    text.includes("samsung") ||
-    text.includes("phone") ||
+
+    text.includes("iphone")
+    ||
+    text.includes("samsung")
+    ||
+    text.includes("xiaomi")
+    ||
+    text.includes("oppo")
+    ||
+    text.includes("vivo")
+    ||
+    text.includes("phone")
+    ||
+    text.includes("mobile")
+    ||
     text.includes("ဖုန်း")
+
   ){
 
     return "phone";
@@ -1733,8 +2709,13 @@ function detectCategory(item){
 
 
   if(
-    text.includes("antique") ||
+
+    text.includes("antique")
+    ||
+    text.includes("vintage")
+    ||
     text.includes("ရှေးဟောင်း")
+
   ){
 
     return "antique";
@@ -1743,11 +2724,19 @@ function detectCategory(item){
 
 
   if(
-    text.includes("crop") ||
-    text.includes("သီးနှံ") ||
-    text.includes("စပါး") ||
-    text.includes("ပြောင်း") ||
-    text.includes("အသီး")
+
+    text.includes("crop")
+    ||
+    text.includes("သီးနှံ")
+    ||
+    text.includes("စပါး")
+    ||
+    text.includes("ပြောင်း")
+    ||
+    text.includes("ပဲ")
+    ||
+    text.includes("နှမ်း")
+
   ){
 
     return "crop";
@@ -1756,8 +2745,13 @@ function detectCategory(item){
 
 
   if(
-    text.includes("book") ||
+
+    text.includes("book")
+    ||
     text.includes("စာအုပ်")
+    ||
+    text.includes("novel")
+
   ){
 
     return "book";
@@ -1766,9 +2760,15 @@ function detectCategory(item){
 
 
   if(
-    text.includes("used") ||
-    text.includes("မလိုတော့") ||
+
+    text.includes("used item")
+    ||
+    text.includes("used")
+    ||
+    text.includes("မလိုတော့")
+    ||
     text.includes("အသုံးပြုပြီး")
+
   ){
 
     return "used";
@@ -1777,9 +2777,15 @@ function detectCategory(item){
 
 
   if(
-    text.includes("fancy") ||
-    text.includes("accessory") ||
+
+    text.includes("fancy")
+    ||
+    text.includes("accessory")
+    ||
+    text.includes("jewelry")
+    ||
     text.includes("အလှဆင်")
+
   ){
 
     return "fancy";
@@ -1788,10 +2794,19 @@ function detectCategory(item){
 
 
   if(
-    text.includes("clothing") ||
-    text.includes("shirt") ||
-    text.includes("dress") ||
+
+    text.includes("clothing")
+    ||
+    text.includes("shirt")
+    ||
+    text.includes("dress")
+    ||
+    text.includes("pants")
+    ||
     text.includes("အဝတ်")
+    ||
+    text.includes("အင်္ကျီ")
+
   ){
 
     return "clothing";
@@ -1800,9 +2815,19 @@ function detectCategory(item){
 
 
   if(
-    text.includes("furniture") ||
-    text.includes("စားပွဲ") ||
+
+    text.includes("furniture")
+    ||
+    text.includes("table")
+    ||
+    text.includes("chair")
+    ||
+    text.includes("sofa")
+    ||
+    text.includes("စားပွဲ")
+    ||
     text.includes("ကုလားထိုင်")
+
   ){
 
     return "furniture";
@@ -1811,10 +2836,17 @@ function detectCategory(item){
 
 
   if(
-    text.includes("laptop") ||
-    text.includes("computer") ||
-    text.includes("electronics") ||
+
+    text.includes("laptop")
+    ||
+    text.includes("computer")
+    ||
+    text.includes("tablet")
+    ||
+    text.includes("electronics")
+    ||
     text.includes("electronic")
+
   ){
 
     return "electronics";
@@ -1823,9 +2855,15 @@ function detectCategory(item){
 
 
   if(
-    text.includes("home") ||
-    text.includes("kitchen") ||
+
+    text.includes("home")
+    ||
+    text.includes("kitchen")
+    ||
     text.includes("အိမ်သုံး")
+    ||
+    text.includes("မီးဖို")
+
   ){
 
     return "home";
@@ -1834,9 +2872,15 @@ function detectCategory(item){
 
 
   if(
-    text.includes("game") ||
-    text.includes("gaming") ||
+
+    text.includes("game")
+    ||
+    text.includes("gaming")
+    ||
+    text.includes("console")
+    ||
     text.includes("ကစား")
+
   ){
 
     return "game";
@@ -1845,9 +2889,13 @@ function detectCategory(item){
 
 
   if(
-    text.includes("tool") ||
-    text.includes("tools") ||
+
+    text.includes("tool")
+    ||
+    text.includes("tools")
+    ||
     text.includes("ကိရိယာ")
+
   ){
 
     return "tools";
@@ -1860,68 +2908,43 @@ function detectCategory(item){
 }
 
 
-/* =====================================================
-   CATEGORY LABEL
-===================================================== */
-
-function categoryLabel(category){
-
-  const labels = {
-
-    phone:
-      "📱 Second-hand Phone",
-
-    antique:
-      "🏺 ရှေးဟောင်းပစ္စည်း",
-
-    crop:
-      "🌾 ရာသီပေါ်သီးနှံ",
-
-    book:
-      "📚 စာအုပ်",
-
-    used:
-      "♻️ မလိုအပ်တော့သောပစ္စည်း",
-
-    fancy:
-      "✨ Fancy / Accessories",
-
-    clothing:
-      "👕 အဝတ်အထည်",
-
-    furniture:
-      "🪑 Furniture",
-
-    electronics:
-      "💻 Electronics",
-
-    home:
-      "🏠 Home & Living",
-
-    game:
-      "🎮 Game / Hobby",
-
-    tools:
-      "🛠️ Tools",
-
-    other:
-      "📦 Other"
-
-  };
-
-
-  return labels[category]
-    ||
-    "📦 Other";
-
-}
-
-
-/* =====================================================
-   BUYER / SELLER
-===================================================== */
+/* =========================================================
+   MODE
+========================================================= */
 
 function detectMode(item){
+
+  const explicit =
+    String(
+      item.post_type
+      ||
+      item.listing_mode
+      ||
+      ""
+    )
+    .toLowerCase()
+    .trim();
+
+  if(
+    explicit === "buyer"
+    ||
+    explicit === "wanted"
+  ){
+
+    return "buyer";
+
+  }
+
+  if(
+    explicit === "seller"
+    ||
+    explicit === "sale"
+  ){
+
+    return "seller";
+
+  }
+
 
   const text = (
 
@@ -1941,6 +2964,8 @@ function detectMode(item){
     ||
     text.includes("ဝယ်မည်")
     ||
+    text.includes("လိုချင်")
+    ||
     text.includes("looking for")
     ||
     text.includes("wanted")
@@ -1959,9 +2984,9 @@ function detectMode(item){
 }
 
 
-/* =====================================================
+/* =========================================================
    CONDITION
-===================================================== */
+========================================================= */
 
 function getCondition(item){
 
@@ -1980,7 +3005,7 @@ function getCondition(item){
 }
 
 
-function conditionLabel(condition){
+function conditionLabel(value){
 
   const labels = {
 
@@ -2001,47 +3026,39 @@ function conditionLabel(condition){
 
   };
 
-
-  return labels[condition]
+  return labels[value]
     ||
     "Condition မဖော်ပြပါ";
 
 }
 
 
-/* =====================================================
+/* =========================================================
    CARD
-===================================================== */
+========================================================= */
 
 function createCard(item){
 
   const images =
     getImages(item);
 
-
   const firstImage =
     images[0] || "";
 
+  const category =
+    detectCategory(item);
+
+  const mode =
+    detectMode(item);
+
+  const condition =
+    getCondition(item);
 
   const title =
     escapeHtml(
       item.title ||
       "Marketplace Item"
     );
-
-
-  const description =
-    escapeHtml(
-      item.description ||
-      ""
-    );
-
-
-  const location =
-    escapeHtml(
-      getLocation(item)
-    );
-
 
   const price =
     escapeHtml(
@@ -2051,16 +3068,25 @@ function createCard(item){
       )
     );
 
+  const location =
+    escapeHtml(
+      getLocation(item)
+    );
 
-  const category =
-    detectCategory(item);
+  const description =
+    escapeHtml(
+      item.description ||
+      ""
+    );
 
 
-  const condition =
-    getCondition(item);
+  let imageHTML = `
 
+    <div class="no-image">
+      🛍️
+    </div>
 
-  let imageHTML;
+  `;
 
 
   if(firstImage){
@@ -2073,7 +3099,9 @@ function createCard(item){
         loading="lazy"
         onerror="
           this.style.display='none';
-          this.nextElementSibling.style.display='flex';
+          this.parentElement
+            .querySelector('.no-image')
+            .style.display='grid';
         "
       >
 
@@ -2087,22 +3115,14 @@ function createCard(item){
     `;
 
   }
-  else{
-
-    imageHTML = `
-
-      <div class="no-image">
-        🛍️
-      </div>
-
-    `;
-
-  }
 
 
   const featured =
+
     item.featured
+
     ?
+
     `
 
       <div class="featured">
@@ -2110,13 +3130,18 @@ function createCard(item){
       </div>
 
     `
+
     :
+
     "";
 
 
   const imageCount =
+
     images.length > 1
+
     ?
+
     `
 
       <div class="image-count">
@@ -2124,46 +3149,58 @@ function createCard(item){
       </div>
 
     `
+
     :
+
     "";
 
 
-  const mode =
-    detectMode(item);
-
-
-  const modeText =
+  const statusText =
     mode === "buyer"
     ?
-    "🛒 Buyer"
+    "Buyer"
     :
-    "🏪 Seller";
+    "Seller";
 
 
   const contact =
+
     item.phone
+
     ?
+
     `
 
       <a
         class="contact"
         href="tel:${encodeURIComponent(item.phone)}"
       >
-        📞 Contact
+        📞 ဆက်သွယ်ရန်
       </a>
 
     `
+
     :
-    "";
+
+    `
+
+      <span class="contact">
+        👁️ ကြည့်ရှုရန်
+      </span>
+
+    `;
 
 
   return `
 
     <article class="card">
 
-      <div class="image">
+
+      <div class="card-image">
 
         ${imageHTML}
+
+        <div class="image-overlay"></div>
 
         ${featured}
 
@@ -2172,13 +3209,26 @@ function createCard(item){
       </div>
 
 
-      <div class="body">
+      <div class="card-body">
 
-        <span class="type">
 
-          ${categoryLabel(category)}
+        <div class="card-meta">
 
-        </span>
+          <span class="type">
+            ${escapeHtml(
+              categoryLabels[category]
+              ||
+              categoryLabels.other
+            )}
+          </span>
+
+          <span class="status-badge">
+            ${mode === "buyer"
+              ? "🛒 Buyer"
+              : "🏪 Seller"}
+          </span>
+
+        </div>
 
 
         <div class="title">
@@ -2192,28 +3242,37 @@ function createCard(item){
 
 
         <div class="location">
-          📍 ${location}
+          <span>📍</span>
+          <span>${location}</span>
         </div>
 
 
         ${
           condition
+
           ?
+
           `
 
             <div class="condition">
-              🏷️ ${conditionLabel(condition)}
+              🏷️ ${escapeHtml(
+                conditionLabel(condition)
+              )}
             </div>
 
           `
+
           :
+
           ""
         }
 
 
         ${
           description
+
           ?
+
           `
 
             <div class="description">
@@ -2221,25 +3280,28 @@ function createCard(item){
             </div>
 
           `
+
           :
+
           ""
         }
 
 
-        ${
-          mode === "buyer"
-          ?
-          `
-            <div class="condition">
-              🛒 ဝယ်လိုသူတင်ထားသော Post
-            </div>
-          `
-          :
-          ""
-        }
+        <div class="card-footer">
 
+          ${contact}
 
-        ${contact}
+          <button
+            type="button"
+            class="view-button"
+            title="View"
+            onclick="showItemInfo()"
+          >
+            ↗
+          </button>
+
+        </div>
+
 
       </div>
 
@@ -2250,25 +3312,13 @@ function createCard(item){
 }
 
 
-/* =====================================================
+/* =========================================================
    LOAD LISTINGS
-===================================================== */
+========================================================= */
 
 async function loadListings(){
 
-  const grid =
-    document.getElementById(
-      "listingsGrid"
-    );
-
-
-  const count =
-    document.getElementById(
-      "listingCount"
-    );
-
-
-  grid.innerHTML = `
+  listingsGrid.innerHTML = `
 
     <div class="state">
 
@@ -2282,15 +3332,16 @@ async function loadListings(){
   `;
 
 
+  listingCount.textContent =
+    "Listings များကို ရယူနေပါသည်...";
+
+
   try{
 
     const {
-
       data,
       error
-
     } =
-
       await supabaseClient
 
         .from("listings")
@@ -2316,9 +3367,7 @@ async function loadListings(){
 
 
     if(error){
-
       throw error;
-
     }
 
 
@@ -2334,21 +3383,20 @@ async function loadListings(){
 
     renderListings();
 
-
   }
   catch(error){
 
     console.error(
-      "Marketplace error:",
+      "All Market error:",
       error
     );
 
 
-    count.textContent =
+    listingCount.textContent =
       "Database error";
 
 
-    grid.innerHTML = `
+    listingsGrid.innerHTML = `
 
       <div class="state">
 
@@ -2376,39 +3424,42 @@ async function loadListings(){
 }
 
 
-/* =====================================================
+/* =========================================================
    CITY OPTIONS
-===================================================== */
+========================================================= */
 
 function createCityOptions(){
 
-  const select =
-    document.getElementById(
-      "cityFilter"
-    );
-
-
   const cities =
-
     allListings
 
       .map(
         item =>
-        item.city
+          item.city
       )
 
-      .filter(Boolean);
+      .filter(Boolean)
+
+      .map(
+        city =>
+          String(city)
+      );
 
 
-  const unique =
-
+  const uniqueCities =
     [
       ...new Set(cities)
     ]
-    .sort();
+    .sort(
+      (a,b) =>
+        a.localeCompare(
+          b,
+          "my"
+        )
+    );
 
 
-  select.innerHTML = `
+  const html = `
 
     <option value="">
       မြို့အားလုံး
@@ -2417,25 +3468,45 @@ function createCityOptions(){
   `;
 
 
-  unique.forEach(
+  cityFilter.innerHTML =
+    html;
+
+  advancedCityFilter.innerHTML =
+    html;
+
+
+  uniqueCities.forEach(
     city => {
 
-      const option =
+      const option1 =
         document.createElement(
           "option"
         );
 
-
-      option.value =
+      option1.value =
         city;
 
-
-      option.textContent =
+      option1.textContent =
         city;
 
+      cityFilter.appendChild(
+        option1
+      );
 
-      select.appendChild(
-        option
+
+      const option2 =
+        document.createElement(
+          "option"
+        );
+
+      option2.value =
+        city;
+
+      option2.textContent =
+        city;
+
+      advancedCityFilter.appendChild(
+        option2
       );
 
     }
@@ -2444,82 +3515,42 @@ function createCityOptions(){
 }
 
 
-/* =====================================================
+/* =========================================================
    RENDER
-===================================================== */
+========================================================= */
 
 function renderListings(){
 
-  const grid =
-    document.getElementById(
-      "listingsGrid"
-    );
-
-
-  const count =
-    document.getElementById(
-      "listingCount"
-    );
-
-
   const keyword =
-
-    document
-      .getElementById(
-        "searchInput"
-      )
-      .value
+    searchInput.value
       .trim()
       .toLowerCase();
 
 
   const city =
-
-    document
-      .getElementById(
-        "cityFilter"
-      )
-      .value;
+    cityFilter.value
+    ||
+    advancedCityFilter.value;
 
 
   const listingType =
-
-    document
-      .getElementById(
-        "listingTypeFilter"
-      )
-      .value;
+    listingTypeFilter.value;
 
 
-  const minPrice =
-
+  const min =
     Number(
-      document
-        .getElementById(
-          "minPrice"
-        )
-        .value
+      minPrice.value
     );
 
 
-  const maxPrice =
-
+  const max =
     Number(
-      document
-        .getElementById(
-          "maxPrice"
-        )
-        .value
+      maxPrice.value
     );
 
 
   const condition =
-
-    document
-      .getElementById(
-        "conditionFilter"
-      )
-      .value;
+    conditionFilter.value;
 
 
   let filtered =
@@ -2537,27 +3568,19 @@ function renderListings(){
           const searchable = [
 
             item.title,
-
             item.description,
-
             item.city,
-
             item.township,
-
             item.address,
-
             item.location,
-
             item.brand,
-
-            item.model
+            item.model,
+            item.subcategory,
+            item.market_category
 
           ]
-
           .filter(Boolean)
-
           .join(" ")
-
           .toLowerCase();
 
 
@@ -2577,7 +3600,9 @@ function renderListings(){
     filtered =
       filtered.filter(
         item =>
-        item.city === city
+          String(
+            item.city || ""
+          ) === city
       );
 
   }
@@ -2591,16 +3616,18 @@ function renderListings(){
       filtered.filter(
         item => {
 
+          const mode =
+            detectMode(item);
+
+
           if(
             listingType === "sale"
           ){
 
             return (
-              item.listing_type ===
-              "sale"
+              item.listing_type === "sale"
               ||
-              detectMode(item) ===
-              "seller"
+              mode === "seller"
             );
 
           }
@@ -2611,11 +3638,9 @@ function renderListings(){
           ){
 
             return (
-              item.listing_type ===
-              "wanted"
+              item.listing_type === "wanted"
               ||
-              detectMode(item) ===
-              "buyer"
+              mode === "buyer"
             );
 
           }
@@ -2636,27 +3661,26 @@ function renderListings(){
     filtered =
       filtered.filter(
         item =>
-        detectCategory(item)
-        ===
-        currentCategory
+          detectCategory(item)
+          ===
+          currentCategory
       );
 
   }
 
 
-  /* BUYER / SELLER */
+  /* MODE */
 
   if(
-    currentMode !==
-    "all"
+    currentMode !== "all"
   ){
 
     filtered =
       filtered.filter(
         item =>
-        detectMode(item)
-        ===
-        currentMode
+          detectMode(item)
+          ===
+          currentMode
       );
 
   }
@@ -2669,18 +3693,18 @@ function renderListings(){
     filtered =
       filtered.filter(
         item =>
-        getCondition(item)
-        ===
-        condition
+          getCondition(item)
+          ===
+          condition
       );
 
   }
 
 
-  /* PRICE */
+  /* MIN PRICE */
 
   if(
-    minPrice > 0
+    min > 0
   ){
 
     filtered =
@@ -2690,14 +3714,16 @@ function renderListings(){
             item.price || 0
           )
           >=
-          minPrice
+          min
       );
 
   }
 
 
+  /* MAX PRICE */
+
   if(
-    maxPrice > 0
+    max > 0
   ){
 
     filtered =
@@ -2707,21 +3733,19 @@ function renderListings(){
             item.price || 0
           )
           <=
-          maxPrice
+          max
       );
 
   }
 
 
-  count.textContent =
+  listingCount.textContent =
     `${filtered.length} marketplace listings ရှိပါသည်`;
 
 
-  if(
-    !filtered.length
-  ){
+  if(!filtered.length){
 
-    grid.innerHTML = `
+    listingsGrid.innerHTML = `
 
       <div class="state">
 
@@ -2734,7 +3758,7 @@ function renderListings(){
         </h3>
 
         <p>
-          Search / Filter ကို
+          Search သို့မဟုတ် Filter ကို
           ပြောင်းပြီး ထပ်စမ်းကြည့်ပါ။
         </p>
 
@@ -2747,192 +3771,221 @@ function renderListings(){
   }
 
 
-  grid.innerHTML =
-
+  listingsGrid.innerHTML =
     filtered
-
-      .map(
-        createCard
-      )
-
+      .map(createCard)
       .join("");
 
 }
 
 
-/* =====================================================
-   MODE
-===================================================== */
+/* =========================================================
+   CATEGORY BUTTONS
+========================================================= */
 
-function setMode(mode){
+document
+  .querySelectorAll(
+    ".category-chip"
+  )
+  .forEach(
+    button => {
 
-  currentMode =
-    mode;
+      button.addEventListener(
+        "click",
+        () => {
+
+          currentCategory =
+            button.dataset.category
+            ||
+            "";
 
 
-  document
-    .querySelectorAll(
-      ".mode"
-    )
-    .forEach(
-      button =>
-        button.classList.remove(
-          "active"
-        )
-    );
+          document
+            .querySelectorAll(
+              ".category-chip"
+            )
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "active"
+                )
+            );
 
 
-  if(
-    mode === "all"
-  ){
+          button.classList.add(
+            "active"
+          );
 
-    document
-      .getElementById(
-        "allMode"
-      )
-      .classList.add(
-        "active"
+
+          renderListings();
+
+        }
       );
 
-  }
+    }
+  );
 
 
-  else if(
-    mode === "buyer"
-  ){
+/* =========================================================
+   MODE BUTTONS
+========================================================= */
 
-    document
-      .getElementById(
-        "buyerMode"
-      )
-      .classList.add(
-        "active"
+document
+  .querySelectorAll(
+    ".mode"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          currentMode =
+            button.dataset.mode;
+
+
+          document
+            .querySelectorAll(
+              ".mode"
+            )
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "active"
+                )
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          renderListings();
+
+        }
       );
 
-  }
+    }
+  );
 
 
-  else{
+/* =========================================================
+   FILTER TOGGLE
+========================================================= */
 
-    document
-      .getElementById(
-        "sellerMode"
-      )
-      .classList.add(
-        "active"
-      );
+filterToggle.addEventListener(
+  "click",
+  () => {
 
-  }
-
-
-  renderListings();
-
-}
+    const open =
+      advancedFilter
+        .classList
+        .toggle("open");
 
 
-/* =====================================================
-   CATEGORY
-===================================================== */
-
-function setCategory(
-  category
-){
-
-  currentCategory =
-    category;
-
-
-  document
-    .querySelectorAll(
-      ".category"
-    )
-    .forEach(
-      button =>
-        button.classList.remove(
-          "active"
-        )
+    filterToggle.classList.toggle(
+      "active",
+      open
     );
 
-
-  event
-    .currentTarget
-    .classList.add(
-      "active"
-    );
+  }
+);
 
 
-  renderListings();
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LIVE FILTERS
-===================================================== */
+========================================================= */
+
+searchInput.addEventListener(
+  "input",
+  renderListings
+);
+
+
+cityFilter.addEventListener(
+  "change",
+  () => {
+
+    advancedCityFilter.value =
+      cityFilter.value;
+
+    renderListings();
+
+  }
+);
+
+
+advancedCityFilter.addEventListener(
+  "change",
+  () => {
+
+    cityFilter.value =
+      advancedCityFilter.value;
+
+    renderListings();
+
+  }
+);
+
+
+listingTypeFilter.addEventListener(
+  "change",
+  renderListings
+);
+
+
+conditionFilter.addEventListener(
+  "change",
+  renderListings
+);
+
+
+minPrice.addEventListener(
+  "input",
+  renderListings
+);
+
+
+maxPrice.addEventListener(
+  "input",
+  renderListings
+);
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
 
 document
   .getElementById(
-    "searchInput"
+    "refreshButton"
   )
   .addEventListener(
-    "input",
-    renderListings
+    "click",
+    loadListings
   );
 
 
-document
-  .getElementById(
-    "cityFilter"
-  )
-  .addEventListener(
-    "change",
-    renderListings
-  );
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+function showItemInfo(){
+
+  /*
+    Future:
+    ဒီနေရာက Listing Detail Page
+    သို့ ချိတ်နိုင်ပါတယ်။
+  */
+
+}
 
 
-document
-  .getElementById(
-    "listingTypeFilter"
-  )
-  .addEventListener(
-    "change",
-    renderListings
-  );
-
-
-document
-  .getElementById(
-    "minPrice"
-  )
-  .addEventListener(
-    "input",
-    renderListings
-  );
-
-
-document
-  .getElementById(
-    "maxPrice"
-  )
-  .addEventListener(
-    "input",
-    renderListings
-  );
-
-
-document
-  .getElementById(
-    "conditionFilter"
-  )
-  .addEventListener(
-    "change",
-    renderListings
-  );
-
-
-/* =====================================================
+/* =========================================================
    START
-===================================================== */
+========================================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
