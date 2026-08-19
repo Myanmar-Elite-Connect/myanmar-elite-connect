@@ -1,130 +1,835 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <title>Login • Myanmar Elite Connect</title>
 
-  <title>Login — Myanmar Elite Connect</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <link rel="stylesheet" href="./style.css">
+    :root {
+      --bg: #f7f9fc;
+      --card: rgba(255,255,255,.82);
+      --solid: #fff;
+      --text: #10233f;
+      --muted: #718097;
+      --border: rgba(16,35,63,.10);
+      --gold: #d8b45c;
+      --gold-light: #f4d98a;
+      --navy: #071a34;
+      --danger: #d9534f;
+      --success: #228b5a;
+      --shadow: 0 30px 80px rgba(13,35,64,.12);
+    }
 
+    body.dark {
+      --bg: #071321;
+      --card: rgba(14,30,50,.86);
+      --solid: #0e1e32;
+      --text: #f3f6fa;
+      --muted: #91a0b4;
+      --border: rgba(255,255,255,.10);
+      --navy: #f4f6f9;
+      --shadow: 0 30px 80px rgba(0,0,0,.38);
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        Inter,
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      color: var(--text);
+      background: var(--bg);
+
+      transition:
+        background .3s ease,
+        color .3s ease;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* ================================
+       BACKGROUND
+    ================================= */
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 90px 20px 35px;
+
+      overflow: hidden;
+    }
+
+    .glow {
+      position: fixed;
+
+      width: 520px;
+      height: 520px;
+
+      border-radius: 50%;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(216,180,92,.15),
+          transparent 70%
+        );
+    }
+
+    .glow.one {
+      top: -260px;
+      left: -230px;
+    }
+
+    .glow.two {
+      right: -280px;
+      bottom: -280px;
+    }
+
+    /* ================================
+       TOP BAR
+    ================================= */
+
+    .topbar {
+      position: fixed;
+
+      top: 22px;
+      left: 22px;
+      right: 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      z-index: 20;
+    }
+
+    .back-button {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      color: var(--text);
+      background: var(--card);
+
+      border: 1px solid var(--border);
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+
+      box-shadow: 0 8px 25px rgba(0,0,0,.04);
+
+      transition: .25s ease;
+    }
+
+    .back-button:hover {
+      transform: translateX(-3px);
+      border-color: rgba(216,180,92,.5);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .language {
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 4px;
+
+      border-radius: 999px;
+
+      background: var(--card);
+      border: 1px solid var(--border);
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .language button {
+      height: 30px;
+      min-width: 43px;
+
+      border: 0;
+      border-radius: 999px;
+
+      background: transparent;
+      color: var(--muted);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    .language button.active {
+      background: var(--gold);
+      color: #071a34;
+    }
+
+    .theme {
+      width: 40px;
+      height: 40px;
+
+      border: 1px solid var(--border);
+      border-radius: 50%;
+
+      background: var(--card);
+      color: var(--text);
+
+      cursor: pointer;
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+
+      transition: .25s ease;
+    }
+
+    .theme:hover {
+      transform: rotate(12deg);
+    }
+
+    /* ================================
+       AUTH CARD
+    ================================= */
+
+    .auth-card {
+      position: relative;
+      z-index: 2;
+
+      width: min(440px, 100%);
+
+      padding: 38px;
+
+      border-radius: 30px;
+
+      background: var(--card);
+      border: 1px solid var(--border);
+
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+
+      box-shadow: var(--shadow);
+
+      animation: cardIn .55s ease both;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* ================================
+       BRAND
+    ================================= */
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      text-align: center;
+
+      margin-bottom: 27px;
+    }
+
+    .logo {
+      width: 76px;
+      height: 76px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 22px;
+
+      background: var(--solid);
+      border: 1px solid var(--border);
+
+      overflow: hidden;
+
+      margin-bottom: 17px;
+    }
+
+    .logo img {
+      width: 82%;
+      height: 82%;
+
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 19px;
+      font-weight: 850;
+      letter-spacing: -.4px;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    /* ================================
+       HEADING
+    ================================= */
+
+    .heading {
+      text-align: center;
+      margin-bottom: 23px;
+    }
+
+    .heading h1 {
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: -.6px;
+      margin-bottom: 7px;
+    }
+
+    .heading p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ================================
+       MODE SWITCH
+    ================================= */
+
+    .mode-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      padding: 4px;
+
+      margin-bottom: 23px;
+
+      border-radius: 14px;
+
+      background: rgba(127,127,127,.08);
+      border: 1px solid var(--border);
+    }
+
+    .mode-switch button {
+      height: 42px;
+
+      border: 0;
+      border-radius: 10px;
+
+      color: var(--muted);
+      background: transparent;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition: .25s ease;
+    }
+
+    .mode-switch button.active {
+      color: var(--text);
+      background: var(--solid);
+
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    }
+
+    /* ================================
+       FORM
+    ================================= */
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: var(--text);
+
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input {
+      width: 100%;
+      height: 51px;
+
+      padding: 0 15px;
+
+      color: var(--text);
+      background: var(--solid);
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      outline: none;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .input:focus {
+      border-color: rgba(216,180,92,.75);
+
+      box-shadow:
+        0 0 0 4px rgba(216,180,92,.10);
+    }
+
+    .input::placeholder {
+      color: var(--muted);
+    }
+
+    .password-input {
+      padding-right: 52px;
+    }
+
+    .show-password {
+      position: absolute;
+
+      top: 50%;
+      right: 9px;
+
+      width: 38px;
+      height: 38px;
+
+      transform: translateY(-50%);
+
+      border: 0;
+      border-radius: 10px;
+
+      background: transparent;
+      color: var(--muted);
+
+      cursor: pointer;
+    }
+
+    .show-password:hover {
+      background: rgba(127,127,127,.08);
+    }
+
+    /* ================================
+       OPTIONS
+    ================================= */
+
+    .options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 2px 0 20px;
+
+      font-size: 11px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      color: var(--muted);
+    }
+
+    .remember input {
+      accent-color: var(--gold);
+    }
+
+    .forgot {
+      color: var(--gold);
+      font-weight: 750;
+    }
+
+    /* ================================
+       MAIN BUTTON
+    ================================= */
+
+    .submit {
+      width: 100%;
+      height: 52px;
+
+      border: 0;
+      border-radius: 14px;
+
+      color: #071a34;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
+      font-size: 14px;
+      font-weight: 850;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 13px 30px rgba(16,35,63,.13);
+
+      transition: .25s ease;
+    }
+
+    .submit:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 18px 38px rgba(16,35,63,.18);
+    }
+
+    .submit:active {
+      transform: translateY(0);
+    }
+
+    .submit.loading {
+      opacity: .65;
+      pointer-events: none;
+    }
+
+    /* ================================
+       MESSAGE
+    ================================= */
+
+    .message {
+      display: none;
+
+      margin-top: 15px;
+      padding: 12px 13px;
+
+      border-radius: 11px;
+
+      font-size: 12px;
+      line-height: 1.5;
+
+      text-align: center;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      color: var(--danger);
+      background: rgba(217,83,79,.08);
+      border: 1px solid rgba(217,83,79,.15);
+    }
+
+    .message.success {
+      color: var(--success);
+      background: rgba(34,139,90,.08);
+      border: 1px solid rgba(34,139,90,.15);
+    }
+
+    /* ================================
+       TERMS
+    ================================= */
+
+    .terms {
+      color: var(--muted);
+
+      text-align: center;
+
+      font-size: 10px;
+      line-height: 1.7;
+
+      margin-top: 19px;
+    }
+
+    .terms a {
+      color: var(--gold);
+    }
+
+    /* ================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 520px) {
+
+      .page {
+        padding: 80px 15px 20px;
+      }
+
+      .topbar {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+      }
+
+      .auth-card {
+        padding: 29px 21px 25px;
+        border-radius: 25px;
+      }
+
+      .logo {
+        width: 68px;
+        height: 68px;
+      }
+
+      .heading h1 {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 360px) {
+
+      .auth-card {
+        padding-left: 17px;
+        padding-right: 17px;
+      }
+
+      .topbar {
+        left: 11px;
+        right: 11px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <div class="auth-page">
+  <div class="page">
 
-    <div class="auth-card">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+
+    <!-- TOP CONTROLS -->
+
+    <header class="topbar">
 
       <a
         href="./index.html"
-        class="auth-logo"
-      >
-        ME
+        class="back-button"
+        aria-label="Back">
+        ←
       </a>
 
+      <div class="controls">
 
-      <div class="auth-heading">
+        <div class="language">
 
-        <span id="authEyebrow">
-          WELCOME BACK
-        </span>
+          <button
+            id="mmButton"
+            type="button"
+            onclick="setLanguage('mm')">
+            မြန်မာ
+          </button>
 
-        <h1 id="authTitle">
-          Sign in
+          <button
+            id="enButton"
+            type="button"
+            onclick="setLanguage('en')">
+            EN
+          </button>
+
+        </div>
+
+        <button
+          class="theme"
+          id="themeButton"
+          type="button"
+          onclick="toggleTheme()">
+          ☾
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- AUTH -->
+
+    <main class="auth-card">
+
+
+      <!-- BRAND -->
+
+      <div class="brand">
+
+        <div class="logo">
+
+          <img
+            src="https://lh3.googleusercontent.com/d/1BbTVppfuWJWIl6QQs909l1HuDW3shLW_"
+            alt="Myanmar Elite Connect">
+
+        </div>
+
+        <div class="brand-name">
+          Myanmar <span>Elite</span> Connect
+        </div>
+
+      </div>
+
+
+      <!-- HEADING -->
+
+      <div class="heading">
+
+        <h1 id="headingTitle">
+          Welcome back
         </h1>
 
-        <p id="authDescription">
-          Sign in to continue to Myanmar Elite Connect.
+        <p id="headingText">
+          Sign in to continue to your account.
         </p>
 
       </div>
 
 
-      <!-- ERROR -->
+      <!-- LOGIN / SIGNUP SWITCH -->
 
-      <div
-        id="authError"
-        class="auth-message error"
-        style="display:none;"
-      ></div>
+      <div class="mode-switch">
+
+        <button
+          id="loginMode"
+          type="button"
+          onclick="setMode('login')">
+          Log In
+        </button>
+
+        <button
+          id="signupMode"
+          type="button"
+          onclick="setMode('signup')">
+          Sign Up
+        </button>
+
+      </div>
 
 
-      <!-- SUCCESS -->
+      <!-- FORM -->
 
-      <div
-        id="authSuccess"
-        class="auth-message success"
-        style="display:none;"
-      ></div>
-
-
-      <!-- AUTH FORM -->
-
-      <form id="authForm">
+      <form
+        id="authForm"
+        onsubmit="handleAuth(event)">
 
 
         <!-- NAME -->
 
         <div
-          class="form-group"
-          id="nameGroup"
-          style="display:none;"
-        >
+          class="field"
+          id="nameField"
+          style="display:none;">
 
-          <label for="name">
+          <label id="nameLabel">
             Full Name
           </label>
 
           <input
-            id="name"
+            id="nameInput"
+            class="input"
             type="text"
-            placeholder="Your full name"
             autocomplete="name"
-          >
+            placeholder="Enter your full name">
 
         </div>
 
 
         <!-- EMAIL -->
 
-        <div class="form-group">
+        <div class="field">
 
-          <label for="email">
+          <label id="emailLabel">
             Email
           </label>
 
           <input
-            id="email"
+            id="emailInput"
+            class="input"
             type="email"
-            placeholder="you@example.com"
             autocomplete="email"
-            required
-          >
+            placeholder="Enter your email"
+            required>
 
         </div>
 
 
         <!-- PASSWORD -->
 
-        <div class="form-group">
+        <div class="field">
 
-          <label for="password">
+          <label id="passwordLabel">
             Password
           </label>
 
-          <input
-            id="password"
-            type="password"
-            placeholder="••••••••"
-            autocomplete="current-password"
-            required
-          >
+          <div class="input-wrap">
+
+            <input
+              id="passwordInput"
+              class="input password-input"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              minlength="6"
+              required>
+
+            <button
+              class="show-password"
+              id="showPassword"
+              type="button"
+              onclick="togglePassword()">
+              ◉
+            </button>
+
+          </div>
 
         </div>
 
@@ -132,615 +837,674 @@
         <!-- CONFIRM PASSWORD -->
 
         <div
-          class="form-group"
-          id="confirmGroup"
-          style="display:none;"
-        >
+          class="field"
+          id="confirmField"
+          style="display:none;">
 
-          <label for="confirmPassword">
+          <label id="confirmLabel">
             Confirm Password
           </label>
 
           <input
-            id="confirmPassword"
+            id="confirmInput"
+            class="input"
             type="password"
-            placeholder="••••••••"
             autocomplete="new-password"
-          >
+            placeholder="Re-enter your password"
+            minlength="6">
 
         </div>
 
 
+        <!-- LOGIN OPTIONS -->
+
+        <div
+          class="options"
+          id="loginOptions">
+
+          <label class="remember">
+
+            <input
+              type="checkbox"
+              id="remember">
+
+            <span id="rememberText">
+              Remember me
+            </span>
+
+          </label>
+
+          <a
+            href="#"
+            class="forgot"
+            onclick="forgotPassword(event)"
+            id="forgotText">
+            Forgot password?
+          </a>
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
         <button
-          type="submit"
-          class="auth-submit"
-          id="authSubmit"
-        >
-          Sign In
+          class="submit"
+          id="submitButton"
+          type="submit">
+          Log In
         </button>
 
       </form>
 
 
-      <!-- SWITCH -->
+      <!-- MESSAGE -->
 
-      <div class="auth-switch">
-
-        <span id="switchText">
-          Don't have an account?
-        </span>
-
-        <button
-          type="button"
-          id="switchMode"
-        >
-          Create account
-        </button>
-
+      <div
+        class="message"
+        id="message">
       </div>
 
 
-      <a
-        href="./index.html"
-        class="back-home"
-      >
-        ← Back to website
-      </a>
+      <!-- TERMS -->
 
-    </div>
+      <div
+        class="terms"
+        id="termsText">
+
+        By continuing, you agree to our
+        <a href="#">Terms</a>
+        and
+        <a href="#">Privacy Policy</a>.
+
+      </div>
+
+    </main>
 
   </div>
 
 
-  <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .auth-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 25px;
-      background:
-        radial-gradient(circle at top right, rgba(30,111,255,.18), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(20,180,120,.10), transparent 35%),
-        #061630;
-    }
-
-    .auth-card {
-      width: 100%;
-      max-width: 460px;
-      padding: 38px;
-      border-radius: 28px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.11);
-      box-shadow: 0 30px 90px rgba(0,0,0,.35);
-      backdrop-filter: blur(20px);
-      color: white;
-    }
-
-    .auth-logo {
-      width: 64px;
-      height: 64px;
-      border-radius: 19px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      color: #061630;
-      font-size: 20px;
-      font-weight: 900;
-      background: linear-gradient(135deg,#d9b65b,#fff0a8);
-    }
-
-    .auth-heading span {
-      color: #d9b65b;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-    }
-
-    .auth-heading h1 {
-      margin: 8px 0;
-      font-size: 38px;
-    }
-
-    .auth-heading p {
-      margin: 0 0 28px;
-      color: #96a5bb;
-      line-height: 1.6;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: #cbd5e4;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 14px 15px;
-      border-radius: 13px;
-      outline: none;
-      color: white;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-
-    .form-group input:focus {
-      border-color: #d9b65b;
-      box-shadow: 0 0 0 3px rgba(217,182,91,.10);
-    }
-
-    .auth-submit {
-      width: 100%;
-      margin-top: 8px;
-      padding: 15px;
-      border: 0;
-      border-radius: 14px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 900;
-      color: #061630;
-      background: linear-gradient(135deg,#d9b65b,#fff0a8);
-    }
-
-    .auth-switch {
-      margin-top: 23px;
-      text-align: center;
-      color: #8797af;
-      font-size: 14px;
-    }
-
-    .auth-switch button {
-      border: 0;
-      background: transparent;
-      color: #d9b65b;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .back-home {
-      display: block;
-      margin-top: 24px;
-      text-align: center;
-      color: #7f91aa;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    .auth-message {
-      padding: 12px 14px;
-      margin-bottom: 18px;
-      border-radius: 12px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .auth-message.error {
-      color: #ffd6d6;
-      background: rgba(220,50,50,.13);
-      border: 1px solid rgba(220,50,50,.25);
-    }
-
-    .auth-message.success {
-      color: #d4ffe7;
-      background: rgba(20,180,120,.12);
-      border: 1px solid rgba(20,180,120,.25);
-    }
-
-    @media(max-width:520px) {
-
-      .auth-page {
-        padding: 15px;
-      }
-
-      .auth-card {
-        padding: 25px 20px;
-        border-radius: 22px;
-      }
-
-      .auth-heading h1 {
-        font-size: 32px;
-      }
-
-    }
-
-  </style>
-
-
-  <script src="./supabase.js"></script>
-
-
   <script>
 
-    let mode = "login";
+    /* =========================================================
+       STATE
+    ========================================================= */
+
+    let currentMode = 'login';
+
+    const translations = {
+
+      en: {
+
+        loginTitle: 'Welcome back',
+        loginText:
+          'Sign in to continue to your account.',
+
+        signupTitle: 'Create your account',
+        signupText:
+          'Join Myanmar Elite Connect and get started.',
+
+        name: 'Full Name',
+        namePlaceholder:
+          'Enter your full name',
+
+        email: 'Email',
+        emailPlaceholder:
+          'Enter your email',
+
+        password: 'Password',
+        passwordPlaceholder:
+          'Enter your password',
+
+        confirm: 'Confirm Password',
+        confirmPlaceholder:
+          'Re-enter your password',
+
+        login: 'Log In',
+        signup: 'Sign Up',
+
+        remember: 'Remember me',
+        forgot: 'Forgot password?',
+
+        terms:
+          'By continuing, you agree to our',
+
+        errorEmail:
+          'Please enter a valid email address.',
+
+        errorPassword:
+          'Password must be at least 6 characters.',
+
+        errorConfirm:
+          'Passwords do not match.',
+
+        successLogin:
+          'Login information is ready. Connect Supabase authentication to complete sign in.',
+
+        successSignup:
+          'Account information is ready. Connect Supabase authentication to complete sign up.',
+
+        forgotMessage:
+          'Password reset will be available after Supabase authentication is connected.'
+
+      },
+
+      mm: {
+
+        loginTitle:
+          'ပြန်လည်ဝင်ရောက်မည်',
+
+        loginText:
+          'သင့်အကောင့်သို့ ဆက်လက်ဝင်ရောက်ပါ။',
+
+        signupTitle:
+          'အကောင့်အသစ်ဖွင့်မည်',
+
+        signupText:
+          'Myanmar Elite Connect တွင် စတင်အသုံးပြုလိုက်ပါ။',
+
+        name:
+          'အမည်အပြည့်အစုံ',
+
+        namePlaceholder:
+          'အမည်အပြည့်အစုံ ရိုက်ထည့်ပါ',
+
+        email:
+          'အီးမေးလ်',
+
+        emailPlaceholder:
+          'အီးမေးလ် ရိုက်ထည့်ပါ',
+
+        password:
+          'စကားဝှက်',
+
+        passwordPlaceholder:
+          'စကားဝှက် ရိုက်ထည့်ပါ',
+
+        confirm:
+          'စကားဝှက်အတည်ပြုရန်',
+
+        confirmPlaceholder:
+          'စကားဝှက်ကို ပြန်ရိုက်ထည့်ပါ',
+
+        login:
+          'ဝင်ရောက်မည်',
+
+        signup:
+          'အကောင့်ဖွင့်မည်',
+
+        remember:
+          'မှတ်ထားမည်',
+
+        forgot:
+          'စကားဝှက်မေ့နေပါသလား?',
+
+        terms:
+          'ဆက်လက်လုပ်ဆောင်ခြင်းဖြင့် ကျွန်ုပ်တို့၏',
+
+        errorEmail:
+          'မှန်ကန်သော အီးမေးလ်တစ်ခု ထည့်ပေးပါ။',
+
+        errorPassword:
+          'စကားဝှက်သည် အနည်းဆုံး ၆ လုံး ရှိရပါမည်။',
+
+        errorConfirm:
+          'စကားဝှက်နှစ်ခု မတူညီပါ။',
+
+        successLogin:
+          'Login အချက်အလက် အဆင်သင့်ဖြစ်ပါပြီ။ Supabase Authentication ချိတ်ဆက်ပြီးပါက အမှန်တကယ် ဝင်ရောက်နိုင်ပါမည်။',
+
+        successSignup:
+          'အကောင့်အချက်အလက် အဆင်သင့်ဖြစ်ပါပြီ။ Supabase Authentication ချိတ်ဆက်ပြီးပါက အကောင့်ဖွင့်နိုင်ပါမည်။',
+
+        forgotMessage:
+          'Supabase Authentication ချိတ်ဆက်ပြီးပါက Password Reset ကို အသုံးပြုနိုင်ပါမည်။'
+
+      }
+
+    };
 
 
-    const authForm =
-      document.getElementById("authForm");
+    /* =========================================================
+       LANGUAGE
+    ========================================================= */
 
-    const authTitle =
-      document.getElementById("authTitle");
+    function setLanguage(language) {
 
-    const authEyebrow =
-      document.getElementById("authEyebrow");
+      localStorage.setItem(
+        'mec_language',
+        language
+      );
 
-    const authDescription =
-      document.getElementById("authDescription");
+      const t =
+        translations[language];
 
-    const authSubmit =
-      document.getElementById("authSubmit");
+      document.documentElement.lang =
+        language === 'mm'
+          ? 'my'
+          : 'en';
 
-    const switchMode =
-      document.getElementById("switchMode");
+      document.getElementById(
+        'headingTitle'
+      ).textContent =
+        currentMode === 'login'
+          ? t.loginTitle
+          : t.signupTitle;
 
-    const switchText =
-      document.getElementById("switchText");
+      document.getElementById(
+        'headingText'
+      ).textContent =
+        currentMode === 'login'
+          ? t.loginText
+          : t.signupText;
 
-    const nameGroup =
-      document.getElementById("nameGroup");
+      document.getElementById(
+        'nameLabel'
+      ).textContent =
+        t.name;
 
-    const confirmGroup =
-      document.getElementById("confirmGroup");
+      document.getElementById(
+        'nameInput'
+      ).placeholder =
+        t.namePlaceholder;
 
-    const nameInput =
-      document.getElementById("name");
+      document.getElementById(
+        'emailLabel'
+      ).textContent =
+        t.email;
 
-    const confirmInput =
-      document.getElementById("confirmPassword");
+      document.getElementById(
+        'emailInput'
+      ).placeholder =
+        t.emailPlaceholder;
 
-    const errorBox =
-      document.getElementById("authError");
+      document.getElementById(
+        'passwordLabel'
+      ).textContent =
+        t.password;
 
-    const successBox =
-      document.getElementById("authSuccess");
+      document.getElementById(
+        'passwordInput'
+      ).placeholder =
+        t.passwordPlaceholder;
+
+      document.getElementById(
+        'confirmLabel'
+      ).textContent =
+        t.confirm;
+
+      document.getElementById(
+        'confirmInput'
+      ).placeholder =
+        t.confirmPlaceholder;
+
+      document.getElementById(
+        'submitButton'
+      ).textContent =
+        currentMode === 'login'
+          ? t.login
+          : t.signup;
+
+      document.getElementById(
+        'rememberText'
+      ).textContent =
+        t.remember;
+
+      document.getElementById(
+        'forgotText'
+      ).textContent =
+        t.forgot;
+
+      document.getElementById(
+        'mmButton'
+      ).classList.toggle(
+        'active',
+        language === 'mm'
+      );
+
+      document.getElementById(
+        'enButton'
+      ).classList.toggle(
+        'active',
+        language === 'en'
+      );
+    }
 
 
-    /* -----------------------------------
-       URL MODE
-    ----------------------------------- */
+    /* =========================================================
+       MODE
+    ========================================================= */
 
-    const params =
+    function setMode(mode) {
+
+      currentMode = mode;
+
+      const isSignup =
+        mode === 'signup';
+
+      document.getElementById(
+        'nameField'
+      ).style.display =
+        isSignup
+          ? 'block'
+          : 'none';
+
+      document.getElementById(
+        'confirmField'
+      ).style.display =
+        isSignup
+          ? 'block'
+          : 'none';
+
+      document.getElementById(
+        'loginOptions'
+      ).style.display =
+        isSignup
+          ? 'none'
+          : 'flex';
+
+      document.getElementById(
+        'loginMode'
+      ).classList.toggle(
+        'active',
+        !isSignup
+      );
+
+      document.getElementById(
+        'signupMode'
+      ).classList.toggle(
+        'active',
+        isSignup
+      );
+
+      const language =
+        localStorage.getItem(
+          'mec_language'
+        ) || 'en';
+
+      setLanguage(language);
+
+      clearMessage();
+
+      document.getElementById(
+        'passwordInput'
+      ).value = '';
+
+      document.getElementById(
+        'confirmInput'
+      ).value = '';
+    }
+
+
+    /* =========================================================
+       PASSWORD
+    ========================================================= */
+
+    function togglePassword() {
+
+      const input =
+        document.getElementById(
+          'passwordInput'
+        );
+
+      const button =
+        document.getElementById(
+          'showPassword'
+        );
+
+      if (input.type === 'password') {
+
+        input.type = 'text';
+
+        button.textContent = '○';
+
+      } else {
+
+        input.type = 'password';
+
+        button.textContent = '◉';
+      }
+    }
+
+
+    /* =========================================================
+       AUTH FORM
+    ========================================================= */
+
+    function handleAuth(event) {
+
+      event.preventDefault();
+
+      clearMessage();
+
+      const language =
+        localStorage.getItem(
+          'mec_language'
+        ) || 'en';
+
+      const t =
+        translations[language];
+
+      const email =
+        document.getElementById(
+          'emailInput'
+        ).value.trim();
+
+      const password =
+        document.getElementById(
+          'passwordInput'
+        ).value;
+
+      const name =
+        document.getElementById(
+          'nameInput'
+        ).value.trim();
+
+      const confirm =
+        document.getElementById(
+          'confirmInput'
+        ).value;
+
+      /* EMAIL */
+
+      if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          .test(email)
+      ) {
+
+        showMessage(
+          t.errorEmail,
+          'error'
+        );
+
+        return;
+      }
+
+
+      /* PASSWORD */
+
+      if (password.length < 6) {
+
+        showMessage(
+          t.errorPassword,
+          'error'
+        );
+
+        return;
+      }
+
+
+      /* SIGN UP */
+
+      if (currentMode === 'signup') {
+
+        if (!name) {
+
+          showMessage(
+            language === 'mm'
+              ? 'အမည်ထည့်ပေးပါ။'
+              : 'Please enter your full name.',
+            'error'
+          );
+
+          return;
+        }
+
+        if (password !== confirm) {
+
+          showMessage(
+            t.errorConfirm,
+            'error'
+          );
+
+          return;
+        }
+
+        showMessage(
+          t.successSignup,
+          'success'
+        );
+
+        return;
+      }
+
+
+      /* LOGIN */
+
+      showMessage(
+        t.successLogin,
+        'success'
+      );
+    }
+
+
+    /* =========================================================
+       FORGOT PASSWORD
+    ========================================================= */
+
+    function forgotPassword(event) {
+
+      event.preventDefault();
+
+      const language =
+        localStorage.getItem(
+          'mec_language'
+        ) || 'en';
+
+      showMessage(
+        translations[language]
+          .forgotMessage,
+        'success'
+      );
+    }
+
+
+    /* =========================================================
+       MESSAGE
+    ========================================================= */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      const box =
+        document.getElementById(
+          'message'
+        );
+
+      box.textContent = text;
+
+      box.className =
+        'message show ' + type;
+    }
+
+
+    function clearMessage() {
+
+      const box =
+        document.getElementById(
+          'message'
+        );
+
+      box.textContent = '';
+
+      box.className =
+        'message';
+    }
+
+
+    /* =========================================================
+       THEME
+    ========================================================= */
+
+    function applyTheme(theme) {
+
+      document.body.classList.toggle(
+        'dark',
+        theme === 'dark'
+      );
+
+      document.getElementById(
+        'themeButton'
+      ).textContent =
+        theme === 'dark'
+          ? '☀'
+          : '☾';
+
+      localStorage.setItem(
+        'mec_theme',
+        theme
+      );
+    }
+
+
+    function toggleTheme() {
+
+      const dark =
+        document.body.classList.contains(
+          'dark'
+        );
+
+      applyTheme(
+        dark
+          ? 'light'
+          : 'dark'
+      );
+    }
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    const urlParams =
       new URLSearchParams(
         window.location.search
       );
 
-    if(params.get("mode") === "signup"){
-      mode = "signup";
-    }
+    const requestedMode =
+      urlParams.get('mode');
+
+    const savedLanguage =
+      localStorage.getItem(
+        'mec_language'
+      ) || 'en';
+
+    const savedTheme =
+      localStorage.getItem(
+        'mec_theme'
+      ) || 'light';
 
 
-    function updateMode(){
+    applyTheme(savedTheme);
 
-      const signup =
-        mode === "signup";
-
-
-      authTitle.textContent =
-        signup
-          ? "Create account"
-          : "Sign in";
-
-
-      authEyebrow.textContent =
-        signup
-          ? "JOIN THE MARKETPLACE"
-          : "WELCOME BACK";
-
-
-      authDescription.textContent =
-        signup
-          ? "Create your account to access the marketplace."
-          : "Sign in to continue to Myanmar Elite Connect.";
-
-
-      authSubmit.textContent =
-        signup
-          ? "Create Account"
-          : "Sign In";
-
-
-      switchText.textContent =
-        signup
-          ? "Already have an account?"
-          : "Don't have an account?";
-
-
-      switchMode.textContent =
-        signup
-          ? "Sign in"
-          : "Create account";
-
-
-      nameGroup.style.display =
-        signup ? "block" : "none";
-
-
-      confirmGroup.style.display =
-        signup ? "block" : "none";
-
-
-      nameInput.required =
-        signup;
-
-
-      confirmInput.required =
-        signup;
-
-    }
-
-
-    updateMode();
-
-
-    switchMode.addEventListener(
-      "click",
-      () => {
-
-        mode =
-          mode === "login"
-            ? "signup"
-            : "login";
-
-        hideMessages();
-
-        updateMode();
-
-      }
+    setMode(
+      requestedMode === 'signup'
+        ? 'signup'
+        : 'login'
     );
 
-
-    function showError(message){
-
-      errorBox.textContent =
-        message;
-
-      errorBox.style.display =
-        "block";
-
-      successBox.style.display =
-        "none";
-
-    }
-
-
-    function showSuccess(message){
-
-      successBox.textContent =
-        message;
-
-      successBox.style.display =
-        "block";
-
-      errorBox.style.display =
-        "none";
-
-    }
-
-
-    function hideMessages(){
-
-      errorBox.style.display =
-        "none";
-
-      successBox.style.display =
-        "none";
-
-    }
-
-
-    /* -----------------------------------
-       SUPABASE CLIENT
-    ----------------------------------- */
-
-    function getSupabaseClient(){
-
-      if(window.supabaseClient){
-        return window.supabaseClient;
-      }
-
-      if(window.supabase){
-        return window.supabase;
-      }
-
-      return null;
-
-    }
-
-
-    /* -----------------------------------
-       SUBMIT
-    ----------------------------------- */
-
-    authForm.addEventListener(
-      "submit",
-      async (event) => {
-
-        event.preventDefault();
-
-        hideMessages();
-
-
-        const email =
-          document
-            .getElementById("email")
-            .value
-            .trim();
-
-
-        const password =
-          document
-            .getElementById("password")
-            .value;
-
-
-        const client =
-          getSupabaseClient();
-
-
-        if(!client){
-
-          showError(
-            "Supabase connection is not available. Please check supabase.js."
-          );
-
-          return;
-
-        }
-
-
-        authSubmit.disabled =
-          true;
-
-
-        authSubmit.textContent =
-          mode === "login"
-            ? "Signing in..."
-            : "Creating account...";
-
-
-        try{
-
-
-          /* LOGIN */
-
-          if(mode === "login"){
-
-            const result =
-              await client.auth.signInWithPassword({
-                email,
-                password
-              });
-
-
-            if(result.error){
-
-              throw result.error;
-
-            }
-
-
-            window.location.href =
-              "./general.html";
-
-            return;
-
-          }
-
-
-          /* SIGN UP */
-
-          const fullName =
-            nameInput.value.trim();
-
-
-          if(password.length < 6){
-
-            throw new Error(
-              "Password must contain at least 6 characters."
-            );
-
-          }
-
-
-          if(
-            password !==
-            confirmInput.value
-          ){
-
-            throw new Error(
-              "Passwords do not match."
-            );
-
-          }
-
-
-          const result =
-            await client.auth.signUp({
-
-              email,
-
-              password,
-
-              options: {
-                data: {
-                  full_name: fullName
-                }
-              }
-
-            });
-
-
-          if(result.error){
-
-            throw result.error;
-
-          }
-
-
-          /*
-             If email confirmation is disabled,
-             session exists and user can go directly
-             to General.
-
-             If confirmation is enabled,
-             show the confirmation message.
-          */
-
-          if(result.data.session){
-
-            window.location.href =
-              "./general.html";
-
-          } else {
-
-            showSuccess(
-              "Account created successfully. Please check your email to verify your account."
-            );
-
-          }
-
-
-        }catch(error){
-
-          console.error(error);
-
-          showError(
-            error.message ||
-            "Authentication failed."
-          );
-
-
-        }finally{
-
-          authSubmit.disabled =
-            false;
-
-          authSubmit.textContent =
-            mode === "login"
-              ? "Sign In"
-              : "Create Account";
-
-        }
-
-      }
-    );
+    setLanguage(savedLanguage);
 
   </script>
 
