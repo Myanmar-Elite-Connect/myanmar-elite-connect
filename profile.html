@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Profile • Myanmar Elite Connect</title>
+  <title>Gems • Myanmar Elite Connect</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./supabase.js"></script>
@@ -18,23 +18,23 @@
 
     :root{
       --bg:#f5f7fb;
-      --surface:#ffffff;
-      --surface-2:#f8f9fc;
+      --surface:#fff;
+      --surface2:#f8f9fc;
       --text:#10233f;
       --muted:#748198;
       --border:rgba(16,35,63,.10);
       --gold:#d8b45c;
       --gold-light:#f4d98a;
       --navy:#071a34;
-      --danger:#c94b4b;
-      --success:#27875a;
+      --green:#27875a;
+      --red:#c94b4b;
       --shadow:0 20px 55px rgba(13,35,64,.08);
     }
 
     body.dark{
       --bg:#071321;
       --surface:#0e1e32;
-      --surface-2:#10243c;
+      --surface2:#10243c;
       --text:#f3f6fa;
       --muted:#94a3b8;
       --border:rgba(255,255,255,.09);
@@ -56,34 +56,20 @@
 
       color:var(--text);
       background:var(--bg);
-
       transition:.3s ease;
     }
 
-    button,
-    input,
-    textarea{
-      font:inherit;
-    }
-
     button{
+      font:inherit;
       cursor:pointer;
     }
 
     a{
-      color:inherit;
       text-decoration:none;
+      color:inherit;
     }
 
-    img{
-      max-width:100%;
-      display:block;
-    }
-
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
+    /* HEADER */
 
     .topbar{
       position:sticky;
@@ -122,7 +108,6 @@
       width:38px;
       height:38px;
       object-fit:contain;
-
       border-radius:11px;
     }
 
@@ -132,7 +117,6 @@
 
     .top-actions{
       display:flex;
-      align-items:center;
       gap:8px;
     }
 
@@ -157,43 +141,29 @@
       border-color:rgba(216,180,92,.5);
     }
 
-
-    /* =====================================================
-       MAIN
-    ===================================================== */
+    /* MAIN */
 
     .container{
-      width:min(1080px,92%);
-      margin:0 auto;
+      width:min(1050px,92%);
+      margin:auto;
 
       padding:34px 0 70px;
     }
 
+    /* HERO */
 
-    /* =====================================================
-       PROFILE CARD
-    ===================================================== */
-
-    .profile-card{
+    .hero{
       position:relative;
-
       overflow:hidden;
 
-      background:var(--surface);
+      padding:35px;
 
-      border:1px solid var(--border);
-      border-radius:28px;
-
-      box-shadow:var(--shadow);
-    }
-
-    .cover{
-      height:155px;
+      border-radius:27px;
 
       background:
         radial-gradient(
-          circle at 15% 20%,
-          rgba(216,180,92,.40),
+          circle at 85% 10%,
+          rgba(216,180,92,.30),
           transparent 32%
         ),
         linear-gradient(
@@ -201,137 +171,257 @@
           #071a34,
           #163b63
         );
-    }
 
-    .profile-main{
-      position:relative;
-
-      padding:0 34px 30px;
-    }
-
-    .avatar{
-      position:relative;
-
-      width:118px;
-      height:118px;
-
-      margin-top:-59px;
-
-      border-radius:32px;
-
-      overflow:hidden;
-
-      background:var(--surface-2);
-
-      border:6px solid var(--surface);
+      color:white;
 
       box-shadow:
-        0 12px 35px rgba(0,0,0,.12);
+        0 25px 60px rgba(7,26,52,.20);
     }
 
-    .avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
+    .hero::after{
+      content:"";
 
-    .avatar-placeholder{
-      width:100%;
-      height:100%;
+      position:absolute;
 
-      display:grid;
-      place-items:center;
+      width:210px;
+      height:210px;
 
-      font-size:38px;
-      font-weight:800;
-
-      color:var(--gold);
-    }
-
-    .profile-info{
-      margin-top:17px;
-    }
-
-    .name-row{
-      display:flex;
-      align-items:center;
-      flex-wrap:wrap;
-      gap:9px;
-    }
-
-    .profile-name{
-      font-size:27px;
-      font-weight:850;
-      letter-spacing:-.6px;
-    }
-
-    .verified{
-      width:24px;
-      height:24px;
-
-      display:grid;
-      place-items:center;
+      right:-70px;
+      bottom:-90px;
 
       border-radius:50%;
 
-      color:white;
-      background:#2787d8;
+      border:1px solid rgba(255,255,255,.15);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .eyebrow{
+      color:var(--gold-light);
+
+      font-size:11px;
+      font-weight:850;
+
+      letter-spacing:2px;
+
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      margin-top:9px;
+
+      font-size:32px;
+      font-weight:900;
+
+      letter-spacing:-.8px;
+    }
+
+    .hero p{
+      max-width:570px;
+
+      margin-top:9px;
+
+      color:rgba(255,255,255,.70);
 
       font-size:13px;
+      line-height:1.7;
+    }
+
+    /* BALANCE */
+
+    .balance-card{
+      margin-top:-38px;
+
+      position:relative;
+      z-index:5;
+
+      width:min(600px,90%);
+
+      margin-left:auto;
+      margin-right:auto;
+
+      padding:24px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+
+      border:1px solid var(--border);
+      border-radius:21px;
+
+      background:var(--surface);
+
+      box-shadow:var(--shadow);
+    }
+
+    .balance-label{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .balance{
+      margin-top:5px;
+
+      display:flex;
+      align-items:center;
+      gap:9px;
+
+      font-size:29px;
       font-weight:900;
     }
 
-    .username{
-      margin-top:4px;
+    .gem-icon{
+      width:39px;
+      height:39px;
 
-      color:var(--muted);
-
-      font-size:14px;
-    }
-
-    .bio{
-      max-width:680px;
-
-      margin-top:13px;
-
-      color:var(--muted);
-
-      line-height:1.65;
-      font-size:14px;
-    }
-
-    .profile-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:9px;
-
-      margin-top:20px;
-    }
-
-    .btn{
-      height:43px;
-
-      padding:0 17px;
+      display:grid;
+      place-items:center;
 
       border-radius:12px;
 
+      color:#071a34;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f4d98a,
+          #d8b45c
+        );
+
+      box-shadow:
+        0 8px 22px rgba(216,180,92,.30);
+    }
+
+    .refresh{
+      width:40px;
+      height:40px;
+
       border:1px solid var(--border);
+      border-radius:11px;
 
       color:var(--text);
+      background:var(--surface2);
+    }
+
+    /* GRID */
+
+    .section{
+      margin-top:25px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      margin-bottom:14px;
+    }
+
+    .section-title h2{
+      font-size:18px;
+      font-weight:850;
+    }
+
+    .section-title span{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .packages{
+      display:grid;
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap:14px;
+    }
+
+    .package{
+      padding:21px;
+
+      border:1px solid var(--border);
+      border-radius:19px;
+
       background:var(--surface);
 
-      font-weight:750;
-      font-size:13px;
+      box-shadow:var(--shadow);
 
-      transition:.2s ease;
+      transition:.22s ease;
     }
 
-    .btn:hover{
-      transform:translateY(-2px);
+    .package:hover{
+      transform:translateY(-4px);
+      border-color:rgba(216,180,92,.45);
     }
 
-    .btn-primary{
-      border-color:transparent;
+    .package-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .package-icon{
+      width:43px;
+      height:43px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:13px;
+
+      background:rgba(216,180,92,.13);
+
+      color:var(--gold);
+
+      font-size:20px;
+    }
+
+    .popular{
+      padding:5px 8px;
+
+      border-radius:999px;
+
+      color:#071a34;
+      background:var(--gold);
+
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .package h3{
+      margin-top:15px;
+
+      font-size:18px;
+      font-weight:850;
+    }
+
+    .package-gems{
+      margin-top:5px;
+
+      color:var(--gold);
+
+      font-size:14px;
+      font-weight:850;
+    }
+
+    .package-price{
+      margin-top:15px;
+
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .package button{
+      width:100%;
+      height:43px;
+
+      margin-top:16px;
+
+      border:1px solid transparent;
+      border-radius:12px;
 
       color:#071a34;
 
@@ -341,380 +431,128 @@
           var(--gold-light),
           var(--gold)
         );
-    }
 
-    .btn-danger{
-      color:var(--danger);
-    }
-
-
-    /* =====================================================
-       STATS
-    ===================================================== */
-
-    .stats{
-      display:grid;
-      grid-template-columns:
-        repeat(3,1fr);
-
-      margin-top:27px;
-
-      border-top:1px solid var(--border);
-      padding-top:24px;
-    }
-
-    .stat{
-      text-align:center;
-
-      border-right:1px solid var(--border);
-    }
-
-    .stat:last-child{
-      border-right:none;
-    }
-
-    .stat strong{
-      display:block;
-
-      font-size:20px;
+      font-size:12px;
       font-weight:850;
     }
 
-    .stat span{
-      display:block;
+    /* INFO */
 
-      margin-top:3px;
+    .info-grid{
+      display:grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:14px;
+    }
+
+    .info-card{
+      padding:20px;
+
+      border:1px solid var(--border);
+      border-radius:18px;
+
+      background:var(--surface);
+    }
+
+    .info-card h3{
+      font-size:14px;
+      font-weight:850;
+    }
+
+    .info-card p{
+      margin-top:7px;
 
       color:var(--muted);
 
       font-size:12px;
+      line-height:1.65;
     }
 
+    /* TRANSACTIONS */
 
-    /* =====================================================
-       CONTENT GRID
-    ===================================================== */
-
-    .content-grid{
-      display:grid;
-
-      grid-template-columns:
-        minmax(0,1.5fr)
-        minmax(280px,.8fr);
-
-      gap:20px;
-
-      margin-top:20px;
-    }
-
-    .panel{
-      background:var(--surface);
+    .transactions{
+      overflow:hidden;
 
       border:1px solid var(--border);
-      border-radius:22px;
+      border-radius:18px;
 
-      box-shadow:var(--shadow);
-
-      padding:23px;
+      background:var(--surface);
     }
 
-    .panel-title{
+    .transaction{
+      min-height:66px;
+
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:15px;
 
-      margin-bottom:18px;
+      padding:13px 17px;
+
+      border-bottom:1px solid var(--border);
     }
 
-    .panel-title h2{
-      font-size:17px;
-      font-weight:850;
+    .transaction:last-child{
+      border-bottom:none;
     }
 
-    .panel-title span{
-      color:var(--muted);
-      font-size:12px;
-    }
-
-
-    /* =====================================================
-       BADGES
-    ===================================================== */
-
-    .badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .badge{
-      display:flex;
-      align-items:center;
-      gap:8px;
-
-      padding:10px 13px;
-
-      border-radius:13px;
-
-      background:var(--surface-2);
-
-      border:1px solid var(--border);
-
-      font-size:12px;
-      font-weight:750;
-    }
-
-    .badge-icon{
-      width:26px;
-      height:26px;
-
-      display:grid;
-      place-items:center;
-
-      border-radius:9px;
-
-      background:rgba(216,180,92,.15);
-
-      color:var(--gold);
-
-      font-size:14px;
-    }
-
-
-    /* =====================================================
-       KYC
-    ===================================================== */
-
-    .kyc-box{
-      padding:17px;
-
-      border-radius:17px;
-
-      background:var(--surface-2);
-
-      border:1px solid var(--border);
-    }
-
-    .kyc-status{
+    .transaction-left{
       display:flex;
       align-items:center;
       gap:11px;
     }
 
-    .status-dot{
-      width:10px;
-      height:10px;
+    .transaction-icon{
+      width:37px;
+      height:37px;
 
-      flex:none;
+      display:grid;
+      place-items:center;
 
-      border-radius:50%;
+      border-radius:11px;
 
-      background:#9aa4b2;
+      background:var(--surface2);
     }
 
-    .status-dot.pending{
-      background:#d8a72e;
+    .transaction-title{
+      font-size:12px;
+      font-weight:800;
     }
 
-    .status-dot.verified{
-      background:#2b9b65;
-    }
-
-    .status-dot.rejected{
-      background:#c94b4b;
-    }
-
-    .kyc-status strong{
-      font-size:14px;
-    }
-
-    .kyc-status small{
-      display:block;
-
+    .transaction-date{
       margin-top:3px;
 
       color:var(--muted);
 
-      font-size:11px;
+      font-size:9px;
     }
 
-    .kyc-description{
-      margin-top:14px;
+    .amount{
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .amount.plus{
+      color:var(--green);
+    }
+
+    .amount.minus{
+      color:var(--red);
+    }
+
+    .empty{
+      padding:30px;
 
       color:var(--muted);
+
+      text-align:center;
 
       font-size:12px;
-      line-height:1.6;
     }
 
-    .kyc-upload{
-      margin-top:15px;
-    }
-
-    .file-input{
-      display:none;
-    }
-
-    .upload-label{
-      min-height:45px;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      padding:10px 14px;
-
-      border:1px dashed rgba(216,180,92,.6);
-
-      border-radius:12px;
-
-      color:var(--text);
-
-      background:
-        rgba(216,180,92,.05);
-
-      cursor:pointer;
-
-      font-size:12px;
-      font-weight:750;
-    }
-
-    .file-name{
-      margin-top:9px;
-
-      color:var(--muted);
-
-      font-size:11px;
-
-      word-break:break-word;
-    }
-
-
-    /* =====================================================
-       POSTS
-    ===================================================== */
-
-    .create-post{
-      width:100%;
-
-      padding:14px;
-
-      margin-bottom:17px;
-
-      border-radius:15px;
-
-      border:1px solid var(--border);
-
-      background:var(--surface-2);
-
-      color:var(--muted);
-
-      text-align:left;
-
-      cursor:pointer;
-
-      transition:.2s ease;
-    }
-
-    .create-post:hover{
-      border-color:rgba(216,180,92,.5);
-    }
-
-    .post{
-      padding:18px 0;
-
-      border-top:1px solid var(--border);
-    }
-
-    .post:first-of-type{
-      border-top:none;
-    }
-
-    .post-head{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .post-avatar{
-      width:38px;
-      height:38px;
-
-      border-radius:12px;
-
-      overflow:hidden;
-
-      background:var(--surface-2);
-    }
-
-    .post-avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .post-author{
-      font-size:13px;
-      font-weight:800;
-    }
-
-    .post-date{
-      margin-top:2px;
-
-      color:var(--muted);
-
-      font-size:10px;
-    }
-
-    .post-text{
-      margin-top:13px;
-
-      color:var(--text);
-
-      line-height:1.7;
-
-      font-size:13px;
-
-      white-space:pre-wrap;
-    }
-
-    .post-image{
-      width:100%;
-
-      max-height:430px;
-
-      margin-top:14px;
-
-      border-radius:15px;
-
-      object-fit:cover;
-    }
-
-    .post-actions{
-      display:flex;
-      gap:7px;
-
-      margin-top:13px;
-    }
-
-    .post-action{
-      border:none;
-
-      color:var(--muted);
-
-      background:transparent;
-
-      font-size:11px;
-    }
-
-    .post-action:hover{
-      color:var(--gold);
-    }
-
-
-    /* =====================================================
-       MODALS
-    ===================================================== */
+    /* MODAL */
 
     .modal{
       position:fixed;
@@ -729,7 +567,6 @@
       padding:20px;
 
       background:rgba(0,0,0,.48);
-
       backdrop-filter:blur(6px);
     }
 
@@ -738,14 +575,11 @@
     }
 
     .modal-card{
-      width:min(520px,100%);
-      max-height:90vh;
-
-      overflow:auto;
+      width:min(430px,100%);
 
       padding:25px;
 
-      border-radius:23px;
+      border-radius:22px;
 
       background:var(--surface);
 
@@ -759,8 +593,6 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-
-      margin-bottom:20px;
     }
 
     .modal-head h2{
@@ -776,75 +608,82 @@
       border-radius:10px;
 
       color:var(--text);
-      background:var(--surface-2);
+      background:var(--surface2);
 
       font-size:18px;
     }
 
-    .field{
-      margin-bottom:15px;
+    .purchase-summary{
+      margin-top:20px;
+
+      padding:18px;
+
+      border-radius:15px;
+
+      background:var(--surface2);
+
+      text-align:center;
     }
 
-    .field label{
+    .purchase-summary strong{
       display:block;
 
-      margin-bottom:7px;
+      font-size:28px;
+      font-weight:900;
+    }
+
+    .purchase-summary span{
+      color:var(--muted);
+
+      font-size:11px;
+    }
+
+    .modal-note{
+      margin-top:15px;
 
       color:var(--muted);
 
       font-size:11px;
-      font-weight:750;
-    }
-
-    .field input,
-    .field textarea{
-      width:100%;
-
-      padding:12px 13px;
-
-      border:1px solid var(--border);
-
-      border-radius:12px;
-
-      outline:none;
-
-      color:var(--text);
-      background:var(--surface-2);
-
-      resize:vertical;
-    }
-
-    .field textarea{
-      min-height:100px;
+      line-height:1.6;
+      text-align:center;
     }
 
     .modal-actions{
       display:flex;
-      justify-content:flex-end;
       gap:8px;
 
       margin-top:20px;
     }
 
+    .btn{
+      flex:1;
 
-    /* =====================================================
-       EMPTY
-    ===================================================== */
+      height:44px;
 
-    .empty{
-      padding:32px 10px;
+      border:1px solid var(--border);
+      border-radius:12px;
 
-      color:var(--muted);
+      color:var(--text);
+      background:var(--surface2);
 
-      text-align:center;
-
-      font-size:13px;
+      font-size:12px;
+      font-weight:800;
     }
 
+    .btn-primary{
+      border:none;
 
-    /* =====================================================
-       TOAST
-    ===================================================== */
+      color:#071a34;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+    }
+
+    /* TOAST */
 
     .toast{
       position:fixed;
@@ -854,8 +693,7 @@
 
       z-index:1000;
 
-      transform:
-        translate(-50%,20px);
+      transform:translate(-50%,20px);
 
       opacity:0;
       visibility:hidden;
@@ -864,12 +702,8 @@
 
       border-radius:13px;
 
-      color:#fff;
-
+      color:white;
       background:#10233f;
-
-      box-shadow:
-        0 15px 40px rgba(0,0,0,.20);
 
       font-size:12px;
 
@@ -877,48 +711,39 @@
     }
 
     .toast.show{
-      transform:
-        translate(-50%,0);
+      transform:translate(-50%,0);
 
       opacity:1;
       visibility:visible;
     }
 
+    /* MOBILE */
 
-    /* =====================================================
-       MOBILE
-    ===================================================== */
+    @media(max-width:760px){
 
-    @media(max-width:780px){
-
-      .content-grid{
+      .packages{
         grid-template-columns:1fr;
       }
 
-      .cover{
-        height:125px;
+      .info-grid{
+        grid-template-columns:1fr;
       }
 
-      .profile-main{
-        padding:0 21px 25px;
+      .hero{
+        padding:27px 22px 65px;
       }
 
-      .avatar{
-        width:100px;
-        height:100px;
-
-        margin-top:-50px;
-
-        border-radius:27px;
+      .hero h1{
+        font-size:27px;
       }
 
-      .profile-name{
-        font-size:23px;
+      .balance-card{
+        width:92%;
       }
 
     }
 
-    @media(max-width:500px){
+    @media(max-width:450px){
 
       .topbar{
         padding:0 4%;
@@ -928,33 +753,17 @@
         font-size:14px;
       }
 
-      .brand img{
-        width:34px;
-        height:34px;
-      }
-
       .container{
         width:94%;
-
         padding-top:20px;
       }
 
-      .profile-card{
-        border-radius:22px;
+      .balance{
+        font-size:24px;
       }
 
-      .panel{
+      .balance-card{
         padding:18px;
-
-        border-radius:19px;
-      }
-
-      .stats{
-        margin-top:22px;
-      }
-
-      .stat strong{
-        font-size:17px;
       }
 
     }
@@ -962,12 +771,9 @@
   </style>
 </head>
 
-
 <body>
 
-  <!-- =====================================================
-       TOP BAR
-  ===================================================== -->
+  <!-- HEADER -->
 
   <header class="topbar">
 
@@ -977,7 +783,7 @@
 
       <img
         src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
-        alt="Logo">
+        alt="Myanmar Elite Connect">
 
       <div>
         Myanmar
@@ -992,9 +798,8 @@
 
       <button
         class="icon-btn"
-        onclick="toggleTheme()"
         id="themeButton"
-        aria-label="Theme">
+        onclick="toggleTheme()">
 
         ☾
 
@@ -1003,8 +808,7 @@
 
       <a
         href="./general.html"
-        class="icon-btn"
-        aria-label="Home">
+        class="icon-btn">
 
         ⌂
 
@@ -1015,311 +819,291 @@
   </header>
 
 
-  <!-- =====================================================
-       MAIN
-  ===================================================== -->
-
   <main class="container">
 
 
-    <!-- PROFILE -->
+    <!-- HERO -->
 
-    <section class="profile-card">
+    <section class="hero">
 
-      <div class="cover"></div>
+      <div class="hero-content">
 
-
-      <div class="profile-main">
-
-        <div class="avatar">
-
-          <img
-            id="avatarImage"
-            src=""
-            alt="Profile photo"
-            style="display:none;">
-
-          <div
-            id="avatarPlaceholder"
-            class="avatar-placeholder">
-
-            U
-
-          </div>
-
+        <div class="eyebrow">
+          MYANMAR ELITE CONNECT
         </div>
 
+        <h1>
+          Gems
+        </h1>
 
-        <div class="profile-info">
-
-          <div class="name-row">
-
-            <h1
-              class="profile-name"
-              id="profileName">
-
-              Loading...
-
-            </h1>
-
-
-            <span
-              class="verified"
-              id="verifiedBadge"
-              style="display:none;">
-
-              ✓
-
-            </span>
-
-          </div>
-
-
-          <div
-            class="username"
-            id="profileUsername">
-
-            @username
-
-          </div>
-
-
-          <p
-            class="bio"
-            id="profileBio">
-
-            Welcome to Myanmar Elite Connect.
-
-          </p>
-
-
-          <div class="profile-actions">
-
-            <button
-              class="btn btn-primary"
-              onclick="openEditModal()">
-
-              Edit Profile
-
-            </button>
-
-
-            <button
-              class="btn"
-              onclick="openKYCModal()">
-
-              KYC Verification
-
-            </button>
-
-          </div>
-
-
-          <div class="stats">
-
-            <div class="stat">
-
-              <strong id="postCount">
-                0
-              </strong>
-
-              <span>Posts</span>
-
-            </div>
-
-
-            <div class="stat">
-
-              <strong id="followerCount">
-                0
-              </strong>
-
-              <span>Followers</span>
-
-            </div>
-
-
-            <div class="stat">
-
-              <strong id="followingCount">
-                0
-              </strong>
-
-              <span>Following</span>
-
-            </div>
-
-          </div>
-
-        </div>
+        <p>
+          Use Gems across Myanmar Elite Connect
+          for premium features and services.
+        </p>
 
       </div>
 
     </section>
 
 
-    <!-- CONTENT -->
+    <!-- BALANCE -->
 
-    <section class="content-grid">
+    <section class="balance-card">
 
+      <div>
 
-      <!-- POSTS -->
+        <div class="balance-label">
+          Your Gem Balance
+        </div>
 
-      <div class="panel">
+        <div class="balance">
 
-        <div class="panel-title">
+          <div class="gem-icon">
+            ◆
+          </div>
 
-          <h2>Posts</h2>
-
-          <span id="postHeadingCount">
-            0 posts
+          <span id="gemBalance">
+            0
           </span>
 
         </div>
 
-
-        <button
-          class="create-post"
-          onclick="openPostModal()">
-
-          ✦ &nbsp; Create a new post...
-
-        </button>
+      </div>
 
 
-        <div id="postsContainer">
+      <button
+        class="refresh"
+        onclick="loadWallet()">
 
-          <div class="empty">
-            No posts yet.
+        ↻
+
+      </button>
+
+    </section>
+
+
+    <!-- PACKAGES -->
+
+    <section class="section">
+
+      <div class="section-title">
+
+        <h2>
+          Gem Packages
+        </h2>
+
+        <span>
+          Choose a package
+        </span>
+
+      </div>
+
+
+      <div class="packages">
+
+
+        <article class="package">
+
+          <div class="package-top">
+
+            <div class="package-icon">
+              ◆
+            </div>
+
           </div>
+
+          <h3>
+            Starter
+          </h3>
+
+          <div class="package-gems">
+            100 Gems
+          </div>
+
+          <div class="package-price">
+            $1.00
+          </div>
+
+          <button
+            onclick="selectPackage(100,1.00)">
+
+            Get Gems
+
+          </button>
+
+        </article>
+
+
+        <article class="package">
+
+          <div class="package-top">
+
+            <div class="package-icon">
+              ◆
+            </div>
+
+            <span class="popular">
+              POPULAR
+            </span>
+
+          </div>
+
+          <h3>
+            Premium
+          </h3>
+
+          <div class="package-gems">
+            550 Gems
+          </div>
+
+          <div class="package-price">
+            $5.00
+          </div>
+
+          <button
+            onclick="selectPackage(550,5.00)">
+
+            Get Gems
+
+          </button>
+
+        </article>
+
+
+        <article class="package">
+
+          <div class="package-top">
+
+            <div class="package-icon">
+              ◆
+            </div>
+
+          </div>
+
+          <h3>
+            Elite
+          </h3>
+
+          <div class="package-gems">
+            1,200 Gems
+          </div>
+
+          <div class="package-price">
+            $10.00
+          </div>
+
+          <button
+            onclick="selectPackage(1200,10.00)">
+
+            Get Gems
+
+          </button>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="section">
+
+      <div class="section-title">
+
+        <h2>
+          How Gems Work
+        </h2>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-card">
+
+          <h3>
+            ◆ Earn
+          </h3>
+
+          <p>
+            Receive Gems from eligible activities,
+            promotions or rewards inside the platform.
+          </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <h3>
+            ◆ Spend
+          </h3>
+
+          <p>
+            Gems can be used for supported premium
+            features and services.
+          </p>
 
         </div>
 
       </div>
 
-
-      <!-- SIDEBAR -->
-
-      <aside>
+    </section>
 
 
-        <!-- BADGES -->
+    <!-- HISTORY -->
 
-        <div class="panel">
+    <section class="section">
 
-          <div class="panel-title">
+      <div class="section-title">
 
-            <h2>Badges</h2>
+        <h2>
+          Transaction History
+        </h2>
 
-            <span>Achievements</span>
+        <span id="transactionCount">
+          0 transactions
+        </span>
 
-          </div>
+      </div>
 
 
-          <div
-            class="badges"
-            id="badgesContainer">
+      <div
+        class="transactions"
+        id="transactions">
 
-            <div class="badge">
-
-              <div class="badge-icon">
-                ☆
-              </div>
-
-              New Member
-
-            </div>
-
-          </div>
-
+        <div class="empty">
+          No transactions yet.
         </div>
 
-
-        <!-- KYC -->
-
-        <div
-          class="panel"
-          style="margin-top:20px;">
-
-          <div class="panel-title">
-
-            <h2>KYC Verification</h2>
-
-          </div>
-
-
-          <div class="kyc-box">
-
-            <div class="kyc-status">
-
-              <div
-                id="kycDot"
-                class="status-dot">
-              </div>
-
-
-              <div>
-
-                <strong id="kycStatus">
-                  Not Verified
-                </strong>
-
-                <small id="kycSub">
-                  Verification has not been submitted.
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <p class="kyc-description">
-
-              Submit your identification documents for
-              manual verification. Your documents are
-              kept private and are not shown publicly.
-
-            </p>
-
-
-            <button
-              class="btn btn-primary"
-              style="width:100%;margin-top:14px;"
-              onclick="openKYCModal()">
-
-              Submit KYC
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-      </aside>
+      </div>
 
     </section>
+
 
   </main>
 
 
-  <!-- =====================================================
-       EDIT PROFILE MODAL
-  ===================================================== -->
+  <!-- PURCHASE MODAL -->
 
   <div
     class="modal"
-    id="editModal">
+    id="purchaseModal">
 
     <div class="modal-card">
 
       <div class="modal-head">
 
-        <h2>Edit Profile</h2>
+        <h2>
+          Purchase Gems
+        </h2>
 
         <button
           class="close"
-          onclick="closeModal('editModal')">
+          onclick="closePurchase()">
 
           ×
 
@@ -1328,182 +1112,33 @@
       </div>
 
 
-      <div class="field">
+      <div class="purchase-summary">
 
-        <label>Name</label>
+        <strong id="purchaseGems">
+          0 Gems
+        </strong>
 
-        <input
-          id="editName"
-          type="text"
-          maxlength="80">
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Username</label>
-
-        <input
-          id="editUsername"
-          type="text"
-          maxlength="40">
+        <span id="purchasePrice">
+          $0.00
+        </span>
 
       </div>
 
 
-      <div class="field">
+      <p class="modal-note">
 
-        <label>Bio</label>
-
-        <textarea
-          id="editBio"
-          maxlength="500"></textarea>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Profile Photo</label>
-
-        <input
-          id="avatarFile"
-          type="file"
-          accept="image/*">
-
-      </div>
-
-
-      <div class="modal-actions">
-
-        <button
-          class="btn"
-          onclick="closeModal('editModal')">
-
-          Cancel
-
-        </button>
-
-
-        <button
-          class="btn btn-primary"
-          onclick="saveProfile()">
-
-          Save Changes
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       KYC MODAL
-  ===================================================== -->
-
-  <div
-    class="modal"
-    id="kycModal">
-
-    <div class="modal-card">
-
-      <div class="modal-head">
-
-        <h2>KYC Verification</h2>
-
-        <button
-          class="close"
-          onclick="closeModal('kycModal')">
-
-          ×
-
-        </button>
-
-      </div>
-
-
-      <p
-        style="
-          color:var(--muted);
-          font-size:12px;
-          line-height:1.65;
-          margin-bottom:18px;
-        ">
-
-        Upload clear photos of your identification
-        documents. These files are submitted privately
-        for manual admin review.
+        Payment processing will be connected to
+        your selected payment provider. Gems should
+        only be credited after a confirmed payment.
 
       </p>
 
 
-      <div class="field">
-
-        <label>Identification Document</label>
-
-        <input
-          class="file-input"
-          id="kycDocument"
-          type="file"
-          accept="image/jpeg,image/png,image/webp">
-
-        <label
-          class="upload-label"
-          for="kycDocument">
-
-          + Choose document image
-
-        </label>
-
-        <div
-          class="file-name"
-          id="kycFileName">
-
-          No file selected
-
-        </div>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Optional second document image</label>
-
-        <input
-          class="file-input"
-          id="kycDocument2"
-          type="file"
-          accept="image/jpeg,image/png,image/webp">
-
-        <label
-          class="upload-label"
-          for="kycDocument2">
-
-          + Choose second image
-
-        </label>
-
-        <div
-          class="file-name"
-          id="kycFileName2">
-
-          No file selected
-
-        </div>
-
-      </div>
-
-
       <div class="modal-actions">
 
         <button
           class="btn"
-          onclick="closeModal('kycModal')">
+          onclick="closePurchase()">
 
           Cancel
 
@@ -1512,83 +1147,9 @@
 
         <button
           class="btn btn-primary"
-          onclick="submitKYC()">
+          onclick="requestPurchase()">
 
-          Submit for Review
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       POST MODAL
-  ===================================================== -->
-
-  <div
-    class="modal"
-    id="postModal">
-
-    <div class="modal-card">
-
-      <div class="modal-head">
-
-        <h2>Create Post</h2>
-
-        <button
-          class="close"
-          onclick="closeModal('postModal')">
-
-          ×
-
-        </button>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Post</label>
-
-        <textarea
-          id="postText"
-          placeholder="Share something..."></textarea>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Image (optional)</label>
-
-        <input
-          id="postImage"
-          type="file"
-          accept="image/*">
-
-      </div>
-
-
-      <div class="modal-actions">
-
-        <button
-          class="btn"
-          onclick="closeModal('postModal')">
-
-          Cancel
-
-        </button>
-
-
-        <button
-          class="btn btn-primary"
-          onclick="createPost()">
-
-          Publish
+          Continue
 
         </button>
 
@@ -1604,18 +1165,16 @@
   <div
     class="toast"
     id="toast">
-
   </div>
 
 
   <script>
 
-    /* =====================================================
-       GLOBAL
-    ===================================================== */
-
     let currentUser = null;
-    let currentProfile = null;
+
+    let selectedGems = 0;
+
+    let selectedPrice = 0;
 
 
     /* =====================================================
@@ -1625,78 +1184,32 @@
     function showToast(message){
 
       const toast =
-        document.getElementById('toast');
+        document.getElementById(
+          'toast'
+        );
 
-      toast.textContent = message;
+      toast.textContent =
+        message;
 
-      toast.classList.add('show');
+      toast.classList.add(
+        'show'
+      );
 
       clearTimeout(
         window.toastTimer
       );
 
       window.toastTimer =
-        setTimeout(() => {
+        setTimeout(
+          () => {
 
-          toast.classList.remove('show');
+            toast.classList.remove(
+              'show'
+            );
 
-        },3000);
-
-    }
-
-
-    function openModal(id){
-
-      document
-        .getElementById(id)
-        .classList.add('open');
-
-    }
-
-
-    function closeModal(id){
-
-      document
-        .getElementById(id)
-        .classList.remove('open');
-
-    }
-
-
-    function openEditModal(){
-
-      if(!currentProfile) return;
-
-      document.getElementById(
-        'editName'
-      ).value =
-        currentProfile.full_name || '';
-
-      document.getElementById(
-        'editUsername'
-      ).value =
-        currentProfile.username || '';
-
-      document.getElementById(
-        'editBio'
-      ).value =
-        currentProfile.bio || '';
-
-      openModal('editModal');
-
-    }
-
-
-    function openKYCModal(){
-
-      openModal('kycModal');
-
-    }
-
-
-    function openPostModal(){
-
-      openModal('postModal');
+          },
+          3000
+        );
 
     }
 
@@ -1729,13 +1242,13 @@
 
     function toggleTheme(){
 
-      const dark =
+      const isDark =
         document.body.classList.contains(
           'dark'
         );
 
       applyTheme(
-        dark
+        isDark
           ? 'light'
           : 'dark'
       );
@@ -1744,63 +1257,7 @@
 
 
     /* =====================================================
-       STORAGE
-    ===================================================== */
-
-    async function uploadFile(
-      file,
-      folder
-    ){
-
-      if(!file) return null;
-
-      const extension =
-        file.name
-          .split('.')
-          .pop()
-          .toLowerCase();
-
-      const fileName =
-        `${currentUser.id}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
-
-      const path =
-        `${folder}/${fileName}`;
-
-
-      const {
-        error
-      } =
-        await supabaseClient.storage
-          .from('user-files')
-          .upload(
-            path,
-            file,
-            {
-              cacheControl:'3600',
-              upsert:false
-            }
-          );
-
-
-      if(error){
-
-        console.error(
-          'Upload error:',
-          error
-        );
-
-        throw error;
-
-      }
-
-
-      return path;
-
-    }
-
-
-    /* =====================================================
-       LOAD USER
+       USER
     ===================================================== */
 
     async function loadUser(){
@@ -1835,20 +1292,23 @@
 
 
     /* =====================================================
-       LOAD PROFILE
+       WALLET
     ===================================================== */
 
-    async function loadProfile(){
+    async function loadWallet(){
+
+      if(!currentUser) return;
+
 
       const {
         data,
         error
       } =
         await supabaseClient
-          .from('profiles')
-          .select('*')
+          .from('wallets')
+          .select('gems')
           .eq(
-            'id',
+            'user_id',
             currentUser.id
           )
           .maybeSingle();
@@ -1857,624 +1317,42 @@
       if(error){
 
         console.error(
-          'Profile load:',
+          'Wallet:',
           error
         );
+
+        document.getElementById(
+          'gemBalance'
+        ).textContent = '0';
+
+        return;
 
       }
 
 
-      currentProfile =
-        data || {
-          id:currentUser.id,
-          full_name:
-            currentUser.user_metadata?.full_name ||
-            'Member',
-          username:
-            currentUser.user_metadata?.username ||
-            '',
-          bio:'',
-          avatar_url:'',
-          kyc_status:'not_verified',
-          followers_count:0,
-          following_count:0
-        };
-
-
-      renderProfile();
-
-    }
-
-
-    /* =====================================================
-       RENDER PROFILE
-    ===================================================== */
-
-    function renderProfile(){
-
-      const p =
-        currentProfile;
-
-
-      const name =
-        p.full_name ||
-        currentUser.user_metadata?.full_name ||
-        'Member';
-
-
       document.getElementById(
-        'profileName'
-      ).textContent =
-        name;
-
-
-      document.getElementById(
-        'profileUsername'
-      ).textContent =
-        p.username
-          ? '@' + p.username
-          : '@member';
-
-
-      document.getElementById(
-        'profileBio'
-      ).textContent =
-        p.bio ||
-        'Welcome to Myanmar Elite Connect.';
-
-
-      document.getElementById(
-        'followerCount'
+        'gemBalance'
       ).textContent =
         Number(
-          p.followers_count || 0
-        );
+          data?.gems || 0
+        ).toLocaleString();
 
-
-      document.getElementById(
-        'followingCount'
-      ).textContent =
-        Number(
-          p.following_count || 0
-        );
-
-
-      if(p.avatar_url){
-
-        const avatar =
-          document.getElementById(
-            'avatarImage'
-          );
-
-        avatar.src =
-          p.avatar_url;
-
-        avatar.style.display =
-          'block';
-
-        document.getElementById(
-          'avatarPlaceholder'
-        ).style.display =
-          'none';
-
-      }
-
-
-      updateKYCStatus(
-        p.kyc_status
-      );
-
-
-      if(
-        p.kyc_status ===
-        'verified'
-      ){
-
-        document.getElementById(
-          'verifiedBadge'
-        ).style.display =
-          'grid';
-
-      }
 
     }
 
 
     /* =====================================================
-       KYC STATUS
+       TRANSACTIONS
     ===================================================== */
 
-    function updateKYCStatus(status){
-
-      const dot =
-        document.getElementById(
-          'kycDot'
-        );
-
-      const title =
-        document.getElementById(
-          'kycStatus'
-        );
-
-      const sub =
-        document.getElementById(
-          'kycSub'
-        );
-
-
-      dot.className =
-        'status-dot';
-
-
-      if(status === 'verified'){
-
-        dot.classList.add(
-          'verified'
-        );
-
-        title.textContent =
-          'Verified';
-
-        sub.textContent =
-          'Your identity has been verified.';
-
-        document.getElementById(
-          'verifiedBadge'
-        ).style.display =
-          'grid';
-
-        return;
-
-      }
-
-
-      if(status === 'pending'){
-
-        dot.classList.add(
-          'pending'
-        );
-
-        title.textContent =
-          'Under Review';
-
-        sub.textContent =
-          'Your documents are being reviewed.';
-
-        return;
-
-      }
-
-
-      if(status === 'rejected'){
-
-        dot.classList.add(
-          'rejected'
-        );
-
-        title.textContent =
-          'Verification Rejected';
-
-        sub.textContent =
-          'Please submit your documents again.';
-
-        return;
-
-      }
-
-
-      title.textContent =
-        'Not Verified';
-
-      sub.textContent =
-        'Verification has not been submitted.';
-
-    }
-
-
-    /* =====================================================
-       SAVE PROFILE
-    ===================================================== */
-
-    async function saveProfile(){
-
-      try{
-
-        const name =
-          document.getElementById(
-            'editName'
-          ).value.trim();
-
-
-        const username =
-          document.getElementById(
-            'editUsername'
-          ).value.trim();
-
-
-        const bio =
-          document.getElementById(
-            'editBio'
-          ).value.trim();
-
-
-        const avatarFile =
-          document.getElementById(
-            'avatarFile'
-          ).files[0];
-
-
-        let avatarUrl =
-          currentProfile.avatar_url ||
-          null;
-
-
-        if(avatarFile){
-
-          const path =
-            await uploadFile(
-              avatarFile,
-              'avatars'
-            );
-
-
-          const {
-            data
-          } =
-            supabaseClient.storage
-              .from('user-files')
-              .getPublicUrl(path);
-
-
-          avatarUrl =
-            data.publicUrl;
-
-        }
-
-
-        const payload = {
-
-          id:currentUser.id,
-
-          full_name:name,
-
-          username:username,
-
-          bio:bio,
-
-          avatar_url:avatarUrl
-
-        };
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from('profiles')
-            .upsert(
-              payload,
-              {
-                onConflict:'id'
-              }
-            );
-
-
-        if(error){
-
-          throw error;
-
-        }
-
-
-        currentProfile =
-          {
-            ...currentProfile,
-            ...payload
-          };
-
-
-        renderProfile();
-
-        closeModal(
-          'editModal'
-        );
-
-        showToast(
-          'Profile updated.'
-        );
-
-
-      }catch(error){
-
-        console.error(
-          error
-        );
-
-        showToast(
-          'Unable to update profile.'
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       KYC SUBMIT
-    ===================================================== */
-
-    async function submitKYC(){
-
-      const file1 =
-        document.getElementById(
-          'kycDocument'
-        ).files[0];
-
-
-      const file2 =
-        document.getElementById(
-          'kycDocument2'
-        ).files[0];
-
-
-      if(!file1){
-
-        showToast(
-          'Please choose your document image.'
-        );
-
-        return;
-
-      }
-
-
-      try{
-
-        const path1 =
-          await uploadFile(
-            file1,
-            'kyc'
-          );
-
-
-        let path2 = null;
-
-
-        if(file2){
-
-          path2 =
-            await uploadFile(
-              file2,
-              'kyc'
-            );
-
-        }
-
-
-        /*
-         * KYC document path ကို
-         * profile row ထဲမှာပဲ သိမ်းထားမယ်။
-         * သီးသန့် KYC table မလိုပါ။
-         */
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from('profiles')
-            .update({
-
-              kyc_status:
-                'pending',
-
-              kyc_document:
-                path1,
-
-              kyc_document_2:
-                path2,
-
-              kyc_submitted_at:
-                new Date().toISOString()
-
-            })
-            .eq(
-              'id',
-              currentUser.id
-            );
-
-
-        if(error){
-
-          throw error;
-
-        }
-
-
-        currentProfile = {
-
-          ...currentProfile,
-
-          kyc_status:
-            'pending',
-
-          kyc_document:
-            path1,
-
-          kyc_document_2:
-            path2,
-
-          kyc_submitted_at:
-            new Date().toISOString()
-
-        };
-
-
-        updateKYCStatus(
-          'pending'
-        );
-
-
-        closeModal(
-          'kycModal'
-        );
-
-
-        showToast(
-          'KYC submitted for review.'
-        );
-
-
-      }catch(error){
-
-        console.error(
-          error
-        );
-
-        showToast(
-          'Unable to submit KYC.'
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       CREATE POST
-    ===================================================== */
-
-    async function createPost(){
-
-      const text =
-        document.getElementById(
-          'postText'
-        ).value.trim();
-
-
-      const imageFile =
-        document.getElementById(
-          'postImage'
-        ).files[0];
-
-
-      if(
-        !text &&
-        !imageFile
-      ){
-
-        showToast(
-          'Please add something to your post.'
-        );
-
-        return;
-
-      }
-
-
-      try{
-
-        let imageUrl = null;
-
-
-        if(imageFile){
-
-          const path =
-            await uploadFile(
-              imageFile,
-              'posts'
-            );
-
-
-          const {
-            data
-          } =
-            supabaseClient.storage
-              .from('user-files')
-              .getPublicUrl(path);
-
-
-          imageUrl =
-            data.publicUrl;
-
-        }
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from('posts')
-            .insert({
-
-              user_id:
-                currentUser.id,
-
-              content:
-                text,
-
-              image_url:
-                imageUrl
-
-            });
-
-
-        if(error){
-
-          throw error;
-
-        }
-
-
-        document.getElementById(
-          'postText'
-        ).value = '';
-
-
-        document.getElementById(
-          'postImage'
-        ).value = '';
-
-
-        closeModal(
-          'postModal'
-        );
-
-
-        await loadPosts();
-
-
-        showToast(
-          'Post published.'
-        );
-
-
-      }catch(error){
-
-        console.error(
-          error
-        );
-
-        showToast(
-          'Unable to publish post.'
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       LOAD POSTS
-    ===================================================== */
-
-    async function loadPosts(){
+    async function loadTransactions(){
 
       const {
         data,
         error
       } =
         await supabaseClient
-          .from('posts')
+          .from('gem_transactions')
           .select('*')
           .eq(
             'user_id',
@@ -2485,13 +1363,14 @@
             {
               ascending:false
             }
-          );
+          )
+          .limit(30);
 
 
       if(error){
 
         console.error(
-          'Posts:',
+          'Transactions:',
           error
         );
 
@@ -2500,34 +1379,30 @@
       }
 
 
-      const posts =
+      const transactions =
         data || [];
 
 
       document.getElementById(
-        'postCount'
+        'transactionCount'
       ).textContent =
-        posts.length;
-
-
-      document.getElementById(
-        'postHeadingCount'
-      ).textContent =
-        `${posts.length} post${posts.length === 1 ? '' : 's'}`;
+        `${transactions.length} transaction${transactions.length === 1 ? '' : 's'}`;
 
 
       const container =
         document.getElementById(
-          'postsContainer'
+          'transactions'
         );
 
 
-      if(!posts.length){
+      if(!transactions.length){
 
         container.innerHTML = `
+
           <div class="empty">
-            No posts yet.
+            No transactions yet.
           </div>
+
         `;
 
         return;
@@ -2536,63 +1411,63 @@
 
 
       container.innerHTML =
-        posts.map(
-          post => renderPost(post)
+        transactions.map(
+          renderTransaction
         ).join('');
 
     }
 
 
-    function renderPost(post){
+    function renderTransaction(transaction){
+
+      const amount =
+        Number(
+          transaction.amount || 0
+        );
+
+
+      const positive =
+        amount > 0;
+
 
       const date =
-        post.created_at
+        transaction.created_at
           ? new Date(
-              post.created_at
-            ).toLocaleDateString()
+              transaction.created_at
+            ).toLocaleString()
           : '';
 
 
       return `
 
-        <article class="post">
+        <div class="transaction">
 
-          <div class="post-head">
+          <div class="transaction-left">
 
-            <div class="post-avatar">
+            <div class="transaction-icon">
 
-              ${
-                currentProfile.avatar_url
-
-                ?
-
-                `<img
-                  src="${escapeHTML(
-                    currentProfile.avatar_url
-                  )}"
-                  alt="">`
-
-                :
-
-                ''
-              }
+              ${positive ? '＋' : '－'}
 
             </div>
 
             <div>
 
-              <div class="post-author">
+              <div class="transaction-title">
 
-                ${escapeHTML(
-                  currentProfile.full_name ||
-                  'Member'
-                )}
+                ${
+                  escapeHTML(
+                    transaction.description ||
+                    (positive
+                      ? 'Gems received'
+                      : 'Gems used')
+                  )
+                }
 
               </div>
 
-              <div class="post-date">
+              <div class="transaction-date">
 
-                ${date}
+                ${escapeHTML(date)}
 
               </div>
 
@@ -2601,54 +1476,16 @@
           </div>
 
 
-          ${
-            post.content
+          <div
+            class="amount ${positive ? 'plus' : 'minus'}">
 
-            ?
-
-            `<div class="post-text">
-              ${escapeHTML(
-                post.content
-              )}
-            </div>`
-
-            :
-
-            ''
-          }
-
-
-          ${
-            post.image_url
-
-            ?
-
-            `<img
-              class="post-image"
-              src="${escapeHTML(
-                post.image_url
-              )}"
-              alt="Post image">`
-
-            :
-
-            ''
-          }
-
-
-          <div class="post-actions">
-
-            <button
-              class="post-action"
-              onclick="deletePost('${post.id}')">
-
-              Delete
-
-            </button>
+            ${
+              positive ? '+' : ''
+            }${amount.toLocaleString()}
 
           </div>
 
-        </article>
+        </div>
 
       `;
 
@@ -2656,15 +1493,58 @@
 
 
     /* =====================================================
-       DELETE POST
+       PURCHASE
     ===================================================== */
 
-    async function deletePost(id){
+    function selectPackage(
+      gems,
+      price
+    ){
+
+      selectedGems =
+        gems;
+
+      selectedPrice =
+        price;
+
+
+      document.getElementById(
+        'purchaseGems'
+      ).textContent =
+        `${gems.toLocaleString()} Gems`;
+
+
+      document.getElementById(
+        'purchasePrice'
+      ).textContent =
+        `$${price.toFixed(2)}`;
+
+
+      document.getElementById(
+        'purchaseModal'
+      ).classList.add(
+        'open'
+      );
+
+    }
+
+
+    function closePurchase(){
+
+      document.getElementById(
+        'purchaseModal'
+      ).classList.remove(
+        'open'
+      );
+
+    }
+
+
+    async function requestPurchase(){
 
       if(
-        !confirm(
-          'Delete this post?'
-        )
+        !selectedGems ||
+        !selectedPrice
       ){
 
         return;
@@ -2672,146 +1552,21 @@
       }
 
 
-      const {
-        error
-      } =
-        await supabaseClient
-          .from('posts')
-          .delete()
-          .eq(
-            'id',
-            id
-          )
-          .eq(
-            'user_id',
-            currentUser.id
-          );
-
-
-      if(error){
-
-        console.error(
-          error
-        );
-
-        showToast(
-          'Unable to delete post.'
-        );
-
-        return;
-
-      }
-
-
-      await loadPosts();
+      /*
+       * Payment provider မချိတ်ရသေးတဲ့အချိန်
+       * Gems ကို client-side ကနေ တိုက်ရိုက်
+       * credit မလုပ်ပါ။
+       */
 
       showToast(
-        'Post deleted.'
+        'Payment system is not connected yet.'
       );
 
     }
 
 
     /* =====================================================
-       BADGES
-    ===================================================== */
-
-    async function loadBadges(){
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from('user_badges')
-          .select(`
-            badge_id,
-            badges (
-              name,
-              icon
-            )
-          `)
-          .eq(
-            'user_id',
-            currentUser.id
-          );
-
-
-      if(error){
-
-        console.error(
-          'Badges:',
-          error
-        );
-
-        return;
-
-      }
-
-
-      const container =
-        document.getElementById(
-          'badgesContainer'
-        );
-
-
-      const badges =
-        data || [];
-
-
-      if(!badges.length){
-
-        container.innerHTML = `
-
-          <div class="badge">
-
-            <div class="badge-icon">
-              ☆
-            </div>
-
-            New Member
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      container.innerHTML =
-        badges.map(
-          item => `
-
-            <div class="badge">
-
-              <div class="badge-icon">
-
-                ${
-                  item.badges?.icon ||
-                  '★'
-                }
-
-              </div>
-
-              ${
-                escapeHTML(
-                  item.badges?.name ||
-                  'Badge'
-                )
-              }
-
-            </div>
-
-          `
-        ).join('');
-
-    }
-
-
-    /* =====================================================
-       ESCAPE
+       ESCAPE HTML
     ===================================================== */
 
     function escapeHTML(value){
@@ -2844,92 +1599,36 @@
 
 
     /* =====================================================
-       FILE NAME DISPLAY
-    ===================================================== */
-
-    document.getElementById(
-      'kycDocument'
-    ).addEventListener(
-      'change',
-      function(){
-
-        document.getElementById(
-          'kycFileName'
-        ).textContent =
-          this.files[0]
-            ?.name ||
-          'No file selected';
-
-      }
-    );
-
-
-    document.getElementById(
-      'kycDocument2'
-    ).addEventListener(
-      'change',
-      function(){
-
-        document.getElementById(
-          'kycFileName2'
-        ).textContent =
-          this.files[0]
-            ?.name ||
-          'No file selected';
-
-      }
-    );
-
-
-    /* =====================================================
        INIT
     ===================================================== */
 
     async function init(){
 
-      try{
-
-        const loggedIn =
-          await loadUser();
-
-
-        if(!loggedIn){
-
-          return;
-
-        }
+      const savedTheme =
+        localStorage.getItem(
+          'mec_theme'
+        ) || 'light';
 
 
-        const savedTheme =
-          localStorage.getItem(
-            'mec_theme'
-          ) || 'light';
+      applyTheme(
+        savedTheme
+      );
 
 
-        applyTheme(
-          savedTheme
-        );
+      const loggedIn =
+        await loadUser();
 
 
-        await loadProfile();
+      if(!loggedIn){
 
-        await loadPosts();
-
-        await loadBadges();
-
-
-      }catch(error){
-
-        console.error(
-          'Profile initialization:',
-          error
-        );
-
-        showToast(
-          'Unable to load profile.'
-        );
+        return;
 
       }
+
+
+      await loadWallet();
+
+      await loadTransactions();
 
     }
 
