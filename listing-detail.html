@@ -1,426 +1,757 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Listing Details • Myanmar Elite Connect</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing Details • Myanmar Elite Connect</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f5f7fb;
-  --card:#fff;
-  --soft:#f1f4f8;
-  --text:#10233f;
-  --muted:#758198;
-  --border:rgba(16,35,63,.1);
-  --gold:#d8b45c;
-  --gold2:#f3db91;
-  --green:#2d8a61;
-  --red:#c94b4b;
-  --shadow:0 20px 55px rgba(16,35,63,.08);
-}
-body.dark{
-  --bg:#071321;
-  --card:#0e1e32;
-  --soft:#10243c;
-  --text:#f4f7fb;
-  --muted:#91a0b4;
-  --border:rgba(255,255,255,.09);
-  --shadow:0 20px 55px rgba(0,0,0,.3);
-}
-body{
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,"Noto Sans Myanmar","Myanmar Text",system-ui,sans-serif;
-}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-img{display:block;max-width:100%}
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
-/* HEADER */
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  height:70px;
-  border-bottom:1px solid var(--border);
-  background:rgba(255,255,255,.93);
-  backdrop-filter:blur(18px);
-}
-body.dark .topbar{background:rgba(7,19,33,.96)}
-.topbar-inner{
-  width:min(1200px,94%);
-  height:100%;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.brand img{
-  width:40px;height:40px;
-  border-radius:11px;
-  object-fit:contain;
-  background:var(--card);
-}
-.brand-name{
-  font-size:14px;
-  font-weight:950;
-}
-.brand-name span{color:var(--gold)}
-.actions{display:flex;gap:7px}
-.icon-btn{
-  width:40px;height:40px;
-  display:grid;
-  place-items:center;
-  border:1px solid var(--border);
-  border-radius:11px;
-  background:var(--card);
-  color:var(--text);
-}
+    :root{
+      --bg:#f5f7fb;
+      --card:#fff;
+      --soft:#f4f6fa;
+      --text:#10233f;
+      --muted:#748197;
+      --border:rgba(16,35,63,.10);
+      --gold:#d8b45c;
+      --gold2:#f2d98d;
+      --green:#2d8a61;
+      --red:#c94b4b;
+      --shadow:0 18px 55px rgba(16,35,63,.08);
+      --radius:18px;
+    }
 
-/* MAIN */
-.container{
-  width:min(1180px,94%);
-  margin:auto;
-  padding:28px 0 100px;
-}
-.back{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  color:var(--muted);
-  font-size:10px;
-  font-weight:850;
-}
-.back:hover{color:var(--gold)}
+    body.dark{
+      --bg:#071321;
+      --card:#0e1e32;
+      --soft:#10243c;
+      --text:#f4f7fb;
+      --muted:#92a0b3;
+      --border:rgba(255,255,255,.09);
+      --shadow:0 18px 55px rgba(0,0,0,.28);
+    }
 
-.layout{
-  display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);
-  gap:20px;
-  margin-top:15px;
-}
+    body{
+      min-height:100vh;
+      color:var(--text);
+      background:var(--bg);
+      font-family:
+        Inter,
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        system-ui,
+        sans-serif;
+    }
 
-/* GALLERY */
-.gallery{
-  overflow:hidden;
-  border:1px solid var(--border);
-  border-radius:20px;
-  background:var(--card);
-  box-shadow:var(--shadow);
-}
-.main-image{
-  position:relative;
-  aspect-ratio:4/3;
-  background:var(--soft);
-}
-.main-image img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-.image-counter{
-  position:absolute;
-  right:12px;
-  top:12px;
-  padding:6px 9px;
-  border-radius:999px;
-  color:#fff;
-  background:rgba(7,26,52,.72);
-  font-size:8px;
-  font-weight:900;
-}
-.thumbs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:10px;
-  scrollbar-width:none;
-}
-.thumbs::-webkit-scrollbar{display:none}
-.thumb{
-  width:72px;
-  height:58px;
-  flex:none;
-  overflow:hidden;
-  border:2px solid transparent;
-  border-radius:9px;
-  background:var(--soft);
-  cursor:pointer;
-}
-.thumb.active{
-  border-color:var(--gold);
-}
-.thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
 
-/* DETAILS */
-.details{
-  min-width:0;
-}
-.card{
-  padding:21px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  background:var(--card);
-  box-shadow:var(--shadow);
-}
-.category{
-  color:var(--gold);
-  font-size:9px;
-  font-weight:950;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-.title{
-  margin-top:7px;
-  font-size:clamp(24px,4vw,38px);
-  line-height:1.15;
-  letter-spacing:-1px;
-  font-weight:950;
-}
-.price{
-  margin-top:12px;
-  font-size:22px;
-  font-weight:950;
-}
-.meta{
-  margin-top:11px;
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.7;
-}
-.description{
-  margin-top:18px;
-  padding-top:18px;
-  border-top:1px solid var(--border);
-  color:var(--text);
-  font-size:12px;
-  line-height:1.85;
-  white-space:pre-wrap;
-}
-.status{
-  display:inline-flex;
-  margin-top:12px;
-  padding:5px 8px;
-  border-radius:999px;
-  color:#fff;
-  background:var(--green);
-  font-size:8px;
-  font-weight:950;
-}
+    button,
+    a{
+      -webkit-tap-highlight-color:transparent;
+    }
 
-/* ACTIONS */
-.actions-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:18px;
-}
-.action{
-  min-height:43px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  color:var(--text);
-  background:var(--soft);
-  font-size:9px;
-  font-weight:900;
-}
-.action.primary{
-  border:0;
-  color:#071a34;
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
-}
-.action.danger{
-  color:var(--red);
-  border-color:rgba(201,75,75,.2);
-}
+    button{
+      cursor:pointer;
+    }
 
-/* SELLER */
-.seller{
-  margin-top:14px;
-  padding:18px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  background:var(--card);
-  box-shadow:var(--shadow);
-}
-.seller-title{
-  color:var(--muted);
-  font-size:9px;
-  font-weight:900;
-}
-.seller-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:11px;
-}
-.seller-avatar{
-  width:48px;height:48px;
-  border-radius:50%;
-  object-fit:cover;
-  background:var(--soft);
-}
-.seller-name{
-  font-size:12px;
-  font-weight:950;
-}
-.verified{
-  margin-top:3px;
-  color:var(--green);
-  font-size:8px;
-  font-weight:900;
-}
-.seller-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
-  margin-top:12px;
-}
-.seller-buttons a{
-  min-height:38px;
-  display:grid;
-  place-items:center;
-  border:1px solid var(--border);
-  border-radius:9px;
-  font-size:9px;
-  font-weight:900;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-/* REPORT MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:500;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(0,0,0,.55);
-}
-.modal.show{display:flex}
-.modal-card{
-  width:min(460px,100%);
-  padding:20px;
-  border-radius:18px;
-  background:var(--card);
-}
-.modal-card h3{
-  font-size:17px;
-  font-weight:950;
-}
-.modal-card p{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:9px;
-}
-.modal-card select,
-.modal-card textarea{
-  width:100%;
-  margin-top:12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  color:var(--text);
-  background:var(--soft);
-}
-.modal-card select{
-  height:42px;
-  padding:0 10px;
-}
-.modal-card textarea{
-  min-height:100px;
-  padding:10px;
-  resize:vertical;
-}
-.modal-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:7px;
-  margin-top:12px;
-}
-.modal-actions button{
-  min-height:38px;
-  padding:0 14px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  background:var(--soft);
-  color:var(--text);
-  font-size:9px;
-  font-weight:900;
-}
-.modal-actions .submit{
-  border:0;
-  color:#071a34;
-  background:var(--gold);
-}
+    img{
+      display:block;
+      max-width:100%;
+    }
 
-.state{
-  padding:70px 20px;
-  text-align:center;
-  color:var(--muted);
-}
-.state strong{
-  display:block;
-  margin-top:8px;
-  color:var(--text);
-  font-size:15px;
-}
-.state span{
-  display:block;
-  margin-top:5px;
-  font-size:9px;
-}
+    /* HEADER */
 
-.toast{
-  position:fixed;
-  right:16px;
-  bottom:18px;
-  z-index:700;
-  padding:12px 15px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  color:var(--text);
-  background:var(--card);
-  box-shadow:var(--shadow);
-  font-size:10px;
-  font-weight:800;
-  opacity:0;
-  transform:translateY(15px);
-  pointer-events:none;
-  transition:.2s;
-}
-.toast.show{
-  opacity:1;
-  transform:none;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      height:70px;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(18px);
+    }
 
-@media(max-width:850px){
-  .layout{
-    grid-template-columns:1fr;
-  }
-}
-@media(max-width:500px){
-  .brand-name{display:none}
-  .container{width:calc(100% - 24px)}
-  .card{padding:15px}
-}
-</style>
+    body.dark .topbar{
+      background:rgba(7,19,33,.95);
+    }
+
+    .topbar-inner{
+      width:min(1200px,94%);
+      height:100%;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:40px;
+      height:40px;
+      border-radius:11px;
+      object-fit:contain;
+      background:var(--card);
+    }
+
+    .brand-name{
+      font-size:14px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+
+    .brand-name span{
+      color:var(--gold);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:3px;
+    }
+
+    .nav a{
+      padding:9px 12px;
+      border-radius:10px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .nav a:hover{
+      background:var(--soft);
+      color:var(--gold);
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:7px;
+    }
+
+    .icon-btn{
+      width:40px;
+      height:40px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--border);
+      border-radius:12px;
+      color:var(--text);
+      background:var(--card);
+      text-decoration:none;
+    }
+
+    /* MAIN */
+
+    .container{
+      width:min(1100px,94%);
+      margin:auto;
+      padding:25px 0 100px;
+    }
+
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:16px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:850;
+    }
+
+    .back:hover{
+      color:var(--gold);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);
+      gap:20px;
+      align-items:start;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      background:var(--card);
+      box-shadow:var(--shadow);
+    }
+
+    /* GALLERY */
+
+    .gallery{
+      overflow:hidden;
+    }
+
+    .main-image-wrap{
+      position:relative;
+      width:100%;
+      aspect-ratio:4/3;
+      background:var(--soft);
+      overflow:hidden;
+    }
+
+    .main-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .image-count{
+      position:absolute;
+      right:12px;
+      bottom:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      color:#fff;
+      background:rgba(0,0,0,.58);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .gallery-arrow{
+      position:absolute;
+      top:50%;
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border:0;
+      border-radius:50%;
+      color:#fff;
+      background:rgba(0,0,0,.48);
+      transform:translateY(-50%);
+      font-size:20px;
+      z-index:2;
+    }
+
+    .gallery-arrow.prev{
+      left:12px;
+    }
+
+    .gallery-arrow.next{
+      right:12px;
+    }
+
+    .gallery-arrow:disabled{
+      opacity:.35;
+    }
+
+    .thumbs{
+      display:flex;
+      gap:8px;
+      padding:10px;
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+
+    .thumbs::-webkit-scrollbar{
+      display:none;
+    }
+
+    .thumb{
+      flex:0 0 74px;
+      height:58px;
+      overflow:hidden;
+      border:2px solid transparent;
+      border-radius:9px;
+      background:var(--soft);
+      padding:0;
+    }
+
+    .thumb.active{
+      border-color:var(--gold);
+    }
+
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    /* DETAILS */
+
+    .details{
+      padding:22px;
+    }
+
+    .category{
+      color:var(--gold);
+      font-size:9px;
+      font-weight:950;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+
+    .title{
+      margin-top:7px;
+      font-size:clamp(24px,4vw,34px);
+      line-height:1.18;
+      font-weight:950;
+      letter-spacing:-.7px;
+    }
+
+    .price{
+      margin-top:13px;
+      font-size:23px;
+      font-weight:950;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:6px 9px;
+      border-radius:999px;
+      color:var(--muted);
+      background:var(--soft);
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .status{
+      color:#fff;
+      background:var(--green);
+    }
+
+    .description{
+      margin-top:20px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+    }
+
+    .section-title{
+      font-size:13px;
+      font-weight:950;
+    }
+
+    .description-text{
+      margin-top:9px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.8;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    /* ACTIONS */
+
+    .actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:20px;
+    }
+
+    .action{
+      min-height:44px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      color:var(--text);
+      background:var(--soft);
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .action.primary{
+      border:0;
+      color:#071a34;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+    }
+
+    .action.favorite.active{
+      color:var(--red);
+      border-color:rgba(201,75,75,.25);
+      background:rgba(201,75,75,.08);
+    }
+
+    .action.report{
+      color:var(--red);
+    }
+
+    /* SELLER */
+
+    .seller-card{
+      margin-top:15px;
+      padding:17px;
+    }
+
+    .seller-head{
+      display:flex;
+      align-items:center;
+      gap:11px;
+    }
+
+    .seller-avatar{
+      width:54px;
+      height:54px;
+      overflow:hidden;
+      flex:none;
+      border:2px solid var(--gold);
+      border-radius:50%;
+      background:var(--soft);
+    }
+
+    .seller-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .seller-name{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:6px;
+      font-size:13px;
+      font-weight:950;
+    }
+
+    .verified{
+      display:inline-flex;
+      align-items:center;
+      gap:3px;
+      padding:4px 7px;
+      border-radius:999px;
+      color:#fff;
+      background:var(--green);
+      font-size:7px;
+      font-weight:950;
+    }
+
+    .seller-location{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    .seller-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:7px;
+      margin-top:12px;
+    }
+
+    .seller-actions a{
+      min-height:38px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:var(--soft);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .seller-actions a.primary{
+      color:#071a34;
+      border:0;
+      background:var(--gold);
+    }
+
+    /* INFO */
+
+    .info-card{
+      margin-top:15px;
+      padding:18px;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:13px;
+    }
+
+    .info-item{
+      padding:11px;
+      border-radius:10px;
+      background:var(--soft);
+    }
+
+    .info-label{
+      color:var(--muted);
+      font-size:8px;
+      font-weight:800;
+    }
+
+    .info-value{
+      margin-top:4px;
+      font-size:10px;
+      font-weight:900;
+      word-break:break-word;
+    }
+
+    /* LOADING */
+
+    .loading{
+      min-height:400px;
+      display:grid;
+      place-items:center;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .error{
+      padding:35px;
+      text-align:center;
+    }
+
+    .error-icon{
+      font-size:35px;
+      color:var(--red);
+    }
+
+    .error strong{
+      display:block;
+      margin-top:10px;
+      font-size:14px;
+    }
+
+    .error p{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.6;
+    }
+
+    /* MODAL */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:500;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(0,0,0,.58);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-box{
+      width:min(480px,100%);
+      max-height:90vh;
+      overflow:auto;
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:var(--card);
+      box-shadow:0 25px 80px rgba(0,0,0,.25);
+    }
+
+    .modal-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .modal-title{
+      font-size:16px;
+      font-weight:950;
+    }
+
+    .close{
+      width:35px;
+      height:35px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      color:var(--text);
+      background:var(--soft);
+    }
+
+    .form-group{
+      margin-top:14px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    select,
+    textarea{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:10px;
+      outline:none;
+      color:var(--text);
+      background:var(--soft);
+    }
+
+    select{
+      height:42px;
+      padding:0 10px;
+    }
+
+    textarea{
+      min-height:110px;
+      padding:10px;
+      resize:vertical;
+    }
+
+    .submit-report{
+      width:100%;
+      min-height:43px;
+      margin-top:14px;
+      border:0;
+      border-radius:10px;
+      color:#071a34;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      font-size:10px;
+      font-weight:950;
+    }
+
+    /* TOAST */
+
+    .toast{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:900;
+      max-width:340px;
+      padding:12px 15px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      color:var(--text);
+      background:var(--card);
+      box-shadow:var(--shadow);
+      font-size:10px;
+      font-weight:800;
+      opacity:0;
+      transform:translateY(15px);
+      pointer-events:none;
+      transition:.2s ease;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* MOBILE */
+
+    .mobile-nav{
+      display:none;
+    }
+
+    @media(max-width:900px){
+      .nav{
+        display:none;
+      }
+
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .mobile-nav{
+        position:fixed;
+        display:block;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:200;
+        height:65px;
+        border-top:1px solid var(--border);
+        background:rgba(255,255,255,.95);
+        backdrop-filter:blur(18px);
+      }
+
+      body.dark .mobile-nav{
+        background:rgba(7,19,33,.96);
+      }
+
+      .mobile-nav-inner{
+        height:100%;
+        display:grid;
+        grid-template-columns:repeat(5,1fr);
+      }
+
+      .mobile-nav a{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:3px;
+        color:var(--muted);
+        font-size:8px;
+        font-weight:850;
+      }
+
+      .mobile-nav a.active{
+        color:var(--gold);
+      }
+
+      .mobile-icon{
+        font-size:17px;
+      }
+
+      .container{
+        padding-bottom:90px;
+      }
+    }
+
+    @media(max-width:520px){
+      .brand-name{
+        display:none;
+      }
+
+      .container{
+        width:calc(100% - 24px);
+      }
+
+      .details{
+        padding:16px;
+      }
+
+      .actions{
+        grid-template-columns:1fr;
+      }
+
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -428,7 +759,7 @@ body.dark .topbar{background:rgba(7,19,33,.96)}
 <header class="topbar">
   <div class="topbar-inner">
 
-    <a href="./posts.html" class="brand">
+    <a href="./general.html" class="brand">
       <img
         src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
         alt="Myanmar Elite Connect">
@@ -437,9 +768,29 @@ body.dark .topbar{background:rgba(7,19,33,.96)}
       </div>
     </a>
 
-    <div class="actions">
-      <button id="themeButton" class="icon-btn">☾</button>
-      <a href="./profile.html" class="icon-btn">♙</a>
+    <nav class="nav">
+      <a href="./general.html">Home</a>
+      <a href="./buy.html">Buy</a>
+      <a href="./sell.html">Sell</a>
+      <a href="./car.html">Cars</a>
+      <a href="./property.html">Property</a>
+      <a href="./chat.html">Chat</a>
+      <a href="./profile.html">Profile</a>
+    </nav>
+
+    <div class="header-actions">
+      <button
+        id="themeButton"
+        class="icon-btn"
+        type="button">
+        ☾
+      </button>
+
+      <a
+        href="./profile.html"
+        class="icon-btn">
+        ♙
+      </a>
     </div>
 
   </div>
@@ -447,158 +798,137 @@ body.dark .topbar{background:rgba(7,19,33,.96)}
 
 <main class="container">
 
-  <a href="./posts.html" class="back">
-    ← Back to Posts
+  <a href="./buy.html" class="back">
+    ← Back to listings
   </a>
 
-  <div id="pageState" class="state">
-    Loading listing...
-  </div>
+  <div id="page">
 
-  <div id="content" style="display:none">
-
-    <div class="layout">
-
-      <section class="gallery">
-
-        <div class="main-image">
-          <img id="mainImage" alt="Listing image">
-          <div id="imageCounter" class="image-counter"></div>
-        </div>
-
-        <div id="thumbs" class="thumbs"></div>
-
-      </section>
-
-      <section class="details">
-
-        <div class="card">
-
-          <div id="category" class="category"></div>
-
-          <h1 id="title" class="title"></h1>
-
-          <div id="price" class="price"></div>
-
-          <div id="meta" class="meta"></div>
-
-          <div id="status" class="status"></div>
-
-          <div id="description" class="description"></div>
-
-          <div class="actions-grid">
-
-            <button
-              id="favoriteButton"
-              class="action"
-              type="button">
-              ♡ Favorite
-            </button>
-
-            <button
-              id="reportButton"
-              class="action danger"
-              type="button">
-              ⚑ Report
-            </button>
-
-            <button
-              id="chatButton"
-              class="action primary"
-              type="button">
-              💬 Chat Seller
-            </button>
-
-            <a
-              id="callButton"
-              class="action primary"
-              style="display:grid;place-items:center;"
-              href="#">
-              ☎ Contact
-            </a>
-
-          </div>
-
-        </div>
-
-        <div class="seller">
-
-          <div class="seller-title">
-            SELLER
-          </div>
-
-          <div class="seller-row">
-
-            <img
-              id="sellerAvatar"
-              class="seller-avatar"
-              alt="Seller">
-
-            <div>
-              <div id="sellerName" class="seller-name">
-                Member
-              </div>
-              <div id="sellerVerified" class="verified"></div>
-            </div>
-
-          </div>
-
-          <div class="seller-buttons">
-
-            <a id="profileButton" href="#">
-              View Profile
-            </a>
-
-            <a id="sellerChatButton" href="#">
-              Message Seller
-            </a>
-
-          </div>
-
-        </div>
-
-      </section>
-
+    <div class="card loading">
+      Loading listing...
     </div>
 
   </div>
 
 </main>
 
-<div id="reportModal" class="modal">
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
 
-  <div class="modal-card">
+    <a href="./general.html">
+      <div class="mobile-icon">⌂</div>
+      Home
+    </a>
 
-    <h3>Report this listing</h3>
+    <a href="./buy.html" class="active">
+      <div class="mobile-icon">◈</div>
+      Buy
+    </a>
 
-    <p>
-      Your report will be sent to the Myanmar Elite Connect admin team.
-    </p>
+    <a href="./add-listing.html">
+      <div class="mobile-icon">＋</div>
+      Sell
+    </a>
 
-    <select id="reportReason">
-      <option value="scam">Scam / Fraud</option>
-      <option value="fake">Fake listing</option>
-      <option value="wrong_information">Wrong information</option>
-      <option value="prohibited">Prohibited item</option>
-      <option value="harassment">Harassment</option>
-      <option value="other">Other</option>
-    </select>
+    <a href="./chat.html">
+      <div class="mobile-icon">◌</div>
+      Chat
+    </a>
 
-    <textarea
-      id="reportDetails"
-      placeholder="Additional details..."></textarea>
+    <a href="./profile.html">
+      <div class="mobile-icon">♙</div>
+      Profile
+    </a>
 
-    <div class="modal-actions">
+  </div>
+</nav>
 
-      <button id="cancelReport">
-        Cancel
+<!-- REPORT MODAL -->
+
+<div
+  id="reportModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <div class="modal-title">
+        Report Listing
+      </div>
+
+      <button
+        id="closeReport"
+        class="close"
+        type="button">
+        ×
       </button>
-
-      <button id="submitReport" class="submit">
-        Submit Report
-      </button>
-
     </div>
+
+    <form id="reportForm">
+
+      <div class="form-group">
+
+        <label for="reportReason">
+          Reason
+        </label>
+
+        <select id="reportReason" required>
+
+          <option value="">
+            Select a reason
+          </option>
+
+          <option value="scam">
+            Scam / Fraud
+          </option>
+
+          <option value="fake_listing">
+            Fake Listing
+          </option>
+
+          <option value="wrong_information">
+            Wrong Information
+          </option>
+
+          <option value="prohibited_item">
+            Prohibited Item
+          </option>
+
+          <option value="harassment">
+            Harassment
+          </option>
+
+          <option value="other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="reportDetails">
+          Details
+        </label>
+
+        <textarea
+          id="reportDetails"
+          maxlength="1000"
+          placeholder="Tell the admin what is wrong with this listing..."></textarea>
+
+      </div>
+
+      <button
+        id="submitReport"
+        class="submit-report"
+        type="submit">
+
+        Send Report to Admin
+
+      </button>
+
+    </form>
 
   </div>
 
@@ -607,637 +937,1493 @@ body.dark .topbar{background:rgba(7,19,33,.96)}
 <div id="toast" class="toast"></div>
 
 <script>
-const supabase = supabaseClient;
+  /* =====================================================
+     CONFIG
+  ===================================================== */
 
-const params =
-  new URLSearchParams(location.search);
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
-const listingId =
-  params.get("id");
+  const listingId =
+    params.get("id");
 
-let listing = null;
-let seller = null;
-let images = [];
-let currentUser = null;
+  const LISTING_IMAGES_BUCKET =
+    "listing-images";
 
-function escapeHTML(value){
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
+  let currentUser = null;
+  let listing = null;
+  let seller = null;
+  let images = [];
+  let currentImage = 0;
+  let favorite = false;
 
-function normalize(value){
-  return String(value || "").trim().toLowerCase();
-}
 
-function toast(message){
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.className = "toast show";
-  clearTimeout(window.__toast);
-  window.__toast =
-    setTimeout(()=>{
-      el.className = "toast";
-    },2800);
-}
+  /* =====================================================
+     HELPERS
+  ===================================================== */
 
-function applyTheme(theme){
-  document.body.classList.toggle(
-    "dark",
-    theme === "dark"
-  );
-
-  document.getElementById("themeButton")
-    .textContent =
-      theme === "dark" ? "☀" : "☾";
-
-  localStorage.setItem(
-    "mec_theme",
-    theme
-  );
-}
-
-document.getElementById("themeButton").onclick = ()=>{
-  applyTheme(
-    document.body.classList.contains("dark")
-      ? "light"
-      : "dark"
-  );
-};
-
-function formatPrice(item){
-  const n = Number(item.price);
-
-  if(!Number.isFinite(n) || n <= 0){
-    return "Price on request";
+  function escapeHTML(value){
+    return String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
   }
 
-  return `${escapeHTML(
-    item.currency || "MMK"
-  )} ${n.toLocaleString()}`;
-}
-
-function formatLocation(item){
-  return [
-    item.city,
-    item.township,
-    item.address
-  ].filter(Boolean).join(" · ") || "Myanmar";
-}
-
-async function getCurrentUser(){
-  const {data} =
-    await supabase.auth.getUser();
-
-  return data?.user || null;
-}
-
-async function loadListing(){
-
-  if(!listingId){
-    showError("Listing ID is missing.");
-    return;
+  function normalize(value){
+    return String(value || "")
+      .trim()
+      .toLowerCase();
   }
 
-  const {data,error} =
-    await supabase
-      .from("listings")
-      .select(`
-        id,
-        user_id,
-        category,
-        listing_type,
-        title,
-        description,
-        price,
-        currency,
-        city,
-        township,
-        address,
-        status,
-        featured,
-        created_at,
-        updated_at,
-        images,
-        seller_id,
-        post_role,
-        phone
-      `)
-      .eq("id",listingId)
-      .maybeSingle();
-
-  if(error){
-    showError(error.message);
-    return;
-  }
-
-  if(!data){
-    showError("This listing does not exist.");
-    return;
-  }
-
-  listing = data;
-
-  /*
-   * Public detail page only exposes approved listings.
-   * Owners/admins can still see their own pending posts
-   * if they enter the direct URL.
-   */
-  if(
-    normalize(listing.status) !== "approved"
+  function toast(
+    message,
+    type="success"
   ){
+    const el =
+      document.getElementById("toast");
 
-    const user =
-      await getCurrentUser();
+    el.textContent =
+      message;
 
-    const isOwner =
-      user &&
-      user.id === listing.user_id;
+    el.className =
+      `toast show ${type}`;
 
-    let isAdmin = false;
+    clearTimeout(
+      window.__toastTimer
+    );
 
-    if(user){
-      const result =
-        await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id",user.id)
-          .maybeSingle();
-
-      isAdmin =
-        result.data?.role === "admin";
-    }
-
-    if(!isOwner && !isAdmin){
-      showError(
-        "This listing is not available publicly."
+    window.__toastTimer =
+      setTimeout(
+        () => {
+          el.className =
+            "toast";
+        },
+        3000
       );
-      return;
+  }
+
+  function formatPrice(item){
+
+    const price =
+      Number(item.price);
+
+    if(
+      !Number.isFinite(price) ||
+      price <= 0
+    ){
+      return "Price on request";
     }
+
+    return `${escapeHTML(
+      item.currency || "MMK"
+    )} ${price.toLocaleString()}`;
   }
 
-  currentUser =
-    await getCurrentUser();
+  function formatLocation(item){
 
-  await loadSeller();
-  await loadImages();
-
-  render();
-}
-
-async function loadSeller(){
-
-  const sellerId =
-    listing.seller_id ||
-    listing.user_id;
-
-  if(!sellerId){
-    return;
-  }
-
-  const {data} =
-    await supabase
-      .from("profiles")
-      .select(
-        "id,full_name,avatar_url,city,role"
+    const values = [
+      item.city,
+      item.township,
+      item.address
+    ]
+      .map(
+        value =>
+          String(value || "").trim()
       )
-      .eq("id",sellerId)
-      .maybeSingle();
+      .filter(Boolean);
 
-  seller = data || null;
-}
+    const unique = [];
 
-async function loadImages(){
+    values.forEach(value => {
 
-  const {data} =
-    await supabase
-      .from("listing_images")
-      .select("image_url,sort_order")
-      .eq("listing_id",listing.id)
-      .order("sort_order",{ascending:true});
-
-  if(data?.length){
-    images =
-      data
-        .map(x=>x.image_url)
-        .filter(Boolean);
-  }else{
-    images =
-      Array.isArray(listing.images)
-        ? listing.images.filter(Boolean)
-        : [];
-  }
-}
-
-function render(){
-
-  document.getElementById("pageState")
-    .style.display = "none";
-
-  document.getElementById("content")
-    .style.display = "block";
-
-  document.getElementById("category")
-    .textContent =
-      String(listing.category || "Listing")
-        .toUpperCase();
-
-  document.getElementById("title")
-    .textContent =
-      listing.title || "Untitled listing";
-
-  document.getElementById("price")
-    .innerHTML =
-      formatPrice(listing);
-
-  document.getElementById("meta")
-    .innerHTML = `
-      ⌖ ${escapeHTML(formatLocation(listing))}
-      <br>
-      ${escapeHTML(
-        listing.listing_type || "Listing"
-      )}
-      · Posted ${
-        listing.created_at
-          ? new Date(listing.created_at)
-              .toLocaleDateString(
-                "en-GB",
-                {
-                  day:"2-digit",
-                  month:"short",
-                  year:"numeric"
-                }
-              )
-          : ""
+      if(
+        !unique.some(
+          x =>
+            normalize(x) ===
+            normalize(value)
+        )
+      ){
+        unique.push(value);
       }
-    `;
 
-  document.getElementById("status")
-    .textContent =
-      String(
-        listing.status || "pending"
-      ).toUpperCase();
-
-  document.getElementById("description")
-    .textContent =
-      listing.description ||
-      "No description provided.";
-
-  renderGallery();
-  renderSeller();
-}
-
-function renderGallery(){
-
-  const main =
-    document.getElementById("mainImage");
-
-  const thumbs =
-    document.getElementById("thumbs");
-
-  if(!images.length){
-
-    main.style.display = "none";
-
-    document.getElementById("imageCounter")
-      .textContent = "No images";
-
-    thumbs.innerHTML = "";
-
-    return;
-  }
-
-  main.src = images[0];
-
-  document.getElementById("imageCounter")
-    .textContent =
-      `1 / ${images.length}`;
-
-  thumbs.innerHTML =
-    images.map((src,index)=>`
-      <button
-        class="thumb ${index === 0 ? "active" : ""}"
-        type="button"
-        onclick="changeImage(${index})">
-        <img
-          src="${escapeHTML(src)}"
-          alt="Image ${index+1}">
-      </button>
-    `).join("");
-}
-
-function changeImage(index){
-
-  if(!images[index]){
-    return;
-  }
-
-  document.getElementById("mainImage")
-    .src = images[index];
-
-  document.getElementById("imageCounter")
-    .textContent =
-      `${index+1} / ${images.length}`;
-
-  document.querySelectorAll(".thumb")
-    .forEach((el,i)=>{
-      el.classList.toggle(
-        "active",
-        i === index
-      );
     });
-}
 
-window.changeImage = changeImage;
+    return unique.length
+      ? unique.join(" · ")
+      : "Myanmar";
+  }
 
-function renderSeller(){
+  function formatDate(value){
 
-  const name =
-    seller?.full_name || "Member";
+    if(!value){
+      return "—";
+    }
 
-  document.getElementById("sellerName")
-    .textContent = name;
+    const date =
+      new Date(value);
 
-  document.getElementById("sellerAvatar")
-    .src =
-      seller?.avatar_url || "";
+    if(
+      Number.isNaN(
+        date.getTime()
+      )
+    ){
+      return "—";
+    }
 
-  if(
-    listing.post_role === "verified" ||
-    seller?.role === "admin"
+    return date.toLocaleDateString(
+      "en-GB",
+      {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+      }
+    );
+  }
+
+  function getPublicUrl(
+    path
   ){
-    document.getElementById("sellerVerified")
-      .textContent = "✓ Verified";
-  }
 
-  if(seller?.id){
-
-    document.getElementById("profileButton")
-      .href =
-        `./public-profile.html?id=${encodeURIComponent(
-          seller.id
-        )}`;
-
-  }else{
-
-    document.getElementById("profileButton")
-      .style.display = "none";
-  }
-
-  const phone =
-    listing.phone;
-
-  if(phone){
-
-    document.getElementById("callButton")
-      .href =
-        `tel:${encodeURIComponent(phone)}`;
-
-  }else{
-
-    document.getElementById("callButton")
-      .style.display = "none";
-  }
-
-  document.getElementById("sellerChatButton")
-    .onclick = event=>{
-      event.preventDefault();
-      startChat();
-    };
-
-  document.getElementById("chatButton")
-    .onclick = startChat;
-}
-
-async function startChat(){
-
-  if(!currentUser){
-    window.location.href =
-      "./auth.html";
-    return;
-  }
-
-  const sellerId =
-    listing.seller_id ||
-    listing.user_id;
-
-  if(!sellerId){
-    toast("Seller account not found.");
-    return;
-  }
-
-  if(sellerId === currentUser.id){
-    toast("This is your own listing.");
-    return;
-  }
-
-  /*
-   * chat.html can read seller through query parameter.
-   * The chat page can then create/find the room.
-   */
-  window.location.href =
-    `./chat.html?user=${encodeURIComponent(
-      sellerId
-    )}`;
-}
-
-async function loadFavorite(){
-
-  if(!currentUser){
-    return;
-  }
-
-  const {data} =
-    await supabase
-      .from("favorites")
-      .select("id")
-      .eq("user_id",currentUser.id)
-      .eq("listing_id",listing.id)
-      .maybeSingle();
-
-  const button =
-    document.getElementById("favoriteButton");
-
-  if(data){
-    button.textContent =
-      "♥ Favorited";
-  }else{
-    button.textContent =
-      "♡ Favorite";
-  }
-}
-
-document.getElementById("favoriteButton")
-  .onclick = async ()=>{
-
-    if(!currentUser){
-      window.location.href =
-        "./auth.html";
-      return;
-    }
-
-    const {data} =
-      await supabase
-        .from("favorites")
-        .select("id")
-        .eq("user_id",currentUser.id)
-        .eq("listing_id",listing.id)
-        .maybeSingle();
-
-    if(data){
-
-      const {error} =
-        await supabase
-          .from("favorites")
-          .delete()
-          .eq("id",data.id);
-
-      if(error){
-        toast(error.message);
-        return;
-      }
-
-      toast("Removed from favorites.");
-
-    }else{
-
-      const {error} =
-        await supabase
-          .from("favorites")
-          .insert({
-            user_id:currentUser.id,
-            listing_id:listing.id
-          });
-
-      if(error){
-        toast(error.message);
-        return;
-      }
-
-      toast("Added to favorites.");
-    }
-
-    await loadFavorite();
-  };
-
-/* REPORT */
-
-document.getElementById("reportButton")
-  .onclick = async ()=>{
-
-    if(!currentUser){
-      window.location.href =
-        "./auth.html";
-      return;
+    if(!path){
+      return "";
     }
 
     if(
-      currentUser.id ===
-      listing.user_id
+      /^https?:\/\//i.test(path)
     ){
-      toast("You cannot report your own listing.");
+      return path;
+    }
+
+    const {
+      data
+    } =
+      supabaseClient.storage
+        .from(
+          LISTING_IMAGES_BUCKET
+        )
+        .getPublicUrl(path);
+
+    return data?.publicUrl || "";
+  }
+
+
+  /* =====================================================
+     THEME
+  ===================================================== */
+
+  function applyTheme(theme){
+
+    document.body.classList.toggle(
+      "dark",
+      theme === "dark"
+    );
+
+    document.getElementById(
+      "themeButton"
+    ).textContent =
+      theme === "dark"
+        ? "☀"
+        : "☾";
+
+    localStorage.setItem(
+      "mec_theme",
+      theme
+    );
+  }
+
+  document.getElementById(
+    "themeButton"
+  ).addEventListener(
+    "click",
+    () => {
+
+      const dark =
+        document.body.classList.contains(
+          "dark"
+        );
+
+      applyTheme(
+        dark
+          ? "light"
+          : "dark"
+      );
+
+    }
+  );
+
+
+  /* =====================================================
+     AUTH
+  ===================================================== */
+
+  async function getUser(){
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getUser();
+
+    if(error){
+      throw error;
+    }
+
+    return data?.user || null;
+  }
+
+
+  /* =====================================================
+     LOAD LISTING
+  ===================================================== */
+
+  async function loadListing(){
+
+    if(!listingId){
+
+      showError(
+        "Listing ID is missing.",
+        "Please open the post from a listing page."
+      );
+
       return;
     }
 
-    document.getElementById("reportModal")
-      .classList.add("show");
-  };
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("listings")
+        .select(`
+          id,
+          user_id,
+          category,
+          listing_type,
+          title,
+          description,
+          price,
+          currency,
+          city,
+          township,
+          address,
+          status,
+          featured,
+          created_at,
+          updated_at,
+          location,
+          phone,
+          images,
+          seller_id,
+          post_role
+        `)
+        .eq(
+          "id",
+          listingId
+        )
+        .maybeSingle();
 
-document.getElementById("cancelReport")
-  .onclick = ()=>{
-    document.getElementById("reportModal")
-      .classList.remove("show");
-  };
+    if(error){
+      throw error;
+    }
 
-document.getElementById("submitReport")
-  .onclick = async ()=>{
+    if(!data){
 
-    const reason =
-      document.getElementById("reportReason")
-        .value;
+      showError(
+        "Listing not found.",
+        "This post may have been deleted or is no longer available."
+      );
 
-    const details =
-      document.getElementById("reportDetails")
-        .value.trim();
+      return;
+    }
+
+    listing =
+      data;
+
+    /*
+     * Public detail page only shows approved posts.
+     * Owner can still open their own post while testing
+     * or managing it.
+     */
+    const status =
+      normalize(
+        listing.status
+      );
+
+    if(
+      status !== "approved" &&
+      listing.user_id !== currentUser?.id
+    ){
+
+      showError(
+        "This listing is not available.",
+        "The post has not been approved or is no longer public."
+      );
+
+      return;
+    }
+
+    await Promise.all([
+      loadSeller(),
+      loadImages(),
+      checkFavorite()
+    ]);
+
+    renderListing();
+  }
+
+
+  /* =====================================================
+     LOAD SELLER
+  ===================================================== */
+
+  async function loadSeller(){
+
+    const sellerId =
+      listing.seller_id ||
+      listing.user_id;
+
+    if(!sellerId){
+      return;
+    }
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(`
+          id,
+          full_name,
+          phone,
+          avatar_url,
+          city,
+          bio,
+          role,
+          created_at
+        `)
+        .eq(
+          "id",
+          sellerId
+        )
+        .maybeSingle();
+
+    if(error){
+      console.warn(
+        "Seller profile error:",
+        error
+      );
+
+      return;
+    }
+
+    seller =
+      data || null;
+  }
+
+
+  /* =====================================================
+     LOAD IMAGES
+  ===================================================== */
+
+  async function loadImages(){
+
+    images = [];
+
+    /*
+     * First use listing_images table.
+     */
+
+    const {
+      data:rows,
+      error
+    } =
+      await supabaseClient
+        .from("listing_images")
+        .select(`
+          id,
+          listing_id,
+          image_url,
+          sort_order,
+          created_at
+        `)
+        .eq(
+          "listing_id",
+          listing.id
+        )
+        .order(
+          "sort_order",
+          {
+            ascending:true
+          }
+        );
+
+    if(!error && Array.isArray(rows)){
+
+      images =
+        rows
+          .map(
+            row =>
+              getPublicUrl(
+                row.image_url
+              )
+          )
+          .filter(Boolean);
+
+    }
+
+    /*
+     * Backward compatibility:
+     * old listings may still have images[]
+     */
+
+    if(!images.length){
+
+      if(
+        Array.isArray(
+          listing.images
+        )
+      ){
+
+        images =
+          listing.images
+            .map(
+              value =>
+                getPublicUrl(value)
+            )
+            .filter(Boolean);
+
+      }
+
+    }
+
+    /*
+     * If no image exists,
+     * use a generated soft placeholder.
+     */
+
+    if(!images.length){
+
+      images = [""];
+    }
+  }
+
+
+  /* =====================================================
+     FAVORITES
+  ===================================================== */
+
+  async function checkFavorite(){
+
+    if(
+      !currentUser ||
+      !listing?.id
+    ){
+      favorite = false;
+      return;
+    }
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("favorites")
+        .select("id")
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .eq(
+          "listing_id",
+          listing.id
+        )
+        .maybeSingle();
+
+    if(error){
+      console.warn(
+        "Favorite check:",
+        error
+      );
+
+      return;
+    }
+
+    favorite =
+      !!data;
+  }
+
+  async function toggleFavorite(){
+
+    if(!currentUser){
+
+      window.location.href =
+        `./auth.html?redirect=${encodeURIComponent(
+          window.location.href
+        )}`;
+
+      return;
+    }
 
     const button =
-      document.getElementById("submitReport");
+      document.getElementById(
+        "favoriteButton"
+      );
 
-    button.disabled = true;
-    button.textContent = "Sending...";
+    button.disabled =
+      true;
 
     try{
 
-      const {error} =
-        await supabase
-          .from("reports")
-          .insert({
-            user_id:currentUser.id,
-            listing_id:listing.id,
-            reason,
-            details,
-            status:"pending"
-          });
+      if(favorite){
 
-      if(error){
-        throw error;
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("favorites")
+            .delete()
+            .eq(
+              "user_id",
+              currentUser.id
+            )
+            .eq(
+              "listing_id",
+              listing.id
+            );
+
+        if(error){
+          throw error;
+        }
+
+        favorite =
+          false;
+
+        toast(
+          "Removed from favorites."
+        );
+
+      }
+      else{
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("favorites")
+            .insert({
+              user_id:
+                currentUser.id,
+              listing_id:
+                listing.id
+            });
+
+        if(error){
+          throw error;
+        }
+
+        favorite =
+          true;
+
+        toast(
+          "Added to favorites."
+        );
       }
 
-      document.getElementById("reportModal")
-        .classList.remove("show");
+      updateFavoriteButton();
 
-      document.getElementById("reportDetails")
-        .value = "";
-
-      toast(
-        "Report submitted to admin."
-      );
-
-    }catch(error){
+    }
+    catch(error){
 
       console.error(error);
+
       toast(
         error.message ||
-        "Could not submit report."
+        "Could not update favorite.",
+        "error"
       );
 
-    }finally{
-
-      button.disabled = false;
-      button.textContent = "Submit Report";
     }
-  };
+    finally{
 
-function showError(message){
+      button.disabled =
+        false;
 
-  document.getElementById("pageState")
-    .innerHTML = `
-      <div style="font-size:34px;color:var(--gold)">
-        !
+    }
+  }
+
+  function updateFavoriteButton(){
+
+    const button =
+      document.getElementById(
+        "favoriteButton"
+      );
+
+    if(!button){
+      return;
+    }
+
+    button.classList.toggle(
+      "active",
+      favorite
+    );
+
+    button.textContent =
+      favorite
+        ? "♥ Saved"
+        : "♡ Save";
+  }
+
+
+  /* =====================================================
+     RENDER
+  ===================================================== */
+
+  function renderListing(){
+
+    const page =
+      document.getElementById(
+        "page"
+      );
+
+    const cover =
+      images[currentImage] ||
+      "";
+
+    const category =
+      normalize(
+        listing.category
+      ).toUpperCase();
+
+    const sellerName =
+      seller?.full_name ||
+      "Myanmar Elite Connect Member";
+
+    const sellerAvatar =
+      seller?.avatar_url ||
+      "";
+
+    const isVerified =
+      false;
+
+    page.innerHTML = `
+
+      <div class="layout">
+
+        <section>
+
+          <div class="card gallery">
+
+            <div class="main-image-wrap">
+
+              ${
+                cover
+                  ? `
+                    <img
+                      id="mainImage"
+                      class="main-image"
+                      src="${escapeHTML(cover)}"
+                      alt="${escapeHTML(
+                        listing.title || "Listing"
+                      )}">
+                  `
+                  : `
+                    <div
+                      style="
+                        width:100%;
+                        height:100%;
+                        display:grid;
+                        place-items:center;
+                        color:var(--muted);
+                        font-size:12px;
+                      ">
+                      No image available
+                    </div>
+                  `
+              }
+
+              ${
+                images.length > 1
+                  ? `
+                    <button
+                      class="gallery-arrow prev"
+                      id="prevImage"
+                      type="button">
+                      ‹
+                    </button>
+
+                    <button
+                      class="gallery-arrow next"
+                      id="nextImage"
+                      type="button">
+                      ›
+                    </button>
+                  `
+                  : ""
+              }
+
+              <div class="image-count">
+                ${
+                  images[0]
+                    ? `${currentImage + 1} / ${images.length}`
+                    : "No photo"
+                }
+              </div>
+
+            </div>
+
+            ${
+              images.length > 1
+                ? `
+                  <div
+                    id="thumbs"
+                    class="thumbs">
+
+                    ${images.map(
+                      (image,index) => `
+                        <button
+                          class="thumb ${
+                            index === currentImage
+                              ? "active"
+                              : ""
+                          }"
+                          data-index="${index}"
+                          type="button">
+
+                          ${
+                            image
+                              ? `
+                                <img
+                                  src="${escapeHTML(image)}"
+                                  alt="Photo ${index + 1}">
+                              `
+                              : ""
+                          }
+
+                        </button>
+                      `
+                    ).join("")}
+
+                  </div>
+                `
+                : ""
+            }
+
+          </div>
+
+          <section class="card info-card">
+
+            <div class="section-title">
+              Listing Information
+            </div>
+
+            <div class="info-grid">
+
+              <div class="info-item">
+                <div class="info-label">
+                  Category
+                </div>
+                <div class="info-value">
+                  ${escapeHTML(
+                    listing.category || "—"
+                  )}
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">
+                  Listing Type
+                </div>
+                <div class="info-value">
+                  ${escapeHTML(
+                    listing.listing_type || "—"
+                  )}
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">
+                  Location
+                </div>
+                <div class="info-value">
+                  ${escapeHTML(
+                    formatLocation(listing)
+                  )}
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">
+                  Posted
+                </div>
+                <div class="info-value">
+                  ${escapeHTML(
+                    formatDate(
+                      listing.created_at
+                    )
+                  )}
+                </div>
+              </div>
+
+              ${
+                listing.post_role
+                  ? `
+                    <div class="info-item">
+                      <div class="info-label">
+                        Post Role
+                      </div>
+                      <div class="info-value">
+                        ${escapeHTML(
+                          listing.post_role
+                        )}
+                      </div>
+                    </div>
+                  `
+                  : ""
+              }
+
+              ${
+                listing.featured
+                  ? `
+                    <div class="info-item">
+                      <div class="info-label">
+                        Status
+                      </div>
+                      <div class="info-value">
+                        Featured Listing
+                      </div>
+                    </div>
+                  `
+                  : ""
+              }
+
+            </div>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <div class="card details">
+
+            <div class="category">
+              ${escapeHTML(category)}
+            </div>
+
+            <h1 class="title">
+              ${escapeHTML(
+                listing.title ||
+                "Untitled Listing"
+              )}
+            </h1>
+
+            <div class="price">
+              ${formatPrice(listing)}
+            </div>
+
+            <div class="meta">
+
+              ${
+                listing.status
+                  ? `
+                    <span class="pill status">
+                      ✓ ${escapeHTML(
+                        listing.status
+                      )}
+                    </span>
+                  `
+                  : ""
+              }
+
+              <span class="pill">
+                ⌖ ${escapeHTML(
+                  formatLocation(listing)
+                )}
+              </span>
+
+              ${
+                listing.featured
+                  ? `
+                    <span class="pill">
+                      ◆ Featured
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            <div class="description">
+
+              <div class="section-title">
+                Description
+              </div>
+
+              <div class="description-text">
+                ${escapeHTML(
+                  listing.description ||
+                  "No description provided."
+                )}
+              </div>
+
+            </div>
+
+            <div class="actions">
+
+              <button
+                id="favoriteButton"
+                class="action favorite"
+                type="button">
+                ♡ Save
+              </button>
+
+              <button
+                id="reportButton"
+                class="action report"
+                type="button">
+                ⚑ Report
+              </button>
+
+              ${
+                currentUser &&
+                currentUser.id ===
+                  listing.user_id
+                  ? `
+                    <a
+                      class="action"
+                      href="./add-listing.html?id=${encodeURIComponent(
+                        listing.id
+                      )}"
+                      style="
+                        display:grid;
+                        place-items:center;
+                      ">
+                      Edit Listing
+                    </a>
+                  `
+                  : ""
+              }
+
+            </div>
+
+          </div>
+
+          <div class="card seller-card">
+
+            <div class="seller-head">
+
+              <div class="seller-avatar">
+
+                ${
+                  sellerAvatar
+                    ? `
+                      <img
+                        src="${escapeHTML(
+                          sellerAvatar
+                        )}"
+                        alt="${escapeHTML(
+                          sellerName
+                        )}">
+                    `
+                    : ""
+                }
+
+              </div>
+
+              <div>
+
+                <div class="seller-name">
+
+                  ${escapeHTML(
+                    sellerName
+                  )}
+
+                  ${
+                    isVerified
+                      ? `
+                        <span class="verified">
+                          ✓ Verified
+                        </span>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+                <div class="seller-location">
+                  ${
+                    seller?.city
+                      ? `⌖ ${escapeHTML(
+                          seller.city
+                        )}`
+                      : "Myanmar Elite Connect Member"
+                  }
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="seller-actions">
+
+              ${
+                seller?.id
+                  ? `
+                    <a
+                      class="primary"
+                      href="./profile-view.html?id=${encodeURIComponent(
+                        seller.id
+                      )}">
+                      View Profile
+                    </a>
+                  `
+                  : ""
+              }
+
+              ${
+                listing.phone ||
+                seller?.phone
+                  ? `
+                    <a
+                      href="tel:${encodeURIComponent(
+                        listing.phone ||
+                        seller.phone
+                      )}">
+                      ☎ Contact
+                    </a>
+                  `
+                  : `
+                    <a
+                      href="./chat.html?user=${encodeURIComponent(
+                        seller?.id ||
+                        listing.user_id
+                      )}">
+                      💬 Chat Seller
+                    </a>
+                  `
+              }
+
+            </div>
+
+            ${
+              listing.phone ||
+              seller?.phone
+                ? `
+                  <div
+                    style="
+                      margin-top:10px;
+                      padding:10px;
+                      border-radius:10px;
+                      background:var(--soft);
+                      color:var(--muted);
+                      font-size:9px;
+                    ">
+                    ☎ ${escapeHTML(
+                      listing.phone ||
+                      seller.phone
+                    )}
+                  </div>
+                `
+                : ""
+            }
+
+          </div>
+
+        </section>
+
       </div>
-      <strong>Listing unavailable</strong>
-      <span>${escapeHTML(message)}</span>
     `;
-}
 
-async function init(){
+    updateFavoriteButton();
 
-  applyTheme(
-    localStorage.getItem("mec_theme") ||
-    "light"
+    bindGallery();
+
+    document.getElementById(
+      "favoriteButton"
+    ).addEventListener(
+      "click",
+      toggleFavorite
+    );
+
+    document.getElementById(
+      "reportButton"
+    ).addEventListener(
+      "click",
+      openReport
+    );
+  }
+
+
+  /* =====================================================
+     GALLERY
+  ===================================================== */
+
+  function bindGallery(){
+
+    const prev =
+      document.getElementById(
+        "prevImage"
+      );
+
+    const next =
+      document.getElementById(
+        "nextImage"
+      );
+
+    if(prev){
+
+      prev.addEventListener(
+        "click",
+        () => {
+
+          currentImage =
+            (
+              currentImage -
+              1 +
+              images.length
+            ) %
+            images.length;
+
+          updateGallery();
+
+        }
+      );
+
+    }
+
+    if(next){
+
+      next.addEventListener(
+        "click",
+        () => {
+
+          currentImage =
+            (
+              currentImage +
+              1
+            ) %
+            images.length;
+
+          updateGallery();
+
+        }
+      );
+
+    }
+
+    document
+      .querySelectorAll(
+        ".thumb"
+      )
+      .forEach(
+        thumb => {
+
+          thumb.addEventListener(
+            "click",
+            () => {
+
+              currentImage =
+                Number(
+                  thumb.dataset.index
+                );
+
+              updateGallery();
+
+            }
+          );
+
+        }
+      );
+  }
+
+  function updateGallery(){
+
+    const main =
+      document.getElementById(
+        "mainImage"
+      );
+
+    if(main){
+
+      main.src =
+        images[currentImage] ||
+        "";
+    }
+
+    document
+      .querySelectorAll(
+        ".thumb"
+      )
+      .forEach(
+        (thumb,index) => {
+
+          thumb.classList.toggle(
+            "active",
+            index === currentImage
+          );
+
+        }
+      );
+
+    const counter =
+      document.querySelector(
+        ".image-count"
+      );
+
+    if(counter){
+
+      counter.textContent =
+        images[0]
+          ? `${currentImage + 1} / ${images.length}`
+          : "No photo";
+
+    }
+  }
+
+
+  /* =====================================================
+     REPORT
+  ===================================================== */
+
+  function openReport(){
+
+    if(!currentUser){
+
+      window.location.href =
+        `./auth.html?redirect=${encodeURIComponent(
+          window.location.href
+        )}`;
+
+      return;
+    }
+
+    document
+      .getElementById(
+        "reportModal"
+      )
+      .classList.add("show");
+  }
+
+  function closeReport(){
+
+    document
+      .getElementById(
+        "reportModal"
+      )
+      .classList.remove("show");
+  }
+
+  document.getElementById(
+    "closeReport"
+  ).addEventListener(
+    "click",
+    closeReport
   );
 
-  await loadListing();
+  document.getElementById(
+    "reportModal"
+  ).addEventListener(
+    "click",
+    event => {
 
-  if(listing){
-    await loadFavorite();
+      if(
+        event.target.id ===
+        "reportModal"
+      ){
+        closeReport();
+      }
+
+    }
+  );
+
+  document.getElementById(
+    "reportForm"
+  ).addEventListener(
+    "submit",
+    async function(event){
+
+      event.preventDefault();
+
+      if(!currentUser){
+        return;
+      }
+
+      const reason =
+        document.getElementById(
+          "reportReason"
+        ).value;
+
+      const details =
+        document.getElementById(
+          "reportDetails"
+        ).value.trim();
+
+      if(!reason){
+
+        toast(
+          "Please select a reason.",
+          "error"
+        );
+
+        return;
+      }
+
+      const button =
+        document.getElementById(
+          "submitReport"
+        );
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Sending...";
+
+      try{
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("reports")
+            .insert({
+              user_id:
+                currentUser.id,
+              listing_id:
+                listing.id,
+              reason,
+              details
+            });
+
+        if(error){
+          throw error;
+        }
+
+        closeReport();
+
+        document.getElementById(
+          "reportForm"
+        ).reset();
+
+        toast(
+          "Report sent to admin successfully."
+        );
+
+      }
+      catch(error){
+
+        console.error(error);
+
+        toast(
+          error.message ||
+          "Could not send report.",
+          "error"
+        );
+
+      }
+      finally{
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Send Report to Admin";
+
+      }
+
+    }
+  );
+
+
+  /* =====================================================
+     ERROR
+  ===================================================== */
+
+  function showError(
+    title,
+    message
+  ){
+
+    document.getElementById(
+      "page"
+    ).innerHTML = `
+
+      <div class="card error">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <strong>
+          ${escapeHTML(title)}
+        </strong>
+
+        <p>
+          ${escapeHTML(message)}
+        </p>
+
+        <a
+          href="./buy.html"
+          style="
+            display:inline-grid;
+            place-items:center;
+            min-height:40px;
+            margin-top:15px;
+            padding:0 16px;
+            border-radius:10px;
+            color:#071a34;
+            background:var(--gold);
+            font-size:10px;
+            font-weight:900;
+          ">
+          Back to Listings
+        </a>
+
+      </div>
+    `;
   }
-}
 
-init();
+
+  /* =====================================================
+     INIT
+  ===================================================== */
+
+  async function init(){
+
+    applyTheme(
+      localStorage.getItem(
+        "mec_theme"
+      ) || "light"
+    );
+
+    try{
+
+      currentUser =
+        await getUser();
+
+      await loadListing();
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      showError(
+        "Something went wrong.",
+        error.message ||
+        "Could not load this listing."
+      );
+
+    }
+
+  }
+
+  init();
 </script>
 
 </body>
