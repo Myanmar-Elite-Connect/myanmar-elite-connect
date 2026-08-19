@@ -3,18 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Myanmar Elite Connect</title>
-
+  <title>Myanmar Elite Connect • Database Test</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
     const SUPABASE_URL =
       "https://ikjwisfsdcupibgjiuvp.supabase.co";
-
     const SUPABASE_KEY =
       "sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
     window.supabaseClient =
       window.supabase.createClient(
         SUPABASE_URL,
@@ -22,57 +17,41 @@
       );
   </script>
 </head>
-
 <body>
-
   <h2>Myanmar Elite Connect</h2>
-
-  <p id="status">Testing...</p>
-
+  <p id="status">Testing listings database...</p>
   <script>
-    async function testSystem() {
-
+    async function testDatabase() {
       const status =
         document.getElementById("status");
-
       try {
-
-        if (!window.supabase) {
-          throw new Error(
-            "Supabase library not loaded."
-          );
-        }
-
-        if (!window.supabaseClient) {
-          throw new Error(
-            "Supabase client not created."
-          );
-        }
-
         const {
           data,
           error
         } =
-          await window.supabaseClient.auth.getSession();
-
+          await window.supabaseClient
+            .from("listings")
+            .select("*")
+            .limit(1);
         if (error) {
           throw error;
         }
-
         status.textContent =
-          "SUCCESS — Supabase is connected.";
-
+          "SUCCESS — Listings database is working.";
+        console.log(
+          "Listings:",
+          data
+        );
       } catch (error) {
-
         status.textContent =
           "ERROR — " + error.message;
-
-        console.error(error);
+        console.error(
+          "Listings database error:",
+          error
+        );
       }
     }
-
-    testSystem();
+    testDatabase();
   </script>
-
 </body>
 </html>
