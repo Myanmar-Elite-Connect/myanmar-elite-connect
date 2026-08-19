@@ -1,1277 +1,4463 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Myanmar Elite Connect — Admin Dashboard</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, "Noto Sans Myanmar", sans-serif;
-      background: #f4f7fb;
-      color: #172033;
-    }
-
-    header {
-      background: #071b3a;
-      color: white;
-      padding: 16px 5%;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-inner {
-      max-width: 1400px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .brand {
-      font-size: 21px;
-      font-weight: 800;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .header-actions a,
-    .header-actions button {
-      border: 0;
-      text-decoration: none;
-      cursor: pointer;
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-    }
-
-    .home-btn {
-      background: white;
-      color: #071b3a;
-    }
-
-    .logout-btn {
-      background: #dc3545;
-      color: white;
-    }
-
-    main {
-      max-width: 1400px;
-      margin: auto;
-      padding: 35px 5%;
-    }
-
-    .page-title {
-      margin-bottom: 25px;
-    }
-
-    .page-title h1 {
-      margin: 0 0 8px;
-      color: #071b3a;
-    }
-
-    .page-title p {
-      margin: 0;
-      color: #697386;
-    }
-
-    #message {
-      display: none;
-      padding: 14px 16px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    #message.success {
-      display: block;
-      background: #e9f8ef;
-      color: #176b38;
-    }
-
-    #message.error {
-      display: block;
-      background: #fff0f0;
-      color: #b42318;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 30px;
-    }
-
-    .stat {
-      background: white;
-      border: 1px solid #e6ebf2;
-      border-radius: 15px;
-      padding: 22px;
-      box-shadow: 0 6px 20px rgba(7, 27, 58, .06);
-    }
-
-    .stat-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      color: #697386;
-      font-size: 14px;
-      margin-bottom: 7px;
-    }
-
-    .stat-number {
-      color: #071b3a;
-      font-size: 30px;
-      font-weight: 800;
-    }
-
-    .toolbar {
-      background: white;
-      border: 1px solid #e6ebf2;
-      border-radius: 15px;
-      padding: 18px;
-      margin-bottom: 22px;
-
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .search {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .search input,
-    .toolbar select {
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid #d8dee8;
-      border-radius: 9px;
-      outline: none;
-      background: white;
-      font-family: inherit;
-    }
-
-    .filter-buttons {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .filter-buttons button {
-      border: 1px solid #d8dee8;
-      background: white;
-      padding: 10px 13px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .filter-buttons button.active {
-      background: #071b3a;
-      color: white;
-      border-color: #071b3a;
-    }
-
-    .table-card {
-      background: white;
-      border: 1px solid #e6ebf2;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 6px 20px rgba(7, 27, 58, .06);
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 1050px;
-      border-collapse: collapse;
-    }
-
-    th {
-      background: #071b3a;
-      color: white;
-      text-align: left;
-      padding: 14px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 14px;
-      border-bottom: 1px solid #edf0f5;
-      vertical-align: top;
-      font-size: 14px;
-    }
-
-    tr:hover td {
-      background: #fafbfd;
-    }
-
-    .title {
-      font-weight: 800;
-      color: #071b3a;
-      margin-bottom: 5px;
-    }
-
-    .seller {
-      color: #697386;
-      font-size: 13px;
-    }
-
-    .price {
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .badge.pending {
-      background: #fff4d6;
-      color: #8a5b00;
-    }
-
-    .badge.approved {
-      background: #e9f8ef;
-      color: #176b38;
-    }
-
-    .badge.rejected {
-      background: #fff0f0;
-      color: #b42318;
-    }
-
-    .badge.category {
-      background: #eef3ff;
-      color: #294b91;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      min-width: 230px;
-    }
-
-    .action-btn {
-      border: 0;
-      border-radius: 7px;
-      padding: 8px 10px;
-      cursor: pointer;
-      color: white;
-      font-weight: 700;
-      font-size: 12px;
-    }
-
-    .approve {
-      background: #198754;
-    }
-
-    .reject {
-      background: #dc3545;
-    }
-
-    .delete {
-      background: #6c757d;
-    }
-
-    .view {
-      background: #071b3a;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: #697386;
-    }
-
-    .empty-icon {
-      font-size: 45px;
-      margin-bottom: 10px;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 60px 20px;
-      color: #697386;
-    }
-
-    .login-box {
-      max-width: 500px;
-      margin: 70px auto;
-      background: white;
-      border-radius: 18px;
-      padding: 35px;
-      text-align: center;
-      box-shadow: 0 8px 30px rgba(7,27,58,.08);
-    }
-
-    .login-box h2 {
-      color: #071b3a;
-    }
-
-    .login-box a {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 25px;
-      border-radius: 8px;
-      background: #071b3a;
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.55);
-      z-index: 1000;
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .modal.show {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 650px;
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .modal-header h2 {
-      margin: 0;
-      color: #071b3a;
-    }
-
-    .close {
-      border: 0;
-      background: #f0f2f5;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .detail-row {
-      padding: 12px 0;
-      border-bottom: 1px solid #edf0f5;
-    }
-
-    .detail-label {
-      color: #697386;
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-
-    .detail-value {
-      font-weight: 600;
-      line-height: 1.6;
-      word-break: break-word;
-    }
-
-    @media (max-width: 900px) {
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .brand {
-        font-size: 17px;
-      }
-
-      .header-actions a,
-      .header-actions button {
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
-      main {
-        padding: 25px 4%;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .stat {
-        padding: 16px;
-      }
-
-      .stat-number {
-        font-size: 24px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin • Myanmar Elite Connect</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f6fa;
+  --surface:#fff;
+  --soft:#f7f8fb;
+  --text:#10233f;
+  --muted:#718097;
+  --border:#e4e8ef;
+  --gold:#d7b55b;
+  --navy:#071a34;
+  --green:#27855b;
+  --red:#c74747;
+  --orange:#c98222;
+  --blue:#3677c9;
+  --shadow:0 14px 45px rgba(16,35,63,.07);
+}
+body.dark{
+  --bg:#071321;
+  --surface:#0d1c2e;
+  --soft:#10243a;
+  --text:#f2f5f8;
+  --muted:#93a2b5;
+  --border:rgba(255,255,255,.09);
+  --navy:#f2f5f8;
+  --shadow:0 14px 45px rgba(0,0,0,.25);
+}
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,"Noto Sans Myanmar","Myanmar Text",system-ui,sans-serif;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:68px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(18px);
+}
+body.dark .topbar{background:rgba(7,19,33,.94)}
+.topbar-inner{
+  width:min(1400px,95%);
+  height:100%;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{
+  width:39px;height:39px;
+  border-radius:11px;
+  object-fit:contain;
+}
+.brand strong{font-size:14px;font-weight:950}
+.brand strong span{color:var(--gold)}
+.admin-label{
+  padding:5px 8px;
+  border-radius:7px;
+  color:#071a34;
+  background:var(--gold);
+  font-size:8px;
+  font-weight:950;
+}
+.actions{display:flex;gap:7px;align-items:center}
+.icon{
+  width:39px;height:39px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--surface);
+  color:var(--text);
+}
+.avatar{
+  width:39px;height:39px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--soft);
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+
+.layout{
+  width:min(1400px,95%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:235px minmax(0,1fr);
+  gap:20px;
+  padding:20px 0 60px;
+}
+.sidebar{
+  position:sticky;
+  top:88px;
+  align-self:start;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.side-title{
+  padding:9px 10px 12px;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.side-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:var(--muted);
+  text-align:left;
+  font-size:11px;
+  font-weight:850;
+}
+.side-btn:hover,
+.side-btn.active{
+  color:var(--text);
+  background:var(--soft);
+}
+.side-btn.active{color:var(--gold)}
+.side-count{
+  margin-left:auto;
+  min-width:20px;
+  padding:3px 5px;
+  border-radius:6px;
+  background:var(--border);
+  text-align:center;
+  font-size:8px;
+}
+
+.content{min-width:0}
+.page-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:15px;
+  margin-bottom:18px;
+}
+.eyebrow{
+  color:var(--gold);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+h1{
+  margin-top:4px;
+  font-size:clamp(25px,4vw,35px);
+  letter-spacing:-.8px;
+}
+.subtitle{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.view{display:none}
+.view.active{display:block}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+.stat{
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.stat-label{
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+}
+.stat-value{
+  margin-top:7px;
+  font-size:25px;
+  font-weight:950;
+}
+.stat.pending .stat-value{color:var(--orange)}
+.stat.good .stat-value{color:var(--green)}
+.stat.danger .stat-value{color:var(--red)}
+
+.panel{
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.panel-head{
+  min-height:57px;
+  padding:12px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid var(--border);
+}
+.panel-head strong{font-size:13px;font-weight:950}
+.tools{display:flex;gap:7px;flex-wrap:wrap}
+.search{
+  width:230px;
+  height:36px;
+  padding:0 10px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  outline:none;
+  color:var(--text);
+  background:var(--soft);
+  font-size:10px;
+}
+.filter{
+  height:36px;
+  padding:0 9px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  outline:none;
+  color:var(--text);
+  background:var(--soft);
+  font-size:10px;
+}
+
+.table-wrap{overflow:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+}
+th,td{
+  padding:12px 13px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  vertical-align:middle;
+}
+th{
+  color:var(--muted);
+  background:var(--soft);
+  font-size:8px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+td{
+  font-size:10px;
+}
+tr:last-child td{border-bottom:0}
+.user-cell{display:flex;align-items:center;gap:9px}
+.user-mini{
+  width:34px;height:34px;
+  overflow:hidden;
+  border-radius:9px;
+  background:var(--soft);
+  flex:none;
+}
+.user-mini img{width:100%;height:100%;object-fit:cover}
+.user-name{font-weight:900}
+.user-sub{margin-top:2px;color:var(--muted);font-size:8px}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:5px 7px;
+  border-radius:7px;
+  font-size:8px;
+  font-weight:900;
+}
+.badge.green{color:var(--green);background:rgba(39,133,91,.1)}
+.badge.red{color:var(--red);background:rgba(199,71,71,.1)}
+.badge.orange{color:var(--orange);background:rgba(201,130,34,.11)}
+.badge.blue{color:var(--blue);background:rgba(54,119,201,.1)}
+.badge.gold{color:#9b7719;background:rgba(215,181,91,.16)}
+
+.btn{
+  height:32px;
+  padding:0 9px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--surface);
+  color:var(--text);
+  font-size:8px;
+  font-weight:900;
+}
+.btn:hover{border-color:var(--gold)}
+.btn.primary{background:var(--gold);color:#071a34;border-color:var(--gold)}
+.btn.success{background:rgba(39,133,91,.1);color:var(--green)}
+.btn.danger{background:rgba(199,71,71,.1);color:var(--red)}
+.btn.blue{background:rgba(54,119,201,.1);color:var(--blue)}
+
+.action-row{display:flex;gap:5px;flex-wrap:wrap}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.info-card{
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--surface);
+}
+.info-card h3{font-size:12px;font-weight:950}
+.info-card p{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.6;
+}
+
+.empty{
+  padding:55px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+.empty-icon{
+  width:52px;height:52px;
+  display:grid;place-items:center;
+  margin:0 auto 10px;
+  border-radius:15px;
+  background:var(--soft);
+  color:var(--gold);
+  font-size:20px;
+}
+.empty strong{display:block;color:var(--text);font-size:13px}
+.empty span{display:block;margin-top:4px;font-size:9px}
+
+.loading{padding:45px;text-align:center;color:var(--muted);font-size:10px}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(5px);
+}
+.modal.open{display:flex}
+.modal-box{
+  width:min(850px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:18px;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:0 30px 90px rgba(0,0,0,.3);
+}
+.modal-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  padding:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.modal-head strong{font-size:14px}
+.close{
+  width:32px;height:32px;
+  border:0;border-radius:8px;
+  background:var(--soft);
+  color:var(--text);
+}
+.modal-body{padding:16px}
+.detail-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.detail{
+  padding:11px;
+  border-radius:10px;
+  background:var(--soft);
+}
+.detail label{
+  display:block;
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.detail span{
+  font-size:10px;
+  font-weight:800;
+  word-break:break-word;
+}
+.document-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:13px;
+}
+.document{
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--soft);
+}
+.document img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:contain;
+  background:#111;
+}
+.document div{
+  padding:8px;
+  font-size:8px;
+  font-weight:900;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+textarea{
+  width:100%;
+  min-height:85px;
+  margin-top:8px;
+  padding:10px;
+  resize:vertical;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+  color:var(--text);
+  background:var(--soft);
+  font-size:10px;
+}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:800;
+  max-width:330px;
+  padding:11px 14px;
+  border-radius:11px;
+  color:#fff;
+  background:#10233f;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  font-size:10px;
+  font-weight:800;
+  transform:translateY(15px);
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+}
+.toast.show{transform:none;opacity:1}
+.toast.error{background:#9d3434}
+
+@media(max-width:1050px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    position:static;
+    display:flex;
+    gap:5px;
+    overflow:auto;
+  }
+  .side-title{display:none}
+  .side-btn{width:auto;white-space:nowrap}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .brand strong{display:none}
+  .layout{width:94%;padding-top:12px}
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .stat{padding:12px}
+  .stat-value{font-size:21px}
+  .page-head{align-items:flex-start;flex-direction:column}
+  .search{width:100%}
+  .panel-head{align-items:flex-start;flex-direction:column}
+  .tools{width:100%}
+  .filter{flex:1}
+  .cards{grid-template-columns:1fr}
+  .detail-grid,.document-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="brand">Myanmar Elite Connect — Admin</div>
+<header class="topbar">
+  <div class="topbar-inner">
 
-    <div class="header-actions">
-      <a class="home-btn" href="./index.html">Home</a>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+    <a href="./general.html" class="brand">
+      <img
+        src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+        alt="Myanmar Elite Connect">
+      <strong>Myanmar <span>Elite</span> Connect</strong>
+      <span class="admin-label">ADMIN</span>
+    </a>
+
+    <div class="actions">
+      <button class="icon" id="themeBtn">☾</button>
+
+      <a href="./profile.html" class="avatar">
+        <img id="adminAvatar" src="" alt="Admin">
+      </a>
     </div>
+
   </div>
 </header>
 
-<main id="app">
 
-  <div class="page-title">
-    <h1>Admin Dashboard</h1>
-    <p>Listings များကို စစ်ဆေးပြီး Approve / Reject / Delete ပြုလုပ်နိုင်ပါသည်။</p>
-  </div>
+<div class="layout">
 
-  <div id="message"></div>
+  <aside class="sidebar">
 
-  <section class="stats">
+    <div class="side-title">Administration</div>
 
-    <div class="stat">
-      <div class="stat-icon">📋</div>
-      <div class="stat-label">Total Listings</div>
-      <div id="totalCount" class="stat-number">0</div>
-    </div>
+    <button class="side-btn active" data-view="dashboard">
+      ◈ Dashboard
+    </button>
 
-    <div class="stat">
-      <div class="stat-icon">⏳</div>
-      <div class="stat-label">Pending</div>
-      <div id="pendingCount" class="stat-number">0</div>
-    </div>
+    <button class="side-btn" data-view="users">
+      ♙ Users
+      <span class="side-count" id="userCount">0</span>
+    </button>
 
-    <div class="stat">
-      <div class="stat-icon">✅</div>
-      <div class="stat-label">Approved</div>
-      <div id="approvedCount" class="stat-number">0</div>
-    </div>
+    <button class="side-btn" data-view="kyc">
+      ✓ KYC
+      <span class="side-count" id="kycCount">0</span>
+    </button>
 
-    <div class="stat">
-      <div class="stat-icon">❌</div>
-      <div class="stat-label">Rejected</div>
-      <div id="rejectedCount" class="stat-number">0</div>
-    </div>
+    <button class="side-btn" data-view="posts">
+      ▣ Posts
+      <span class="side-count" id="postCount">0</span>
+    </button>
 
-  </section>
+    <button class="side-btn" data-view="badges">
+      ◆ Badges
+    </button>
 
-  <section class="toolbar">
+    <button class="side-btn" data-view="reports">
+      ⚑ Reports
+      <span class="side-count" id="reportCount">0</span>
+    </button>
 
-    <div class="search">
-      <input
-        id="searchInput"
-        type="search"
-        placeholder="🔎 Title, seller, city ရှာရန်..."
-        oninput="renderListings()"
-      >
-    </div>
+    <button class="side-btn" data-view="logs">
+      ◷ Activity
+    </button>
 
-    <div class="filter-buttons">
-      <button id="filterAll" class="active" onclick="setFilter('all')">
-        All
+  </aside>
+
+
+  <main class="content">
+
+    <section class="page-head">
+      <div>
+        <div class="eyebrow">Control Center</div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <p class="subtitle" id="pageSubtitle">
+          Myanmar Elite Connect administration
+        </p>
+      </div>
+
+      <button class="btn primary" onclick="refreshCurrentView()">
+        ↻ Refresh
       </button>
+    </section>
 
-      <button id="filterPending" onclick="setFilter('pending')">
-        ⏳ Pending
-      </button>
 
-      <button id="filterApproved" onclick="setFilter('approved')">
-        ✅ Approved
-      </button>
+    <!-- DASHBOARD -->
 
-      <button id="filterRejected" onclick="setFilter('rejected')">
-        ❌ Rejected
-      </button>
-    </div>
+    <section class="view active" id="view-dashboard">
 
-    <select id="categoryFilter" onchange="renderListings()">
-      <option value="all">All Categories</option>
-      <option value="car">🚗 Cars</option>
-      <option value="property">🏠 Property</option>
-      <option value="gem">💎 Gems</option>
-    </select>
+      <div class="stats">
 
-  </section>
+        <div class="stat">
+          <div class="stat-label">TOTAL USERS</div>
+          <div class="stat-value" id="statUsers">—</div>
+        </div>
 
-  <section class="table-card">
+        <div class="stat pending">
+          <div class="stat-label">PENDING KYC</div>
+          <div class="stat-value" id="statKyc">—</div>
+        </div>
 
-    <div id="loading" class="loading">
-      ⏳ Listings များကို ရယူနေပါသည်...
-    </div>
+        <div class="stat pending">
+          <div class="stat-label">PENDING POSTS</div>
+          <div class="stat-value" id="statPosts">—</div>
+        </div>
 
-    <div class="table-wrap">
-      <table id="listingTable" style="display:none">
+        <div class="stat danger">
+          <div class="stat-label">OPEN REPORTS</div>
+          <div class="stat-value" id="statReports">—</div>
+        </div>
 
-        <thead>
-          <tr>
-            <th>Listing</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Location</th>
-            <th>Status</th>
-            <th>Created</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+      </div>
 
-        <tbody id="listingBody"></tbody>
+      <div class="cards">
 
-      </table>
-    </div>
+        <div class="info-card">
+          <h3>🚗 Cars</h3>
+          <p id="carTotal">Loading...</p>
+        </div>
 
-  </section>
+        <div class="info-card">
+          <h3>🏠 Property</h3>
+          <p id="propertyTotal">Loading...</p>
+        </div>
 
-</main>
+        <div class="info-card">
+          <h3>💎 Gems</h3>
+          <p id="gemTotal">Loading...</p>
+        </div>
 
-<div id="loginRequired" style="display:none">
-  <div class="login-box">
-    <h2>🔐 Login လိုအပ်ပါတယ်</h2>
-    <p>Admin Dashboard အသုံးပြုရန် Login ဝင်ထားရပါမည်။</p>
-    <a href="./auth.html">Login / Register</a>
-  </div>
+      </div>
+
+      <br>
+
+      <div class="panel">
+        <div class="panel-head">
+          <strong>Recent Activity</strong>
+          <button class="btn" onclick="switchView('logs')">
+            View All
+          </button>
+        </div>
+        <div id="dashboardActivity"></div>
+      </div>
+
+    </section>
+
+
+    <!-- USERS -->
+
+    <section class="view" id="view-users">
+
+      <div class="panel">
+
+        <div class="panel-head">
+
+          <strong>User Management</strong>
+
+          <div class="tools">
+            <input
+              class="search"
+              id="userSearch"
+              placeholder="Search name, phone or city...">
+          </div>
+
+        </div>
+
+        <div id="usersTable"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- KYC -->
+
+    <section class="view" id="view-kyc">
+
+      <div class="panel">
+
+        <div class="panel-head">
+
+          <strong>KYC Verification</strong>
+
+          <div class="tools">
+
+            <select class="filter" id="kycStatusFilter">
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="all">All</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div id="kycTable"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- POSTS -->
+
+    <section class="view" id="view-posts">
+
+      <div class="panel">
+
+        <div class="panel-head">
+
+          <strong>Listing Management</strong>
+
+          <div class="tools">
+
+            <input
+              class="search"
+              id="postSearch"
+              placeholder="Search listing...">
+
+            <select class="filter" id="postStatusFilter">
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="all">All</option>
+            </select>
+
+            <select class="filter" id="postCategoryFilter">
+              <option value="all">All Categories</option>
+              <option value="car">Cars</option>
+              <option value="property">Property</option>
+              <option value="gem">Gems</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div id="postsTable"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- BADGES -->
+
+    <section class="view" id="view-badges">
+
+      <div class="panel">
+
+        <div class="panel-head">
+          <strong>Badge Management</strong>
+        </div>
+
+        <div id="badgesTable"></div>
+
+      </div>
+
+      <br>
+
+      <div class="panel">
+
+        <div class="panel-head">
+          <strong>Assign Badge</strong>
+        </div>
+
+        <div style="padding:15px">
+
+          <div class="tools">
+
+            <input
+              class="search"
+              id="badgeUserSearch"
+              placeholder="User UUID">
+
+            <select class="filter" id="badgeSelect">
+            </select>
+
+            <button
+              class="btn primary"
+              onclick="assignBadge()">
+              Assign Badge
+            </button>
+
+          </div>
+
+          <p style="
+            margin-top:8px;
+            color:var(--muted);
+            font-size:9px;
+          ">
+            Enter the user's profile UUID to assign a badge.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- REPORTS -->
+
+    <section class="view" id="view-reports">
+
+      <div class="panel">
+
+        <div class="panel-head">
+
+          <strong>Report Center</strong>
+
+          <div class="tools">
+
+            <select class="filter" id="reportStatusFilter">
+              <option value="open">Open</option>
+              <option value="resolved">Resolved</option>
+              <option value="dismissed">Dismissed</option>
+              <option value="all">All</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div id="reportsTable"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LOGS -->
+
+    <section class="view" id="view-logs">
+
+      <div class="panel">
+
+        <div class="panel-head">
+          <strong>Admin Activity</strong>
+        </div>
+
+        <div id="logsTable"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
 </div>
 
-<div id="modal" class="modal" onclick="closeModal(event)">
-  <div class="modal-card" onclick="event.stopPropagation()">
 
-    <div class="modal-header">
-      <h2>Listing Details</h2>
-      <button class="close" onclick="hideModal()">×</button>
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <strong id="modalTitle">Details</strong>
+
+      <button
+        class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
     </div>
 
-    <div id="modalContent"></div>
+    <div
+      class="modal-body"
+      id="modalBody">
+    </div>
 
   </div>
+
 </div>
+
+
+<div class="toast" id="toast"></div>
+
 
 <script>
 
-let allListings = [];
-let currentFilter = "all";
+/* =========================================================
+   STATE
+========================================================= */
 
-function escapeHtml(value) {
-  if (value === null || value === undefined) return "";
+let currentView = "dashboard";
 
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+let currentUser = null;
+let adminProfile = null;
+
+let users = [];
+let kycs = [];
+let posts = [];
+let reports = [];
+let badges = [];
+let logs = [];
+
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
 }
 
-function showMessage(text, type) {
-  const box = document.getElementById("message");
 
-  box.textContent = text;
-  box.className = type;
+function toast(message,error=false){
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent = message;
+
+  el.classList.toggle(
+    "error",
+    error
+  );
+
+  el.classList.add("show");
+
+  setTimeout(
+    () => el.classList.remove("show"),
+    2800
+  );
+
 }
 
-function clearMessage() {
-  const box = document.getElementById("message");
 
-  box.textContent = "";
-  box.className = "";
+function fmtDate(value){
+
+  if(!value) return "—";
+
+  const d = new Date(value);
+
+  if(Number.isNaN(d.getTime()))
+    return "—";
+
+  return d.toLocaleString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
 }
 
-function categoryIcon(category) {
-  if (category === "car") return "🚗";
-  if (category === "property") return "🏠";
-  if (category === "gem") return "💎";
-  return "📦";
+
+function money(value,currency="MMK"){
+
+  const n = Number(value);
+
+  if(!Number.isFinite(n) || n <= 0)
+    return "Price on request";
+
+  return `${esc(currency)} ${n.toLocaleString()}`;
+
 }
 
-function categoryName(category) {
-  if (category === "car") return "Car";
-  if (category === "property") return "Property";
-  if (category === "gem") return "Gem";
-  return category || "-";
+
+function normalize(value){
+
+  return String(value ?? "")
+    .trim()
+    .toLowerCase();
+
 }
 
-function listingTypeName(type) {
-  if (type === "sale") return "ရောင်းရန်";
-  if (type === "rent") return "ငှားရန်";
-  return type || "-";
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(theme){
+
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
+  document.getElementById(
+    "themeBtn"
+  ).textContent =
+    theme === "dark"
+      ? "☀"
+      : "☾";
+
+  localStorage.setItem(
+    "mec_theme",
+    theme
+  );
+
 }
 
-function formatPrice(price, currency) {
-  if (price === null || price === undefined || price === "") {
-    return "မဖော်ပြပါ";
-  }
 
-  const number = Number(price);
+document.getElementById(
+  "themeBtn"
+).onclick = () => {
 
-  if (!Number.isFinite(number)) {
-    return String(price);
-  }
+  applyTheme(
+    document.body.classList.contains("dark")
+      ? "light"
+      : "dark"
+  );
 
-  return number.toLocaleString("en-US") + " " + (currency || "MMK");
-}
+};
 
-function formatDate(date) {
-  if (!date) return "-";
 
-  try {
-    return new Date(date).toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-  } catch {
-    return date;
-  }
-}
+/* =========================================================
+   AUTH + ADMIN SECURITY
+========================================================= */
 
-function locationText(item) {
-  return [
-    item.city,
-    item.township,
-    item.location
-  ]
-    .filter(Boolean)
-    .join(" • ") || "-";
-}
-
-function setFilter(filter) {
-  currentFilter = filter;
-
-  document
-    .querySelectorAll(".filter-buttons button")
-    .forEach(button => button.classList.remove("active"));
-
-  const buttonMap = {
-    all: "filterAll",
-    pending: "filterPending",
-    approved: "filterApproved",
-    rejected: "filterRejected"
-  };
-
-  document
-    .getElementById(buttonMap[filter])
-    .classList.add("active");
-
-  renderListings();
-}
-
-async function getCurrentUser() {
+async function requireAdmin(){
 
   const {
     data,
     error
-  } = await supabaseClient.auth.getSession();
+  } =
+    await supabaseClient.auth.getUser();
 
-  if (error) throw error;
+  if(error || !data?.user){
 
-  return data?.session?.user || null;
-}
-
-async function checkAdmin() {
-
-  try {
-
-    const user = await getCurrentUser();
-
-    if (!user) {
-      document.getElementById("app").style.display = "none";
-      document.getElementById("loginRequired").style.display = "block";
-      return false;
-    }
-
-    /*
-      IMPORTANT:
-      This first version checks that the logged-in user
-      has a profile.
-
-      Admin authorization should be enforced by Supabase RLS
-      before using this dashboard in production.
-    */
-
-    const {
-      data: profile,
-      error
-    } = await supabaseClient
-      .from("profiles")
-      .select("id, full_name, role")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    if (error) throw error;
-
-    if (!profile) {
-      throw new Error("Profile မတွေ့ပါ။");
-    }
-
-    if (profile.role !== "admin") {
-
-      document.getElementById("app").innerHTML = `
-        <div class="login-box">
-          <h2>⛔ Admin Access Required</h2>
-          <p>
-            ဒီစာမျက်နှာကို Admin account သာ အသုံးပြုနိုင်ပါသည်။
-          </p>
-          <p style="color:#697386">
-            Current role: ${escapeHtml(profile.role || "unknown")}
-          </p>
-          <a href="./index.html">Marketplace သို့ပြန်ရန်</a>
-        </div>
-      `;
-
-      return false;
-    }
-
-    return true;
-
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      "❌ " + (error.message || "Admin စစ်ဆေးမရပါ။"),
-      "error"
-    );
+    window.location.href =
+      "./auth.html";
 
     return false;
+
   }
+
+  currentUser =
+    data.user;
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,full_name,phone,avatar_url,city,bio,role"
+      )
+      .eq(
+        "id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+
+  if(
+    profileError ||
+    !profile ||
+    profile.role !== "admin"
+  ){
+
+    document.body.innerHTML = `
+
+      <div style="
+        min-height:100vh;
+        display:grid;
+        place-items:center;
+        padding:25px;
+        background:var(--bg);
+        color:var(--text);
+        text-align:center;
+        font-family:system-ui;
+      ">
+
+        <div>
+
+          <div style="
+            font-size:50px;
+            margin-bottom:15px;
+          ">
+            🔒
+          </div>
+
+          <h2>Admin Access Required</h2>
+
+          <p style="
+            margin-top:7px;
+            color:var(--muted);
+          ">
+            This account does not have administrator permission.
+          </p>
+
+          <a
+            href="./general.html"
+            style="
+              display:inline-block;
+              margin-top:18px;
+              padding:11px 16px;
+              border-radius:10px;
+              background:#d7b55b;
+              color:#071a34;
+              font-weight:900;
+              text-decoration:none;
+            ">
+            Return Home
+          </a>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return false;
+
+  }
+
+
+  adminProfile =
+    profile;
+
+
+  if(profile.avatar_url){
+
+    document.getElementById(
+      "adminAvatar"
+    ).src =
+      profile.avatar_url;
+
+  }
+
+  return true;
+
 }
 
-async function loadListings() {
 
-  const loading = document.getElementById("loading");
-  const table = document.getElementById("listingTable");
+/* =========================================================
+   ADMIN LOG
+========================================================= */
 
-  loading.style.display = "block";
-  table.style.display = "none";
+async function logAction(
+  action,
+  details="",
+  targetUserId=null,
+  targetListingId=null,
+  targetKycId=null,
+  targetReportId=null
+){
 
-  try {
+  try{
 
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("listings")
-      .select(`
-        id,
-        user_id,
-        seller_id,
-        category,
-        listing_type,
-        title,
-        description,
-        price,
-        currency,
-        city,
-        township,
-        address,
-        location,
-        phone,
-        images,
-        status,
-        featured,
-        created_at,
-        updated_at
-      `)
-      .order("created_at", {
-        ascending: false
+    await supabaseClient
+      .from("admin_logs")
+      .insert({
+
+        admin_id: currentUser.id,
+
+        action,
+
+        details,
+
+        target_user_id:
+          targetUserId,
+
+        target_listing_id:
+          targetListingId,
+
+        target_kyc_id:
+          targetKycId,
+
+        target_report_id:
+          targetReportId
+
       });
 
-    if (error) throw error;
+  }
+  catch(error){
 
-    allListings = data || [];
-
-    updateStats();
-    renderListings();
-
-  } catch (error) {
-
-    console.error("ADMIN LISTINGS ERROR:", error);
-
-    loading.innerHTML = `
-      ❌ Listings ရယူမရပါ။
-      <br><br>
-      ${escapeHtml(error.message)}
-    `;
-
-  } finally {
-
-    loading.style.display = "none";
-    table.style.display = "table";
+    console.warn(
+      "Admin log failed:",
+      error
+    );
 
   }
+
 }
 
-function updateStats() {
 
-  const total = allListings.length;
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
-  const pending =
-    allListings.filter(x => x.status === "pending").length;
+async function loadDashboard(){
 
-  const approved =
-    allListings.filter(x => x.status === "approved").length;
+  const [
+    usersRes,
+    kycRes,
+    postRes,
+    reportRes,
+    carRes,
+    propertyRes,
+    gemRes,
+    logsRes
+  ] =
+    await Promise.all([
 
-  const rejected =
-    allListings.filter(x => x.status === "rejected").length;
+      supabaseClient
+        .from("profiles")
+        .select("id",{count:"exact",head:true}),
 
-  document.getElementById("totalCount").textContent = total;
-  document.getElementById("pendingCount").textContent = pending;
-  document.getElementById("approvedCount").textContent = approved;
-  document.getElementById("rejectedCount").textContent = rejected;
+      supabaseClient
+        .from("kyc_submissions")
+        .select("id",{count:"exact",head:true})
+        .eq("status","pending"),
+
+      supabaseClient
+        .from("listings")
+        .select("id",{count:"exact",head:true})
+        .eq("status","pending"),
+
+      supabaseClient
+        .from("reports")
+        .select("id",{count:"exact",head:true})
+        .eq("status","open"),
+
+      supabaseClient
+        .from("listings")
+        .select("id",{count:"exact",head:true})
+        .eq("category","car"),
+
+      supabaseClient
+        .from("listings")
+        .select("id",{count:"exact",head:true})
+        .eq("category","property"),
+
+      supabaseClient
+        .from("listings")
+        .select("id",{count:"exact",head:true})
+        .eq("category","gem"),
+
+      supabaseClient
+        .from("admin_logs")
+        .select("*")
+        .order("created_at",{ascending:false})
+        .limit(8)
+
+    ]);
+
+
+  document.getElementById(
+    "statUsers"
+  ).textContent =
+    usersRes.count ?? 0;
+
+  document.getElementById(
+    "statKyc"
+  ).textContent =
+    kycRes.count ?? 0;
+
+  document.getElementById(
+    "statPosts"
+  ).textContent =
+    postRes.count ?? 0;
+
+  document.getElementById(
+    "statReports"
+  ).textContent =
+    reportRes.count ?? 0;
+
+
+  document.getElementById(
+    "userCount"
+  ).textContent =
+    usersRes.count ?? 0;
+
+  document.getElementById(
+    "kycCount"
+  ).textContent =
+    kycRes.count ?? 0;
+
+  document.getElementById(
+    "postCount"
+  ).textContent =
+    postRes.count ?? 0;
+
+  document.getElementById(
+    "reportCount"
+  ).textContent =
+    reportRes.count ?? 0;
+
+
+  document.getElementById(
+    "carTotal"
+  ).textContent =
+    `${carRes.count ?? 0} listings`;
+
+  document.getElementById(
+    "propertyTotal"
+  ).textContent =
+    `${propertyRes.count ?? 0} listings`;
+
+  document.getElementById(
+    "gemTotal"
+  ).textContent =
+    `${gemRes.count ?? 0} listings`;
+
+
+  renderDashboardLogs(
+    logsRes.data || []
+  );
+
 }
 
-function renderListings() {
 
-  const body = document.getElementById("listingBody");
+/* =========================================================
+   USERS
+========================================================= */
 
-  const keyword =
-    document.getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+async function loadUsers(){
 
-  const category =
-    document.getElementById("categoryFilter").value;
+  document.getElementById(
+    "usersTable"
+  ).innerHTML =
+    `<div class="loading">Loading users...</div>`;
 
-  let filtered = [...allListings];
 
-  if (currentFilter !== "all") {
-    filtered = filtered.filter(
-      item => item.status === currentFilter
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,full_name,phone,avatar_url,city,bio,role,created_at"
+      )
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+
+  if(error){
+
+    showError(
+      "usersTable",
+      error.message
     );
-  }
-
-  if (category !== "all") {
-    filtered = filtered.filter(
-      item => item.category === category
-    );
-  }
-
-  if (keyword) {
-
-    filtered = filtered.filter(item => {
-
-      const text = [
-        item.title,
-        item.description,
-        item.category,
-        item.city,
-        item.township,
-        item.location,
-        item.address,
-        item.phone
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-      return text.includes(keyword);
-
-    });
-
-  }
-
-  if (!filtered.length) {
-
-    body.innerHTML = `
-      <tr>
-        <td colspan="8">
-          <div class="empty">
-            <div class="empty-icon">🔍</div>
-            <strong>Listing မတွေ့ပါ</strong>
-            <p>Filter သို့မဟုတ် Search ကို ပြောင်းကြည့်ပါ။</p>
-          </div>
-        </td>
-      </tr>
-    `;
 
     return;
+
   }
 
-  body.innerHTML = filtered
-    .map(createRow)
-    .join("");
+
+  users =
+    data || [];
+
+
+  renderUsers();
+
 }
 
-function createRow(item) {
 
-  const sellerId =
-    item.seller_id || item.user_id || "-";
+function renderUsers(){
+
+  const q =
+    normalize(
+      document.getElementById(
+        "userSearch"
+      ).value
+    );
+
+
+  const filtered =
+    users.filter(
+      user => {
+
+        if(!q)
+          return true;
+
+        return [
+
+          user.full_name,
+          user.phone,
+          user.city,
+          user.role
+
+        ]
+        .map(normalize)
+        .join(" ")
+        .includes(q);
+
+      }
+    );
+
+
+  if(!filtered.length){
+
+    document.getElementById(
+      "usersTable"
+    ).innerHTML =
+      emptyHTML(
+        "No users found",
+        "There are no matching users."
+      );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "usersTable"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>Role</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          ${
+            filtered.map(
+              user => `
+
+                <tr>
+
+                  <td>
+                    <div class="user-cell">
+
+                      <div class="user-mini">
+
+                        ${
+                          user.avatar_url
+
+                          ?
+
+                          `<img
+                            src="${esc(user.avatar_url)}"
+                            alt="">`
+
+                          :
+
+                          ""
+
+                        }
+
+                      </div>
+
+                      <div>
+                        <div class="user-name">
+                          ${esc(
+                            user.full_name ||
+                            "Unnamed User"
+                          )}
+                        </div>
+
+                        <div class="user-sub">
+                          ${esc(user.id)}
+                        </div>
+                      </div>
+
+                    </div>
+                  </td>
+
+                  <td>
+                    ${esc(user.phone || "—")}
+                  </td>
+
+                  <td>
+                    ${esc(user.city || "—")}
+                  </td>
+
+                  <td>
+                    <span class="badge ${
+                      user.role === "admin"
+                        ? "gold"
+                        : "blue"
+                    }">
+                      ${esc(user.role || "user")}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${esc(
+                      fmtDate(
+                        user.created_at
+                      )
+                    )}
+                  </td>
+
+                  <td>
+
+                    <div class="action-row">
+
+                      <button
+                        class="btn"
+                        onclick="viewUser('${user.id}')">
+                        Details
+                      </button>
+
+                      ${
+                        user.role !== "admin"
+
+                        ?
+
+                        `<button
+                          class="btn danger"
+                          onclick="banUser('${user.id}')">
+                          Ban
+                        </button>`
+
+                        :
+
+                        ""
+
+                      }
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+document.getElementById(
+  "userSearch"
+).addEventListener(
+  "input",
+  renderUsers
+);
+
+
+/* =========================================================
+   USER DETAIL
+========================================================= */
+
+async function viewUser(id){
+
+  const user =
+    users.find(
+      x => x.id === id
+    );
+
+  if(!user) return;
+
+
+  const [
+    listingsRes,
+    kycRes,
+    badgesRes
+  ] =
+    await Promise.all([
+
+      supabaseClient
+        .from("listings")
+        .select(
+          "id,title,category,status,price,currency,created_at"
+        )
+        .eq(
+          "user_id",
+          id
+        )
+        .order(
+          "created_at",
+          {ascending:false}
+        ),
+
+      supabaseClient
+        .from("kyc_submissions")
+        .select(
+          "id,status,document_type,created_at,reviewed_at"
+        )
+        .eq(
+          "user_id",
+          id
+        )
+        .order(
+          "created_at",
+          {ascending:false}
+        ),
+
+      supabaseClient
+        .from("user_badges")
+        .select(
+          "id,badge_id,created_at,badges(name,slug,icon)"
+        )
+        .eq(
+          "user_id",
+          id
+        )
+
+    ]);
+
+
+  openModal(
+    "User Details",
+    `
+
+      <div class="detail-grid">
+
+        <div class="detail">
+          <label>Name</label>
+          <span>${esc(user.full_name || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Phone</label>
+          <span>${esc(user.phone || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>City</label>
+          <span>${esc(user.city || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Role</label>
+          <span>${esc(user.role || "user")}</span>
+        </div>
+
+        <div class="detail">
+          <label>User ID</label>
+          <span>${esc(user.id)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Joined</label>
+          <span>${esc(fmtDate(user.created_at))}</span>
+        </div>
+
+      </div>
+
+      <br>
+
+      <h3 style="font-size:12px">
+        Badges
+      </h3>
+
+      <div style="margin-top:8px">
+
+        ${
+          (badgesRes.data || []).length
+
+          ?
+
+          badgesRes.data.map(
+            x => `
+
+              <span class="badge gold">
+                ${esc(
+                  x.badges?.icon || "◆"
+                )}
+                ${esc(
+                  x.badges?.name || "Badge"
+                )}
+              </span>
+
+            `
+          ).join(" ")
+
+          :
+
+          `<span style="
+            color:var(--muted);
+            font-size:9px;
+          ">No badges</span>`
+
+        }
+
+      </div>
+
+      <br>
+
+      <h3 style="font-size:12px">
+        Posts (${listingsRes.data?.length || 0})
+      </h3>
+
+      <div style="margin-top:8px">
+
+        ${
+          (listingsRes.data || []).length
+
+          ?
+
+          listingsRes.data.map(
+            p => `
+
+              <div style="
+                padding:9px;
+                margin-bottom:6px;
+                border-radius:9px;
+                background:var(--soft);
+                font-size:9px;
+              ">
+
+                <strong>
+                  ${esc(p.title)}
+                </strong>
+
+                <br>
+
+                ${esc(p.category)}
+                ·
+                ${esc(p.status)}
+                ·
+                ${money(p.price,p.currency)}
+
+              </div>
+
+            `
+          ).join("")
+
+          :
+
+          `<span style="
+            color:var(--muted);
+            font-size:9px;
+          ">No posts</span>`
+
+        }
+
+      </div>
+
+      <br>
+
+      <h3 style="font-size:12px">
+        KYC
+      </h3>
+
+      <div style="margin-top:8px">
+
+        ${
+          (kycRes.data || []).length
+
+          ?
+
+          kycRes.data.map(
+            k => `
+
+              <div style="
+                padding:9px;
+                border-radius:9px;
+                background:var(--soft);
+                font-size:9px;
+                margin-bottom:6px;
+              ">
+
+                ${esc(k.document_type)}
+                ·
+                <strong>${esc(k.status)}</strong>
+                ·
+                ${esc(fmtDate(k.created_at))}
+
+              </div>
+
+            `
+          ).join("")
+
+          :
+
+          `<span style="
+            color:var(--muted);
+            font-size:9px;
+          ">No KYC submission</span>`
+
+        }
+
+      </div>
+
+      <div class="modal-actions">
+
+        ${
+          user.role !== "admin"
+
+          ?
+
+          `<button
+            class="btn danger"
+            onclick="banUser('${user.id}');closeModal()">
+            Ban User
+          </button>`
+
+          :
+
+          ""
+
+        }
+
+      </div>
+
+    `
+  );
+
+}
+
+
+/* =========================================================
+   BAN USER
+========================================================= */
+
+async function banUser(id){
+
+  if(id === currentUser.id){
+
+    toast(
+      "You cannot ban your own admin account.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      "Ban this user? Their profile role will become banned."
+    )
+  )
+    return;
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        role:"banned"
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    toast(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  await logAction(
+    "ban_user",
+    "User banned",
+    id
+  );
+
+
+  toast(
+    "User banned."
+  );
+
+
+  await loadUsers();
+  await loadDashboard();
+
+}
+
+
+async function unbanUser(id){
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        role:"user"
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    toast(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  await logAction(
+    "unban_user",
+    "User unbanned",
+    id
+  );
+
+
+  toast(
+    "User unbanned."
+  );
+
+
+  await loadUsers();
+
+}
+
+
+/* =========================================================
+   KYC
+========================================================= */
+
+async function loadKyc(){
+
+  document.getElementById(
+    "kycTable"
+  ).innerHTML =
+    `<div class="loading">Loading KYC...</div>`;
+
+
+  const status =
+    document.getElementById(
+      "kycStatusFilter"
+    ).value;
+
+
+  let query =
+    supabaseClient
+      .from("kyc_submissions")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+
+  if(status !== "all"){
+
+    query =
+      query.eq(
+        "status",
+        status
+      );
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await query;
+
+
+  if(error){
+
+    showError(
+      "kycTable",
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  kycs =
+    data || [];
+
+
+  renderKyc();
+
+}
+
+
+function renderKyc(){
+
+  if(!kycs.length){
+
+    document.getElementById(
+      "kycTable"
+    ).innerHTML =
+      emptyHTML(
+        "No KYC submissions",
+        "There are no submissions in this status."
+      );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "kycTable"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Name</th>
+            <th>Document</th>
+            <th>Status</th>
+            <th>Submitted</th>
+            <th>Actions</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            kycs.map(
+              k => `
+
+                <tr>
+
+                  <td>
+                    <strong>
+                      ${esc(
+                        k.full_name ||
+                        "—"
+                      )}
+                    </strong>
+
+                    <div class="user-sub">
+                      ${esc(k.user_id)}
+                    </div>
+                  </td>
+
+                  <td>
+                    ${esc(
+                      k.document_type ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${statusBadge(k.status)}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      fmtDate(
+                        k.created_at
+                      )
+                    )}
+                  </td>
+
+                  <td>
+
+                    <div class="action-row">
+
+                      <button
+                        class="btn"
+                        onclick="viewKyc('${k.id}')">
+                        Review
+                      </button>
+
+                      ${
+                        k.status === "pending"
+
+                        ?
+
+                        `
+
+                        <button
+                          class="btn success"
+                          onclick="approveKyc('${k.id}')">
+                          Approve
+                        </button>
+
+                        <button
+                          class="btn danger"
+                          onclick="rejectKyc('${k.id}')">
+                          Reject
+                        </button>
+
+                        `
+
+                        :
+
+                        ""
+
+                      }
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+function statusBadge(status){
+
+  const s =
+    normalize(status);
+
+  let cls =
+    "blue";
+
+  if(s === "approved")
+    cls = "green";
+
+  if(s === "pending")
+    cls = "orange";
+
+  if(s === "rejected")
+    cls = "red";
 
   return `
-    <tr>
-
-      <td>
-        <div class="title">
-          ${categoryIcon(item.category)}
-          ${escapeHtml(item.title || "Untitled")}
-        </div>
-
-        <div class="seller">
-          Seller ID:
-          ${escapeHtml(sellerId)}
-        </div>
-      </td>
-
-      <td>
-        <span class="badge category">
-          ${escapeHtml(categoryName(item.category))}
-        </span>
-      </td>
-
-      <td>
-        ${escapeHtml(listingTypeName(item.listing_type))}
-      </td>
-
-      <td>
-        <span class="price">
-          ${escapeHtml(
-            formatPrice(item.price, item.currency)
-          )}
-        </span>
-      </td>
-
-      <td>
-        📍 ${escapeHtml(locationText(item))}
-      </td>
-
-      <td>
-        <span class="badge ${escapeHtml(item.status || "")}">
-          ${escapeHtml(item.status || "unknown")}
-        </span>
-      </td>
-
-      <td>
-        ${escapeHtml(formatDate(item.created_at))}
-      </td>
-
-      <td>
-
-        <div class="actions">
-
-          <button
-            class="action-btn view"
-            onclick="viewListing('${item.id}')"
-          >
-            👁 View
-          </button>
-
-          ${
-            item.status !== "approved"
-            ? `
-              <button
-                class="action-btn approve"
-                onclick="changeStatus('${item.id}', 'approved')"
-              >
-                ✓ Approve
-              </button>
-            `
-            : ""
-          }
-
-          ${
-            item.status !== "rejected"
-            ? `
-              <button
-                class="action-btn reject"
-                onclick="changeStatus('${item.id}', 'rejected')"
-              >
-                ✕ Reject
-              </button>
-            `
-            : ""
-          }
-
-          <button
-            class="action-btn delete"
-            onclick="deleteListing('${item.id}')"
-          >
-            🗑 Delete
-          </button>
-
-        </div>
-
-      </td>
-
-    </tr>
+    <span class="badge ${cls}">
+      ${esc(status || "unknown")}
+    </span>
   `;
+
 }
 
-async function changeStatus(id, status) {
 
-  const item =
-    allListings.find(x => x.id === id);
+async function viewKyc(id){
 
-  if (!item) return;
-
-  const actionName =
-    status === "approved"
-      ? "Approve"
-      : "Reject";
-
-  const confirmed =
-    confirm(
-      `${item.title || "ဒီ Listing"} ကို ${actionName} လုပ်မလား?`
+  const k =
+    kycs.find(
+      x => x.id === id
     );
 
-  if (!confirmed) return;
+  if(!k) return;
 
-  try {
 
-    clearMessage();
+  const front =
+    await signedKycUrl(
+      k.front_image_url
+    );
 
-    const {
+  const back =
+    await signedKycUrl(
+      k.back_image_url
+    );
+
+
+  openModal(
+    "KYC Review",
+    `
+
+      <div class="detail-grid">
+
+        <div class="detail">
+          <label>Full Name</label>
+          <span>${esc(k.full_name)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Document Type</label>
+          <span>${esc(k.document_type)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Status</label>
+          <span>${statusBadge(k.status)}</span>
+        </div>
+
+        <div class="detail">
+          <label>User ID</label>
+          <span>${esc(k.user_id)}</span>
+        </div>
+
+      </div>
+
+      <div class="document-grid">
+
+        <div class="document">
+
+          ${
+            front
+
+            ?
+
+            `<img
+              src="${esc(front)}"
+              alt="Front document">`
+
+            :
+
+            `<div style="
+              height:200px;
+              display:grid;
+              place-items:center;
+              color:var(--muted);
+            ">
+              Front document unavailable
+            </div>`
+
+          }
+
+          <div>
+            Front Document
+          </div>
+
+        </div>
+
+        <div class="document">
+
+          ${
+            back
+
+            ?
+
+            `<img
+              src="${esc(back)}"
+              alt="Back document">`
+
+            :
+
+            `<div style="
+              height:200px;
+              display:grid;
+              place-items:center;
+              color:var(--muted);
+            ">
+              Back document unavailable
+            </div>`
+
+          }
+
+          <div>
+            Back Document
+          </div>
+
+        </div>
+
+      </div>
+
+      ${
+        k.rejection_reason
+
+        ?
+
+        `<div style="
+          margin-top:12px;
+          padding:10px;
+          border-radius:9px;
+          background:rgba(199,71,71,.08);
+          color:var(--red);
+          font-size:9px;
+        ">
+          Rejection reason:
+          ${esc(k.rejection_reason)}
+        </div>`
+
+        :
+
+        ""
+
+      }
+
+      ${
+        k.status === "pending"
+
+        ?
+
+        `
+
+        <div class="modal-actions">
+
+          <button
+            class="btn success"
+            onclick="approveKyc('${k.id}');closeModal()">
+            ✓ Approve KYC
+          </button>
+
+          <button
+            class="btn danger"
+            onclick="rejectKyc('${k.id}');closeModal()">
+            Reject KYC
+          </button>
+
+        </div>
+
+        `
+
+        :
+
+        ""
+
+      }
+
+    `
+  );
+
+}
+
+
+async function signedKycUrl(path){
+
+  if(!path)
+    return null;
+
+
+  /*
+   * Accept either a storage path or a full
+   * Supabase storage URL.
+   */
+
+  let clean =
+    String(path);
+
+
+  const marker =
+    "/storage/v1/object/";
+
+  const index =
+    clean.indexOf(marker);
+
+
+  if(index >= 0){
+
+    clean =
+      clean.slice(
+        index + marker.length
+      );
+
+    clean =
+      clean.replace(
+        /^public\//,
+        ""
+      );
+
+    clean =
+      clean.replace(
+        /^private\//,
+        ""
+      );
+
+    const bucketMarker =
+      "kyc-documents/";
+
+    const bucketIndex =
+      clean.indexOf(
+        bucketMarker
+      );
+
+    if(bucketIndex >= 0){
+
+      clean =
+        clean.slice(
+          bucketIndex +
+          bucketMarker.length
+        );
+
+    }
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.storage
+      .from("kyc-documents")
+      .createSignedUrl(
+        clean,
+        60 * 10
+      );
+
+
+  if(error){
+
+    console.warn(
+      "KYC image URL error:",
       error
-    } = await supabaseClient
+    );
+
+    return null;
+
+  }
+
+
+  return data?.signedUrl || null;
+
+}
+
+
+async function approveKyc(id){
+
+  const k =
+    kycs.find(
+      x => x.id === id
+    );
+
+  if(!k) return;
+
+
+  if(
+    !confirm(
+      "Approve this KYC submission?"
+    )
+  )
+    return;
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("kyc_submissions")
+      .update({
+
+        status:"approved",
+
+        reviewed_by:
+          currentUser.id,
+
+        reviewed_at:
+          new Date().toISOString(),
+
+        rejection_reason:
+          null
+
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    toast(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Automatically award Verified badge.
+   */
+
+  const {
+    data: verified
+  } =
+    await supabaseClient
+      .from("badges")
+      .select("id")
+      .eq(
+        "slug",
+        "verified"
+      )
+      .maybeSingle();
+
+
+  if(verified){
+
+    await supabaseClient
+      .from("user_badges")
+      .upsert(
+        {
+          user_id:k.user_id,
+          badge_id:verified.id,
+          awarded_by:currentUser.id
+        },
+        {
+          onConflict:
+            "user_id,badge_id"
+        }
+      );
+
+  }
+
+
+  await logAction(
+    "approve_kyc",
+    "KYC approved and Verified badge awarded.",
+    k.user_id,
+    null,
+    k.id
+  );
+
+
+  toast(
+    "KYC approved. Verified badge awarded."
+  );
+
+
+  await loadKyc();
+  await loadDashboard();
+
+}
+
+
+async function rejectKyc(id){
+
+  const reason =
+    prompt(
+      "Enter rejection reason:"
+    );
+
+  if(reason === null)
+    return;
+
+
+  const k =
+    kycs.find(
+      x => x.id === id
+    );
+
+  if(!k) return;
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("kyc_submissions")
+      .update({
+
+        status:"rejected",
+
+        rejection_reason:
+          reason.trim() ||
+          "KYC verification was rejected.",
+
+        reviewed_by:
+          currentUser.id,
+
+        reviewed_at:
+          new Date().toISOString()
+
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    toast(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  await logAction(
+    "reject_kyc",
+    reason,
+    k.user_id,
+    null,
+    k.id
+  );
+
+
+  toast(
+    "KYC rejected."
+  );
+
+
+  await loadKyc();
+  await loadDashboard();
+
+}
+
+
+document.getElementById(
+  "kycStatusFilter"
+).addEventListener(
+  "change",
+  loadKyc
+);
+
+
+/* =========================================================
+   POSTS
+========================================================= */
+
+async function loadPosts(){
+
+  document.getElementById(
+    "postsTable"
+  ).innerHTML =
+    `<div class="loading">Loading listings...</div>`;
+
+
+  let query =
+    supabaseClient
+      .from("listings")
+      .select(
+        "id,user_id,category,listing_type,title,description,price,currency,city,township,address,status,featured,created_at,updated_at,location,phone,images,seller_id,post_role"
+      )
+      .in(
+        "category",
+        [
+          "car",
+          "property",
+          "gem"
+        ]
+      )
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+
+  const status =
+    document.getElementById(
+      "postStatusFilter"
+    ).value;
+
+  const category =
+    document.getElementById(
+      "postCategoryFilter"
+    ).value;
+
+
+  if(status !== "all")
+    query =
+      query.eq(
+        "status",
+        status
+      );
+
+
+  if(category !== "all")
+    query =
+      query.eq(
+        "category",
+        category
+      );
+
+
+  const {
+    data,
+    error
+  } =
+    await query;
+
+
+  if(error){
+
+    showError(
+      "postsTable",
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  posts =
+    data || [];
+
+
+  renderPosts();
+
+}
+
+
+function renderPosts(){
+
+  const q =
+    normalize(
+      document.getElementById(
+        "postSearch"
+      ).value
+    );
+
+
+  const filtered =
+    posts.filter(
+      p => {
+
+        if(!q)
+          return true;
+
+        return [
+
+          p.title,
+          p.description,
+          p.category,
+          p.city,
+          p.township
+
+        ]
+        .map(normalize)
+        .join(" ")
+        .includes(q);
+
+      }
+    );
+
+
+  if(!filtered.length){
+
+    document.getElementById(
+      "postsTable"
+    ).innerHTML =
+      emptyHTML(
+        "No listings found",
+        "There are no matching listings."
+      );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "postsTable"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Listing</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            filtered.map(
+              p => `
+
+                <tr>
+
+                  <td>
+
+                    <strong>
+                      ${esc(
+                        p.title ||
+                        "Untitled"
+                      )}
+                    </strong>
+
+                    <div class="user-sub">
+                      ${esc(p.id)}
+                    </div>
+
+                  </td>
+
+                  <td>
+                    ${categoryLabel(
+                      p.category
+                    )}
+                  </td>
+
+                  <td>
+                    ${money(
+                      p.price,
+                      p.currency
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      [
+                        p.city,
+                        p.township
+                      ]
+                      .filter(Boolean)
+                      .join(" · ") ||
+                      "Myanmar"
+                    )}
+                  </td>
+
+                  <td>
+                    ${statusBadge(p.status)}
+
+                    ${
+                      p.featured
+
+                      ?
+
+                      `<span class="badge gold">
+                        ★ Featured
+                      </span>`
+
+                      :
+
+                      ""
+
+                    }
+
+                  </td>
+
+                  <td>
+
+                    <div class="action-row">
+
+                      <button
+                        class="btn"
+                        onclick="viewPost('${p.id}')">
+                        Details
+                      </button>
+
+                      ${
+                        p.status === "pending"
+
+                        ?
+
+                        `
+
+                        <button
+                          class="btn success"
+                          onclick="approvePost('${p.id}')">
+                          Approve
+                        </button>
+
+                        <button
+                          class="btn danger"
+                          onclick="rejectPost('${p.id}')">
+                          Reject
+                        </button>
+
+                        `
+
+                        :
+
+                        ""
+
+                      }
+
+                      ${
+                        p.status === "approved"
+
+                        ?
+
+                        `<button
+                          class="btn blue"
+                          onclick="toggleFeatured('${p.id}')">
+                          ${p.featured ? "Unfeature" : "Feature"}
+                        </button>`
+
+                        :
+
+                        ""
+
+                      }
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+function categoryLabel(category){
+
+  const c =
+    normalize(category);
+
+  if(c === "car")
+    return "🚗 Car";
+
+  if(c === "property")
+    return "🏠 Property";
+
+  if(c === "gem")
+    return "💎 Gem";
+
+  return "Other";
+
+}
+
+
+async function viewPost(id){
+
+  const p =
+    posts.find(
+      x => x.id === id
+    );
+
+  if(!p) return;
+
+
+  const images =
+    Array.isArray(p.images)
+      ? p.images
+      : [];
+
+
+  openModal(
+    "Listing Details",
+    `
+
+      <div class="detail-grid">
+
+        <div class="detail">
+          <label>Title</label>
+          <span>${esc(p.title)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Category</label>
+          <span>${categoryLabel(p.category)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Price</label>
+          <span>${money(p.price,p.currency)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Listing Type</label>
+          <span>${esc(p.listing_type || "sale")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Region / City</label>
+          <span>${esc(p.city || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Township</label>
+          <span>${esc(p.township || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Phone</label>
+          <span>${esc(p.phone || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Status</label>
+          <span>${statusBadge(p.status)}</span>
+        </div>
+
+      </div>
+
+      <div style="
+        margin-top:12px;
+        padding:12px;
+        border-radius:10px;
+        background:var(--soft);
+        font-size:10px;
+        line-height:1.65;
+      ">
+
+        ${esc(
+          p.description ||
+          "No description."
+        )}
+
+      </div>
+
+      ${
+        images.length
+
+        ?
+
+        `
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:7px;
+          margin-top:12px;
+        ">
+
+          ${
+            images.map(
+              image => `
+
+                <img
+                  src="${esc(image)}"
+                  style="
+                    width:100%;
+                    aspect-ratio:1;
+                    object-fit:cover;
+                    border-radius:9px;
+                    background:var(--soft);
+                  "
+                  alt="">
+
+              `
+            ).join("")
+          }
+
+        </div>
+
+        `
+
+        :
+
+        ""
+
+      }
+
+      <div class="modal-actions">
+
+        ${
+          p.status === "pending"
+
+          ?
+
+          `
+
+          <button
+            class="btn success"
+            onclick="approvePost('${p.id}');closeModal()">
+            ✓ Approve
+          </button>
+
+          <button
+            class="btn danger"
+            onclick="rejectPost('${p.id}');closeModal()">
+            Reject
+          </button>
+
+          `
+
+          :
+
+          ""
+
+        }
+
+        ${
+          p.status === "approved"
+
+          ?
+
+          `<button
+            class="btn blue"
+            onclick="toggleFeatured('${p.id}');closeModal()">
+            ${p.featured ? "Remove Featured" : "Make Featured"}
+          </button>`
+
+          :
+
+          ""
+
+        }
+
+      </div>
+
+    `
+  );
+
+}
+
+
+async function approvePost(id){
+
+  const p =
+    posts.find(
+      x => x.id === id
+    );
+
+  if(!p) return;
+
+
+  const {
+    error
+  } =
+    await supabaseClient
       .from("listings")
       .update({
-        status: status,
-        updated_at: new Date().toISOString()
+        status:"approved"
       })
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
 
-    if (error) throw error;
 
-    showMessage(
-      `✅ Listing ကို ${status} အဖြစ် ပြောင်းပြီးပါပြီ။`,
-      "success"
+  if(error){
+
+    toast(
+      error.message,
+      true
     );
 
-    await loadListings();
+    return;
 
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      "❌ Status ပြောင်းမရပါ — " + error.message,
-      "error"
-    );
   }
+
+
+  await logAction(
+    "approve_listing",
+    `Approved listing: ${p.title}`,
+    p.user_id,
+    p.id
+  );
+
+
+  toast(
+    "Listing approved."
+  );
+
+
+  await loadPosts();
+  await loadDashboard();
+
 }
 
-async function deleteListing(id) {
 
-  const item =
-    allListings.find(x => x.id === id);
+async function rejectPost(id){
 
-  if (!item) return;
-
-  const confirmed =
-    confirm(
-      `"${item.title || "ဒီ Listing"}" ကို အပြီးဖျက်မလား?\n\nဒီလုပ်ဆောင်ချက်ကို ပြန်ပြင်လို့မရပါ။`
+  const p =
+    posts.find(
+      x => x.id === id
     );
 
-  if (!confirmed) return;
+  if(!p) return;
 
-  try {
 
-    clearMessage();
+  const reason =
+    prompt(
+      "Enter rejection reason:"
+    );
 
-    const {
-      error
-    } = await supabaseClient
+  if(reason === null)
+    return;
+
+
+  const {
+    error
+  } =
+    await supabaseClient
       .from("listings")
-      .delete()
-      .eq("id", id);
+      .update({
+        status:"rejected"
+      })
+      .eq(
+        "id",
+        id
+      );
 
-    if (error) throw error;
 
-    showMessage(
-      "✅ Listing ဖျက်ပြီးပါပြီ။",
-      "success"
+  if(error){
+
+    toast(
+      error.message,
+      true
     );
 
-    hideModal();
+    return;
 
-    await loadListings();
-
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      "❌ Listing ဖျက်မရပါ — " + error.message,
-      "error"
-    );
   }
+
+
+  await logAction(
+    "reject_listing",
+    reason || `Rejected listing: ${p.title}`,
+    p.user_id,
+    p.id
+  );
+
+
+  toast(
+    "Listing rejected."
+  );
+
+
+  await loadPosts();
+  await loadDashboard();
+
 }
 
-function viewListing(id) {
 
-  const item =
-    allListings.find(x => x.id === id);
+async function toggleFeatured(id){
 
-  if (!item) return;
+  const p =
+    posts.find(
+      x => x.id === id
+    );
 
-  const content = document.getElementById("modalContent");
+  if(!p) return;
 
-  content.innerHTML = `
 
-    <div class="detail-row">
-      <div class="detail-label">Title</div>
-      <div class="detail-value">
-        ${categoryIcon(item.category)}
-        ${escapeHtml(item.title || "-")}
-      </div>
-    </div>
+  const next =
+    !Boolean(p.featured);
 
-    <div class="detail-row">
-      <div class="detail-label">Category</div>
-      <div class="detail-value">
-        ${escapeHtml(categoryName(item.category))}
-      </div>
-    </div>
 
-    <div class="detail-row">
-      <div class="detail-label">Listing Type</div>
-      <div class="detail-value">
-        ${escapeHtml(listingTypeName(item.listing_type))}
-      </div>
-    </div>
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("listings")
+      .update({
+        featured:next
+      })
+      .eq(
+        "id",
+        id
+      );
 
-    <div class="detail-row">
-      <div class="detail-label">Price</div>
-      <div class="detail-value">
-        ${escapeHtml(formatPrice(item.price, item.currency))}
-      </div>
-    </div>
 
-    <div class="detail-row">
-      <div class="detail-label">Location</div>
-      <div class="detail-value">
-        ${escapeHtml(locationText(item))}
-      </div>
-    </div>
+  if(error){
 
-    <div class="detail-row">
-      <div class="detail-label">Address</div>
-      <div class="detail-value">
-        ${escapeHtml(item.address || "-")}
-      </div>
-    </div>
+    toast(
+      error.message,
+      true
+    );
 
-    <div class="detail-row">
-      <div class="detail-label">Phone</div>
-      <div class="detail-value">
-        ${escapeHtml(item.phone || "-")}
-      </div>
-    </div>
+    return;
 
-    <div class="detail-row">
-      <div class="detail-label">Description</div>
-      <div class="detail-value">
-        ${escapeHtml(item.description || "-")}
-      </div>
-    </div>
+  }
 
-    <div class="detail-row">
-      <div class="detail-label">Status</div>
-      <div class="detail-value">
-        <span class="badge ${escapeHtml(item.status || "")}">
-          ${escapeHtml(item.status || "-")}
-        </span>
-      </div>
-    </div>
 
-    <div class="detail-row">
-      <div class="detail-label">Seller ID</div>
-      <div class="detail-value">
-        ${escapeHtml(item.seller_id || item.user_id || "-")}
-      </div>
-    </div>
+  await logAction(
+    next
+      ? "feature_listing"
+      : "unfeature_listing",
+    `${next ? "Featured" : "Unfeatured"}: ${p.title}`,
+    p.user_id,
+    p.id
+  );
 
-    <div class="detail-row">
-      <div class="detail-label">Created</div>
-      <div class="detail-value">
-        ${escapeHtml(formatDate(item.created_at))}
-      </div>
+
+  toast(
+    next
+      ? "Listing featured."
+      : "Featured removed."
+  );
+
+
+  await loadPosts();
+
+}
+
+
+document.getElementById(
+  "postSearch"
+).addEventListener(
+  "input",
+  renderPosts
+);
+
+document.getElementById(
+  "postStatusFilter"
+).addEventListener(
+  "change",
+  loadPosts
+);
+
+document.getElementById(
+  "postCategoryFilter"
+).addEventListener(
+  "change",
+  loadPosts
+);
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+async function loadBadges(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("badges")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:true}
+      );
+
+
+  if(error){
+
+    showError(
+      "badgesTable",
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  badges =
+    data || [];
+
+
+  document.getElementById(
+    "badgesTable"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Badge</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Icon</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            badges.map(
+              b => `
+
+                <tr>
+
+                  <td>
+                    <span class="badge gold">
+                      ${esc(b.icon || "◆")}
+                      ${esc(b.name)}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${esc(b.slug)}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      b.description ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(b.icon || "—")}
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
     </div>
 
   `;
 
-  document.getElementById("modal").classList.add("show");
+
+  document.getElementById(
+    "badgeSelect"
+  ).innerHTML =
+
+    badges.map(
+      b => `
+
+        <option value="${esc(b.id)}">
+          ${esc(b.icon || "◆")}
+          ${esc(b.name)}
+        </option>
+
+      `
+    ).join("");
+
 }
 
-function hideModal() {
-  document.getElementById("modal").classList.remove("show");
-}
 
-function closeModal(event) {
-  if (event.target.id === "modal") {
-    hideModal();
+async function assignBadge(){
+
+  const userId =
+    document.getElementById(
+      "badgeUserSearch"
+    ).value.trim();
+
+  const badgeId =
+    document.getElementById(
+      "badgeSelect"
+    ).value;
+
+
+  if(!userId){
+
+    toast(
+      "Enter a user UUID.",
+      true
+    );
+
+    return;
+
   }
+
+
+  if(!badgeId){
+
+    toast(
+      "Select a badge.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("user_badges")
+      .upsert(
+        {
+          user_id:userId,
+          badge_id:badgeId,
+          awarded_by:currentUser.id
+        },
+        {
+          onConflict:
+            "user_id,badge_id"
+        }
+      );
+
+
+  if(error){
+
+    toast(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  const badge =
+    badges.find(
+      x => x.id === badgeId
+    );
+
+
+  await logAction(
+    "assign_badge",
+    `Assigned badge: ${badge?.name || badgeId}`,
+    userId
+  );
+
+
+  toast(
+    "Badge assigned."
+  );
+
 }
 
-async function logout() {
 
-  const confirmed =
-    confirm("Logout လုပ်မလား?");
+/* =========================================================
+   REPORTS
+========================================================= */
 
-  if (!confirmed) return;
+async function loadReports(){
 
-  await supabaseClient.auth.signOut();
+  const status =
+    document.getElementById(
+      "reportStatusFilter"
+    ).value;
 
-  window.location.href = "./auth.html";
+
+  let query =
+    supabaseClient
+      .from("reports")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+
+  if(status !== "all"){
+
+    query =
+      query.eq(
+        "status",
+        status
+      );
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await query;
+
+
+  if(error){
+
+    showError(
+      "reportsTable",
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  reports =
+    data || [];
+
+
+  renderReports();
+
 }
 
-async function start() {
+
+function renderReports(){
+
+  if(!reports.length){
+
+    document.getElementById(
+      "reportsTable"
+    ).innerHTML =
+      emptyHTML(
+        "No reports",
+        "There are no reports in this status."
+      );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "reportsTable"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Report</th>
+            <th>Listing</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            reports.map(
+              r => `
+
+                <tr>
+
+                  <td>
+
+                    <strong>
+                      ${esc(
+                        r.id
+                      )}
+                    </strong>
+
+                    <div class="user-sub">
+                      User:
+                      ${esc(r.user_id)}
+                    </div>
+
+                  </td>
+
+                  <td>
+                    ${esc(
+                      r.listing_id ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    <strong>
+                      ${esc(
+                        r.reason ||
+                        "—"
+                      )}
+                    </strong>
+
+                    ${
+                      r.details
+
+                      ?
+
+                      `<div class="user-sub">
+                        ${esc(
+                          r.details
+                        )}
+                      </div>`
+
+                      :
+
+                      ""
+
+                    }
+
+                  </td>
+
+                  <td>
+                    ${statusBadge(r.status)}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      fmtDate(
+                        r.created_at
+                      )
+                    )}
+                  </td>
+
+                  <td>
+
+                    <div class="action-row">
+
+                      <button
+                        class="btn"
+                        onclick="viewReport('${r.id}')">
+                        Details
+                      </button>
+
+                      ${
+                        r.status === "open"
+
+                        ?
+
+                        `
+
+                        <button
+                          class="btn success"
+                          onclick="resolveReport('${r.id}')">
+                          Resolve
+                        </button>
+
+                        <button
+                          class="btn"
+                          onclick="dismissReport('${r.id}')">
+                          Dismiss
+                        </button>
+
+                        `
+
+                        :
+
+                        ""
+
+                      }
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+function viewReport(id){
+
+  const r =
+    reports.find(
+      x => x.id === id
+    );
+
+  if(!r) return;
+
+
+  openModal(
+    "Report Details",
+    `
+
+      <div class="detail-grid">
+
+        <div class="detail">
+          <label>Report ID</label>
+          <span>${esc(r.id)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Reporter</label>
+          <span>${esc(r.user_id || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Listing</label>
+          <span>${esc(r.listing_id || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Reason</label>
+          <span>${esc(r.reason || "—")}</span>
+        </div>
+
+        <div class="detail">
+          <label>Status</label>
+          <span>${statusBadge(r.status)}</span>
+        </div>
+
+        <div class="detail">
+          <label>Created</label>
+          <span>${esc(fmtDate(r.created_at))}</span>
+        </div>
+
+      </div>
+
+      <div style="
+        margin-top:12px;
+        padding:12px;
+        border-radius:10px;
+        background:var(--soft);
+        font-size:10px;
+        line-height:1.6;
+      ">
+        ${esc(
+          r.details ||
+          "No additional details."
+        )}
+      </div>
+
+      ${
+        r.status === "open"
+
+        ?
+
+        `<div class="modal-actions">
+
+          <button
+            class="btn success"
+            onclick="resolveReport('${r.id}');closeModal()">
+            Resolve
+          </button>
+
+          <button
+            class="btn"
+            onclick="dismissReport('${r.id}');closeModal()">
+            Dismiss
+          </button>
+
+        </div>`
+
+        :
+
+        ""
+
+      }
+
+    `
+  );
+
+}
+
+
+async function updateReport(
+  id,
+  status
+){
+
+  const r =
+    reports.find(
+      x => x.id === id
+    );
+
+  if(!r) return;
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("reports")
+      .update({
+        status
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    toast(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  await logAction(
+    status === "resolved"
+      ? "resolve_report"
+      : "dismiss_report",
+    `Report ${status}`,
+    r.user_id,
+    r.listing_id,
+    null,
+    r.id
+  );
+
+
+  toast(
+    `Report ${status}.`
+  );
+
+
+  await loadReports();
+  await loadDashboard();
+
+}
+
+
+function resolveReport(id){
+
+  updateReport(
+    id,
+    "resolved"
+  );
+
+}
+
+
+function dismissReport(id){
+
+  updateReport(
+    id,
+    "dismissed"
+  );
+
+}
+
+
+document.getElementById(
+  "reportStatusFilter"
+).addEventListener(
+  "change",
+  loadReports
+);
+
+
+/* =========================================================
+   LOGS
+========================================================= */
+
+async function loadLogs(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("admin_logs")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      )
+      .limit(200);
+
+
+  if(error){
+
+    showError(
+      "logsTable",
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  logs =
+    data || [];
+
+
+  renderLogs();
+
+}
+
+
+function renderLogs(){
+
+  if(!logs.length){
+
+    document.getElementById(
+      "logsTable"
+    ).innerHTML =
+      emptyHTML(
+        "No activity yet",
+        "Admin actions will appear here."
+      );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "logsTable"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Action</th>
+            <th>Details</th>
+            <th>Admin</th>
+            <th>Date</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            logs.map(
+              l => `
+
+                <tr>
+
+                  <td>
+                    <span class="badge blue">
+                      ${esc(l.action)}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${esc(
+                      l.details ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(l.admin_id)}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      fmtDate(
+                        l.created_at
+                      )
+                    )}
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+function renderDashboardLogs(items){
+
+  if(!items.length){
+
+    document.getElementById(
+      "dashboardActivity"
+    ).innerHTML =
+      emptyHTML(
+        "No activity",
+        "Admin activity will appear here."
+      );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "dashboardActivity"
+  ).innerHTML = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Details</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          ${
+            items.map(
+              l => `
+
+                <tr>
+
+                  <td>
+                    <span class="badge blue">
+                      ${esc(l.action)}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${esc(
+                      l.details ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      fmtDate(
+                        l.created_at
+                      )
+                    )}
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document.querySelectorAll(
+  ".side-btn"
+).forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        switchView(
+          button.dataset.view
+        );
+
+      }
+    );
+
+  }
+);
+
+
+function switchView(view){
+
+  currentView =
+    view;
+
+
+  document.querySelectorAll(
+    ".side-btn"
+  ).forEach(
+    button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.view === view
+      );
+
+    }
+  );
+
+
+  document.querySelectorAll(
+    ".view"
+  ).forEach(
+    section => {
+
+      section.classList.toggle(
+        "active",
+        section.id ===
+        `view-${view}`
+      );
+
+    }
+  );
+
+
+  const titles = {
+
+    dashboard:[
+      "Dashboard",
+      "Myanmar Elite Connect administration"
+    ],
+
+    users:[
+      "Users",
+      "Manage registered users"
+    ],
+
+    kyc:[
+      "KYC Verification",
+      "Review identity verification submissions"
+    ],
+
+    posts:[
+      "Posts",
+      "Approve and manage Car, Property and Gem listings"
+    ],
+
+    badges:[
+      "Badges",
+      "Manage user verification and seller badges"
+    ],
+
+    reports:[
+      "Report Center",
+      "Review reports and take moderation action"
+    ],
+
+    logs:[
+      "Admin Activity",
+      "Review administrator actions"
+    ]
+
+  };
+
+
+  const info =
+    titles[view] ||
+    titles.dashboard;
+
+
+  document.getElementById(
+    "pageTitle"
+  ).textContent =
+    info[0];
+
+  document.getElementById(
+    "pageSubtitle"
+  ).textContent =
+    info[1];
+
+
+  refreshCurrentView();
+
+}
+
+
+async function refreshCurrentView(){
+
+  try{
+
+    if(currentView === "dashboard")
+      await loadDashboard();
+
+    if(currentView === "users")
+      await loadUsers();
+
+    if(currentView === "kyc")
+      await loadKyc();
+
+    if(currentView === "posts")
+      await loadPosts();
+
+    if(currentView === "badges")
+      await loadBadges();
+
+    if(currentView === "reports")
+      await loadReports();
+
+    if(currentView === "logs")
+      await loadLogs();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Something went wrong.",
+      true
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(
+  title,
+  body
+){
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    title;
+
+  document.getElementById(
+    "modalBody"
+  ).innerHTML =
+    body;
+
+  document.getElementById(
+    "modal"
+  ).classList.add("open");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById(
+    "modal"
+  ).classList.remove("open");
+
+}
+
+
+document.getElementById(
+  "modal"
+).addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target.id ===
+      "modal"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   EMPTY / ERROR
+========================================================= */
+
+function emptyHTML(
+  title,
+  message
+){
+
+  return `
+
+    <div class="empty">
+
+      <div class="empty-icon">
+        ◌
+      </div>
+
+      <strong>
+        ${esc(title)}
+      </strong>
+
+      <span>
+        ${esc(message)}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+function showError(
+  elementId,
+  message
+){
+
+  document.getElementById(
+    elementId
+  ).innerHTML =
+    emptyHTML(
+      "Could not load data",
+      message
+    );
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+async function init(){
+
+  applyTheme(
+    localStorage.getItem(
+      "mec_theme"
+    ) || "light"
+  );
+
 
   const allowed =
-    await checkAdmin();
+    await requireAdmin();
 
-  if (!allowed) return;
 
-  await loadListings();
+  if(!allowed)
+    return;
+
+
+  await loadBadges();
+
+  await loadDashboard();
+
 }
 
-start();
+
+init();
 
 </script>
 
