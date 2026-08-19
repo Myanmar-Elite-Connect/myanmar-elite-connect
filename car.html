@@ -1,1455 +1,2422 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Cars | Myanmar Elite Connect</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --navy:#071b3a;
-  --navy2:#102d59;
-  --green:#19a974;
-  --gold:#d9a441;
-  --bg:#f4f7fb;
-  --white:#fff;
-  --text:#172033;
-  --muted:#697386;
-  --border:#e2e7ef;
-  --danger:#b42318;
-  --shadow:0 10px 30px rgba(7,27,58,.08);
-}
-
-body{
-  font-family:Arial,"Noto Sans Myanmar",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-}
-
-/* HEADER */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(7,27,58,.98);
-  box-shadow:0 3px 18px rgba(0,0,0,.15);
-}
-
-.header{
-  max-width:1400px;
-  margin:auto;
-  padding:13px 5%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.logo{
-  color:white;
-  text-decoration:none;
-  font-size:20px;
-  font-weight:900;
-}
-
-.logo span{
-  color:#65d6a7;
-}
-
-.nav{
-  display:flex;
-  gap:6px;
-}
-
-.nav a{
-  color:white;
-  text-decoration:none;
-  padding:9px 12px;
-  border-radius:8px;
-  font-size:13px;
-}
-
-.nav a:hover{
-  background:rgba(255,255,255,.1);
-}
-
-.nav .active{
-  background:var(--green);
-  font-weight:bold;
-}
-
-/* PAGE HERO */
-
-.page-hero{
-  background:
-  radial-gradient(circle at 85% 15%,#1b4c83,#071b3a 48%,#041126);
-  color:white;
-  padding:45px 5% 50px;
-}
-
-.page-hero-inner{
-  max-width:1400px;
-  margin:auto;
-}
-
-.back{
-  display:inline-block;
-  color:rgba(255,255,255,.8);
-  text-decoration:none;
-  margin-bottom:20px;
-  font-size:14px;
-}
-
-.page-title{
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
-
-.car-icon{
-  width:65px;
-  height:65px;
-  border-radius:18px;
-  background:rgba(255,255,255,.1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:36px;
-}
-
-.page-title h1{
-  font-size:clamp(30px,5vw,46px);
-}
-
-.page-title p{
-  margin-top:6px;
-  color:rgba(255,255,255,.75);
-  font-size:14px;
-}
-
-/* MAIN */
-
-main{
-  max-width:1400px;
-  margin:auto;
-  padding:35px 5% 70px;
-}
-
-/* SEARCH */
-
-.search-panel{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  margin-bottom:25px;
-}
-
-.search-row{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr auto;
-  gap:10px;
-}
-
-input,
-select{
-  width:100%;
-  padding:13px 14px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  background:white;
-  color:var(--text);
-  font-size:14px;
-}
-
-input:focus,
-select:focus{
-  border-color:var(--navy);
-  box-shadow:0 0 0 3px rgba(7,27,58,.07);
-}
-
-.search-btn{
-  border:0;
-  background:var(--navy);
-  color:white;
-  padding:0 20px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-/* BUY SELL */
-
-.mode-row{
-  display:flex;
-  gap:9px;
-  margin-bottom:25px;
-  flex-wrap:wrap;
-}
-
-.mode{
-  border:1px solid var(--border);
-  background:white;
-  color:var(--text);
-  padding:11px 18px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:800;
-}
-
-.mode.active{
-  background:var(--navy);
-  color:white;
-  border-color:var(--navy);
-}
-
-/* HEAD */
-
-.listing-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:20px;
-  gap:15px;
-}
-
-.listing-head h2{
-  color:var(--navy);
-  font-size:27px;
-}
-
-.count{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:5px;
-}
-
-/* GRID */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
-}
-
-/* CARD */
-
-.card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  transition:.2s;
-}
-
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 40px rgba(7,27,58,.13);
-}
-
-.image{
-  height:225px;
-  background:linear-gradient(135deg,#071b3a,#24548d);
-  position:relative;
-  overflow:hidden;
-}
-
-.image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.no-image{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:65px;
-}
-
-.featured{
-  position:absolute;
-  top:11px;
-  left:11px;
-  background:var(--gold);
-  color:white;
-  padding:6px 9px;
-  border-radius:7px;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.photo-count{
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  background:rgba(0,0,0,.7);
-  color:white;
-  padding:5px 8px;
-  border-radius:7px;
-  font-size:11px;
-}
-
-.body{
-  padding:18px;
-}
-
-.tag{
-  display:inline-block;
-  background:#e8f7ef;
-  color:#167344;
-  padding:5px 9px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:bold;
-  margin-bottom:9px;
-}
-
-.title{
-  color:var(--navy);
-  font-size:19px;
-  font-weight:900;
-  line-height:1.4;
-  margin-bottom:8px;
-}
-
-.price{
-  color:var(--navy);
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:9px;
-}
-
-.location{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-  margin-bottom:10px;
-}
-
-.description{
-  color:#596476;
-  font-size:13px;
-  line-height:1.65;
-  margin-bottom:14px;
-}
-
-.contact{
-  display:block;
-  width:100%;
-  text-align:center;
-  text-decoration:none;
-  background:var(--navy);
-  color:white;
-  padding:12px;
-  border-radius:9px;
-  font-size:14px;
-  font-weight:bold;
-}
-
-.contact:hover{
-  background:var(--navy2);
-}
-
-/* STATE */
-
-.state{
-  grid-column:1/-1;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:60px 20px;
-  text-align:center;
-  color:var(--muted);
-}
-
-.state-icon{
-  font-size:50px;
-  margin-bottom:10px;
-}
-
-.state h3{
-  color:var(--navy);
-  margin-bottom:7px;
-}
-
-.spinner{
-  width:40px;
-  height:40px;
-  border:4px solid #e6ebf2;
-  border-top-color:var(--navy);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 15px;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-.error{
-  grid-column:1/-1;
-  background:#fff1f1;
-  border:1px solid #ffd1d1;
-  color:var(--danger);
-  border-radius:14px;
-  padding:25px;
-  line-height:1.7;
-}
-
-.retry{
-  margin-top:12px;
-  border:0;
-  background:var(--navy);
-  color:white;
-  padding:10px 16px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* MOBILE */
-
-@media(max-width:1050px){
-  .search-row{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .search-btn{
-    min-height:45px;
-  }
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:700px){
-
-  .header{
-    padding:12px 4%;
-  }
-
-  .logo{
-    font-size:16px;
-  }
-
-  .nav a{
-    display:none;
-  }
-
-  .nav a:last-child{
-    display:block;
-  }
-
-  .page-hero{
-    padding:35px 5% 40px;
-  }
-
-  .search-row{
-    grid-template-columns:1fr;
-  }
-
-  .search-btn{
-    min-height:45px;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .listing-head{
-    align-items:flex-start;
-  }
-
-  .image{
-    height:230px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cars — Myanmar Elite Connect</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface2: #eef2f6;
+      --text: #10233f;
+      --muted: #758298;
+      --navy: #071a34;
+      --gold: #d7b35a;
+      --border: rgba(16,35,63,.09);
+      --danger: #c94a4a;
+      --shadow: 0 18px 55px rgba(16,35,63,.08);
+    }
+
+    body.dark {
+      --bg: #071321;
+      --surface: #0d1d31;
+      --surface2: #12263d;
+      --text: #f4f7fb;
+      --muted: #9baabd;
+      --navy: #f4f7fb;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 18px 55px rgba(0,0,0,.28);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+
+      font-family:
+        Inter,
+        "Noto Sans Myanmar",
+        "Myanmar Text",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      transition: background .2s ease, color .2s ease;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==============================
+       HEADER
+    ============================== */
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      height: 74px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(18px);
+    }
+
+    body.dark .header {
+      background: rgba(13,29,49,.93);
+    }
+
+    .header-inner {
+      width: min(1200px, calc(100% - 32px));
+      height: 100%;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      background: var(--surface);
+    }
+
+    .logo img {
+      width: 82%;
+      height: 82%;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: -.4px;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav a {
+      padding: 9px 12px;
+
+      border-radius: 9px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      font-weight: 850;
+
+      transition: .2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .icon-btn,
+    .profile-link {
+      width: 39px;
+      height: 39px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+      border-radius: 11px;
+
+      background: var(--surface);
+      color: var(--text);
+
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .profile-link {
+      border-radius: 50%;
+    }
+
+    /* ==============================
+       MAIN
+    ============================== */
+
+    .main {
+      width: min(1200px, calc(100% - 32px));
+      margin: auto;
+
+      padding: 40px 0 85px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 10px;
+
+      color: var(--gold);
+
+      font-size: 9px;
+      font-weight: 950;
+
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .eyebrow::before {
+      content: "";
+
+      width: 21px;
+      height: 1px;
+
+      background: var(--gold);
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .hero-text {
+      max-width: 580px;
+
+      margin-top: 11px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .sell-btn {
+      flex-shrink: 0;
+
+      min-width: 140px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background: var(--navy);
+      color: var(--bg);
+
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    body.dark .sell-btn {
+      background: var(--gold);
+      color: #071a34;
+    }
+
+    /* ==============================
+       SEARCH
+    ============================== */
+
+    .search-panel {
+      display: grid;
+      grid-template-columns: 1fr 170px 170px 105px;
+
+      gap: 9px;
+
+      padding: 10px;
+
+      margin-bottom: 25px;
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      background: var(--surface);
+
+      box-shadow: var(--shadow);
+    }
+
+    .search-field {
+      position: relative;
+    }
+
+    .search-field input,
+    .search-field select {
+      width: 100%;
+      height: 42px;
+
+      padding: 0 12px;
+
+      outline: 0;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface2);
+      color: var(--text);
+
+      font-size: 10px;
+    }
+
+    .search-field input:focus,
+    .search-field select:focus {
+      border-color: rgba(215,179,90,.7);
+    }
+
+    .clear-btn {
+      height: 42px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: transparent;
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .clear-btn:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    /* ==============================
+       TOOLBAR
+    ============================== */
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 14px;
+    }
+
+    .result-count {
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .result-count strong {
+      color: var(--text);
+    }
+
+    .sort {
+      height: 34px;
+
+      padding: 0 10px;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      outline: 0;
+
+      background: var(--surface);
+      color: var(--text);
+
+      font-size: 9px;
+    }
+
+    /* ==============================
+       CAR GRID
+    ============================== */
+
+    .car-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .car-card {
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      background: var(--surface);
+
+      box-shadow: 0 8px 30px rgba(16,35,63,.045);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .car-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .car-image {
+      position: relative;
+
+      height: 205px;
+
+      overflow: hidden;
+
+      background: var(--surface2);
+    }
+
+    .car-image img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: transform .35s ease;
+    }
+
+    .car-card:hover .car-image img {
+      transform: scale(1.035);
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--muted);
+
+      font-size: 34px;
+    }
+
+    .condition {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+
+      padding: 5px 8px;
+
+      border-radius: 6px;
+
+      background: rgba(7,26,52,.82);
+      color: white;
+
+      font-size: 7px;
+      font-weight: 900;
+
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-title {
+      min-height: 34px;
+
+      margin-bottom: 7px;
+
+      font-size: 13px;
+      font-weight: 950;
+      line-height: 1.35;
+
+      letter-spacing: -.2px;
+    }
+
+    .price {
+      margin-bottom: 9px;
+
+      color: var(--gold);
+
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      margin-bottom: 13px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    .meta span:not(:last-child)::after {
+      content: "•";
+      margin-left: 8px;
+      color: var(--gold);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding-top: 11px;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .location {
+      max-width: 55%;
+
+      overflow: hidden;
+
+      color: var(--muted);
+
+      font-size: 8px;
+      font-weight: 700;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .details-btn {
+      height: 31px;
+
+      padding: 0 10px;
+
+      border: 1px solid var(--border);
+      border-radius: 7px;
+
+      background: var(--surface2);
+      color: var(--text);
+
+      font-size: 8px;
+      font-weight: 900;
+    }
+
+    .details-btn:hover {
+      border-color: var(--gold);
+    }
+
+    /* ==============================
+       LOADING
+    ============================== */
+
+    .loading {
+      grid-column: 1 / -1;
+
+      min-height: 280px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      background: var(--surface);
+    }
+
+    .loader-box {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 30px;
+      height: 30px;
+
+      margin: 0 auto 10px;
+
+      border: 2px solid var(--border);
+      border-top-color: var(--gold);
+
+      border-radius: 50%;
+
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    /* ==============================
+       EMPTY
+    ============================== */
+
+    .empty {
+      grid-column: 1 / -1;
+
+      min-height: 280px;
+
+      display: none;
+      place-items: center;
+
+      padding: 30px;
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      background: var(--surface);
+
+      text-align: center;
+    }
+
+    .empty.show {
+      display: grid;
+    }
+
+    .empty-icon {
+      margin-bottom: 10px;
+
+      font-size: 30px;
+      color: var(--gold);
+    }
+
+    .empty h3 {
+      font-size: 14px;
+    }
+
+    .empty p {
+      max-width: 370px;
+
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+      line-height: 1.6;
+    }
+
+    /* ==============================
+       MODAL
+    ============================== */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(4,12,24,.68);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-card {
+      position: relative;
+
+      width: min(720px, 100%);
+      max-height: 90vh;
+
+      overflow: auto;
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      background: var(--surface);
+
+      box-shadow: 0 30px 90px rgba(0,0,0,.25);
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 300px;
+
+      object-fit: cover;
+
+      background: var(--surface2);
+    }
+
+    .modal-content {
+      padding: 22px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+
+      width: 35px;
+      height: 35px;
+
+      display: grid;
+      place-items: center;
+
+      border: 0;
+      border-radius: 50%;
+
+      background: rgba(7,26,52,.78);
+      color: white;
+
+      font-size: 14px;
+    }
+
+    .modal-category {
+      margin-bottom: 7px;
+
+      color: var(--gold);
+
+      font-size: 8px;
+      font-weight: 950;
+
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-title {
+      font-size: 23px;
+      line-height: 1.25;
+    }
+
+    .modal-price {
+      margin: 9px 0 17px;
+
+      color: var(--gold);
+
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .modal-description {
+      padding: 15px;
+
+      border-radius: 11px;
+
+      background: var(--surface2);
+
+      color: var(--muted);
+
+      font-size: 10px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+
+    .modal-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+
+      margin-top: 13px;
+    }
+
+    .modal-meta-item {
+      padding: 11px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .modal-meta-item small {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--muted);
+
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .modal-meta-item strong {
+      font-size: 10px;
+    }
+
+    /* ==============================
+       MOBILE NAV
+    ============================== */
+
+    .bottom-nav {
+      display: none;
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+
+    @media (max-width: 950px) {
+
+      .nav {
+        display: none;
+      }
+
+      .car-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .search-panel {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .search-field:first-child {
+        grid-column: 1 / -1;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .header {
+        height: 68px;
+      }
+
+      .header-inner {
+        width: calc(100% - 22px);
+      }
+
+      .brand-name {
+        display: none;
+      }
+
+      .main {
+        width: calc(100% - 22px);
+        padding-top: 27px;
+      }
+
+      .hero {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .sell-btn {
+        width: 100%;
+      }
+
+      .search-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .search-field:first-child {
+        grid-column: auto;
+      }
+
+      .car-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .car-image {
+        height: 220px;
+      }
+
+      .modal-image {
+        height: 220px;
+      }
+
+      .modal-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .bottom-nav {
+        position: fixed;
+
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        z-index: 200;
+
+        height: 62px;
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        padding: 6px;
+
+        border: 1px solid var(--border);
+        border-radius: 17px;
+
+        background: rgba(255,255,255,.94);
+        backdrop-filter: blur(18px);
+
+        box-shadow: 0 15px 40px rgba(0,0,0,.12);
+      }
+
+      body.dark .bottom-nav {
+        background: rgba(13,29,49,.95);
+      }
+
+      .bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 3px;
+
+        border-radius: 11px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        font-weight: 850;
+      }
+
+      .bottom-nav a.active {
+        color: var(--gold);
+        background: var(--surface2);
+      }
+
+      .bottom-nav b {
+        font-size: 17px;
+        font-weight: 500;
+      }
+
+      .bottom-space {
+        height: 80px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <!-- ==============================
+       HEADER
+  ============================== -->
 
-<div class="header">
+  <header class="header">
 
-<a href="./index.html" class="logo">
-Myanmar <span>Elite Connect</span>
-</a>
+    <div class="header-inner">
 
-<div class="nav">
+      <a
+        class="brand"
+        href="./general.html">
 
-<a href="./index.html">General</a>
-
-<a href="./car.html" class="active">
-🚗 Cars
-</a>
-
-<a href="./property.html">
-🏠 Property
-</a>
-
-<a href="./gem.html">
-💎 Gems
-</a>
-
-<a href="./auth.html">
-Login
-</a>
-
-</div>
-
-</div>
-
-</header>
-
-
-<section class="page-hero">
-
-<div class="page-hero-inner">
-
-<a href="./index.html" class="back">
-← General Page
-</a>
-
-<div class="page-title">
-
-<div class="car-icon">
-🚗
-</div>
-
-<div>
-
-<h1>
-Car Marketplace
-</h1>
-
-<p>
-ကားဝယ်ရန်၊ ရောင်းရန်နှင့် ရှာဖွေရန်
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<main>
-
-
-<!-- SEARCH -->
-
-<section class="search-panel">
-
-<div class="search-row">
-
-<input
-id="searchInput"
-type="text"
-placeholder="ကားအမည်၊ Model၊ Description..."
->
-
-<select id="cityFilter">
-
-<option value="">
-မြို့အားလုံး
-</option>
-
-</select>
-
-<select id="townshipFilter">
-
-<option value="">
-မြို့နယ်အားလုံး
-</option>
-
-</select>
-
-<select id="priceFilter">
-
-<option value="">
-ဈေးနှုန်းအားလုံး
-</option>
-
-<option value="0-50000000">
-၅၀ သန်းအောက်
-</option>
-
-<option value="50000000-100000000">
-၅၀ - ၁၀၀ သန်း
-</option>
-
-<option value="100000000-200000000">
-၁၀၀ - ၂၀၀ သန်း
-</option>
-
-<option value="200000000+">
-၂၀၀ သန်းအထက်
-</option>
-
-</select>
-
-<button
-class="search-btn"
-onclick="applyFilters()"
->
-🔎 Search
-</button>
-
-</div>
-
-</section>
-
-
-<!-- BUY / SELL -->
-
-<div class="mode-row">
-
-<button
-id="allMode"
-class="mode active"
-onclick="setMode('all')"
->
-All
-</button>
-
-<button
-id="buyMode"
-class="mode"
-onclick="setMode('buy')"
->
-🔎 Buy
-</button>
-
-<button
-id="sellMode"
-class="mode"
-onclick="setMode('sell')"
->
-🏷️ Sell
-</button>
-
-</div>
-
-
-<!-- LISTINGS -->
-
-<section>
-
-<div class="listing-head">
-
-<div>
-
-<h2>
-🚗 Car Listings
-</h2>
-
-<div
-id="count"
-class="count"
->
-Loading...
-</div>
-
-</div>
-
-</div>
-
-
-<div
-id="grid"
-class="grid"
->
-
-<div class="state">
-
-<div class="spinner"></div>
-
-ကား Listing များကို
-ရယူနေပါသည်...
-
-</div>
-
-</div>
-
-</section>
-
-
-</main>
-
-
-<script>
-
-/* =========================================
-   SUPABASE
-========================================= */
-
-const SUPABASE_URL =
-"https://ikjwisfsdcupibgjiuvp.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* =========================================
-   STATE
-========================================= */
-
-let listings = [];
-
-let currentMode = "all";
-
-
-/* =========================================
-   HELPERS
-========================================= */
-
-function escapeHtml(value){
-
-  if(value === null || value === undefined){
-    return "";
-  }
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-function getImages(item){
-
-  if(!item.images){
-    return [];
-  }
-
-  if(Array.isArray(item.images)){
-    return item.images.filter(Boolean);
-  }
-
-  if(typeof item.images === "string"){
-
-    try{
-
-      const parsed =
-      JSON.parse(item.images);
-
-      if(Array.isArray(parsed)){
-        return parsed.filter(Boolean);
-      }
-
-    }catch(e){
-
-      if(item.images.startsWith("http")){
-        return [item.images];
-      }
-
-    }
-
-  }
-
-  return [];
-}
-
-
-function formatPrice(price,currency){
-
-  if(
-    price === null ||
-    price === undefined ||
-    price === ""
-  ){
-    return "ဈေးနှုန်း မဖော်ပြပါ";
-  }
-
-  const number =
-  Number(price);
-
-  if(!Number.isFinite(number)){
-    return escapeHtml(price);
-  }
-
-  return (
-    number.toLocaleString("en-US") +
-    " " +
-    (currency || "MMK")
-  );
-}
-
-
-function locationText(item){
-
-  const parts = [];
-
-  if(item.city){
-    parts.push(item.city);
-  }
-
-  if(item.township){
-    parts.push(item.township);
-  }
-
-  if(item.location){
-    parts.push(item.location);
-  }
-
-  return parts.length
-    ? escapeHtml(
-        [...new Set(parts)].join(" • ")
-      )
-    : "တည်နေရာ မဖော်ပြပါ";
-}
-
-
-/* =========================================
-   CARD
-========================================= */
-
-function createCard(item){
-
-  const images =
-  getImages(item);
-
-  const image =
-  images[0] || "";
-
-  let imageHTML;
-
-  if(image){
-
-    imageHTML = `
-
-      <img
-        src="${escapeHtml(image)}"
-        alt="${escapeHtml(item.title || "Car")}"
-        loading="lazy"
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-      <div
-        class="no-image"
-        style="display:none"
-      >
-        🚗
-      </div>
-
-    `;
-
-  }else{
-
-    imageHTML = `
-
-      <div class="no-image">
-        🚗
-      </div>
-
-    `;
-
-  }
-
-
-  const featured =
-  item.featured
-  ? `
-    <div class="featured">
-      ⭐ FEATURED
-    </div>
-  `
-  : "";
-
-
-  const photoCount =
-  images.length > 1
-  ? `
-    <div class="photo-count">
-      🖼️ ${images.length}
-    </div>
-  `
-  : "";
-
-
-  const phone =
-  item.phone
-  ? `
-    <a
-      class="contact"
-      href="tel:${encodeURIComponent(item.phone)}"
-    >
-      📞 Contact Seller
-    </a>
-  `
-  : "";
-
-
-  const type =
-  item.listing_type === "sale"
-  ? "ရောင်းရန်"
-  : item.listing_type === "rent"
-  ? "ငှားရန်"
-  : "Listing";
-
-
-  return `
-
-    <article class="card">
-
-      <div class="image">
-
-        ${imageHTML}
-
-        ${featured}
-
-        ${photoCount}
-
-      </div>
-
-
-      <div class="body">
-
-        <span class="tag">
-          ${type}
-        </span>
-
-
-        <div class="title">
-          ${escapeHtml(
-            item.title || "Untitled Car"
-          )}
+        <div class="logo">
+          <img
+            src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+            alt="Myanmar Elite Connect">
         </div>
 
-
-        <div class="price">
-          ${formatPrice(
-            item.price,
-            item.currency
-          )}
+        <div class="brand-name">
+          Myanmar <span>Elite</span> Connect
         </div>
 
-
-        <div class="location">
-          📍 ${locationText(item)}
-        </div>
+      </a>
 
 
-        ${
-          item.description
-          ? `
-            <div class="description">
-              ${escapeHtml(
-                item.description
-              )}
-            </div>
-          `
-          : ""
-        }
+      <nav class="nav">
+
+        <a href="./general.html">
+          Home
+        </a>
+
+        <a href="./buy.html">
+          Buy
+        </a>
+
+        <a href="./sell.html">
+          Sell
+        </a>
+
+        <a
+          href="./car.html"
+          class="active">
+          Cars
+        </a>
+
+        <a href="./property.html">
+          Property
+        </a>
+
+        <a href="./chat.html">
+          Chat
+        </a>
+
+      </nav>
 
 
-        ${phone}
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================
-   LOAD
-========================================= */
-
-async function loadCars(){
-
-  const grid =
-  document.getElementById("grid");
-
-  const count =
-  document.getElementById("count");
-
-
-  grid.innerHTML = `
-
-    <div class="state">
-
-      <div class="spinner"></div>
-
-      ကား Listing များကို
-      ရယူနေပါသည်...
-
-    </div>
-
-  `;
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-      .from("listings")
-      .select("*")
-      .eq("category","car")
-      .eq("status","approved")
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-
-    if(error){
-      throw error;
-    }
-
-
-    listings =
-    Array.isArray(data)
-    ? data
-    : [];
-
-
-    createLocationFilters();
-
-    applyFilters();
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    count.textContent =
-    "Database Error";
-
-
-    grid.innerHTML = `
-
-      <div class="error">
-
-        ❌ Car Listings မရယူနိုင်ပါ။
-
-        <br><br>
-
-        ${escapeHtml(
-          error.message ||
-          "Unknown error"
-        )}
-
-        <br>
+      <div class="header-actions">
 
         <button
-          class="retry"
-          onclick="loadCars()"
-        >
-          ↻ ပြန်စမ်းမည်
+          class="icon-btn"
+          id="languageBtn">
+          MM
         </button>
+
+        <button
+          class="icon-btn"
+          id="themeBtn">
+          ☾
+        </button>
+
+        <a
+          href="./profile.html"
+          class="profile-link"
+          id="profileLink">
+          U
+        </a>
 
       </div>
 
-    `;
+    </div>
 
-  }
+  </header>
 
-}
 
+  <!-- ==============================
+       MAIN
+  ============================== -->
 
-/* =========================================
-   LOCATION FILTERS
-========================================= */
+  <main class="main">
 
-function createLocationFilters(){
+    <section class="hero">
 
-  const citySelect =
-  document.getElementById(
-    "cityFilter"
-  );
+      <div>
 
-  const townshipSelect =
-  document.getElementById(
-    "townshipFilter"
-  );
-
-
-  const cities =
-  [
-    ...new Set(
-      listings
-      .map(item => item.city)
-      .filter(Boolean)
-    )
-  ]
-  .sort();
-
-
-  const townships =
-  [
-    ...new Set(
-      listings
-      .map(item => item.township)
-      .filter(Boolean)
-    )
-  ]
-  .sort();
-
-
-  citySelect.innerHTML =
-  `<option value="">
-    မြို့အားလုံး
-  </option>`;
-
-
-  townshipSelect.innerHTML =
-  `<option value="">
-    မြို့နယ်အားလုံး
-  </option>`;
-
-
-  cities.forEach(city => {
-
-    citySelect.innerHTML += `
-
-      <option value="${escapeHtml(city)}">
-        ${escapeHtml(city)}
-      </option>
-
-    `;
-
-  });
-
-
-  townships.forEach(township => {
-
-    townshipSelect.innerHTML += `
-
-      <option value="${escapeHtml(township)}">
-        ${escapeHtml(township)}
-      </option>
-
-    `;
-
-  });
-
-}
-
-
-/* =========================================
-   MODE
-========================================= */
-
-function setMode(mode){
-
-  currentMode =
-  mode;
-
-
-  document
-    .getElementById("allMode")
-    .classList
-    .toggle(
-      "active",
-      mode === "all"
-    );
-
-
-  document
-    .getElementById("buyMode")
-    .classList
-    .toggle(
-      "active",
-      mode === "buy"
-    );
-
-
-  document
-    .getElementById("sellMode")
-    .classList
-    .toggle(
-      "active",
-      mode === "sell"
-    );
-
-
-  applyFilters();
-
-}
-
-
-/* =========================================
-   FILTER
-========================================= */
-
-function applyFilters(){
-
-  const keyword =
-  document
-    .getElementById("searchInput")
-    .value
-    .trim()
-    .toLowerCase();
-
-
-  const city =
-  document
-    .getElementById("cityFilter")
-    .value;
-
-
-  const township =
-  document
-    .getElementById("townshipFilter")
-    .value;
-
-
-  const price =
-  document
-    .getElementById("priceFilter")
-    .value;
-
-
-  let filtered =
-  [...listings];
-
-
-  /* BUY / SELL */
-
-  if(currentMode === "sell"){
-
-    filtered =
-    filtered.filter(
-      item =>
-      item.listing_type === "sale"
-    );
-
-  }
-
-
-  /*
-    Existing database uses
-    listing_type = sale/rent.
-
-    Buyer posts can later be
-    supported with a separate
-    listing_role column.
-  */
-
-
-  /* SEARCH */
-
-  if(keyword){
-
-    filtered =
-    filtered.filter(item => {
-
-      const text = [
-
-        item.title,
-        item.description,
-        item.city,
-        item.township,
-        item.location,
-        item.address
-
-      ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-
-
-      return text.includes(keyword);
-
-    });
-
-  }
-
-
-  /* CITY */
-
-  if(city){
-
-    filtered =
-    filtered.filter(
-      item =>
-      item.city === city
-    );
-
-  }
-
-
-  /* TOWNSHIP */
-
-  if(township){
-
-    filtered =
-    filtered.filter(
-      item =>
-      item.township === township
-    );
-
-  }
-
-
-  /* PRICE */
-
-  if(price){
-
-    filtered =
-    filtered.filter(item => {
-
-      const p =
-      Number(item.price);
-
-
-      if(!Number.isFinite(p)){
-        return false;
-      }
-
-
-      if(price === "0-50000000"){
-        return p <= 50000000;
-      }
-
-
-      if(price === "50000000-100000000"){
-        return (
-          p >= 50000000 &&
-          p <= 100000000
-        );
-      }
-
-
-      if(price === "100000000-200000000"){
-        return (
-          p >= 100000000 &&
-          p <= 200000000
-        );
-      }
-
-
-      if(price === "200000000+"){
-        return p >= 200000000;
-      }
-
-
-      return true;
-
-    });
-
-  }
-
-
-  render(
-    filtered
-  );
-
-}
-
-
-/* =========================================
-   RENDER
-========================================= */
-
-function render(items){
-
-  const grid =
-  document.getElementById("grid");
-
-  const count =
-  document.getElementById("count");
-
-
-  count.textContent =
-  `${items.length} ကား Listing ရှိပါသည်`;
-
-
-  if(!items.length){
-
-    grid.innerHTML = `
-
-      <div class="state">
-
-        <div class="state-icon">
-          🔍
+        <div class="eyebrow">
+          Premium Automotive Marketplace
         </div>
 
-        <h3>
-          ကား Listing မတွေ့ပါ
-        </h3>
+        <h1>
+          Find your next car.
+        </h1>
 
-        <p>
-          Search / Filter ကို
-          ပြောင်းပြီး ပြန်ရှာကြည့်ပါ။
+        <p class="hero-text">
+          Explore approved vehicle listings from Myanmar Elite Connect.
+          Search by model, location, price, and category.
         </p>
 
       </div>
 
-    `;
 
-    return;
+      <a
+        class="sell-btn"
+        href="./sell.html">
 
-  }
+        + List a Car
 
+      </a>
 
-  grid.innerHTML =
-  items
-    .map(createCard)
-    .join("");
-
-}
+    </section>
 
 
-/* =========================================
-   LIVE SEARCH
-========================================= */
+    <!-- ==============================
+         SEARCH
+    ============================== -->
 
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    applyFilters
-  );
+    <section class="search-panel">
+
+      <div class="search-field">
+
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Search brand, model or keyword...">
+
+      </div>
 
 
-/* =========================================
-   START
-========================================= */
+      <div class="search-field">
 
-document.addEventListener(
-  "DOMContentLoaded",
-  loadCars
-);
+        <select id="regionFilter">
 
-</script>
+          <option value="">
+            All locations
+          </option>
+
+          <option value="Yangon">
+            Yangon
+          </option>
+
+          <option value="Mandalay">
+            Mandalay
+          </option>
+
+          <option value="Nay Pyi Taw">
+            Nay Pyi Taw
+          </option>
+
+          <option value="Bago">
+            Bago
+          </option>
+
+          <option value="Shan">
+            Shan
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="search-field">
+
+        <select id="priceFilter">
+
+          <option value="">
+            Any price
+          </option>
+
+          <option value="under50">
+            Under 50 Lakh
+          </option>
+
+          <option value="50to100">
+            50–100 Lakh
+          </option>
+
+          <option value="100to300">
+            100–300 Lakh
+          </option>
+
+          <option value="over300">
+            Over 300 Lakh
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <button
+        id="clearBtn"
+        class="clear-btn">
+
+        Clear
+
+      </button>
+
+    </section>
+
+
+    <!-- ==============================
+         TOOLBAR
+    ============================== -->
+
+    <div class="toolbar">
+
+      <div
+        id="resultCount"
+        class="result-count">
+
+        Loading cars...
+
+      </div>
+
+
+      <select
+        id="sortSelect"
+        class="sort">
+
+        <option value="newest">
+          Newest
+        </option>
+
+        <option value="low">
+          Price: Low
+        </option>
+
+        <option value="high">
+          Price: High
+        </option>
+
+        <option value="az">
+          Name: A–Z
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ==============================
+         CAR GRID
+    ============================== -->
+
+    <section
+      id="carGrid"
+      class="car-grid">
+
+      <div class="loading">
+
+        <div class="loader-box">
+
+          <div class="spinner"></div>
+
+          <div class="loading-text">
+            Loading approved cars...
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        id="empty"
+        class="empty">
+
+        <div>
+
+          <div class="empty-icon">
+            ◇
+          </div>
+
+          <h3>
+            No cars found
+          </h3>
+
+          <p>
+            There are no approved car listings matching
+            your current search and filters.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div class="bottom-space"></div>
+
+  </main>
+
+
+  <!-- ==============================
+       DETAIL MODAL
+  ============================== -->
+
+  <div
+    id="detailModal"
+    class="modal">
+
+    <div class="modal-card">
+
+      <button
+        id="modalClose"
+        class="modal-close">
+        ×
+      </button>
+
+
+      <img
+        id="modalImage"
+        class="modal-image"
+        alt="Car image">
+
+
+      <div class="modal-content">
+
+        <div
+          id="modalCategory"
+          class="modal-category">
+        </div>
+
+        <h2
+          id="modalTitle"
+          class="modal-title">
+        </h2>
+
+        <div
+          id="modalPrice"
+          class="modal-price">
+        </div>
+
+
+        <div
+          id="modalDescription"
+          class="modal-description">
+        </div>
+
+
+        <div class="modal-meta">
+
+          <div class="modal-meta-item">
+
+            <small>
+              Region
+            </small>
+
+            <strong id="modalRegion">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="modal-meta-item">
+
+            <small>
+              City
+            </small>
+
+            <strong id="modalCity">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="modal-meta-item">
+
+            <small>
+              Listed
+            </small>
+
+            <strong id="modalDate">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="modal-meta-item">
+
+            <small>
+              Listing type
+            </small>
+
+            <strong id="modalRole">
+              —
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       MOBILE NAV
+  ============================== -->
+
+  <nav class="bottom-nav">
+
+    <a href="./general.html">
+
+      <b>⌂</b>
+      Home
+
+    </a>
+
+
+    <a href="./buy.html">
+
+      <b>⌕</b>
+      Buy
+
+    </a>
+
+
+    <a
+      href="./sell.html">
+
+      <b>＋</b>
+      Sell
+
+    </a>
+
+
+    <a
+      href="./car.html"
+      class="active">
+
+      <b>🚗</b>
+      Cars
+
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let allCars = [];
+
+
+    /* =====================================================
+       HELPERS
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+      return String(
+        value ?? ""
+      )
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    function formatPrice(value) {
+
+      const number =
+        Number(value);
+
+
+      if (!Number.isFinite(number)) {
+        return "Price on request";
+      }
+
+
+      return new Intl.NumberFormat(
+        "en-US"
+      ).format(number) + " MMK";
+
+    }
+
+
+    function formatDate(value) {
+
+      if (!value) {
+        return "—";
+      }
+
+
+      const date =
+        new Date(value);
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return "—";
+      }
+
+
+      return date.toLocaleDateString(
+        "en-GB",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }
+      );
+
+    }
+
+
+    function imageHTML(url) {
+
+      if (!url) {
+
+        return `
+          <div class="image-placeholder">
+            🚗
+          </div>
+        `;
+
+      }
+
+
+      return `
+        <img
+          src="${escapeHTML(url)}"
+          alt="Car listing"
+          loading="lazy"
+          onerror="
+            this.style.display='none';
+            this.parentElement.innerHTML='<div class=&quot;image-placeholder&quot;>🚗</div>';
+          ">
+      `;
+
+    }
+
+
+    /* =====================================================
+       LOAD CARS
+    ===================================================== */
+
+    async function loadCars() {
+
+      const grid =
+        document.getElementById(
+          "carGrid"
+        );
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("listings")
+            .select("*")
+            .eq("category", "car")
+            .eq("status", "approved")
+            .order(
+              "inserted_at",
+              {
+                ascending: false
+              }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        allCars =
+          Array.isArray(data)
+            ? data
+            : [];
+
+
+        renderCars();
+
+      } catch (error) {
+
+        console.error(
+          "Car loading error:",
+          error
+        );
+
+
+        /*
+          Keep the page usable even if the
+          database is temporarily unavailable.
+        */
+
+        grid.innerHTML = `
+          <div class="empty show">
+
+            <div>
+
+              <div class="empty-icon">
+                !
+              </div>
+
+              <h3>
+                Cars could not be loaded
+              </h3>
+
+              <p>
+                Please check your Supabase connection,
+                listings table, and RLS policy.
+              </p>
+
+            </div>
+
+          </div>
+        `;
+
+
+        document.getElementById(
+          "resultCount"
+        ).innerHTML =
+          "Unable to load listings.";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       FILTER
+    ===================================================== */
+
+    function filterCars() {
+
+      const search =
+        document.getElementById(
+          "searchInput"
+        ).value
+          .trim()
+          .toLowerCase();
+
+
+      const region =
+        document.getElementById(
+          "regionFilter"
+        ).value;
+
+
+      const price =
+        document.getElementById(
+          "priceFilter"
+        ).value;
+
+
+      return allCars.filter(
+        car => {
+
+          const searchable =
+            [
+              car.title,
+              car.description,
+              car.city,
+              car.region
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+
+
+          if (
+            search &&
+            !searchable.includes(search)
+          ) {
+            return false;
+          }
+
+
+          if (
+            region &&
+            car.region !== region
+          ) {
+            return false;
+          }
+
+
+          const amount =
+            Number(car.price);
+
+
+          if (
+            price === "under50" &&
+            amount >= 50000000
+          ) {
+            return false;
+          }
+
+
+          if (
+            price === "50to100" &&
+            (
+              amount < 50000000 ||
+              amount > 100000000
+            )
+          ) {
+            return false;
+          }
+
+
+          if (
+            price === "100to300" &&
+            (
+              amount < 100000000 ||
+              amount > 300000000
+            )
+          ) {
+            return false;
+          }
+
+
+          if (
+            price === "over300" &&
+            amount <= 300000000
+          ) {
+            return false;
+          }
+
+
+          return true;
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       SORT
+    ===================================================== */
+
+    function sortCars(
+      cars
+    ) {
+
+      const sort =
+        document.getElementById(
+          "sortSelect"
+        ).value;
+
+
+      return [...cars].sort(
+        (a, b) => {
+
+          if (
+            sort === "low"
+          ) {
+
+            return (
+              Number(a.price || 0) -
+              Number(b.price || 0)
+            );
+
+          }
+
+
+          if (
+            sort === "high"
+          ) {
+
+            return (
+              Number(b.price || 0) -
+              Number(a.price || 0)
+            );
+
+          }
+
+
+          if (
+            sort === "az"
+          ) {
+
+            return String(
+              a.title || ""
+            ).localeCompare(
+              String(
+                b.title || ""
+              )
+            );
+
+          }
+
+
+          return new Date(
+            b.inserted_at ||
+            b.created_at ||
+            0
+          ) - new Date(
+            a.inserted_at ||
+            a.created_at ||
+            0
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    function renderCars() {
+
+      const grid =
+        document.getElementById(
+          "carGrid"
+        );
+
+
+      const loading =
+        grid.querySelector(
+          ".loading"
+        );
+
+
+      if (loading) {
+        loading.remove();
+      }
+
+
+      const oldCards =
+        grid.querySelectorAll(
+          ".car-card"
+        );
+
+
+      oldCards.forEach(
+        card => card.remove()
+      );
+
+
+      const empty =
+        document.getElementById(
+          "empty"
+        );
+
+
+      const filtered =
+        sortCars(
+          filterCars()
+        );
+
+
+      document.getElementById(
+        "resultCount"
+      ).innerHTML =
+        `<strong>${filtered.length}</strong> car${filtered.length === 1 ? "" : "s"} available`;
+
+
+      if (!filtered.length) {
+
+        empty.classList.add(
+          "show"
+        );
+
+        return;
+
+      }
+
+
+      empty.classList.remove(
+        "show"
+      );
+
+
+      filtered.forEach(
+        car => {
+
+          const card =
+            document.createElement(
+              "article"
+            );
+
+
+          card.className =
+            "car-card";
+
+
+          const city =
+            car.city ||
+            car.region ||
+            "Myanmar";
+
+
+          card.innerHTML = `
+
+            <div class="car-image">
+
+              ${imageHTML(car.image_url)}
+
+              <div class="condition">
+                Approved
+              </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+              <h3 class="card-title">
+                ${escapeHTML(
+                  car.title ||
+                  "Untitled Car"
+                )}
+              </h3>
+
+
+              <div class="price">
+                ${escapeHTML(
+                  formatPrice(
+                    car.price
+                  )
+                )}
+              </div>
+
+
+              <div class="meta">
+
+                <span>
+                  ${escapeHTML(
+                    car.role ||
+                    "Seller"
+                  )}
+                </span>
+
+                <span>
+                  ${escapeHTML(
+                    car.region ||
+                    "Myanmar"
+                  )}
+                </span>
+
+              </div>
+
+
+              <div class="card-footer">
+
+                <div class="location">
+                  ${escapeHTML(city)}
+                </div>
+
+
+                <button
+                  class="details-btn"
+                  data-id="${escapeHTML(
+                    car.id
+                  )}">
+
+                  View details
+
+                </button>
+
+              </div>
+
+            </div>
+          `;
+
+
+          card
+            .querySelector(
+              ".details-btn"
+            )
+            .addEventListener(
+              "click",
+              () => {
+
+                openDetails(
+                  car
+                );
+
+              }
+            );
+
+
+          grid.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       DETAIL MODAL
+    ===================================================== */
+
+    function openDetails(
+      car
+    ) {
+
+      const modal =
+        document.getElementById(
+          "detailModal"
+        );
+
+
+      const image =
+        document.getElementById(
+          "modalImage"
+        );
+
+
+      if (car.image_url) {
+
+        image.src =
+          car.image_url;
+
+        image.style.display =
+          "block";
+
+      } else {
+
+        image.removeAttribute(
+          "src"
+        );
+
+        image.style.display =
+          "none";
+
+      }
+
+
+      document.getElementById(
+        "modalCategory"
+      ).textContent =
+        "CAR LISTING";
+
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent =
+        car.title ||
+        "Untitled Car";
+
+
+      document.getElementById(
+        "modalPrice"
+      ).textContent =
+        formatPrice(
+          car.price
+        );
+
+
+      document.getElementById(
+        "modalDescription"
+      ).textContent =
+        car.description ||
+        "No description provided.";
+
+
+      document.getElementById(
+        "modalRegion"
+      ).textContent =
+        car.region ||
+        "—";
+
+
+      document.getElementById(
+        "modalCity"
+      ).textContent =
+        car.city ||
+        car.location ||
+        "—";
+
+
+      document.getElementById(
+        "modalDate"
+      ).textContent =
+        formatDate(
+          car.inserted_at ||
+          car.created_at
+        );
+
+
+      document.getElementById(
+        "modalRole"
+      ).textContent =
+        car.role ||
+        "Seller";
+
+
+      modal.classList.add(
+        "show"
+      );
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+    function closeModal() {
+
+      document.getElementById(
+        "detailModal"
+      ).classList.remove(
+        "show"
+      );
+
+
+      document.body.style.overflow =
+        "";
+
+    }
+
+
+    document
+      .getElementById(
+        "modalClose"
+      )
+      .addEventListener(
+        "click",
+        closeModal
+      );
+
+
+    document
+      .getElementById(
+        "detailModal"
+      )
+      .addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target.id ===
+            "detailModal"
+          ) {
+
+            closeModal();
+
+          }
+
+        }
+      );
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       SEARCH EVENTS
+    ===================================================== */
+
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .addEventListener(
+        "input",
+        renderCars
+      );
+
+
+    document
+      .getElementById(
+        "regionFilter"
+      )
+      .addEventListener(
+        "change",
+        renderCars
+      );
+
+
+    document
+      .getElementById(
+        "priceFilter"
+      )
+      .addEventListener(
+        "change",
+        renderCars
+      );
+
+
+    document
+      .getElementById(
+        "sortSelect"
+      )
+      .addEventListener(
+        "change",
+        renderCars
+      );
+
+
+    document
+      .getElementById(
+        "clearBtn"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          document.getElementById(
+            "searchInput"
+          ).value = "";
+
+
+          document.getElementById(
+            "regionFilter"
+          ).value = "";
+
+
+          document.getElementById(
+            "priceFilter"
+          ).value = "";
+
+
+          document.getElementById(
+            "sortSelect"
+          ).value = "newest";
+
+
+          renderCars();
+
+        }
+      );
+
+
+    /* =====================================================
+       THEME
+    ===================================================== */
+
+    function applyTheme(
+      theme
+    ) {
+
+      document.body.classList.toggle(
+        "dark",
+        theme === "dark"
+      );
+
+
+      document.getElementById(
+        "themeBtn"
+      ).textContent =
+        theme === "dark"
+          ? "☀"
+          : "☾";
+
+
+      localStorage.setItem(
+        "mec_theme",
+        theme
+      );
+
+    }
+
+
+    document
+      .getElementById(
+        "themeBtn"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          const dark =
+            document.body.classList.contains(
+              "dark"
+            );
+
+
+          applyTheme(
+            dark
+              ? "light"
+              : "dark"
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       LANGUAGE BUTTON
+    ===================================================== */
+
+    let language =
+      localStorage.getItem(
+        "mec_language"
+      ) || "en";
+
+
+    const languageBtn =
+      document.getElementById(
+        "languageBtn"
+      );
+
+
+    languageBtn.textContent =
+      language === "en"
+        ? "MM"
+        : "EN";
+
+
+    languageBtn.addEventListener(
+      "click",
+      () => {
+
+        language =
+          language === "en"
+            ? "mm"
+            : "en";
+
+
+        localStorage.setItem(
+          "mec_language",
+          language
+        );
+
+
+        languageBtn.textContent =
+          language === "en"
+            ? "MM"
+            : "EN";
+
+      }
+    );
+
+
+    /* =====================================================
+       PROFILE LETTER
+    ===================================================== */
+
+    async function loadProfileLetter() {
+
+      try {
+
+        const {
+          data
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        const user =
+          data?.user;
+
+
+        if (!user) {
+          return;
+        }
+
+
+        const name =
+          user.user_metadata?.full_name ||
+          user.user_metadata?.name ||
+          user.email ||
+          "U";
+
+
+        document.getElementById(
+          "profileLink"
+        ).textContent =
+          name
+            .toString()
+            .charAt(0)
+            .toUpperCase();
+
+      } catch (error) {
+
+        console.warn(
+          "Profile:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       AUTH STATE
+    ===================================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      (
+        event,
+        session
+      ) => {
+
+        if (
+          event === "SIGNED_OUT"
+        ) {
+
+          window.location.href =
+            "./auth.html";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       INIT
+    ===================================================== */
+
+    async function init() {
+
+      applyTheme(
+        localStorage.getItem(
+          "mec_theme"
+        ) || "light"
+      );
+
+
+      await loadProfileLetter();
+
+
+      await loadCars();
+
+    }
+
+
+    init();
+
+  </script>
 
 </body>
 </html>
