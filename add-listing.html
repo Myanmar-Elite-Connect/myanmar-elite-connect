@@ -3,18 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Create Listing • Myanmar Elite Connect</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
     }
-
     :root{
       --bg:#f5f7fb;
       --surface:#ffffff;
@@ -29,7 +25,6 @@
       --red:#c94b4b;
       --shadow:0 18px 55px rgba(13,35,64,.07);
     }
-
     body.dark{
       --bg:#071321;
       --surface:#0e1e32;
@@ -40,7 +35,6 @@
       --navy:#f3f6fa;
       --shadow:0 18px 55px rgba(0,0,0,.28);
     }
-
     body{
       min-height:100vh;
       color:var(--text);
@@ -50,36 +44,34 @@
         "Noto Sans Myanmar",
         "Myanmar Text",
         system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         sans-serif;
-      transition:.3s ease;
+      transition:
+        background .3s ease,
+        color .3s ease;
     }
-
     button,
     input,
     select,
     textarea{
       font:inherit;
     }
-
     button{
       cursor:pointer;
     }
-
     a{
       color:inherit;
       text-decoration:none;
     }
-
     img{
       display:block;
       max-width:100%;
     }
-
-
-    /* =========================
+    /* =====================================================
        HEADER
-    ========================= */
-
+    ===================================================== */
     .topbar{
       position:sticky;
       top:0;
@@ -90,11 +82,9 @@
       backdrop-filter:blur(18px);
       -webkit-backdrop-filter:blur(18px);
     }
-
     body.dark .topbar{
       background:rgba(7,19,33,.92);
     }
-
     .topbar-inner{
       width:min(1180px,92%);
       height:100%;
@@ -104,32 +94,31 @@
       justify-content:space-between;
       gap:20px;
     }
-
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
+      min-width:0;
       font-size:15px;
       font-weight:900;
     }
-
     .brand img{
       width:38px;
       height:38px;
       object-fit:contain;
       border-radius:11px;
     }
-
+    .brand-name{
+      white-space:nowrap;
+    }
     .brand span{
       color:var(--gold);
     }
-
     .nav{
       display:flex;
       align-items:center;
       gap:4px;
     }
-
     .nav a{
       padding:9px 12px;
       border-radius:10px;
@@ -137,19 +126,16 @@
       font-size:12px;
       font-weight:800;
     }
-
     .nav a:hover,
     .nav a.active{
       color:var(--text);
       background:var(--soft);
     }
-
     .actions{
       display:flex;
       align-items:center;
       gap:8px;
     }
-
     .icon-btn{
       width:40px;
       height:40px;
@@ -159,8 +145,12 @@
       border-radius:12px;
       color:var(--text);
       background:var(--surface);
+      transition:.2s ease;
     }
-
+    .icon-btn:hover{
+      border-color:rgba(216,180,92,.6);
+      transform:translateY(-1px);
+    }
     .profile{
       width:40px;
       height:40px;
@@ -169,24 +159,19 @@
       border-radius:12px;
       background:var(--soft);
     }
-
     .profile img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
-
-
-    /* =========================
+    /* =====================================================
        PAGE
-    ========================= */
-
+    ===================================================== */
     .container{
       width:min(1100px,92%);
       margin:auto;
       padding:30px 0 90px;
     }
-
     .back{
       display:inline-flex;
       align-items:center;
@@ -196,15 +181,12 @@
       font-weight:850;
       margin-bottom:18px;
     }
-
     .back:hover{
       color:var(--gold);
     }
-
     .page-head{
       margin-bottom:22px;
     }
-
     .eyebrow{
       color:var(--gold);
       font-size:10px;
@@ -212,14 +194,12 @@
       text-transform:uppercase;
       letter-spacing:1px;
     }
-
     h1{
       margin-top:7px;
       font-size:clamp(27px,5vw,38px);
       line-height:1.12;
       letter-spacing:-1px;
     }
-
     .subtitle{
       max-width:650px;
       margin-top:8px;
@@ -227,19 +207,17 @@
       font-size:12px;
       line-height:1.7;
     }
-
-
-    /* =========================
+    /* =====================================================
        LAYOUT
-    ========================= */
-
+    ===================================================== */
     .layout{
       display:grid;
-      grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);
+      grid-template-columns:
+        minmax(0,1.25fr)
+        minmax(320px,.75fr);
       gap:22px;
       align-items:start;
     }
-
     .card{
       padding:22px;
       border:1px solid var(--border);
@@ -247,18 +225,14 @@
       background:var(--surface);
       box-shadow:var(--shadow);
     }
-
-
-    /* =========================
+    /* =====================================================
        SECTION
-    ========================= */
-
+    ===================================================== */
     .section + .section{
       margin-top:25px;
       padding-top:25px;
       border-top:1px solid var(--border);
     }
-
     .section-head{
       display:flex;
       align-items:center;
@@ -266,22 +240,17 @@
       gap:12px;
       margin-bottom:15px;
     }
-
     .section-title{
       font-size:14px;
       font-weight:950;
     }
-
     .section-note{
       color:var(--muted);
       font-size:9px;
     }
-
-
-    /* =========================
+    /* =====================================================
        PHOTO UPLOAD
-    ========================= */
-
+    ===================================================== */
     .photo-upload{
       position:relative;
       min-height:180px;
@@ -299,12 +268,11 @@
       text-align:center;
       transition:.2s ease;
     }
-
     .photo-upload:hover{
       border-color:var(--gold);
-      background:rgba(216,180,92,.09);
+      background:
+        rgba(216,180,92,.09);
     }
-
     .photo-upload input{
       position:absolute;
       inset:0;
@@ -313,7 +281,6 @@
       opacity:0;
       cursor:pointer;
     }
-
     .upload-icon{
       width:50px;
       height:50px;
@@ -325,26 +292,23 @@
       background:var(--gold);
       font-size:21px;
     }
-
     .upload-title{
       font-size:12px;
       font-weight:900;
     }
-
     .upload-note{
       margin-top:5px;
       color:var(--muted);
       font-size:9px;
       line-height:1.6;
     }
-
     .photo-preview{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:
+        repeat(2,1fr);
       gap:10px;
       margin-top:12px;
     }
-
     .preview-item{
       position:relative;
       aspect-ratio:1/1;
@@ -353,17 +317,14 @@
       border-radius:13px;
       background:var(--soft);
     }
-
     .preview-item.cover{
       border:2px solid var(--gold);
     }
-
     .preview-item img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
-
     .preview-badge{
       position:absolute;
       left:7px;
@@ -375,7 +336,6 @@
       font-size:7px;
       font-weight:950;
     }
-
     .remove-photo{
       position:absolute;
       top:7px;
@@ -387,23 +347,23 @@
       color:#fff;
       background:rgba(0,0,0,.58);
       font-size:14px;
+      transition:.2s ease;
     }
-
-
-    /* =========================
+    .remove-photo:hover{
+      background:rgba(201,75,75,.9);
+    }
+    /* =====================================================
        FORM
-    ========================= */
-
+    ===================================================== */
     .form-grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:
+        1fr 1fr;
       gap:14px;
     }
-
     .field.full{
       grid-column:1/-1;
     }
-
     label{
       display:block;
       margin-bottom:7px;
@@ -411,11 +371,9 @@
       font-size:10px;
       font-weight:900;
     }
-
     .required{
       color:var(--red);
     }
-
     input,
     select,
     textarea{
@@ -427,14 +385,12 @@
       outline:none;
       transition:.2s ease;
     }
-
     input,
     select{
       height:46px;
       padding:0 13px;
       font-size:11px;
     }
-
     textarea{
       min-height:145px;
       padding:13px;
@@ -442,31 +398,27 @@
       font-size:11px;
       line-height:1.7;
     }
-
     input:focus,
     select:focus,
     textarea:focus{
       border-color:rgba(216,180,92,.7);
-      box-shadow:0 0 0 3px rgba(216,180,92,.09);
+      box-shadow:
+        0 0 0 3px
+        rgba(216,180,92,.09);
     }
-
     .hint{
       margin-top:6px;
       color:var(--muted);
       font-size:8px;
       line-height:1.5;
     }
-
-
-    /* =========================
+    /* =====================================================
        PREVIEW
-    ========================= */
-
+    ===================================================== */
     .preview-card{
       position:sticky;
       top:92px;
     }
-
     .preview-label{
       margin-bottom:12px;
       color:var(--muted);
@@ -475,14 +427,12 @@
       text-transform:uppercase;
       letter-spacing:.8px;
     }
-
     .listing-preview{
       overflow:hidden;
       border:1px solid var(--border);
       border-radius:18px;
       background:var(--surface);
     }
-
     .preview-cover{
       position:relative;
       aspect-ratio:4/3;
@@ -494,13 +444,11 @@
           #bdc9d8
         );
     }
-
     .preview-cover img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
-
     .empty-cover{
       width:100%;
       height:100%;
@@ -510,41 +458,36 @@
       font-size:10px;
       font-weight:800;
     }
-
     .preview-content{
       padding:16px;
     }
-
     .preview-category{
       display:inline-block;
       padding:5px 7px;
       border-radius:6px;
       color:var(--gold);
-      background:rgba(216,180,92,.12);
+      background:
+        rgba(216,180,92,.12);
       font-size:7px;
       font-weight:950;
     }
-
     .preview-title{
       margin-top:9px;
       font-size:17px;
       font-weight:950;
       line-height:1.25;
     }
-
     .preview-price{
       margin-top:7px;
       font-size:16px;
       font-weight:950;
     }
-
     .preview-location{
       margin-top:8px;
       color:var(--muted);
       font-size:9px;
       line-height:1.55;
     }
-
     .preview-description{
       margin-top:13px;
       padding-top:13px;
@@ -557,16 +500,12 @@
       -webkit-box-orient:vertical;
       overflow:hidden;
     }
-
-
-    /* =========================
+    /* =====================================================
        PUBLISH
-    ========================= */
-
+    ===================================================== */
     .publish-area{
       margin-top:22px;
     }
-
     .publish-button{
       width:100%;
       height:52px;
@@ -579,22 +518,21 @@
           var(--gold-light),
           var(--gold)
         );
-      box-shadow:0 14px 30px rgba(16,35,63,.12);
+      box-shadow:
+        0 14px 30px
+        rgba(16,35,63,.12);
       font-size:12px;
       font-weight:950;
       transition:.2s ease;
     }
-
     .publish-button:hover{
       transform:translateY(-2px);
     }
-
     .publish-button:disabled{
       opacity:.55;
       cursor:not-allowed;
       transform:none;
     }
-
     .status{
       display:none;
       margin-top:12px;
@@ -603,31 +541,24 @@
       font-size:9px;
       line-height:1.6;
     }
-
     .status.show{
       display:block;
     }
-
     .status.success{
       color:var(--green);
       background:rgba(45,138,97,.09);
     }
-
     .status.error{
       color:var(--red);
       background:rgba(201,75,75,.09);
     }
-
     .status.loading{
       color:var(--gold);
       background:rgba(216,180,92,.09);
     }
-
-
-    /* =========================
+    /* =====================================================
        MOBILE NAV
-    ========================= */
-
+    ===================================================== */
     .mobile-nav{
       display:none;
       position:fixed;
@@ -639,18 +570,17 @@
       border-top:1px solid var(--border);
       background:rgba(255,255,255,.94);
       backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
-
     body.dark .mobile-nav{
       background:rgba(7,19,33,.95);
     }
-
     .mobile-nav-inner{
       height:100%;
       display:grid;
-      grid-template-columns:repeat(5,1fr);
+      grid-template-columns:
+        repeat(5,1fr);
     }
-
     .mobile-nav a{
       display:flex;
       flex-direction:column;
@@ -661,770 +591,662 @@
       font-size:9px;
       font-weight:800;
     }
-
     .mobile-nav a.active{
       color:var(--gold);
     }
-
     .mobile-icon{
       font-size:17px;
     }
-
-
-    /* =========================
+    /* =====================================================
        RESPONSIVE
-    ========================= */
-
+    ===================================================== */
     @media(max-width:900px){
-
       .nav{
         display:none;
       }
-
       .mobile-nav{
         display:block;
       }
-
       .container{
         padding-bottom:95px;
       }
-
       .layout{
         grid-template-columns:1fr;
       }
-
       .preview-card{
         position:relative;
         top:auto;
       }
-
     }
-
     @media(max-width:600px){
-
       .container{
         width:94%;
         padding-top:20px;
       }
-
       .card{
         padding:17px;
         border-radius:18px;
       }
-
       .form-grid{
         grid-template-columns:1fr;
       }
-
       .field.full{
         grid-column:auto;
       }
-
       .photo-preview{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:
+          repeat(2,1fr);
       }
-
       .brand-name{
         display:none;
       }
-
     }
-
   </style>
 </head>
-
 <body>
-
 <header class="topbar">
-
   <div class="topbar-inner">
-
     <a
       href="./general.html"
       class="brand">
-
       <img
         src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
         alt="Myanmar Elite Connect">
-
       <div class="brand-name">
         Myanmar
         <span>Elite</span>
         Connect
       </div>
-
     </a>
-
-
     <nav class="nav">
-
       <a href="./general.html">
         Home
       </a>
-
       <a href="./buy.html">
         Buy
       </a>
-
       <a
         href="./add-listing.html"
         class="active">
         Sell
       </a>
-
       <a href="./car.html">
         Cars
       </a>
-
       <a href="./property.html">
         Property
       </a>
-
       <a href="./chat.html">
         Chat
       </a>
-
     </nav>
-
-
     <div class="actions">
-
       <button
         class="icon-btn"
         id="themeButton"
-        onclick="toggleTheme()">
+        type="button">
         ☾
       </button>
-
       <a
         href="./gem.html"
-        class="icon-btn">
+        class="icon-btn"
+        aria-label="Gems">
         ◆
       </a>
-
       <a
         href="./profile.html"
         class="profile">
-
         <img
           id="avatar"
           src=""
           alt="Profile">
-
       </a>
-
     </div>
-
   </div>
-
 </header>
-
-
 <main class="container">
-
   <a
     href="./buy.html"
     class="back">
-
     ← Back to listings
-
   </a>
-
-
   <div class="page-head">
-
     <div class="eyebrow">
       SELL • CREATE LISTING
     </div>
-
     <h1>
       Create your listing
     </h1>
-
     <p class="subtitle">
       Add clear photos and accurate information so buyers can
       understand your item quickly and contact you easily.
     </p>
-
   </div>
-
-
   <div class="layout">
-
-
-    <!-- ==========================================
+    <!-- ===================================================
          FORM
-    =========================================== -->
-
+    ==================================================== -->
     <section class="card">
-
-
       <!-- PHOTOS -->
-
       <div class="section">
-
         <div class="section-head">
-
           <div class="section-title">
             Photos
           </div>
-
           <div class="section-note">
             First photo = Show Photo
           </div>
-
         </div>
-
-
         <div class="photo-upload">
-
           <input
             type="file"
             id="photoInput"
             accept="image/jpeg,image/png,image/webp"
             multiple>
-
           <div>
-
             <div class="upload-icon">
               ＋
             </div>
-
             <div class="upload-title">
               Add listing photos
             </div>
-
             <div class="upload-note">
               Select multiple photos.<br>
-              The first selected photo becomes the Show Photo.
+              The first selected photo becomes the
+              Show Photo.
             </div>
-
           </div>
-
         </div>
-
-
         <div
           class="photo-preview"
           id="photoPreview">
         </div>
-
+        <div class="hint">
+          JPG, PNG or WebP.
+          Use clear photos of the item.
+          Photos are uploaded to your Supabase Storage bucket.
+        </div>
       </div>
-
-
-      <!-- BASIC INFO -->
-
+      <!-- BASIC INFORMATION -->
       <div class="section">
-
         <div class="section-head">
-
           <div class="section-title">
             Basic Information
           </div>
-
         </div>
-
-
         <div class="form-grid">
-
-
           <div class="field full">
-
             <label>
-              Title <span class="required">*</span>
+              Title
+              <span class="required">*</span>
             </label>
-
             <input
               id="title"
               type="text"
               maxlength="120"
               placeholder="e.g. iPhone 15 Pro Max 256GB">
-
           </div>
-
-
           <div class="field">
-
             <label>
-              Category <span class="required">*</span>
+              Category
+              <span class="required">*</span>
             </label>
-
             <select id="category">
-
               <option value="">
                 Select category
               </option>
-
               <option value="Electronics">
                 Electronics
               </option>
-
               <option value="Fashion">
                 Fashion
               </option>
-
               <option value="Home & Living">
                 Home & Living
               </option>
-
               <option value="Jobs">
                 Jobs
               </option>
-
               <option value="Services">
                 Services
               </option>
-
               <option value="Other">
                 Other
               </option>
-
             </select>
-
           </div>
-
-
           <div class="field">
-
             <label>
-              Price (MMK) <span class="required">*</span>
+              Price (MMK)
+              <span class="required">*</span>
             </label>
-
             <input
               id="price"
               type="number"
               min="0"
               step="1"
               placeholder="0">
-
           </div>
-
-
           <div class="field">
-
             <label>
               Condition
             </label>
-
             <select id="condition">
-
               <option value="Not specified">
                 Not specified
               </option>
-
               <option value="New">
                 New
               </option>
-
               <option value="Like New">
                 Like New
               </option>
-
               <option value="Used - Good">
                 Used - Good
               </option>
-
               <option value="Used - Fair">
                 Used - Fair
               </option>
-
             </select>
-
           </div>
-
-
         </div>
-
       </div>
-
-
       <!-- LOCATION -->
-
       <div class="section">
-
         <div class="section-head">
-
           <div class="section-title">
             Location
           </div>
-
           <div class="section-note">
             Keep the address simple
           </div>
-
         </div>
-
-
         <div class="form-grid">
-
-
           <div class="field">
-
             <label>
-              Region / State <span class="required">*</span>
+              Region / State
+              <span class="required">*</span>
             </label>
-
             <input
               id="region"
               type="text"
               maxlength="80"
               placeholder="e.g. Yangon Region">
-
           </div>
-
-
           <div class="field">
-
             <label>
               Township
             </label>
-
             <input
               id="township"
               type="text"
               maxlength="80"
               placeholder="e.g. Bahan">
-
           </div>
-
-
           <div class="field full">
-
             <label>
               Nearby Address
             </label>
-
             <input
               id="nearbyAddress"
               type="text"
               maxlength="160"
               placeholder="e.g. Near Shwedagon Pagoda">
-
             <div class="hint">
               Do not repeat the region and township here.
             </div>
-
           </div>
-
-
         </div>
-
       </div>
-
-
       <!-- DESCRIPTION -->
-
       <div class="section">
-
         <div class="section-head">
-
           <div class="section-title">
             Description
           </div>
-
           <div class="section-note">
             Tell buyers what matters
           </div>
-
         </div>
-
-
         <textarea
           id="description"
           maxlength="3000"
           placeholder="Describe the item, condition, included accessories, important details, and anything buyers should know."></textarea>
-
         <div class="hint">
           Maximum 3000 characters.
         </div>
-
       </div>
-
-
       <!-- PUBLISH -->
-
       <div class="publish-area">
-
         <button
           class="publish-button"
           id="publishButton"
-          onclick="publishListing()">
-
+          type="button">
           Publish Listing
-
         </button>
-
-
         <div
           class="status"
           id="status">
         </div>
-
       </div>
-
-
     </section>
-
-
-    <!-- ==========================================
-         PREVIEW
-    =========================================== -->
-
+    <!-- ===================================================
+         LIVE PREVIEW
+    ==================================================== -->
     <aside class="card preview-card">
-
       <div class="preview-label">
         Live Preview
       </div>
-
-
       <div class="listing-preview">
-
-
         <div class="preview-cover">
-
           <img
             id="previewImage"
             src=""
             alt="Preview"
             style="display:none;">
-
           <div
             class="empty-cover"
             id="emptyCover">
-
             Your Show Photo
-
           </div>
-
         </div>
-
-
         <div class="preview-content">
-
           <div
             class="preview-category"
             id="previewCategory">
-
             CATEGORY
-
           </div>
-
-
           <div
             class="preview-title"
             id="previewTitle">
-
             Listing title
-
           </div>
-
-
           <div
             class="preview-price"
             id="previewPrice">
-
             MMK 0
-
           </div>
-
-
           <div
             class="preview-location"
             id="previewLocation">
-
             Region / State · Township · Nearby Address
-
           </div>
-
-
           <div
             class="preview-description"
             id="previewDescription">
-
             Your description will appear here.
-
           </div>
-
         </div>
-
       </div>
-
     </aside>
-
   </div>
-
 </main>
-
-
+<!-- =====================================================
+     MOBILE NAV
+===================================================== -->
 <nav class="mobile-nav">
-
   <div class="mobile-nav-inner">
-
     <a href="./general.html">
-      <div class="mobile-icon">⌂</div>
+      <div class="mobile-icon">
+        ⌂
+      </div>
       Home
     </a>
-
     <a href="./buy.html">
-      <div class="mobile-icon">◈</div>
+      <div class="mobile-icon">
+        ◈
+      </div>
       Buy
     </a>
-
     <a
       href="./add-listing.html"
       class="active">
-      <div class="mobile-icon">＋</div>
+      <div class="mobile-icon">
+        ＋
+      </div>
       Sell
     </a>
-
     <a href="./chat.html">
-      <div class="mobile-icon">◌</div>
+      <div class="mobile-icon">
+        ◌
+      </div>
       Chat
     </a>
-
     <a href="./profile.html">
-      <div class="mobile-icon">♙</div>
+      <div class="mobile-icon">
+        ♙
+      </div>
       Profile
     </a>
-
   </div>
-
 </nav>
-
-
 <script>
-
-  /* ==========================================
+  /* =====================================================
      SUPABASE
-  =========================================== */
-
+  ===================================================== */
   const SUPABASE_URL =
     "https://ikjwisfsdcupibgjiuvp.supabase.co";
-
   const SUPABASE_KEY =
     "sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s";
-
   const supabaseClient =
     window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
-
-
-  /* ==========================================
+  /* =====================================================
+     CONFIG
+  ===================================================== */
+  const STORAGE_BUCKET =
+    "listing-images";
+  const MAX_PHOTOS =
+    10;
+  const MAX_FILE_SIZE =
+    8 * 1024 * 1024;
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
+  const photoInput =
+    document.getElementById(
+      "photoInput"
+    );
+  const photoPreview =
+    document.getElementById(
+      "photoPreview"
+    );
+  const publishButton =
+    document.getElementById(
+      "publishButton"
+    );
+  const statusBox =
+    document.getElementById(
+      "status"
+    );
+  /* =====================================================
      THEME
-  =========================================== */
-
+  ===================================================== */
   function applyTheme(theme){
-
     document.body.classList.toggle(
       "dark",
       theme === "dark"
     );
-
     document.getElementById(
       "themeButton"
     ).textContent =
       theme === "dark"
         ? "☀"
         : "☾";
-
     localStorage.setItem(
       "mec_theme",
       theme
     );
   }
-
-
   function toggleTheme(){
-
-    const dark =
+    const isDark =
       document.body.classList.contains(
         "dark"
       );
-
     applyTheme(
-      dark
+      isDark
         ? "light"
         : "dark"
     );
   }
-
-
+  document.getElementById(
+    "themeButton"
+  ).addEventListener(
+    "click",
+    toggleTheme
+  );
   applyTheme(
     localStorage.getItem(
       "mec_theme"
     ) || "light"
   );
-
-
-  /* ==========================================
+  /* =====================================================
      STATE
-  =========================================== */
-
+  ===================================================== */
   let selectedFiles = [];
-
-
-  /* ==========================================
-     ELEMENTS
-  =========================================== */
-
-  const photoInput =
-    document.getElementById(
-      "photoInput"
-    );
-
-  const photoPreview =
-    document.getElementById(
-      "photoPreview"
-    );
-
-
-  /* ==========================================
+  /* =====================================================
+     STATUS
+  ===================================================== */
+  function setStatus(
+    message,
+    type
+  ){
+    statusBox.className =
+      "status show " +
+      type;
+    statusBox.textContent =
+      message;
+  }
+  function clearStatus(){
+    statusBox.className =
+      "status";
+    statusBox.textContent =
+      "";
+  }
+  /* =====================================================
+     FILE VALIDATION
+  ===================================================== */
+  function validateImageFile(
+    file
+  ){
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+    if(
+      !allowedTypes.includes(
+        file.type
+      )
+    ){
+      return {
+        valid:false,
+        message:
+          `${file.name} is not a JPG, PNG or WebP image.`
+      };
+    }
+    if(
+      file.size > MAX_FILE_SIZE
+    ){
+      return {
+        valid:false,
+        message:
+          `${file.name} is larger than 8 MB.`
+      };
+    }
+    return {
+      valid:true
+    };
+  }
+  /* =====================================================
      PHOTO SELECTION
-  =========================================== */
-
+  ===================================================== */
   photoInput.addEventListener(
     "change",
     function(){
-
       const incoming =
         Array.from(
           this.files || []
         );
-
-      selectedFiles =
-        selectedFiles.concat(
-          incoming
+      if(
+        incoming.length === 0
+      ){
+        return;
+      }
+      clearStatus();
+      const remainingSlots =
+        MAX_PHOTOS -
+        selectedFiles.length;
+      if(
+        remainingSlots <= 0
+      ){
+        setStatus(
+          `You can upload up to ${MAX_PHOTOS} photos.`,
+          "error"
         );
-
+        this.value = "";
+        return;
+      }
+      const filesToAdd =
+        incoming.slice(
+          0,
+          remainingSlots
+        );
+      for(
+        const file of filesToAdd
+      ){
+        const result =
+          validateImageFile(
+            file
+          );
+        if(
+          !result.valid
+        ){
+          setStatus(
+            result.message,
+            "error"
+          );
+          continue;
+        }
+        selectedFiles.push(
+          file
+        );
+      }
+      if(
+        incoming.length >
+        remainingSlots
+      ){
+        setStatus(
+          `Only ${MAX_PHOTOS} photos can be added.`,
+          "error"
+        );
+      }
       renderPhotoPreview();
-
       updatePreview();
-
       this.value = "";
-
     }
   );
-
-
+  /* =====================================================
+     RENDER PHOTOS
+  ===================================================== */
   function renderPhotoPreview(){
-
-    photoPreview.innerHTML = "";
-
+    photoPreview.innerHTML =
+      "";
     selectedFiles.forEach(
-      (file,index)=>{
-
+      (
+        file,
+        index
+      )=>{
         const url =
           URL.createObjectURL(
             file
           );
-
         const item =
           document.createElement(
             "div"
           );
-
         item.className =
           "preview-item" +
           (
@@ -1432,68 +1254,83 @@
               ? " cover"
               : ""
           );
-
-        item.innerHTML = `
-
-          <img
-            src="${url}"
-            alt="Listing photo">
-
-          ${
-            index === 0
-
-              ?
-
-              `<div class="preview-badge">
-                SHOW PHOTO
-              </div>`
-
-              :
-
-              `<div class="preview-badge">
-                DETAIL ${index}
-              </div>`
+        const image =
+          document.createElement(
+            "img"
+          );
+        image.src =
+          url;
+        image.alt =
+          "Listing photo";
+        const badge =
+          document.createElement(
+            "div"
+          );
+        badge.className =
+          "preview-badge";
+        badge.textContent =
+          index === 0
+            ? "SHOW PHOTO"
+            : `DETAIL ${index}`;
+        const removeButton =
+          document.createElement(
+            "button"
+          );
+        removeButton.type =
+          "button";
+        removeButton.className =
+          "remove-photo";
+        removeButton.textContent =
+          "×";
+        removeButton.setAttribute(
+          "aria-label",
+          `Remove photo ${index + 1}`
+        );
+        removeButton.addEventListener(
+          "click",
+          function(){
+            removePhoto(
+              index
+            );
           }
-
-          <button
-            type="button"
-            class="remove-photo"
-            onclick="removePhoto(${index})">
-
-            ×
-
-          </button>
-
-        `;
-
+        );
+        item.appendChild(
+          image
+        );
+        item.appendChild(
+          badge
+        );
+        item.appendChild(
+          removeButton
+        );
         photoPreview.appendChild(
           item
         );
-
       }
     );
-
   }
-
-
-  function removePhoto(index){
-
+  /* =====================================================
+     REMOVE PHOTO
+  ===================================================== */
+  function removePhoto(
+    index
+  ){
+    if(
+      index < 0 ||
+      index >= selectedFiles.length
+    ){
+      return;
+    }
     selectedFiles.splice(
       index,
       1
     );
-
     renderPhotoPreview();
-
     updatePreview();
-
   }
-
-
-  /* ==========================================
-     LIVE PREVIEW
-  =========================================== */
-
+  /* =====================================================
+     LIVE PREVIEW EVENTS
+  ===================================================== */
   [
     "title",
     "category",
@@ -1505,328 +1342,286 @@
   ]
   .forEach(
     id=>{
-
-      document
-        .getElementById(id)
-        .addEventListener(
-          "input",
-          updatePreview
+      const element =
+        document.getElementById(
+          id
         );
-
-      document
-        .getElementById(id)
-        .addEventListener(
-          "change",
-          updatePreview
-        );
-
+      element.addEventListener(
+        "input",
+        updatePreview
+      );
+      element.addEventListener(
+        "change",
+        updatePreview
+      );
     }
   );
-
-
-  function formatMoney(value){
-
+  /* =====================================================
+     MONEY
+  ===================================================== */
+  function formatMoney(
+    value
+  ){
     if(
-      !value ||
+      value === "" ||
+      value === null ||
+      value === undefined ||
       Number(value) < 0
     ){
-
       return "MMK 0";
-
     }
-
+    const number =
+      Number(value);
+    if(
+      Number.isNaN(
+        number
+      )
+    ){
+      return "MMK 0";
+    }
     return (
       "MMK " +
-      Number(value)
-        .toLocaleString()
+      number.toLocaleString(
+        "en-US"
+      )
     );
-
   }
-
-
+  /* =====================================================
+     UPDATE LIVE PREVIEW
+  ===================================================== */
   function updatePreview(){
-
     const title =
       document.getElementById(
         "title"
       ).value.trim();
-
     const category =
       document.getElementById(
         "category"
       ).value;
-
     const price =
       document.getElementById(
         "price"
       ).value;
-
     const region =
       document.getElementById(
         "region"
       ).value.trim();
-
     const township =
       document.getElementById(
         "township"
       ).value.trim();
-
     const nearby =
       document.getElementById(
         "nearbyAddress"
       ).value.trim();
-
     const description =
       document.getElementById(
         "description"
       ).value.trim();
-
-
     document.getElementById(
       "previewTitle"
     ).textContent =
       title ||
       "Listing title";
-
-
     document.getElementById(
       "previewCategory"
     ).textContent =
       category ||
       "CATEGORY";
-
-
     document.getElementById(
       "previewPrice"
     ).textContent =
       formatMoney(
         price
       );
-
-
-    const locationParts =
-      [
-        region,
-        township,
-        nearby
-      ]
-      .filter(Boolean);
-
-
+    const locationParts = [
+      region,
+      township,
+      nearby
+    ]
+    .filter(Boolean);
     document.getElementById(
       "previewLocation"
     ).textContent =
       locationParts.length
-        ? locationParts.join(" · ")
+        ? locationParts.join(
+            " · "
+          )
         : "Region / State · Township · Nearby Address";
-
-
     document.getElementById(
       "previewDescription"
     ).textContent =
       description ||
       "Your description will appear here.";
-
-
     const image =
       document.getElementById(
         "previewImage"
       );
-
     const empty =
       document.getElementById(
         "emptyCover"
       );
-
-
     if(
-      selectedFiles.length
+      selectedFiles.length > 0
     ){
-
-      image.src =
+      const url =
         URL.createObjectURL(
           selectedFiles[0]
         );
-
+      image.src =
+        url;
       image.style.display =
         "block";
-
       empty.style.display =
         "none";
-
     }
     else{
-
       image.removeAttribute(
         "src"
       );
-
       image.style.display =
         "none";
-
       empty.style.display =
         "grid";
-
     }
-
   }
-
-
-  /* ==========================================
+  /* =====================================================
      AUTH
-  =========================================== */
-
+  ===================================================== */
   async function getCurrentUser(){
-
     const {
       data,
       error
     } =
       await supabaseClient.auth.getUser();
-
-
     if(
       error ||
-      !data?.user
+      !data ||
+      !data.user
     ){
-
       window.location.href =
         "./auth.html?mode=login";
-
       return null;
-
     }
-
-
     return data.user;
-
   }
-
-
-  /* ==========================================
+  /* =====================================================
      PROFILE AVATAR
-  =========================================== */
-
+  ===================================================== */
   async function loadAvatar(
     user
   ){
-
     try{
-
       const {
-        data
+        data,
+        error
       } =
         await supabaseClient
           .from("profiles")
-          .select("avatar_url")
+          .select(
+            "avatar_url"
+          )
           .eq(
             "id",
             user.id
           )
           .maybeSingle();
-
-
       if(
-        data?.avatar_url
+        error
       ){
-
+        console.warn(
+          "Avatar lookup failed:",
+          error.message
+        );
+        return;
+      }
+      if(
+        data &&
+        data.avatar_url
+      ){
         document.getElementById(
           "avatar"
         ).src =
           data.avatar_url;
-
       }
-
     }
     catch(error){
-
-      console.log(
+      console.warn(
         "Profile avatar unavailable."
       );
-
     }
-
   }
-
-
-  /* ==========================================
-     STATUS
-  =========================================== */
-
-  function setStatus(
-    message,
-    type
+  /* =====================================================
+     SAFE FILE NAME
+  ===================================================== */
+  function createSafeFileName(
+    file,
+    index
   ){
-
-    const box =
-      document.getElementById(
-        "status"
-      );
-
-    box.className =
-      "status show " +
-      type;
-
-    box.textContent =
-      message;
-
+    const originalName =
+      file.name ||
+      "image";
+    const extension =
+      originalName
+        .split(".")
+        .pop()
+        .toLowerCase();
+    const safeExtension =
+      [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ].includes(
+        extension
+      )
+        ? extension
+        : "jpg";
+    const randomPart =
+      crypto.randomUUID
+        ? crypto.randomUUID()
+        : (
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .slice(2)
+          );
+    return (
+      Date.now() +
+      "-" +
+      index +
+      "-" +
+      randomPart +
+      "." +
+      safeExtension
+    );
   }
-
-
-  /* ==========================================
-     STORAGE
-  =========================================== */
-
+  /* =====================================================
+     UPLOAD FILE
+  ===================================================== */
   async function uploadFile(
     userId,
     file,
     index
   ){
-
-    const extension =
-      file.name
-        .split(".")
-        .pop()
-        .toLowerCase();
-
-    const safeExtension =
-      extension || "jpg";
-
     const fileName =
-      Date.now() +
-      "-" +
-      index +
-      "-" +
-      Math.random()
-        .toString(36)
-        .slice(2) +
-      "." +
-      safeExtension;
-
+      createSafeFileName(
+        file,
+        index
+      );
     const path =
       userId +
       "/" +
       fileName;
-
-
-    /*
-     * Bucket name:
-     * listing-images
-     *
-     * If your Supabase bucket uses another name,
-     * change ONLY this value.
-     */
-
-    const bucket =
-      "listing-images";
-
-
     const {
       error
     } =
       await supabaseClient
         .storage
-        .from(bucket)
+        .from(
+          STORAGE_BUCKET
+        )
         .upload(
           path,
           file,
@@ -1838,415 +1633,358 @@
               file.type
           }
         );
-
-
-    if(error){
-
+    if(
+      error
+    ){
       throw new Error(
         "Photo upload failed: " +
         error.message
       );
-
     }
-
-
     const {
       data
     } =
       supabaseClient
         .storage
-        .from(bucket)
+        .from(
+          STORAGE_BUCKET
+        )
         .getPublicUrl(
           path
         );
-
-
-    return data.publicUrl;
-
-  }
-
-
-  /* ==========================================
-     PUBLISH LISTING
-  =========================================== */
-
-  async function publishListing(){
-
-    const button =
-      document.getElementById(
-        "publishButton"
-      );
-
-
     if(
-      button.disabled
+      !data ||
+      !data.publicUrl
     ){
-
-      return;
-
+      throw new Error(
+        "Photo uploaded, but its public URL could not be created."
+      );
     }
-
-
-    const user =
-      await getCurrentUser();
-
-
-    if(!user){
-
-      return;
-
-    }
-
-
+    return data.publicUrl;
+  }
+  /* =====================================================
+     VALIDATE FORM
+  ===================================================== */
+  function validateForm(){
     const title =
       document.getElementById(
         "title"
       ).value.trim();
-
     const category =
       document.getElementById(
         "category"
       ).value;
-
     const price =
       document.getElementById(
         "price"
       ).value;
-
-    const condition =
-      document.getElementById(
-        "condition"
-      ).value;
-
     const region =
       document.getElementById(
         "region"
       ).value.trim();
-
+    if(
+      selectedFiles.length === 0
+    ){
+      return {
+        valid:false,
+        message:
+          "Please select at least one photo."
+      };
+    }
+    if(
+      !title
+    ){
+      return {
+        valid:false,
+        message:
+          "Please enter a listing title."
+      };
+    }
+    if(
+      title.length < 3
+    ){
+      return {
+        valid:false,
+        message:
+          "Listing title must contain at least 3 characters."
+      };
+    }
+    if(
+      !category
+    ){
+      return {
+        valid:false,
+        message:
+          "Please select a category."
+      };
+    }
+    if(
+      price === "" ||
+      Number.isNaN(
+        Number(price)
+      ) ||
+      Number(price) < 0
+    ){
+      return {
+        valid:false,
+        message:
+          "Please enter a valid price."
+      };
+    }
+    if(
+      !region
+    ){
+      return {
+        valid:false,
+        message:
+          "Please enter your Region / State."
+      };
+    }
+    return {
+      valid:true
+    };
+  }
+  /* =====================================================
+     PUBLISH LISTING
+  ===================================================== */
+  async function publishListing(){
+    if(
+      publishButton.disabled
+    ){
+      return;
+    }
+    clearStatus();
+    const validation =
+      validateForm();
+    if(
+      !validation.valid
+    ){
+      setStatus(
+        validation.message,
+        "error"
+      );
+      return;
+    }
+    const user =
+      await getCurrentUser();
+    if(
+      !user
+    ){
+      return;
+    }
+    const title =
+      document.getElementById(
+        "title"
+      ).value.trim();
+    const category =
+      document.getElementById(
+        "category"
+      ).value;
+    const price =
+      document.getElementById(
+        "price"
+      ).value;
+    const condition =
+      document.getElementById(
+        "condition"
+      ).value;
+    const region =
+      document.getElementById(
+        "region"
+      ).value.trim();
     const township =
       document.getElementById(
         "township"
       ).value.trim();
-
     const nearbyAddress =
       document.getElementById(
         "nearbyAddress"
       ).value.trim();
-
     const description =
       document.getElementById(
         "description"
       ).value.trim();
-
-
-    /* VALIDATION */
-
-    if(
-      selectedFiles.length === 0
-    ){
-
-      setStatus(
-        "Please select at least one photo.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(!title){
-
-      setStatus(
-        "Please enter a listing title.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(!category){
-
-      setStatus(
-        "Please select a category.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(
-      !price ||
-      Number(price) < 0
-    ){
-
-      setStatus(
-        "Please enter a valid price.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(!region){
-
-      setStatus(
-        "Please enter your Region / State.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
     try{
-
-      button.disabled =
+      publishButton.disabled =
         true;
-
-      button.textContent =
+      publishButton.textContent =
         "Uploading photos...";
-
       setStatus(
-        "Uploading listing photos...",
+        `Uploading ${selectedFiles.length} photo${selectedFiles.length > 1 ? "s" : ""}...`,
         "loading"
       );
-
-
-      /* ==========================
-         UPLOAD PHOTOS
-      ========================== */
-
+      /* =================================================
+         UPLOAD ALL PHOTOS
+      ================================================= */
       const imageUrls = [];
-
-
       for(
         let i = 0;
         i < selectedFiles.length;
         i++
       ){
-
+        setStatus(
+          `Uploading photo ${i + 1} of ${selectedFiles.length}...`,
+          "loading"
+        );
         const url =
           await uploadFile(
             user.id,
             selectedFiles[i],
             i
           );
-
         imageUrls.push(
           url
         );
-
       }
-
-
       const showPhotoUrl =
         imageUrls[0] ||
         null;
-
-
       const detailImages =
         imageUrls.slice(1);
-
-
-      /* ==========================
-         INSERT LISTING
-      ========================== */
-
-      button.textContent =
+      /* =================================================
+         LISTING DATA
+      ================================================= */
+      publishButton.textContent =
         "Publishing...";
-
-
       setStatus(
-        "Saving listing...",
+        "Saving your listing...",
         "loading"
       );
-
-
-      /*
-       * These are the standard columns
-       * used by the listing pages.
-       */
-
       const listingData = {
-
         user_id:
           user.id,
-
+        listing_type:
+          "Sell",
+        post_role:
+          "user",
         title:
           title,
-
         category:
           category,
-
         price:
           Number(price),
-
         condition:
           condition,
-
         region:
           region,
-
         township:
-          township || null,
-
+          township ||
+          null,
         nearby_address:
-          nearbyAddress || null,
-
+          nearbyAddress ||
+          null,
         description:
-          description || null,
-
+          description ||
+          null,
         show_photo_url:
           showPhotoUrl,
-
         detail_images:
           detailImages,
-
         status:
           "Available"
-
       };
-
-
+      /* =================================================
+         INSERT
+      ================================================= */
       const {
         data,
         error
       } =
-        await supabaseClient
-          .from("listings")
-          .insert(
-            listingData
-          )
-          .select()
-          .single();
-
-
-      if(error){
-
+      await supabaseClient
+        .from(
+          "listings"
+        )
+        .insert(
+          listingData
+        )
+        .select()
+        .single();
+      if(
+        error
+      ){
         console.error(
           "Listing insert error:",
           error
         );
-
         throw new Error(
           "Listing could not be saved: " +
           error.message
         );
-
       }
-
-
+      /* =================================================
+         SUCCESS
+      ================================================= */
       setStatus(
         "Listing published successfully.",
         "success"
       );
-
-
-      button.textContent =
+      publishButton.textContent =
         "Published ✓";
-
-
-      /*
-       * Open the new listing detail page.
-       */
-
-      if(data?.id){
-
+      if(
+        data &&
+        data.id
+      ){
         setTimeout(
-          ()=>{
-
+          function(){
             window.location.href =
               "./buy.html?id=" +
               encodeURIComponent(
                 data.id
               );
-
           },
           900
         );
-
       }
-
     }
     catch(error){
-
       console.error(
+        "Publish listing error:",
         error
       );
-
-
       setStatus(
         error.message ||
         "Unable to publish listing.",
         "error"
       );
-
-
-      button.disabled =
+      publishButton.disabled =
         false;
-
-      button.textContent =
+      publishButton.textContent =
         "Publish Listing";
-
     }
-
   }
-
-
-  /* ==========================================
-     INIT
-  =========================================== */
-
+  publishButton.addEventListener(
+    "click",
+    publishListing
+  );
+  /* =====================================================
+     INITIALIZE
+  ===================================================== */
   async function init(){
-
     try{
-
       const user =
         await getCurrentUser();
-
-
-      if(!user){
-
+      if(
+        !user
+      ){
         return;
-
       }
-
-
       await loadAvatar(
         user
       );
-
-
       updatePreview();
-
     }
     catch(error){
-
       console.error(
+        "Initialization error:",
         error
       );
-
       setStatus(
         "Unable to initialize the page.",
         "error"
       );
-
     }
-
   }
-
-
   init();
-
 </script>
-
 </body>
 </html>
