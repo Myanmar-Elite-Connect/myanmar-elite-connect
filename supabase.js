@@ -10,6 +10,25 @@ window.supabaseClient =
     SUPABASE_KEY
   );
 
+/* Shared logo treatment: keep every occurrence of the MEC logo in a
+   proportional rounded-square container. 18% keeps small logos subtle and
+   larger logo cards consistently rounded without becoming circular. */
+(function(){
+  if(document.getElementById('mec-logo-style')) return;
+  const style=document.createElement('style');
+  style.id='mec-logo-style';
+  style.textContent=`
+    :where(.logo-wrap,.brand-logo,.logo-showcase,.logo-box,.brand-mark,.brand-image):has(> img[src*="lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"]){
+      border-radius:18% !important;
+      overflow:hidden;
+    }
+    img[src*="lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"]{
+      border-radius:8%;
+    }
+  `;
+  (document.head||document.documentElement).appendChild(style);
+})();
+
 /* Shared app navigation: every page that loads supabase.js gets the same
    Home / Listing / Chat / Profile navigation without duplicating markup. */
 (function(){
