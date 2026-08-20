@@ -1,41 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f7fb">
-<title>MPC Registration — Myanmar Elite Connect</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase.js"></script>
-<style>
-:root{--bg:#f5f7fb;--card:#fff;--soft:#eef2f7;--text:#10233f;--muted:#738197;--line:rgba(16,35,63,.1);--gold:#d7b35a;--navy:#071a34;--green:#16a36a;--red:#dc4d5c;--shadow:0 14px 45px rgba(16,35,63,.08)}
-body.dark{--bg:#071321;--card:#0d1d31;--soft:#12263d;--text:#f5f7fb;--muted:#9aa9bb;--line:rgba(255,255,255,.1);--navy:#f5f7fb;--shadow:0 14px 45px rgba(0,0,0,.3)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,"Noto Sans Myanmar","Myanmar Text",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}body{padding-bottom:88px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.wrap{width:min(760px,calc(100% - 18px));margin:0 auto 30px}.top{height:62px;position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.topin{height:100%;width:min(760px,calc(100% - 22px));margin:auto;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:900}.brand img{width:36px;height:36px;object-fit:contain;border:1px solid var(--line);border-radius:10px}.brand b{color:var(--gold)}.icon{width:38px;height:38px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text)}.hero{margin-top:12px;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}h1{font-size:23px;margin:0}.sub{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.7}.status{margin-top:15px;padding:11px 12px;border-radius:12px;background:var(--soft);font-size:10px}.status strong{display:block;font-size:11px}.status span{display:block;margin-top:3px;color:var(--muted)}.form-card{margin-top:12px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.section-title{font-size:12px;font-weight:950;margin-bottom:13px}.field{margin-bottom:12px}.field label{display:block;color:var(--muted);font-size:9px;font-weight:850;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:var(--soft);color:var(--text);outline:none}.field textarea{min-height:80px;resize:vertical}.check{display:flex;gap:9px;align-items:flex-start;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--soft);font-size:9px;line-height:1.6;color:var(--muted)}.check input{margin-top:3px;accent-color:var(--gold)}.save{width:100%;height:44px;margin-top:13px;border:0;border-radius:12px;background:var(--navy);color:var(--bg);font-size:10px;font-weight:900}.back{display:inline-flex;margin-top:11px;color:var(--muted);font-size:9px}.notice{margin-top:10px;color:var(--muted);font-size:8px;line-height:1.6;text-align:center}.loading{min-height:55vh;display:grid;place-items:center}.spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:s .7s linear infinite}@keyframes s{to{transform:rotate(360deg)}}.hidden{display:none!important}.toast{position:fixed;left:50%;bottom:78px;z-index:100;transform:translate(-50%,15px);opacity:0;pointer-events:none;padding:10px 13px;border-radius:11px;background:var(--navy);color:var(--bg);font-size:10px;font-weight:850;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta http-equiv="refresh" content="0; url=./MCP.html">
+  <title>MCP Registration — Myanmar Elite Connect</title>
+  <script>
+    window.location.replace('./MCP.html');
+  </script>
 </head>
 <body>
-<header class="top"><div class="topin"><a class="brand" href="./profile.html"><img src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd" alt="MEC"><span>Myanmar Elite <b>Connect</b></span></a><button class="icon" id="theme" aria-label="Theme">☾</button></div></header>
-<main class="wrap">
-<section id="loading" class="loading"><div class="spinner"></div></section>
-<section id="app" class="hidden">
-<div class="hero"><h1>◆ MPC Registration</h1><p class="sub">Myanmar Elite Connect မှာ MPC membership အတွက် စာရင်းသွင်းခြင်း။ သင့်အကောင့်အချက်အလက်ကို စစ်ဆေးပြီး registration request တင်နိုင်ပါတယ်။</p><div class="status"><strong id="statusTitle">Registration status</strong><span id="statusText">Checking your account…</span></div></div>
-<form id="form" class="form-card"><div class="section-title">Registration information</div>
-<div class="field"><label>Full name</label><input id="name" maxlength="100" required></div>
-<div class="field"><label>Phone number</label><input id="phone" type="tel" maxlength="30" required></div>
-<div class="field"><label>တိုင်းဒေသကြီး / ပြည်နယ်</label><select id="region" required><option value="">ရွေးချယ်ပါ</option><option>ရန်ကုန်တိုင်းဒေသကြီး</option><option>မန္တလေးတိုင်းဒေသကြီး</option><option>နေပြည်တော်</option><option>ပဲခူးတိုင်းဒေသကြီး</option><option>ဧရာဝတီတိုင်းဒေသကြီး</option><option>မွန်ပြည်နယ်</option><option>ရှမ်းပြည်နယ်</option><option>ကရင်ပြည်နယ်</option><option>ကချင်ပြည်နယ်</option><option>ကယားပြည်နယ်</option><option>ချင်းပြည်နယ်</option><option>ရခိုင်ပြည်နယ်</option><option>တနင်္သာရီတိုင်းဒေသကြီး</option><option>စစ်ကိုင်းတိုင်းဒေသကြီး</option><option>မကွေးတိုင်းဒေသကြီး</option></select></div>
-<div class="field"><label>Field / Occupation</label><input id="field" maxlength="100" required placeholder="ဥပမာ — Business, Education, IT"></div>
-<div class="field"><label>Reason / additional information</label><textarea id="note" maxlength="500" placeholder="Optional"></textarea></div>
-<label class="check"><input id="agree" type="checkbox" required><span>MPC registration အတွက် ပေးထားသောအချက်အလက်များ မှန်ကန်ကြောင်းနှင့် စည်းကမ်းချက်များကို လက်ခံကြောင်း အတည်ပြုပါသည်။</span></label>
-<button class="save" type="submit">Submit MPC Registration</button><div class="notice">Registration request တင်ပြီးနောက် status ကို ဒီစာမျက်နှာမှာ ပြန်ကြည့်နိုင်ပါတယ်။ Verification ကို server/database မှသာ အတည်ပြုပါမယ်။</div><a class="back" href="./profile.html">‹ Back to profile</a>
-</form></section>
-</main><div id="toast" class="toast"></div>
-<script>
-const db=window.supabaseClient;const $=id=>document.getElementById(id);let user=null;
-function theme(){const d=localStorage.getItem('mec-theme')==='dark';document.body.classList.toggle('dark',d);$('theme').textContent=d?'☀':'☾'}theme();$('theme').onclick=()=>{localStorage.setItem('mec-theme',document.body.classList.contains('dark')?'light':'dark');theme()};
-function toast(x){$('toast').textContent=x;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2600)}
-async function init(){try{const r=await db.auth.getUser();user=r.data?.user;if(!user)throw new Error('Please sign in first.');$('loading').classList.add('hidden');$('app').classList.remove('hidden');let p=null;const pr=await db.from('profiles').select('*').eq('id',user.id).maybeSingle();p=pr.data||{};$('name').value=p.full_name||'';$('phone').value=p.phone||'';$('region').value=p.region_name||p.region||'';$('field').value=p.field||p.occupation||'';
-const tableCandidates=['mpc_registrations','mpc_registration'];let row=null;for(const t of tableCandidates){const q=await db.from(t).select('*').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1);if(!q.error){row=q.data?.[0]||null;break}}if(row){$('statusTitle').textContent='Registration submitted';$('statusText').textContent=(row.status||'pending').toString().replace(/^./,c=>c.toUpperCase())+' — '+(row.created_at?new Date(row.created_at).toLocaleDateString():'');if(String(row.status).toLowerCase()==='approved'){$('form').classList.add('hidden');$('statusTitle').textContent='MPC registration approved';$('statusText').textContent='Your MPC registration has been approved.'}}
-}catch(e){$('loading').classList.add('hidden');$('app').classList.remove('hidden');toast(e.message||'Unable to load MPC registration.')}}
-$('form').onsubmit=async e=>{e.preventDefault();if(!user)return;const payload={user_id:user.id,full_name:$('name').value.trim(),phone:$('phone').value.trim(),region:$('region').value,field:$('field').value.trim(),note:$('note').value.trim()||null,status:'pending'};let ok=false,lastErr=null;for(const t of ['mpc_registrations','mpc_registration']){const q=await db.from(t).insert(payload);if(!q.error){ok=true;break}lastErr=q.error}if(!ok){toast(lastErr?.message||'MPC registration could not be submitted.');return}toast('MPC registration submitted');$('statusTitle').textContent='Registration submitted';$('statusText').textContent='Pending review';$('form').querySelector('.save').disabled=true};init();
-</script>
-</body></html>
+  <p>Redirecting to <a href="./MCP.html">MCP Registration</a>…</p>
+</body>
+</html>
