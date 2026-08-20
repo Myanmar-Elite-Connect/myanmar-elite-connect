@@ -5,8 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f5f7fb">
 <title>Profile — Myanmar Elite Connect</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase.js"></script>
+<script>
+window.mecSupabaseReady=new Promise((resolve,reject)=>{
+ const timeout=setTimeout(()=>reject(new Error('Supabase connection timed out.')),8000);
+ const local=document.createElement('script');
+ local.src='./supabase.js';
+ local.onload=()=>{clearTimeout(timeout);if(window.supabaseClient)resolve(window.supabaseClient);else reject(new Error('Supabase client is not available.'))};
+ local.onerror=()=>{clearTimeout(timeout);reject(new Error('Unable to load Supabase configuration.'))};
+ const cdn=document.createElement('script');
+ cdn.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+ cdn.onload=()=>document.head.appendChild(local);
+ cdn.onerror=()=>{clearTimeout(timeout);reject(new Error('Unable to load Supabase library.'))};
+ document.head.appendChild(cdn);
+});
+</script>
 <style>
 :root{--bg:#f5f7fb;--card:#fff;--soft:#eef2f7;--text:#10233f;--muted:#738197;--line:rgba(16,35,63,.10);--gold:#d7b35a;--navy:#071a34;--green:#159c68;--red:#d94b59;--blue:#3d70c9;--shadow:0 14px 45px rgba(16,35,63,.08)}
 body.dark{--bg:#071321;--card:#0d1d31;--soft:#12263d;--text:#f5f7fb;--muted:#9aa9bb;--line:rgba(255,255,255,.10);--navy:#f5f7fb;--shadow:0 18px 55px rgba(0,0,0,.32)}
@@ -61,11 +73,12 @@ function money(v,c='MMK'){const n=Number(v);return Number.isFinite(n)&&n>0?`${es
 function fmtDate(v){try{return new Date(v).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}catch{return ''}}
 function timeout(ms){return new Promise((_,reject)=>setTimeout(()=>reject(new Error('Request timed out. Please try again.')),ms))}
 async function withTimeout(p,ms=6000){return Promise.race([p,timeout(ms)])}
-async function getUser(){try{if(typeof supabaseClient==='undefined'||!supabaseClient?.auth)return null;const {data,error}=await withTimeout(supabaseClient.auth.getUser(),5000);if(error)throw error;return data?.user||null}catch(e){console.warn('Auth check:',e);return null}}
+async function getUser(){try{await withTimeout(window.mecSupabaseReady,8000);if(typeof supabaseClient==='undefined'||!supabaseClient?.auth)return null;const {data,error}=await withTimeout(supabaseClient.auth.getUser(),5000);if(error)throw error;return data?.user||null}catch(e){console.warn('Auth check:',e);return null}}
 function showError(message){$('loading').classList.add('hidden');$('profileCard').classList.add('hidden');$('tabs').classList.add('hidden');$('error').classList.remove('hidden');$('errorText').textContent=message||'Unable to load profile.'}
 async function loadProfile(){
  $('loading').classList.remove('hidden');$('error').classList.add('hidden');
  try{
+  await withTimeout(window.mecSupabaseReady,8000);
   if(typeof supabaseClient==='undefined'||!supabaseClient)throw new Error('Supabase client is not available.');
   const q=new URLSearchParams(location.search),requested=q.get('id');
   currentUser=await getUser();const id=requested||currentUser?.id;
@@ -88,8 +101,8 @@ function openLanguage(){openModal(I18N[lang].language,`<div class="language-grid
 function openBadges(){openModal(I18N[lang].badges,`<div class="form"><div class="badges" style="margin-top:0">${regionBadge(profile)||'<span class="badge region-badge">No region</span>'}${fieldBadge(profile)||'<span class="badge field-allmarket">No field</span>'}${profile.is_verified?'<span class="badge verified">✓ Verified</span>':''}${profile.is_mcp?'<span class="badge mcp">◆ MPC</span>':''}</div><p style="margin-top:14px;color:var(--muted);font-size:9px;line-height:1.6">Region and field badges are generated automatically from your profile selections, using the same badge style as badge.html.</p></div>`)}
 function openKyc(){location.href='./kyc.html'}
 async function logout(){try{await withTimeout(supabaseClient.auth.signOut(),5000)}finally{location.href='./auth.html'}}
-function setup(){applyTheme(localStorage.getItem('mec_theme')||'light');applyLanguage();$('themeTop').onclick=toggleTheme;$('themeSwitch').onclick=e=>{e.stopPropagation();toggleTheme()};$('retryBtn').onclick=loadProfile;document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');const owner=t.dataset.tab==='owner';$('publicPanel').classList.toggle('hidden',owner);$('ownerPanel').classList.toggle('hidden',!owner)});document.querySelectorAll('.setting[data-action]').forEach(s=>s.onclick=async()=>{const a=s.dataset.action;if(a==='edit')openEdit();else if(a==='badges')openBadges();else if(a==='kyc')openKyc();else if(a==='theme')toggleTheme();else if(a==='language')openLanguage();else if(a==='logout')logout();else if(a==='posts'){document.querySelector('[data-tab="public"]')?.click();$('postsSection')?.scrollIntoView({behavior:'smooth'})}else if(a==='chat')location.href='./chat.html';else if(a==='followers')toast('Followers section is coming next.')}});$('followBtn').onclick=()=>toast(isOwner?'This is your profile.':'Follow action connected to the profile.');$('likeBtn').onclick=()=>toast('Like action connected to this profile.');$('chatBtn').onclick=()=>location.href='./chat.html')}
-setup();loadProfile();setTimeout(()=>{if(!$('loading').classList.contains('hidden'))showError('Profile is taking too long to load. Please try again.');},9000);
+function setup(){applyTheme(localStorage.getItem('mec_theme')||'light');applyLanguage();$('themeTop').onclick=toggleTheme;$('themeSwitch').onclick=e=>{e.stopPropagation();toggleTheme()};$('retryBtn').onclick=loadProfile;document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');const owner=t.dataset.tab==='owner';$('publicPanel').classList.toggle('hidden',owner);$('ownerPanel').classList.toggle('hidden',!owner)});document.querySelectorAll('.setting[data-action]').forEach(s=>s.onclick=async()=>{const a=s.dataset.action;if(a==='edit')openEdit();else if(a==='badges')openBadges();else if(a==='kyc')openKyc();else if(a==='theme')toggleTheme();else if(a==='language')openLanguage();else if(a==='logout')logout();else if(a==='posts'){document.querySelector('[data-tab="public"]')?.click();$('postsSection')?.scrollIntoView({behavior:'smooth'})}else if(a==='chat')location.href='./chat.html';else if(a==='followers')toast('Followers section is coming next.')}});$('followBtn').onclick=()=>toast(isOwner?'This is your profile.':'Follow action connected to the profile.');$('likeBtn').onclick=()=>toast('Like action connected to this profile.');$('chatBtn').onclick=()=>location.href='./chat.html'}
+setup();loadProfile();setTimeout(()=>{if(!$('loading').classList.contains('hidden'))showError('Profile is taking too long to load. Please try again.');},10000);
 </script>
 </body>
 </html>
