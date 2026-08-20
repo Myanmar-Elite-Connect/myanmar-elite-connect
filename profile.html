@@ -8,53 +8,55 @@
 
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     :root {
-      --bg: #f5f7fb;
+      --bg: #f5f7fa;
       --surface: #ffffff;
-      --surface-soft: #eef2f7;
+      --surface-soft: #f0f3f7;
 
-      --text: #0d1b2a;
+      --text: #0b1d35;
       --muted: #718096;
 
       --navy: #071a34;
-      --navy-2: #12385f;
+      --navy-2: #173b62;
 
-      --gold: #c9a23a;
-      --gold-light: #e4c76d;
-      --gold-soft: #fbf5df;
+      --gold: #c9a13a;
+      --gold-soft: #f8efd3;
 
-      --blue: #3b82f6;
       --green: #10b981;
+      --blue: #3b82f6;
       --red: #ef4444;
 
-      --border: rgba(13, 27, 42, .08);
+      --border: rgba(7, 26, 52, .09);
 
       --shadow:
-        0 12px 35px rgba(13, 27, 42, .07);
+        0 12px 35px rgba(7, 26, 52, .07);
 
-      --radius: 18px;
+      --radius: 17px;
     }
 
     body.dark {
-      --bg: #06101d;
-      --surface: #0b1b2e;
-      --surface-soft: #12263e;
+      --bg: #06111f;
+      --surface: #0b1c31;
+      --surface-soft: #122740;
 
-      --text: #f3f6fa;
-      --muted: #94a3b8;
+      --text: #f4f7fb;
+      --muted: #9aa9bc;
 
-      --navy: #f3f6fa;
-      --navy-2: #d8e2ed;
+      --navy: #f4f7fb;
+      --navy-2: #d9e3ef;
 
-      --border: rgba(255,255,255,.08);
+      --gold: #e0bd5d;
+      --gold-soft: rgba(224, 189, 93, .12);
+
+      --border: rgba(255,255,255,.09);
 
       --shadow:
-        0 15px 40px rgba(0,0,0,.28);
+        0 15px 40px rgba(0,0,0,.3);
     }
 
     html {
@@ -63,6 +65,7 @@
 
     body {
       min-height: 100vh;
+
       background: var(--bg);
       color: var(--text);
 
@@ -104,34 +107,27 @@
       display: none !important;
     }
 
-
-    /* =====================================================
+    /* =========================
        APP
-    ===================================================== */
+    ========================= */
 
     .app {
       min-height: 100vh;
-      padding-bottom: 92px;
+      padding-bottom: 82px;
     }
 
-
-    /* =====================================================
+    /* =========================
        TOPBAR
-    ===================================================== */
+    ========================= */
 
     .topbar {
       position: sticky;
       top: 0;
       z-index: 1000;
 
-      height: 66px;
+      height: 64px;
 
-      background:
-        color-mix(
-          in srgb,
-          var(--surface) 92%,
-          transparent
-        );
+      background: var(--surface);
 
       border-bottom:
         1px solid var(--border);
@@ -141,10 +137,8 @@
     }
 
     .topbar-inner {
-      width: min(
-        1100px,
-        calc(100% - 26px)
-      );
+      width:
+        min(1080px, calc(100% - 24px));
 
       height: 100%;
       margin: auto;
@@ -154,11 +148,6 @@
       justify-content: space-between;
     }
 
-
-    /* =====================================================
-       BRAND
-    ===================================================== */
-
     .brand {
       display: flex;
       align-items: center;
@@ -166,20 +155,20 @@
     }
 
     .brand-logo {
-      width: 38px;
-      height: 38px;
+      width: 37px;
+      height: 37px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 11px;
+      overflow: hidden;
+
+      border-radius: 10px;
 
       background: var(--surface);
 
       border:
         1px solid var(--border);
-
-      overflow: hidden;
     }
 
     .brand-logo img {
@@ -191,21 +180,15 @@
     .brand-name {
       font-size: 14px;
       font-weight: 850;
-      letter-spacing: -.2px;
+      white-space: nowrap;
     }
 
     .brand-name span {
       color: var(--gold);
     }
 
-
-    /* =====================================================
-       TOP ACTIONS
-    ===================================================== */
-
     .top-actions {
       display: flex;
-      align-items: center;
       gap: 7px;
     }
 
@@ -216,10 +199,10 @@
       display: grid;
       place-items: center;
 
+      border-radius: 11px;
+
       border:
         1px solid var(--border);
-
-      border-radius: 11px;
 
       background: var(--surface);
       color: var(--text);
@@ -232,28 +215,25 @@
       transform: translateY(-1px);
     }
 
-
-    /* =====================================================
+    /* =========================
        MAIN
-    ===================================================== */
+    ========================= */
 
     .main {
-      width: min(
-        880px,
-        calc(100% - 26px)
-      );
+      width:
+        min(880px, calc(100% - 24px));
 
-      margin: 18px auto 0;
+      margin:
+        16px auto 0;
     }
 
-
-    /* =====================================================
+    /* =========================
        SEARCH
-    ===================================================== */
+    ========================= */
 
     .search-box {
       position: relative;
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     .search-input {
@@ -263,28 +243,28 @@
       padding:
         0 45px 0 16px;
 
+      border-radius: 13px;
+
       border:
         1px solid var(--border);
 
-      border-radius: 13px;
+      outline: none;
 
       background: var(--surface);
       color: var(--text);
 
-      outline: none;
-
-      box-shadow:
-        0 4px 18px rgba(0,0,0,.025);
-
-      transition: .2s;
+      transition: .2s ease;
     }
 
     .search-input:focus {
       border-color: var(--gold);
+      box-shadow:
+        0 0 0 3px rgba(201,161,58,.08);
     }
 
     .search-icon {
       position: absolute;
+
       right: 15px;
       top: 50%;
 
@@ -293,54 +273,51 @@
 
       color: var(--muted);
 
-      font-size: 20px;
       pointer-events: none;
     }
 
     .search-results {
       position: absolute;
 
+      top: calc(100% + 6px);
       left: 0;
       right: 0;
 
-      top: calc(100% + 7px);
+      z-index: 100;
 
-      z-index: 80;
+      overflow: hidden;
+
+      border-radius: 13px;
 
       background: var(--surface);
 
       border:
         1px solid var(--border);
 
-      border-radius: 14px;
-
       box-shadow: var(--shadow);
-
-      overflow: hidden;
     }
 
     .search-result {
       width: 100%;
 
-      padding: 11px 14px;
+      padding: 10px 13px;
 
       display: flex;
       align-items: center;
+      gap: 10px;
 
-      gap: 11px;
-
-      border: 0;
+      border: none;
       border-bottom:
         1px solid var(--border);
 
-      background: transparent;
+      background: var(--surface);
       color: var(--text);
 
       text-align: left;
     }
 
     .search-result:last-child {
-      border-bottom: 0;
+      border-bottom: none;
     }
 
     .search-result:hover {
@@ -348,12 +325,11 @@
     }
 
     .result-avatar {
-      width: 40px;
-      height: 40px;
-
-      flex: 0 0 40px;
+      width: 38px;
+      height: 38px;
 
       border-radius: 50%;
+
       object-fit: cover;
 
       background: var(--surface-soft);
@@ -361,23 +337,22 @@
 
     .result-info {
       min-width: 0;
+      flex: 1;
     }
 
     .result-name {
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 750;
     }
 
     .result-username {
-      margin-top: 2px;
-      font-size: 11px;
       color: var(--muted);
+      font-size: 11px;
     }
 
-
-    /* =====================================================
+    /* =========================
        PROFILE CARD
-    ===================================================== */
+    ========================= */
 
     .profile-card {
       overflow: hidden;
@@ -392,37 +367,51 @@
       box-shadow: var(--shadow);
     }
 
-    .profile-cover {
+    .cover {
       height: 145px;
 
       background:
         radial-gradient(
-          circle at 80% 20%,
-          rgba(201,162,58,.28),
-          transparent 34%
+          circle at 85% 20%,
+          rgba(201,161,58,.28),
+          transparent 30%
         ),
         linear-gradient(
           135deg,
-          var(--navy),
-          var(--navy-2)
+          #071a34,
+          #173b62
+        );
+    }
+
+    body.dark .cover {
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(224,189,93,.16),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #0d223b,
+          #071321
         );
     }
 
     .profile-body {
       padding:
-        0 22px 22px;
+        0 20px 20px;
     }
 
     .profile-head {
       position: relative;
 
-      margin-top: -52px;
+      margin-top: -48px;
 
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
 
-      gap: 15px;
+      gap: 12px;
     }
 
     .avatar-wrap {
@@ -430,12 +419,12 @@
     }
 
     .avatar {
-      width: 104px;
-      height: 104px;
-
-      border-radius: 50%;
+      width: 100px;
+      height: 100px;
 
       object-fit: cover;
+
+      border-radius: 50%;
 
       background: var(--surface-soft);
 
@@ -443,17 +432,17 @@
         4px solid var(--surface);
 
       box-shadow:
-        0 8px 22px rgba(0,0,0,.13);
+        0 5px 20px rgba(0,0,0,.13);
     }
 
-    .verified-dot {
+    .verified {
       position: absolute;
 
       right: 2px;
-      bottom: 7px;
+      bottom: 6px;
 
-      width: 25px;
-      height: 25px;
+      width: 24px;
+      height: 24px;
 
       display: grid;
       place-items: center;
@@ -466,43 +455,33 @@
       border:
         2px solid var(--surface);
 
-      font-size: 12px;
-      font-weight: 900;
+      font-size: 11px;
+      font-weight: 800;
     }
-
-
-    /* =====================================================
-       PROFILE ACTIONS
-    ===================================================== */
 
     .profile-actions {
       display: flex;
-      align-items: center;
-      gap: 8px;
-
-      padding-bottom: 3px;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .btn {
-      min-height: 39px;
+      min-height: 38px;
 
       padding:
-        0 15px;
+        0 14px;
 
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 10px;
 
       border:
         1px solid var(--border);
-
-      border-radius: 11px;
 
       background: var(--surface);
       color: var(--text);
 
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 750;
 
       transition: .2s ease;
     }
@@ -513,57 +492,60 @@
     }
 
     .btn-primary {
-      background: var(--navy);
       color: white;
 
       border-color: transparent;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--navy),
+          #173b62
+        );
     }
 
     body.dark .btn-primary {
-      background: var(--gold);
       color: #071a34;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f1d487,
+          var(--gold)
+        );
     }
-
-    .btn-danger {
-      color: var(--red);
-    }
-
-
-    /* =====================================================
-       PROFILE INFO
-    ===================================================== */
 
     .profile-name-row {
-      margin-top: 13px;
+      margin-top: 12px;
 
       display: flex;
       align-items: center;
+      gap: 7px;
 
-      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .profile-name {
       font-size: 23px;
       font-weight: 850;
-      letter-spacing: -.5px;
     }
 
-    .mcp-mark {
-      padding: 4px 8px;
+    .mcp-badge {
+      padding:
+        4px 8px;
 
       border-radius: 20px;
 
-      background:
-        rgba(201,162,58,.12);
-
-      border:
-        1px solid
-        rgba(201,162,58,.25);
-
       color: var(--gold);
 
-      font-size: 9px;
-      font-weight: 900;
+      background:
+        var(--gold-soft);
+
+      border:
+        1px solid rgba(201,161,58,.28);
+
+      font-size: 10px;
+      font-weight: 850;
     }
 
     .username {
@@ -575,10 +557,10 @@
     }
 
     .bio {
-      margin-top: 11px;
+      margin-top: 10px;
 
       font-size: 13px;
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
     .location {
@@ -586,31 +568,31 @@
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .field {
       margin-top: 7px;
 
-      color: var(--gold);
+      color: var(--muted);
 
-      font-size: 11px;
-      font-weight: 750;
+      font-size: 12px;
     }
 
-    .badges {
-      margin-top: 12px;
+    /* =========================
+       BADGES
+    ========================= */
 
+    .badges {
       display: flex;
       flex-wrap: wrap;
+
       gap: 6px;
+
+      margin-top: 12px;
     }
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-
       padding:
         5px 9px;
 
@@ -622,20 +604,20 @@
         1px solid var(--border);
 
       font-size: 10px;
-      font-weight: 750;
+      font-weight: 700;
     }
 
-
-    /* =====================================================
+    /* =========================
        STATS
-    ===================================================== */
+    ========================= */
 
     .stats {
-      margin-top: 18px;
-
       display: grid;
+
       grid-template-columns:
         repeat(4, 1fr);
+
+      margin-top: 17px;
 
       border-top:
         1px solid var(--border);
@@ -645,37 +627,30 @@
     }
 
     .stat {
-      padding:
-        13px 5px;
+      min-height: 67px;
 
-      text-align: center;
+      display: flex;
+      flex-direction: column;
 
-      cursor: pointer;
+      align-items: center;
+      justify-content: center;
 
       border-right:
         1px solid var(--border);
 
-      transition: .2s;
+      cursor: pointer;
     }
 
     .stat:last-child {
-      border-right: 0;
-    }
-
-    .stat:hover {
-      background: var(--surface-soft);
+      border-right: none;
     }
 
     .stat-value {
-      display: block;
-
       font-size: 17px;
       font-weight: 850;
     }
 
     .stat-label {
-      display: block;
-
       margin-top: 2px;
 
       color: var(--muted);
@@ -684,17 +659,16 @@
       font-weight: 650;
     }
 
+    /* =========================
+       MY PROFILE FUNCTIONS
+    ========================= */
 
-    /* =====================================================
-       OWN PROFILE MANAGEMENT
-    ===================================================== */
-
-    .management-section {
+    .my-functions {
       margin-top: 18px;
     }
 
     .section-title {
-      padding:
+      margin:
         0 4px 8px;
 
       color: var(--muted);
@@ -702,33 +676,33 @@
       font-size: 10px;
       font-weight: 850;
 
-      letter-spacing: .7px;
+      letter-spacing: .8px;
 
       text-transform: uppercase;
     }
 
-    .management-list {
+    .function-list {
       display: grid;
       gap: 7px;
     }
 
-    .management-row {
+    .function-row {
       width: 100%;
 
-      min-height: 62px;
+      min-height: 60px;
 
       padding:
-        10px 13px;
+        9px 13px;
 
       display: flex;
       align-items: center;
 
       gap: 12px;
 
+      border-radius: 14px;
+
       border:
         1px solid var(--border);
-
-      border-radius: 14px;
 
       background: var(--surface);
 
@@ -736,22 +710,24 @@
 
       text-align: left;
 
-      box-shadow:
-        0 3px 14px rgba(0,0,0,.025);
-
-      transition: .2s;
+      transition: .2s ease;
     }
 
-    .management-row:hover {
+    .function-row:hover {
       transform: translateY(-1px);
-      border-color: var(--gold);
+
+      border-color:
+        rgba(201,161,58,.55);
+
+      box-shadow:
+        0 5px 18px rgba(7,26,52,.05);
     }
 
-    .management-icon {
-      width: 39px;
-      height: 39px;
+    .function-icon {
+      width: 38px;
+      height: 38px;
 
-      flex: 0 0 39px;
+      flex: 0 0 38px;
 
       display: grid;
       place-items: center;
@@ -763,49 +739,41 @@
       font-size: 16px;
     }
 
-    .management-content {
+    .function-content {
       flex: 1;
       min-width: 0;
     }
 
-    .management-title {
+    .function-title {
       font-size: 13px;
       font-weight: 800;
     }
 
-    .management-description {
+    .function-description {
       margin-top: 2px;
 
       color: var(--muted);
 
       font-size: 10px;
+
       line-height: 1.4;
     }
 
-    .management-arrow {
+    .function-arrow {
       color: var(--muted);
       font-size: 18px;
     }
 
-    .management-row.danger .management-title {
+    .danger-row .function-title {
       color: var(--red);
     }
 
-
-    /* =====================================================
+    /* =========================
        POSTS
-    ===================================================== */
+    ========================= */
 
     .posts-section {
-      margin-top: 22px;
-    }
-
-    .posts-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      margin-bottom: 10px;
+      margin-top: 20px;
     }
 
     .posts-title {
@@ -813,16 +781,13 @@
       font-weight: 850;
     }
 
-    .posts-count-label {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
     .posts-grid {
+      margin-top: 9px;
+
       display: grid;
 
       grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(3, minmax(0,1fr));
 
       gap: 8px;
     }
@@ -830,21 +795,20 @@
     .post-card {
       overflow: hidden;
 
+      border-radius: 13px;
+
       background: var(--surface);
 
       border:
         1px solid var(--border);
 
-      border-radius: 13px;
-
       cursor: pointer;
 
-      transition: .2s;
+      transition: .2s ease;
     }
 
     .post-card:hover {
       transform: translateY(-2px);
-      border-color: var(--gold);
     }
 
     .post-image {
@@ -858,7 +822,7 @@
     }
 
     .post-info {
-      padding: 9px;
+      padding: 8px;
     }
 
     .post-title {
@@ -881,60 +845,31 @@
       font-weight: 850;
     }
 
-    .post-edit-row {
-      display: flex;
-      gap: 5px;
-
-      margin-top: 7px;
-    }
-
-    .mini-btn {
-      flex: 1;
-
-      min-height: 27px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 7px;
-
-      background: var(--surface-soft);
-
-      color: var(--text);
-
-      font-size: 9px;
-      font-weight: 750;
-    }
-
-    .mini-btn.delete {
-      color: var(--red);
-    }
-
     .empty {
       grid-column: 1 / -1;
 
-      padding: 28px 15px;
+      padding: 28px;
 
       text-align: center;
+
+      color: var(--muted);
+
+      background: var(--surface);
 
       border:
         1px dashed var(--border);
 
       border-radius: 13px;
 
-      color: var(--muted);
-
       font-size: 12px;
     }
 
-
-    /* =====================================================
+    /* =========================
        MODAL
-    ===================================================== */
+    ========================= */
 
     .modal {
       position: fixed;
-
       inset: 0;
 
       z-index: 3000;
@@ -945,9 +880,10 @@
       justify-content: center;
 
       background:
-        rgba(0,0,0,.42);
+        rgba(0,0,0,.45);
 
-      backdrop-filter: blur(5px);
+      backdrop-filter:
+        blur(5px);
     }
 
     .modal.open {
@@ -955,24 +891,22 @@
     }
 
     .modal-card {
-      width: min(
-        600px,
-        100%
-      );
+      width:
+        min(600px, 100%);
 
-      max-height: 92vh;
+      max-height: 90vh;
 
       overflow-y: auto;
 
       padding: 20px;
 
-      background: var(--surface);
-
       border-radius:
         20px 20px 0 0;
 
+      background: var(--surface);
+
       box-shadow:
-        0 -15px 45px rgba(0,0,0,.18);
+        0 -15px 50px rgba(0,0,0,.15);
     }
 
     .modal-head {
@@ -992,24 +926,18 @@
       width: 33px;
       height: 33px;
 
-      border: 0;
+      border: none;
 
       border-radius: 9px;
 
       background: var(--surface-soft);
-
       color: var(--text);
 
-      font-size: 17px;
+      font-size: 19px;
     }
 
-
-    /* =====================================================
-       FORM
-    ===================================================== */
-
     .form-group {
-      margin-bottom: 13px;
+      margin-bottom: 12px;
     }
 
     .form-label {
@@ -1029,16 +957,15 @@
       padding:
         8px 12px;
 
+      border-radius: 10px;
+
       border:
         1px solid var(--border);
 
-      border-radius: 10px;
+      outline: none;
 
       background: var(--surface);
-
       color: var(--text);
-
-      outline: none;
     }
 
     .form-control:focus {
@@ -1046,7 +973,7 @@
     }
 
     textarea.form-control {
-      min-height: 90px;
+      min-height: 85px;
       resize: vertical;
     }
 
@@ -1070,54 +997,9 @@
       flex: 1;
     }
 
-    .avatar-edit {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-
-      margin-bottom: 16px;
-    }
-
-    .avatar-preview {
-      width: 68px;
-      height: 68px;
-
-      flex: 0 0 68px;
-
-      border-radius: 50%;
-
-      object-fit: cover;
-
-      border:
-        3px solid var(--surface-soft);
-    }
-
-    .file-label {
-      display: inline-flex;
-      align-items: center;
-
-      min-height: 36px;
-
-      padding:
-        0 12px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 9px;
-
-      background: var(--surface-soft);
-
-      font-size: 11px;
-      font-weight: 750;
-
-      cursor: pointer;
-    }
-
-
-    /* =====================================================
-       PEOPLE LIST
-    ===================================================== */
+    /* =========================
+       PEOPLE MODAL
+    ========================= */
 
     .person-list {
       display: grid;
@@ -1125,12 +1007,11 @@
     }
 
     .person {
-      padding: 9px;
-
       display: flex;
       align-items: center;
-
       gap: 10px;
+
+      padding: 9px;
 
       border-radius: 11px;
 
@@ -1141,9 +1022,9 @@
       width: 40px;
       height: 40px;
 
-      border-radius: 50%;
-
       object-fit: cover;
+
+      border-radius: 50%;
     }
 
     .person-info {
@@ -1153,54 +1034,17 @@
 
     .person-name {
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 750;
     }
 
     .person-username {
-      margin-top: 2px;
-
       color: var(--muted);
-
       font-size: 10px;
     }
 
-
-    /* =====================================================
-       STATUS BOX
-    ===================================================== */
-
-    .status-box {
-      padding: 11px 12px;
-
-      margin-bottom: 14px;
-
-      border-radius: 11px;
-
-      background: var(--surface-soft);
-
-      border:
-        1px solid var(--border);
-
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .status-box.pending {
-      color: #b7791f;
-    }
-
-    .status-box.approved {
-      color: var(--green);
-    }
-
-    .status-box.rejected {
-      color: var(--red);
-    }
-
-
-    /* =====================================================
+    /* =========================
        BOTTOM NAV
-    ===================================================== */
+    ========================= */
 
     .bottom-nav {
       position: fixed;
@@ -1211,30 +1055,26 @@
 
       z-index: 2000;
 
-      height: 70px;
+      height: 68px;
 
       padding-bottom:
         env(safe-area-inset-bottom);
 
-      background:
-        color-mix(
-          in srgb,
-          var(--surface) 94%,
-          transparent
-        );
+      background: var(--surface);
 
       border-top:
         1px solid var(--border);
 
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
     }
 
     .nav-inner {
-      width: min(
-        520px,
-        calc(100% - 18px)
-      );
+      width:
+        min(500px, calc(100% - 10px));
 
       height: 100%;
 
@@ -1248,7 +1088,6 @@
 
     .nav-item {
       display: flex;
-
       flex-direction: column;
 
       align-items: center;
@@ -1264,17 +1103,15 @@
 
     .nav-icon {
       font-size: 18px;
-      line-height: 1;
     }
 
     .nav-item.active {
       color: var(--gold);
     }
 
-
-    /* =====================================================
+    /* =========================
        TOAST
-    ===================================================== */
+    ========================= */
 
     .toast {
       position: fixed;
@@ -1284,115 +1121,104 @@
 
       z-index: 5000;
 
-      transform:
-        translateX(-50%)
-        translateY(12px);
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      max-width:
-        calc(100% - 30px);
-
       padding:
-        10px 16px;
+        10px 15px;
 
       border-radius: 10px;
 
       background: var(--navy);
-
       color: var(--surface);
 
       font-size: 11px;
       font-weight: 750;
 
-      transition: .22s;
+      transform:
+        translate(-50%, 12px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: .25s ease;
     }
 
     .toast.show {
-      opacity: 1;
-
       transform:
-        translateX(-50%)
-        translateY(0);
+        translate(-50%, 0);
+
+      opacity: 1;
     }
 
-
-    /* =====================================================
+    /* =========================
        MOBILE
-    ===================================================== */
+    ========================= */
 
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
 
       .brand-name {
         display: none;
       }
 
-      .profile-cover {
-        height: 125px;
-      }
-
       .profile-body {
-        padding:
-          0 15px 18px;
+        padding-left: 15px;
+        padding-right: 15px;
       }
 
       .profile-head {
-        margin-top: -48px;
+        align-items: flex-end;
       }
 
       .avatar {
-        width: 92px;
-        height: 92px;
-      }
-
-      .verified-dot {
-        width: 23px;
-        height: 23px;
+        width: 90px;
+        height: 90px;
       }
 
       .profile-actions {
         gap: 5px;
       }
 
-      .profile-actions .btn {
-        padding:
-          0 11px;
+      .btn {
+        padding: 0 11px;
       }
 
-      .profile-name {
-        font-size: 20px;
-      }
-
-      .posts-grid {
+      .stats {
         grid-template-columns:
-          repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 390px) {
-
-      .profile-head {
-        align-items: center;
-      }
-
-      .profile-actions .btn {
-        font-size: 10px;
-        min-height: 35px;
-      }
-
-      .stats .stat {
-        padding:
-          11px 3px;
+          repeat(4, 1fr);
       }
 
       .stat-value {
         font-size: 15px;
       }
 
-      .stat-label {
-        font-size: 9px;
+      .posts-grid {
+        grid-template-columns:
+          repeat(2, minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 420px) {
+
+      .profile-name {
+        font-size: 20px;
+      }
+
+      .profile-head {
+        margin-top: -42px;
+      }
+
+      .avatar {
+        width: 82px;
+        height: 82px;
+      }
+
+      .profile-actions .btn {
+        min-height: 35px;
+        padding: 0 9px;
+        font-size: 11px;
+      }
+
+      .function-row {
+        min-height: 57px;
       }
     }
   </style>
@@ -1402,9 +1228,9 @@
 
 <div class="app">
 
-  <!-- ===================================================
-       TOPBAR
-  ==================================================== -->
+  <!-- =========================
+       HEADER
+  ========================== -->
 
   <header class="topbar">
 
@@ -1413,11 +1239,9 @@
       <a href="./index.html" class="brand">
 
         <div class="brand-logo">
-
           <img
             src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
             alt="Myanmar Elite Connect">
-
         </div>
 
         <div class="brand-name">
@@ -1429,16 +1253,16 @@
       <div class="top-actions">
 
         <button
-          class="icon-button"
           id="themeButton"
+          class="icon-button"
           type="button"
-          aria-label="Toggle theme">
+          aria-label="Change theme">
           ☾
         </button>
 
         <button
+          id="logoutTopButton"
           class="icon-button"
-          id="logoutButton"
           type="button"
           aria-label="Logout">
           ⇥
@@ -1451,9 +1275,9 @@
   </header>
 
 
-  <!-- ===================================================
+  <!-- =========================
        MAIN
-  ==================================================== -->
+  ========================== -->
 
   <main class="main">
 
@@ -1468,9 +1292,7 @@
         placeholder="Search username..."
         autocomplete="off">
 
-      <span class="search-icon">
-        ⌕
-      </span>
+      <span class="search-icon">⌕</span>
 
       <div
         id="searchResults"
@@ -1480,13 +1302,13 @@
     </section>
 
 
-    <!-- =================================================
+    <!-- =========================
          PROFILE
-    ================================================== -->
+    ========================== -->
 
     <section class="profile-card">
 
-      <div class="profile-cover"></div>
+      <div class="cover"></div>
 
       <div class="profile-body">
 
@@ -1498,51 +1320,37 @@
               id="profileAvatar"
               class="avatar"
               src=""
-              alt="Profile photo">
+              alt="Profile">
 
             <div
-              id="verifiedDot"
-              class="verified-dot hidden">
+              id="verifiedBadge"
+              class="verified hidden">
               ✓
             </div>
 
           </div>
 
-
-          <!-- OTHER USER ACTIONS -->
-
-          <div
-            id="otherActions"
-            class="profile-actions hidden">
+          <div class="profile-actions">
 
             <button
               id="followButton"
-              type="button"
-              class="btn btn-primary">
+              class="btn btn-primary hidden"
+              type="button">
               Follow
             </button>
 
             <button
               id="chatButton"
-              type="button"
-              class="btn">
+              class="btn hidden"
+              type="button">
               Chat
             </button>
 
-          </div>
-
-
-          <!-- OWN PROFILE -->
-
-          <div
-            id="ownActions"
-            class="profile-actions hidden">
-
             <button
               id="editProfileButton"
-              type="button"
-              class="btn btn-primary">
-              Edit Profile
+              class="btn hidden"
+              type="button">
+              Edit
             </button>
 
           </div>
@@ -1559,8 +1367,8 @@
           </h1>
 
           <span
-            id="mcpMark"
-            class="mcp-mark hidden">
+            id="mcpBadge"
+            class="mcp-badge hidden">
             ★ MCP
           </span>
 
@@ -1603,8 +1411,8 @@
         <div class="stats">
 
           <div
-            class="stat"
-            id="likesStat">
+            id="likesStat"
+            class="stat">
 
             <span
               id="likesCount"
@@ -1620,8 +1428,8 @@
 
 
           <div
-            class="stat"
-            id="followersStat">
+            id="followersStat"
+            class="stat">
 
             <span
               id="followersCount"
@@ -1637,8 +1445,8 @@
 
 
           <div
-            class="stat"
-            id="followingStat">
+            id="followingStat"
+            class="stat">
 
             <span
               id="followingCount"
@@ -1654,8 +1462,8 @@
 
 
           <div
-            class="stat"
-            id="postsStat">
+            id="postsStat"
+            class="stat">
 
             <span
               id="postsCount"
@@ -1676,168 +1484,76 @@
     </section>
 
 
-    <!-- =================================================
-         OWN PROFILE MANAGEMENT
-    ================================================== -->
+    <!-- =========================
+         MY PROFILE FUNCTIONS
+    ========================== -->
 
     <section
-      id="ownManagement"
-      class="management-section hidden">
+      id="myFunctions"
+      class="my-functions hidden">
 
       <div class="section-title">
         Profile Management
       </div>
 
 
-      <div class="management-list">
+      <div class="function-list">
 
 
         <!-- EDIT INFO -->
 
         <button
-          type="button"
-          class="management-row"
-          id="editInfoButton">
+          id="editInfoButton"
+          class="function-row"
+          type="button">
 
-          <div class="management-icon">
+          <div class="function-icon">
             ✎
           </div>
 
-          <div class="management-content">
+          <div class="function-content">
 
-            <div class="management-title">
+            <div class="function-title">
               Edit Info
             </div>
 
-            <div class="management-description">
-              Username, profile photo, region, state and field
+            <div class="function-description">
+              Username, profile photo, region/state and field
             </div>
 
           </div>
 
-          <div class="management-arrow">
+          <div class="function-arrow">
             ›
           </div>
 
         </button>
 
 
-        <!-- BADGES -->
+        <!-- POSTS -->
 
         <button
-          type="button"
-          class="management-row"
-          id="badgeButton">
+          id="myPostsButton"
+          class="function-row"
+          type="button">
 
-          <div class="management-icon">
-            🏅
-          </div>
-
-          <div class="management-content">
-
-            <div class="management-title">
-              My Badges
-            </div>
-
-            <div class="management-description">
-              Manage badges suitable for your profile
-            </div>
-
-          </div>
-
-          <div class="management-arrow">
-            ›
-          </div>
-
-        </button>
-
-
-        <!-- KYC -->
-
-        <button
-          type="button"
-          class="management-row"
-          id="kycButton">
-
-          <div class="management-icon">
-            🛡️
-          </div>
-
-          <div class="management-content">
-
-            <div class="management-title">
-              KYC Verification
-            </div>
-
-            <div
-              id="kycDescription"
-              class="management-description">
-              Verify your identity
-            </div>
-
-          </div>
-
-          <div class="management-arrow">
-            ›
-          </div>
-
-        </button>
-
-
-        <!-- MCP -->
-
-        <button
-          type="button"
-          class="management-row"
-          id="mcpButton">
-
-          <div class="management-icon">
-            ★
-          </div>
-
-          <div class="management-content">
-
-            <div class="management-title">
-              MCP Registration
-            </div>
-
-            <div class="management-description">
-              Apply for Myanmar Elite Certified Partner
-            </div>
-
-          </div>
-
-          <div class="management-arrow">
-            ›
-          </div>
-
-        </button>
-
-
-        <!-- MY POSTS -->
-
-        <button
-          type="button"
-          class="management-row"
-          id="myPostsButton">
-
-          <div class="management-icon">
+          <div class="function-icon">
             📝
           </div>
 
-          <div class="management-content">
+          <div class="function-content">
 
-            <div class="management-title">
+            <div class="function-title">
               My Posts
             </div>
 
-            <div class="management-description">
-              Edit, manage or delete your posts
+            <div class="function-description">
+              View and edit your listings and posts
             </div>
 
           </div>
 
-          <div class="management-arrow">
+          <div class="function-arrow">
             ›
           </div>
 
@@ -1847,27 +1563,27 @@
         <!-- FOLLOWERS -->
 
         <button
-          type="button"
-          class="management-row"
-          id="myFollowersButton">
+          id="myFollowersButton"
+          class="function-row"
+          type="button">
 
-          <div class="management-icon">
+          <div class="function-icon">
             👥
           </div>
 
-          <div class="management-content">
+          <div class="function-content">
 
-            <div class="management-title">
+            <div class="function-title">
               Followers
             </div>
 
-            <div class="management-description">
+            <div class="function-description">
               See people following you
             </div>
 
           </div>
 
-          <div class="management-arrow">
+          <div class="function-arrow">
             ›
           </div>
 
@@ -1877,57 +1593,149 @@
         <!-- FOLLOWING -->
 
         <button
-          type="button"
-          class="management-row"
-          id="myFollowingButton">
+          id="myFollowingButton"
+          class="function-row"
+          type="button">
 
-          <div class="management-icon">
-            ➜
+          <div class="function-icon">
+            ◎
           </div>
 
-          <div class="management-content">
+          <div class="function-content">
 
-            <div class="management-title">
+            <div class="function-title">
               Following
             </div>
 
-            <div class="management-description">
+            <div class="function-description">
               See people you follow
             </div>
 
           </div>
 
-          <div class="management-arrow">
+          <div class="function-arrow">
             ›
           </div>
 
         </button>
 
 
-        <!-- ACCOUNT SETTINGS -->
+        <!-- BADGES -->
 
         <button
-          type="button"
-          class="management-row"
-          id="settingsButton">
+          id="badgesButton"
+          class="function-row"
+          type="button">
 
-          <div class="management-icon">
+          <div class="function-icon">
+            🏅
+          </div>
+
+          <div class="function-content">
+
+            <div class="function-title">
+              Badges
+            </div>
+
+            <div class="function-description">
+              Manage your eligible profile badges
+            </div>
+
+          </div>
+
+          <div class="function-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <!-- KYC -->
+
+        <button
+          id="kycButton"
+          class="function-row"
+          type="button">
+
+          <div class="function-icon">
+            🛡️
+          </div>
+
+          <div class="function-content">
+
+            <div class="function-title">
+              KYC Verification
+            </div>
+
+            <div
+              id="kycDescription"
+              class="function-description">
+              Verify your identity
+            </div>
+
+          </div>
+
+          <div class="function-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <!-- MCP -->
+
+        <button
+          id="mcpButton"
+          class="function-row"
+          type="button">
+
+          <div class="function-icon">
+            ★
+          </div>
+
+          <div class="function-content">
+
+            <div class="function-title">
+              MCP Registration
+            </div>
+
+            <div class="function-description">
+              Apply for Myanmar Elite Certified Partner
+            </div>
+
+          </div>
+
+          <div class="function-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <!-- SETTINGS -->
+
+        <button
+          id="settingsButton"
+          class="function-row"
+          type="button">
+
+          <div class="function-icon">
             ⚙
           </div>
 
-          <div class="management-content">
+          <div class="function-content">
 
-            <div class="management-title">
+            <div class="function-title">
               Account Settings
             </div>
 
-            <div class="management-description">
-              Privacy and account preferences
+            <div class="function-description">
+              Privacy, security and account preferences
             </div>
 
           </div>
 
-          <div class="management-arrow">
+          <div class="function-arrow">
             ›
           </div>
 
@@ -1937,27 +1745,27 @@
         <!-- LOGOUT -->
 
         <button
-          type="button"
-          class="management-row danger"
-          id="logoutRow">
+          id="logoutButton"
+          class="function-row danger-row"
+          type="button">
 
-          <div class="management-icon">
+          <div class="function-icon">
             ⇥
           </div>
 
-          <div class="management-content">
+          <div class="function-content">
 
-            <div class="management-title">
+            <div class="function-title">
               Log Out
             </div>
 
-            <div class="management-description">
+            <div class="function-description">
               Sign out from this account
             </div>
 
           </div>
 
-          <div class="management-arrow">
+          <div class="function-arrow">
             ›
           </div>
 
@@ -1968,25 +1776,15 @@
     </section>
 
 
-    <!-- =================================================
+    <!-- =========================
          POSTS
-    ================================================== -->
+    ========================== -->
 
     <section class="posts-section">
 
-      <div class="posts-header">
-
-        <h2 class="posts-title">
-          Posts
-        </h2>
-
-        <span
-          id="postsCountLabel"
-          class="posts-count-label">
-          0 posts
-        </span>
-
-      </div>
+      <h2 class="posts-title">
+        Posts
+      </h2>
 
       <div
         id="postsGrid"
@@ -1998,9 +1796,9 @@
   </main>
 
 
-  <!-- ===================================================
-       BOTTOM NAV
-  ==================================================== -->
+  <!-- =========================
+       BOTTOM NAVIGATION
+  ========================== -->
 
   <nav class="bottom-nav">
 
@@ -2023,10 +1821,10 @@
 
       <a
         class="nav-item"
-        href="./listing.html">
+        href="./addlisting.html">
 
         <span class="nav-icon">
-          ▦
+          ＋
         </span>
 
         <span>
@@ -2072,9 +1870,46 @@
 </div>
 
 
-<!-- =====================================================
-     EDIT PROFILE MODAL
-====================================================== -->
+<!-- =========================
+     PEOPLE MODAL
+========================== -->
+
+<div
+  id="peopleModal"
+  class="modal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2
+        id="peopleModalTitle"
+        class="modal-title">
+        Followers
+      </h2>
+
+      <button
+        class="close-button"
+        type="button"
+        data-close="peopleModal">
+        ×
+      </button>
+
+    </div>
+
+    <div
+      id="peopleList"
+      class="person-list">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     EDIT INFO MODAL
+========================== -->
 
 <div
   id="editModal"
@@ -2089,28 +1924,42 @@
       </h2>
 
       <button
-        type="button"
         class="close-button"
-        onclick="closeModal('editModal')">
+        type="button"
+        data-close="editModal">
         ×
       </button>
 
     </div>
 
 
-    <div class="avatar-edit">
+    <div
+      style="
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-bottom:15px;
+      ">
 
       <img
         id="editAvatarPreview"
-        class="avatar-preview"
+        class="avatar"
+        style="
+          width:64px;
+          height:64px;
+        "
         src=""
-        alt="Profile preview">
+        alt="Preview">
 
       <div>
 
         <label
           for="avatarInput"
-          class="file-label">
+          class="btn"
+          style="
+            display:inline-flex;
+            align-items:center;
+          ">
           Change Photo
         </label>
 
@@ -2160,10 +2009,6 @@
         type="text"
         maxlength="30">
 
-      <div class="form-help">
-        Username must be unique.
-      </div>
-
     </div>
 
 
@@ -2180,23 +2025,6 @@
         class="form-control"
         maxlength="500">
       </textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label
-        class="form-label"
-        for="cityInput">
-        City / Township
-      </label>
-
-      <input
-        id="cityInput"
-        class="form-control"
-        type="text"
-        maxlength="80">
 
     </div>
 
@@ -2227,7 +2055,7 @@
       <label
         class="form-label"
         for="fieldInput">
-        Field / Profession
+        Field
       </label>
 
       <select
@@ -2238,44 +2066,40 @@
           Select Field
         </option>
 
-        <option value="Business">
-          Business
-        </option>
-
         <option value="Education">
           Education
+        </option>
+
+        <option value="Business">
+          Business
         </option>
 
         <option value="Technology">
           Technology
         </option>
 
-        <option value="Finance">
-          Finance
-        </option>
-
         <option value="Healthcare">
           Healthcare
         </option>
 
-        <option value="Engineering">
-          Engineering
+        <option value="Finance">
+          Finance
         </option>
 
-        <option value="Design">
-          Design
+        <option value="Sales">
+          Sales
         </option>
 
         <option value="Marketing">
           Marketing
         </option>
 
-        <option value="Student">
-          Student
+        <option value="Design">
+          Design
         </option>
 
-        <option value="Freelancer">
-          Freelancer
+        <option value="Student">
+          Student
         </option>
 
         <option value="Other">
@@ -2290,16 +2114,16 @@
     <div class="modal-actions">
 
       <button
-        type="button"
+        id="cancelEditButton"
         class="btn"
-        onclick="closeModal('editModal')">
+        type="button">
         Cancel
       </button>
 
       <button
-        type="button"
         id="saveProfileButton"
-        class="btn btn-primary">
+        class="btn btn-primary"
+        type="button">
         Save Changes
       </button>
 
@@ -2310,81 +2134,9 @@
 </div>
 
 
-<!-- =====================================================
-     PEOPLE MODAL
-====================================================== -->
-
-<div
-  id="peopleModal"
-  class="modal">
-
-  <div class="modal-card">
-
-    <div class="modal-head">
-
-      <h2
-        id="peopleModalTitle"
-        class="modal-title">
-        Followers
-      </h2>
-
-      <button
-        type="button"
-        class="close-button"
-        onclick="closeModal('peopleModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div
-      id="peopleList"
-      class="person-list">
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     BADGES MODAL
-====================================================== -->
-
-<div
-  id="badgeModal"
-  class="modal">
-
-  <div class="modal-card">
-
-    <div class="modal-head">
-
-      <h2 class="modal-title">
-        My Badges
-      </h2>
-
-      <button
-        type="button"
-        class="close-button"
-        onclick="closeModal('badgeModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div
-      id="badgeList"
-      class="person-list">
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
+<!-- =========================
      KYC MODAL
-====================================================== -->
+========================== -->
 
 <div
   id="kycModal"
@@ -2399,9 +2151,9 @@
       </h2>
 
       <button
-        type="button"
         class="close-button"
-        onclick="closeModal('kycModal')">
+        type="button"
+        data-close="kycModal">
         ×
       </button>
 
@@ -2409,9 +2161,13 @@
 
 
     <div
-      id="kycStatusBox"
-      class="status-box">
-      Checking verification status...
+      id="kycStatus"
+      class="form-help"
+      style="
+        margin-bottom:14px;
+        font-weight:700;
+      ">
+      Complete the form to submit verification.
     </div>
 
 
@@ -2463,8 +2219,7 @@
     <div class="form-group">
 
       <label
-        class="form-label"
-        for="kycFront">
+        class="form-label">
         Front Image
       </label>
 
@@ -2480,8 +2235,7 @@
     <div class="form-group">
 
       <label
-        class="form-label"
-        for="kycBack">
+        class="form-label">
         Back Image
       </label>
 
@@ -2497,17 +2251,17 @@
     <div class="modal-actions">
 
       <button
-        type="button"
         class="btn"
-        onclick="closeModal('kycModal')">
-        Close
+        type="button"
+        data-close="kycModal">
+        Cancel
       </button>
 
       <button
-        type="button"
         id="submitKycButton"
-        class="btn btn-primary">
-        Submit KYC
+        class="btn btn-primary"
+        type="button">
+        Submit
       </button>
 
     </div>
@@ -2517,9 +2271,9 @@
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      MCP MODAL
-====================================================== -->
+========================== -->
 
 <div
   id="mcpModal"
@@ -2534,19 +2288,28 @@
       </h2>
 
       <button
-        type="button"
         class="close-button"
-        onclick="closeModal('mcpModal')">
+        type="button"
+        data-close="mcpModal">
         ×
       </button>
 
     </div>
 
 
-    <div
-      id="mcpStatusBox"
-      class="status-box">
-      Myanmar Elite Certified Partner
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="mcpBusinessName">
+        Business / Organization Name
+      </label>
+
+      <input
+        id="mcpBusinessName"
+        class="form-control"
+        type="text">
+
     </div>
 
 
@@ -2561,66 +2324,8 @@
       <textarea
         id="mcpReason"
         class="form-control"
-        maxlength="1000"
-        placeholder="Tell us briefly about yourself and your work...">
+        maxlength="1000">
       </textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label
-        class="form-label"
-        for="mcpField">
-        Main Field
-      </label>
-
-      <select
-        id="mcpField"
-        class="form-control">
-
-        <option value="">
-          Select Field
-        </option>
-
-        <option value="Business">
-          Business
-        </option>
-
-        <option value="Education">
-          Education
-        </option>
-
-        <option value="Technology">
-          Technology
-        </option>
-
-        <option value="Finance">
-          Finance
-        </option>
-
-        <option value="Healthcare">
-          Healthcare
-        </option>
-
-        <option value="Engineering">
-          Engineering
-        </option>
-
-        <option value="Design">
-          Design
-        </option>
-
-        <option value="Marketing">
-          Marketing
-        </option>
-
-        <option value="Other">
-          Other
-        </option>
-
-      </select>
 
     </div>
 
@@ -2628,16 +2333,16 @@
     <div class="modal-actions">
 
       <button
-        type="button"
         class="btn"
-        onclick="closeModal('mcpModal')">
-        Close
+        type="button"
+        data-close="mcpModal">
+        Cancel
       </button>
 
       <button
-        type="button"
         id="submitMcpButton"
-        class="btn btn-primary">
+        class="btn btn-primary"
+        type="button">
         Submit Application
       </button>
 
@@ -2648,9 +2353,9 @@
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      TOAST
-====================================================== -->
+========================== -->
 
 <div
   id="toast"
@@ -2663,10 +2368,9 @@
 <script>
 "use strict";
 
-
-/* =====================================================
-   STATE
-===================================================== */
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
 let currentUser = null;
 let currentProfile = null;
@@ -2676,52 +2380,33 @@ let regionList = [];
 let searchTimer = null;
 
 
-/* =====================================================
-   HELPERS
-===================================================== */
+/* =========================================================
+   SHORTCUT
+========================================================= */
 
-const $ = (id) =>
-  document.getElementById(id);
+function $(id) {
+  return document.getElementById(id);
+}
 
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
 
 function escapeHtml(value) {
 
   return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 
-function fallbackAvatar(name = "U") {
-
-  const initial =
-    String(name)
-      .trim()
-      .charAt(0)
-      .toUpperCase() || "U";
-
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
-      <rect width="200" height="200" fill="#d9e1ea"/>
-      <text
-        x="50%"
-        y="56%"
-        text-anchor="middle"
-        font-size="76"
-        font-family="Arial"
-        font-weight="700"
-        fill="#0d1b2a">
-        ${initial}
-      </text>
-    </svg>
-  `)}`;
-
-}
-
+/* =========================================================
+   TOAST
+========================================================= */
 
 function showToast(message) {
 
@@ -2737,49 +2422,111 @@ function showToast(message) {
 
   showToast.timer =
     setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2600);
 
+      toast.classList.remove("show");
+
+    }, 2600);
 }
 
 
+/* =========================================================
+   MODAL
+========================================================= */
+
 function openModal(id) {
 
-  $(id)?.classList.add("open");
+  const modal = $(id);
 
+  if (modal) {
+    modal.classList.add("open");
+  }
 }
 
 
 function closeModal(id) {
 
-  $(id)?.classList.remove("open");
+  const modal = $(id);
 
+  if (modal) {
+    modal.classList.remove("open");
+  }
 }
 
+
+/* =========================================================
+   FALLBACK AVATAR
+========================================================= */
+
+function fallbackAvatar(name) {
+
+  const initial =
+    String(name || "U")
+      .trim()
+      .charAt(0)
+      .toUpperCase() || "U";
+
+  const svg = `
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="200"
+      height="200">
+
+      <rect
+        width="200"
+        height="200"
+        fill="#d7dee8"/>
+
+      <text
+        x="50%"
+        y="55%"
+        text-anchor="middle"
+        font-family="Arial"
+        font-size="78"
+        font-weight="700"
+        fill="#071a34">
+        ${initial}
+      </text>
+
+    </svg>
+  `;
+
+  return "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(svg);
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
 
 function applyTheme(theme) {
 
+  const dark =
+    theme === "dark";
+
   document.body.classList.toggle(
     "dark",
-    theme === "dark"
+    dark
   );
 
-  $("themeButton").textContent =
-    theme === "dark"
-      ? "☀"
-      : "☾";
+  const button =
+    $("themeButton");
+
+  if (button) {
+    button.textContent =
+      dark ? "☀" : "☾";
+  }
 
   localStorage.setItem(
     "mec_theme",
-    theme
+    dark ? "dark" : "light"
   );
-
 }
 
 
-/* =====================================================
-   GET PROFILE ID
-===================================================== */
+/* =========================================================
+   GET REQUESTED PROFILE
+========================================================= */
 
 function getRequestedProfileId() {
 
@@ -2793,115 +2540,185 @@ function getRequestedProfileId() {
     params.get("user") ||
     params.get("profile")
   );
-
 }
 
 
-/* =====================================================
+/* =========================================================
    INIT
-===================================================== */
+========================================================= */
 
 async function init() {
 
-  applyTheme(
-    localStorage.getItem(
-      "mec_theme"
-    ) || "light"
-  );
+  try {
+
+    applyTheme(
+      localStorage.getItem(
+        "mec_theme"
+      ) || "light"
+    );
 
 
-  const {
-    data: {
-      user
+    if (
+      typeof supabase === "undefined" ||
+      !supabase
+    ) {
+
+      showToast(
+        "Supabase connection not found."
+      );
+
+      return;
     }
-  } =
-    await supabase.auth.getUser();
 
 
-  currentUser = user;
+    const {
+      data: {
+        user
+      },
+      error
+    } =
+      await supabase.auth.getUser();
 
 
-  if (!currentUser) {
-
-    window.location.href =
-      "./auth.html?mode=login";
-
-    return;
-
-  }
+    if (error) {
+      console.error(error);
+    }
 
 
-  viewedUserId =
-    getRequestedProfileId() ||
-    currentUser.id;
+    currentUser = user;
 
 
-  await loadRegions();
+    if (!currentUser) {
 
-  await loadProfile(
-    viewedUserId
-  );
+      window.location.href =
+        "./auth.html?mode=login";
 
-  setupSearch();
-
-}
+      return;
+    }
 
 
-/* =====================================================
-   LOAD PROFILE
-===================================================== */
-
-async function loadProfile(userId) {
-
-  const {
-    data,
-    error
-  } =
-    await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .maybeSingle();
+    viewedUserId =
+      getRequestedProfileId() ||
+      currentUser.id;
 
 
-  if (error || !data) {
+    await loadRegions();
+
+    await loadProfile(
+      viewedUserId
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Profile init error:",
+      error
+    );
 
     showToast(
       "Unable to load profile."
     );
 
-    return;
-
   }
-
-
-  currentProfile = data;
-
-
-  renderProfile(data);
-
-
-  await Promise.all([
-
-    loadProfileBadges(userId),
-
-    loadProfileStats(userId),
-
-    loadUserPosts(userId),
-
-    loadKycStatus(userId)
-
-  ]);
-
-
-  setupProfileMode();
 
 }
 
 
-/* =====================================================
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
+
+async function loadProfile(userId) {
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .maybeSingle();
+
+
+    if (error) {
+
+      console.error(
+        "Profile query:",
+        error
+      );
+
+      showToast(
+        error.message ||
+        "Unable to load profile."
+      );
+
+      return;
+    }
+
+
+    if (!data) {
+
+      showToast(
+        "Profile not found."
+      );
+
+      return;
+    }
+
+
+    currentProfile = data;
+
+
+    renderProfile(data);
+
+
+    await Promise.allSettled([
+
+      loadProfileBadges(
+        userId
+      ),
+
+      loadProfileStats(
+        userId
+      ),
+
+      loadUserPosts(
+        userId
+      ),
+
+      loadKycStatus(
+        userId
+      )
+
+    ]);
+
+
+    setupProfileMode();
+
+
+  } catch (error) {
+
+    console.error(
+      "loadProfile:",
+      error
+    );
+
+    showToast(
+      "Unable to load profile."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
    RENDER PROFILE
-===================================================== */
+========================================================= */
 
 function renderProfile(profile) {
 
@@ -2917,7 +2734,7 @@ function renderProfile(profile) {
 
   $("profileUsername").textContent =
     profile.username
-      ? `@${profile.username}`
+      ? "@" + profile.username
       : "@username";
 
 
@@ -2936,13 +2753,13 @@ function renderProfile(profile) {
 
   $("profileLocation").textContent =
     location
-      ? `📍 ${location}`
+      ? "📍 " + location
       : "";
 
 
   $("profileField").textContent =
     profile.field
-      ? `◆ ${profile.field}`
+      ? "💼 " + profile.field
       : "";
 
 
@@ -2951,7 +2768,7 @@ function renderProfile(profile) {
     fallbackAvatar(name);
 
 
-  $("verifiedDot")
+  $("verifiedBadge")
     .classList
     .toggle(
       "hidden",
@@ -2959,7 +2776,7 @@ function renderProfile(profile) {
     );
 
 
-  $("mcpMark")
+  $("mcpBadge")
     .classList
     .toggle(
       "hidden",
@@ -2969,18 +2786,20 @@ function renderProfile(profile) {
 }
 
 
-/* =====================================================
-   OWN / OTHER MODE
-===================================================== */
+/* =========================================================
+   PROFILE MODE
+========================================================= */
 
 function setupProfileMode() {
 
   const isOwn =
-    currentUser &&
-    currentUser.id === viewedUserId;
+    Boolean(
+      currentUser &&
+      currentUser.id === viewedUserId
+    );
 
 
-  $("ownManagement")
+  $("myFunctions")
     .classList
     .toggle(
       "hidden",
@@ -2988,7 +2807,7 @@ function setupProfileMode() {
     );
 
 
-  $("ownActions")
+  $("editProfileButton")
     .classList
     .toggle(
       "hidden",
@@ -2996,7 +2815,7 @@ function setupProfileMode() {
     );
 
 
-  $("otherActions")
+  $("followButton")
     .classList
     .toggle(
       "hidden",
@@ -3004,11 +2823,11 @@ function setupProfileMode() {
     );
 
 
-  $("logoutButton")
+  $("chatButton")
     .classList
     .toggle(
       "hidden",
-      !isOwn
+      isOwn
     );
 
 
@@ -3021,9 +2840,9 @@ function setupProfileMode() {
 }
 
 
-/* =====================================================
+/* =========================================================
    BADGES
-===================================================== */
+========================================================= */
 
 async function loadProfileBadges(userId) {
 
@@ -3034,12 +2853,24 @@ async function loadProfileBadges(userId) {
 
 
   const {
-    data
+    data,
+    error
   } =
     await supabase
       .from("mec_profile_badges")
       .select("mec_badges(*)")
       .eq("user_id", userId);
+
+
+  if (error) {
+
+    console.warn(
+      "Badge loading:",
+      error.message
+    );
+
+    return;
+  }
 
 
   (data || []).forEach(row => {
@@ -3048,74 +2879,53 @@ async function loadProfileBadges(userId) {
       row.mec_badges;
 
 
-    if (
-      !badge ||
-      badge.active === false
-    ) return;
+    if (!badge || badge.active === false) {
+      return;
+    }
 
 
-    const span =
+    const element =
       document.createElement(
         "span"
       );
 
 
-    span.className =
+    element.className =
       "badge";
 
 
-    span.innerHTML = `
-      <span>
-        ${escapeHtml(
-          badge.icon || "🏷️"
-        )}
-      </span>
-
-      <span>
-        ${escapeHtml(
-          badge.label_en ||
-          badge.name ||
-          "Badge"
-        )}
-      </span>
-    `;
+    element.textContent =
+      `${badge.icon || "🏷️"} ${
+        badge.label_en ||
+        badge.name ||
+        "Badge"
+      }`;
 
 
-    container.appendChild(span);
+    container.appendChild(
+      element
+    );
 
   });
 
 }
 
 
-/* =====================================================
-   STATS
-===================================================== */
+/* =========================================================
+   PROFILE STATS
+========================================================= */
 
 async function loadProfileStats(userId) {
 
-  const [
-
-    followers,
-
-    following,
-
-    likes,
-
-    posts
-
-  ] =
-    await Promise.all([
+  const results =
+    await Promise.allSettled([
 
       supabase
         .from("profile_follows")
-        .select(
-          "*",
-          {
-            count: "exact",
-            head: true
-          }
-        )
+        .select("*", {
+          count: "exact",
+          head: true
+        })
         .eq(
           "following_id",
           userId
@@ -3123,13 +2933,10 @@ async function loadProfileStats(userId) {
 
       supabase
         .from("profile_follows")
-        .select(
-          "*",
-          {
-            count: "exact",
-            head: true
-          }
-        )
+        .select("*", {
+          count: "exact",
+          head: true
+        })
         .eq(
           "follower_id",
           userId
@@ -3137,13 +2944,10 @@ async function loadProfileStats(userId) {
 
       supabase
         .from("profile_reactions")
-        .select(
-          "*",
-          {
-            count: "exact",
-            head: true
-          }
-        )
+        .select("*", {
+          count: "exact",
+          head: true
+        })
         .eq(
           "profile_id",
           userId
@@ -3155,13 +2959,10 @@ async function loadProfileStats(userId) {
 
       supabase
         .from("listings")
-        .select(
-          "*",
-          {
-            count: "exact",
-            head: true
-          }
-        )
+        .select("*", {
+          count: "exact",
+          head: true
+        })
         .eq(
           "user_id",
           userId
@@ -3170,36 +2971,35 @@ async function loadProfileStats(userId) {
     ]);
 
 
-  $("followersCount")
-    .textContent =
-    followers.count || 0;
+  $("followersCount").textContent =
+    results[0].status === "fulfilled"
+      ? results[0].value.count || 0
+      : 0;
 
 
-  $("followingCount")
-    .textContent =
-    following.count || 0;
+  $("followingCount").textContent =
+    results[1].status === "fulfilled"
+      ? results[1].value.count || 0
+      : 0;
 
 
-  $("likesCount")
-    .textContent =
-    likes.count || 0;
+  $("likesCount").textContent =
+    results[2].status === "fulfilled"
+      ? results[2].value.count || 0
+      : 0;
 
 
-  $("postsCount")
-    .textContent =
-    posts.count || 0;
-
-
-  $("postsCountLabel")
-    .textContent =
-    `${posts.count || 0} posts`;
+  $("postsCount").textContent =
+    results[3].status === "fulfilled"
+      ? results[3].value.count || 0
+      : 0;
 
 }
 
 
-/* =====================================================
+/* =========================================================
    POSTS
-===================================================== */
+========================================================= */
 
 async function loadUserPosts(userId) {
 
@@ -3208,9 +3008,7 @@ async function loadUserPosts(userId) {
 
 
   grid.innerHTML =
-    `<div class="empty">
-      Loading posts...
-    </div>`;
+    `<div class="empty">Loading posts...</div>`;
 
 
   const {
@@ -3220,10 +3018,7 @@ async function loadUserPosts(userId) {
     await supabase
       .from("listings")
       .select("*")
-      .eq(
-        "user_id",
-        userId
-      )
+      .eq("user_id", userId)
       .order(
         "created_at",
         {
@@ -3235,17 +3030,21 @@ async function loadUserPosts(userId) {
 
   if (error) {
 
+    console.error(
+      "Posts:",
+      error
+    );
+
     grid.innerHTML =
       `<div class="empty">
         Unable to load posts.
       </div>`;
 
     return;
-
   }
 
 
-  if (!data?.length) {
+  if (!data || !data.length) {
 
     grid.innerHTML =
       `<div class="empty">
@@ -3253,16 +3052,10 @@ async function loadUserPosts(userId) {
       </div>`;
 
     return;
-
   }
 
 
   grid.innerHTML = "";
-
-
-  const isOwn =
-    currentUser &&
-    currentUser.id === userId;
 
 
   data.forEach(post => {
@@ -3279,7 +3072,11 @@ async function loadUserPosts(userId) {
 
     const image =
       post.show_photo_url ||
-      post.images?.[0] ||
+      (
+        Array.isArray(post.images)
+          ? post.images[0]
+          : null
+      ) ||
       fallbackAvatar(
         post.title
       );
@@ -3290,14 +3087,13 @@ async function loadUserPosts(userId) {
       <img
         class="post-image"
         src="${escapeHtml(image)}"
-        alt="${escapeHtml(post.title || "")}">
+        alt="">
 
       <div class="post-info">
 
         <div class="post-title">
           ${escapeHtml(
-            post.title ||
-            "Untitled"
+            post.title || "Untitled"
           )}
         </div>
 
@@ -3305,168 +3101,51 @@ async function loadUserPosts(userId) {
           post.price
             ? `
               <div class="post-price">
-                ${escapeHtml(
-                  post.price
-                )}
-              </div>
-            `
-            : ""
-        }
-
-        ${
-          isOwn
-            ? `
-              <div class="post-edit-row">
-
-                <button
-                  class="mini-btn"
-                  type="button"
-                  data-edit="${escapeHtml(post.id)}">
-                  Edit
-                </button>
-
-                <button
-                  class="mini-btn delete"
-                  type="button"
-                  data-delete="${escapeHtml(post.id)}">
-                  Delete
-                </button>
-
+                ${escapeHtml(post.price)}
               </div>
             `
             : ""
         }
 
       </div>
+
     `;
 
 
-    card
-      .querySelector(
-        ".post-image"
-      )
-      ?.addEventListener(
-        "click",
-        () => {
+    card.addEventListener(
+      "click",
+      () => {
 
-          window.location.href =
-            `./listing.html?id=${
-              encodeURIComponent(
-                post.id
-              )
-            }`;
+        if (!post.id) return;
 
-        }
-      );
-
-
-    const edit =
-      card.querySelector(
-        "[data-edit]"
-      );
-
-
-    if (edit) {
-
-      edit.onclick =
-        event => {
-
-          event.stopPropagation();
-
-          window.location.href =
-            `./addlisting.html?edit=${
-              encodeURIComponent(
-                post.id
-              )
-            }`;
-
-        };
-
-    }
-
-
-    const del =
-      card.querySelector(
-        "[data-delete]"
-      );
-
-
-    if (del) {
-
-      del.onclick =
-        async event => {
-
-          event.stopPropagation();
-
-          const ok =
-            confirm(
-              "Delete this post?"
-            );
-
-
-          if (!ok) return;
-
-
-          const {
-            error
-          } =
-            await supabase
-              .from("listings")
-              .delete()
-              .eq(
-                "id",
-                post.id
-              )
-              .eq(
-                "user_id",
-                currentUser.id
-              );
-
-
-          if (error) {
-
-            showToast(
-              error.message
-            );
-
-            return;
-
-          }
-
-
-          showToast(
-            "Post deleted."
+        window.location.href =
+          "./listing.html?id=" +
+          encodeURIComponent(
+            post.id
           );
 
-
-          loadProfileStats(
-            viewedUserId
-          );
-
-          loadUserPosts(
-            viewedUserId
-          );
-
-        };
-
-    }
+      }
+    );
 
 
-    grid.appendChild(card);
+    grid.appendChild(
+      card
+    );
 
   });
 
 }
 
 
-/* =====================================================
+/* =========================================================
    REGIONS
-===================================================== */
+========================================================= */
 
 async function loadRegions() {
 
   const {
-    data
+    data,
+    error
   } =
     await supabase
       .from("mec_regions")
@@ -3474,6 +3153,19 @@ async function loadRegions() {
       .order(
         "name_en"
       );
+
+
+  if (error) {
+
+    console.warn(
+      "Regions:",
+      error.message
+    );
+
+    regionList = [];
+
+    return;
+  }
 
 
   regionList =
@@ -3484,12 +3176,13 @@ async function loadRegions() {
     $("regionInput");
 
 
+  if (!select) return;
+
+
   select.innerHTML =
-    `
-      <option value="">
-        Select Region / State
-      </option>
-    `;
+    `<option value="">
+      Select Region / State
+    </option>`;
 
 
   regionList.forEach(
@@ -3506,7 +3199,8 @@ async function loadRegions() {
 
 
       option.textContent =
-        `${region.name_mm || region.name_en} — ${region.code}`;
+        region.name_mm ||
+        region.name_en;
 
 
       select.appendChild(
@@ -3519,14 +3213,18 @@ async function loadRegions() {
 }
 
 
-/* =====================================================
-   FOLLOW
-===================================================== */
+/* =========================================================
+   FOLLOW STATE
+========================================================= */
 
 async function loadFollowState() {
 
+  if (!currentUser) return;
+
+
   const {
-    data
+    data,
+    error
   } =
     await supabase
       .from("profile_follows")
@@ -3542,8 +3240,22 @@ async function loadFollowState() {
       .maybeSingle();
 
 
+  if (error) {
+
+    console.warn(
+      "Follow state:",
+      error.message
+    );
+
+    return;
+  }
+
+
   const button =
     $("followButton");
+
+
+  if (!button) return;
 
 
   if (data) {
@@ -3569,13 +3281,18 @@ async function loadFollowState() {
 }
 
 
+/* =========================================================
+   TOGGLE FOLLOW
+========================================================= */
+
 async function toggleFollow() {
 
   if (!currentUser) return;
 
 
   const {
-    data
+    data,
+    error
   } =
     await supabase
       .from("profile_follows")
@@ -3591,34 +3308,69 @@ async function toggleFollow() {
       .maybeSingle();
 
 
+  if (error) {
+
+    showToast(
+      error.message
+    );
+
+    return;
+  }
+
+
   if (data) {
 
-    await supabase
-      .from("profile_follows")
-      .delete()
-      .eq(
-        "id",
-        data.id
+    const {
+      error: deleteError
+    } =
+      await supabase
+        .from("profile_follows")
+        .delete()
+        .eq(
+          "id",
+          data.id
+        );
+
+
+    if (deleteError) {
+
+      showToast(
+        deleteError.message
       );
+
+      return;
+    }
 
 
     showToast(
       "Unfollowed"
     );
 
+
   } else {
 
-    await supabase
-      .from("profile_follows")
-      .insert({
+    const {
+      error: insertError
+    } =
+      await supabase
+        .from("profile_follows")
+        .insert({
+          follower_id:
+            currentUser.id,
 
-        follower_id:
-          currentUser.id,
+          following_id:
+            viewedUserId
+        });
 
-        following_id:
-          viewedUserId
 
-      });
+    if (insertError) {
+
+      showToast(
+        insertError.message
+      );
+
+      return;
+    }
 
 
     showToast(
@@ -3637,11 +3389,14 @@ async function toggleFollow() {
 }
 
 
-/* =====================================================
-   EDIT PROFILE
-===================================================== */
+/* =========================================================
+   EDIT INFO
+========================================================= */
 
 function openEditProfile() {
+
+  if (!currentProfile) return;
+
 
   $("fullNameInput").value =
     currentProfile.full_name || "";
@@ -3655,10 +3410,6 @@ function openEditProfile() {
     currentProfile.bio || "";
 
 
-  $("cityInput").value =
-    currentProfile.city || "";
-
-
   $("regionInput").value =
     currentProfile.region_code || "";
 
@@ -3670,7 +3421,8 @@ function openEditProfile() {
   $("editAvatarPreview").src =
     currentProfile.avatar_url ||
     fallbackAvatar(
-      currentProfile.full_name
+      currentProfile.full_name ||
+      currentProfile.username
     );
 
 
@@ -3681,283 +3433,261 @@ function openEditProfile() {
 }
 
 
-/* =====================================================
-   AVATAR UPLOAD
-===================================================== */
+/* =========================================================
+   AVATAR PREVIEW
+========================================================= */
 
-let selectedAvatarFile =
-  null;
+$("avatarInput")
+  .addEventListener(
+    "change",
+    event => {
 
-
-$("avatarInput").addEventListener(
-  "change",
-  event => {
-
-    selectedAvatarFile =
-      event.target.files?.[0] ||
-      null;
+      const file =
+        event.target.files?.[0];
 
 
-    if (!selectedAvatarFile)
-      return;
+      if (!file) return;
 
 
-    const url =
-      URL.createObjectURL(
-        selectedAvatarFile
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        e => {
+
+          $("editAvatarPreview")
+            .src =
+            e.target.result;
+
+        };
+
+
+      reader.readAsDataURL(
+        file
       );
 
-
-    $("editAvatarPreview").src =
-      url;
-
-  }
-);
+    }
+  );
 
 
-/* =====================================================
+/* =========================================================
    SAVE PROFILE
-===================================================== */
+========================================================= */
 
-$("saveProfileButton").onclick =
-  async () => {
+async function saveProfile() {
 
-    if (!currentUser)
-      return;
+  if (!currentUser) return;
 
 
-    const fullName =
-      $("fullNameInput")
-        .value
-        .trim();
+  const fullName =
+    $("fullNameInput")
+      .value
+      .trim();
 
 
-    const username =
-      $("usernameInput")
-        .value
-        .trim()
-        .toLowerCase()
-        .replace(
-          /\s+/g,
-          "_"
-        );
-
-
-    const bio =
-      $("bioInput")
-        .value
-        .trim();
-
-
-    const city =
-      $("cityInput")
-        .value
-        .trim();
-
-
-    const region_code =
-      $("regionInput")
-        .value ||
-      null;
-
-
-    const field =
-      $("fieldInput")
-        .value ||
-      null;
-
-
-    const region_name =
-      regionList.find(
-        r =>
-          r.code ===
-          region_code
-      )?.name_en ||
-      null;
-
-
-    if (!username) {
-
-      showToast(
-        "Username is required."
+  const username =
+    $("usernameInput")
+      .value
+      .trim()
+      .toLowerCase()
+      .replace(
+        /[^a-z0-9_.]/g,
+        ""
       );
 
-      return;
 
-    }
-
-
-    const button =
-      $("saveProfileButton");
+  const bio =
+    $("bioInput")
+      .value
+      .trim();
 
 
-    button.disabled = true;
-
-    button.textContent =
-      "Saving...";
-
-
-    let avatar_url =
-      currentProfile.avatar_url ||
-      null;
+  const regionCode =
+    $("regionInput")
+      .value ||
+    null;
 
 
-    /*
-      Supabase Storage bucket:
-      avatars
-
-      Create this bucket in Supabase
-      if it does not already exist.
-    */
-
-    if (selectedAvatarFile) {
-
-      const extension =
-        selectedAvatarFile.name
-          .split(".")
-          .pop()
-          .toLowerCase();
+  const field =
+    $("fieldInput")
+      .value ||
+    null;
 
 
-      const filePath =
-        `${currentUser.id}/avatar-${Date.now()}.${extension}`;
-
-
-      const {
-        error:
-          uploadError
-      } =
-        await supabase
-          .storage
-          .from("avatars")
-          .upload(
-            filePath,
-            selectedAvatarFile,
-            {
-              upsert: true,
-              contentType:
-                selectedAvatarFile.type
-            }
-          );
-
-
-      if (uploadError) {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Save Changes";
-
-        showToast(
-          uploadError.message
-        );
-
-        return;
-
-      }
-
-
-      const {
-        data:
-          publicUrl
-      } =
-        supabase
-          .storage
-          .from("avatars")
-          .getPublicUrl(
-            filePath
-          );
-
-
-      avatar_url =
-        publicUrl.publicUrl;
-
-    }
-
-
-    const {
-      error
-    } =
-      await supabase
-        .from("profiles")
-        .update({
-
-          full_name:
-            fullName,
-
-          username:
-            username,
-
-          bio:
-            bio,
-
-          city:
-            city,
-
-          region_code:
-            region_code,
-
-          region_name:
-            region_name,
-
-          field:
-            field,
-
-          avatar_url:
-            avatar_url
-
-        })
-        .eq(
-          "id",
-          currentUser.id
-        );
-
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      "Save Changes";
-
-
-    if (error) {
-
-      showToast(
-        error.message
-      );
-
-      return;
-
-    }
-
-
-    showToast(
-      "Profile updated!"
+  const region =
+    regionList.find(
+      r =>
+        r.code ===
+        regionCode
     );
 
 
-    selectedAvatarFile =
-      null;
+  const regionName =
+    region
+      ? (
+          region.name_en ||
+          region.name_mm
+        )
+      : null;
 
 
-    closeModal(
-      "editModal"
-    );
+  const updateData = {
 
+    full_name:
+      fullName || null,
 
-    await loadProfile(
-      currentUser.id
-    );
+    username:
+      username || null,
+
+    bio:
+      bio || null,
+
+    region_code:
+      regionCode,
+
+    region_name:
+      regionName,
+
+    field:
+      field
 
   };
 
 
-/* =====================================================
-   PEOPLE
-===================================================== */
+  const {
+    error
+  } =
+    await supabase
+      .from("profiles")
+      .update(updateData)
+      .eq(
+        "id",
+        currentUser.id
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Profile update:",
+      error
+    );
+
+    showToast(
+      error.message
+    );
+
+    return;
+  }
+
+
+  showToast(
+    "Profile updated successfully."
+  );
+
+
+  closeModal(
+    "editModal"
+  );
+
+
+  await loadProfile(
+    currentUser.id
+  );
+
+}
+
+
+/* =========================================================
+   KYC STATUS
+========================================================= */
+
+async function loadKycStatus(userId) {
+
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .from("kyc_verifications")
+      .select("status")
+      .eq(
+        "user_id",
+        userId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(1)
+      .maybeSingle();
+
+
+  if (error) {
+
+    console.warn(
+      "KYC status:",
+      error.message
+    );
+
+    return;
+  }
+
+
+  if (!data) {
+
+    $("kycDescription")
+      .textContent =
+      "Verify your identity";
+
+    return;
+  }
+
+
+  const status =
+    String(
+      data.status || ""
+    ).toLowerCase();
+
+
+  if (status === "approved") {
+
+    $("kycDescription")
+      .textContent =
+      "✓ KYC Verified";
+
+  } else if (
+    status === "pending"
+  ) {
+
+    $("kycDescription")
+      .textContent =
+      "KYC application pending";
+
+  } else if (
+    status === "rejected"
+  ) {
+
+    $("kycDescription")
+      .textContent =
+      "KYC rejected — submit again";
+
+  }
+
+}
+
+
+/* =========================================================
+   PEOPLE LIST
+========================================================= */
 
 async function showPeople(type) {
+
+  if (!currentUser) return;
+
 
   const isFollowers =
     type === "followers";
@@ -3993,29 +3723,40 @@ async function showPeople(type) {
   } =
     await supabase
       .from("profile_follows")
-      .select(
-        "follower_id, following_id"
-      )
+      .select("*")
       .eq(
         column,
         viewedUserId
-      );
+      )
+      .limit(100);
 
 
   if (error) {
 
     $("peopleList").innerHTML =
       `<div class="empty">
-        Unable to load list.
+        ${escapeHtml(
+          error.message
+        )}
       </div>`;
 
     return;
+  }
 
+
+  if (!data?.length) {
+
+    $("peopleList").innerHTML =
+      `<div class="empty">
+        No people found.
+      </div>`;
+
+    return;
   }
 
 
   const ids =
-    (data || []).map(
+    data.map(
       row =>
         isFollowers
           ? row.follower_id
@@ -4023,26 +3764,13 @@ async function showPeople(type) {
     );
 
 
-  if (!ids.length) {
-
-    $("peopleList").innerHTML =
-      `<div class="empty">
-        No users found.
-      </div>`;
-
-    return;
-
-  }
-
-
   const {
-    data:
-      people
+    data: profiles
   } =
     await supabase
       .from("profiles")
       .select(
-        "id, full_name, username, avatar_url"
+        "id,full_name,username,avatar_url"
       )
       .in(
         "id",
@@ -4050,34 +3778,32 @@ async function showPeople(type) {
       );
 
 
-  $("peopleList").innerHTML = "";
+  $("peopleList").innerHTML =
+    "";
 
 
-  (people || []).forEach(
-    person => {
+  (profiles || []).forEach(
+    profile => {
 
-      const row =
+      const person =
         document.createElement(
-          "button"
+          "div"
         );
 
 
-      row.type =
-        "button";
-
-
-      row.className =
+      person.className =
         "person";
 
 
-      row.innerHTML = `
+      person.innerHTML = `
 
         <img
           class="person-avatar"
           src="${escapeHtml(
-            person.avatar_url ||
+            profile.avatar_url ||
             fallbackAvatar(
-              person.full_name
+              profile.full_name ||
+              profile.username
             )
           )}"
           alt="">
@@ -4086,477 +3812,59 @@ async function showPeople(type) {
 
           <div class="person-name">
             ${escapeHtml(
-              person.full_name ||
-              person.username ||
+              profile.full_name ||
+              profile.username ||
               "MEC User"
             )}
           </div>
 
           <div class="person-username">
             ${
-              person.username
+              profile.username
                 ? "@" +
                   escapeHtml(
-                    person.username
+                    profile.username
                   )
                 : ""
             }
           </div>
 
         </div>
+
       `;
 
 
-      row.onclick = () => {
+      person.addEventListener(
+        "click",
+        () => {
 
-        window.location.href =
-          `./Profile.html?id=${
+          window.location.href =
+            "./Profile.html?id=" +
             encodeURIComponent(
-              person.id
-            )
-          }`;
+              profile.id
+            );
 
-      };
+        }
+      );
 
 
       $("peopleList")
-        .appendChild(row);
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   BADGE LIST
-===================================================== */
-
-async function openBadgeManager() {
-
-  $("badgeList").innerHTML =
-    `<div class="empty">
-      Loading badges...
-    </div>`;
-
-
-  openModal(
-    "badgeModal"
-  );
-
-
-  const {
-    data
-  } =
-    await supabase
-      .from("mec_badges")
-      .select("*")
-      .eq(
-        "active",
-        true
-      )
-      .order(
-        "name"
-      );
-
-
-  $("badgeList").innerHTML = "";
-
-
-  if (!data?.length) {
-
-    $("badgeList").innerHTML =
-      `<div class="empty">
-        No badges are available yet.
-      </div>`;
-
-    return;
-
-  }
-
-
-  data.forEach(
-    badge => {
-
-      const row =
-        document.createElement(
-          "button"
+        .appendChild(
+          person
         );
 
-
-      row.type =
-        "button";
-
-
-      row.className =
-        "person";
-
-
-      row.innerHTML = `
-
-        <div
-          style="
-            width:40px;
-            height:40px;
-            display:grid;
-            place-items:center;
-            border-radius:50%;
-            background:var(--gold-soft);
-            font-size:18px;
-          ">
-          ${escapeHtml(
-            badge.icon ||
-            "🏅"
-          )}
-        </div>
-
-        <div class="person-info">
-
-          <div class="person-name">
-            ${escapeHtml(
-              badge.label_en ||
-              badge.name ||
-              "Badge"
-            )}
-          </div>
-
-          <div class="person-username">
-            ${escapeHtml(
-              badge.description_en ||
-              "Profile badge"
-            )}
-          </div>
-
-        </div>
-      `;
-
-
-      $("badgeList")
-        .appendChild(row);
-
     }
   );
 
 }
 
 
-/* =====================================================
-   KYC STATUS
-===================================================== */
-
-async function loadKycStatus(userId) {
-
-  if (
-    !currentUser ||
-    currentUser.id !== userId
-  ) return;
-
-
-  /*
-    If your project already has a
-    KYC table, this section can be
-    connected directly to it.
-
-    The UI remains safe if the table
-    is not yet created.
-  */
-
-  try {
-
-    const {
-      data
-    } =
-      await supabase
-        .from("kyc_verifications")
-        .select(
-          "status"
-        )
-        .eq(
-          "user_id",
-          userId
-        )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        )
-        .limit(1)
-        .maybeSingle();
-
-
-    if (!data) {
-
-      $("kycDescription")
-        .textContent =
-        "Verify your identity";
-
-      return;
-
-    }
-
-
-    $("kycDescription")
-      .textContent =
-      `Status: ${
-        data.status || "Pending"
-      }`;
-
-  } catch {
-
-    $("kycDescription")
-      .textContent =
-      "Verify your identity";
-
-  }
-
-}
-
-
-async function openKyc() {
-
-  $("kycStatusBox")
-    .className =
-    "status-box";
-
-
-  $("kycStatusBox")
-    .textContent =
-    "Your identity verification is handled securely.";
-
-
-  openModal(
-    "kycModal"
-  );
-
-}
-
-
-$("submitKycButton").onclick =
-  async () => {
-
-    if (!currentUser)
-      return;
-
-
-    const name =
-      $("kycName")
-        .value
-        .trim();
-
-
-    const documentType =
-      $("kycDocumentType")
-        .value;
-
-
-    if (
-      !name ||
-      !documentType
-    ) {
-
-      showToast(
-        "Please complete the required information."
-      );
-
-      return;
-
-    }
-
-
-    const button =
-      $("submitKycButton");
-
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Submitting...";
-
-
-    try {
-
-      const {
-        error
-      } =
-        await supabase
-          .from("kyc_verifications")
-          .insert({
-
-            user_id:
-              currentUser.id,
-
-            full_name:
-              name,
-
-            document_type:
-              documentType,
-
-            status:
-              "pending"
-
-          });
-
-
-      if (error)
-        throw error;
-
-
-      showToast(
-        "KYC submitted successfully."
-      );
-
-
-      closeModal(
-        "kycModal"
-      );
-
-
-      await loadKycStatus(
-        currentUser.id
-      );
-
-    } catch (error) {
-
-      showToast(
-        error.message ||
-        "KYC submission failed."
-      );
-
-    }
-
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      "Submit KYC";
-
-  };
-
-
-/* =====================================================
-   MCP
-===================================================== */
-
-$("mcpButton").onclick =
-  () => {
-
-    openModal(
-      "mcpModal"
-    );
-
-  };
-
-
-$("submitMcpButton").onclick =
-  async () => {
-
-    if (!currentUser)
-      return;
-
-
-    const reason =
-      $("mcpReason")
-        .value
-        .trim();
-
-
-    const field =
-      $("mcpField")
-        .value;
-
-
-    if (!reason || !field) {
-
-      showToast(
-        "Please complete the application."
-      );
-
-      return;
-
-    }
-
-
-    const button =
-      $("submitMcpButton");
-
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Submitting...";
-
-
-    try {
-
-      const {
-        error
-      } =
-        await supabase
-          .from("mcp_applications")
-          .insert({
-
-            user_id:
-              currentUser.id,
-
-            reason:
-              reason,
-
-            field:
-              field,
-
-            status:
-              "pending"
-
-          });
-
-
-      if (error)
-        throw error;
-
-
-      showToast(
-        "MCP application submitted."
-      );
-
-
-      closeModal(
-        "mcpModal"
-      );
-
-    } catch (error) {
-
-      showToast(
-        error.message ||
-        "Unable to submit MCP application."
-      );
-
-    }
-
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      "Submit Application";
-
-  };
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-function setupSearch() {
-
-  const input =
-    $("usernameSearch");
-
-
-  input.addEventListener(
+/* =========================================================
+   USERNAME SEARCH
+========================================================= */
+
+$("usernameSearch")
+  .addEventListener(
     "input",
     () => {
 
@@ -4566,7 +3874,8 @@ function setupSearch() {
 
 
       const query =
-        input.value
+        $("usernameSearch")
+          .value
           .trim()
           .replace(
             /^@/,
@@ -4574,54 +3883,29 @@ function setupSearch() {
           );
 
 
-      if (
-        query.length < 2
-      ) {
+      if (query.length < 2) {
 
         $("searchResults")
           .classList
           .add("hidden");
 
         return;
-
       }
 
 
       searchTimer =
         setTimeout(
           () => searchUsers(query),
-          300
+          350
         );
 
     }
   );
 
 
-  document.addEventListener(
-    "click",
-    event => {
-
-      if (
-        !event.target.closest(
-          ".search-box"
-        )
-      ) {
-
-        $("searchResults")
-          .classList
-          .add("hidden");
-
-      }
-
-    }
-  );
-
-}
-
-
 async function searchUsers(query) {
 
-  const results =
+  const container =
     $("searchResults");
 
 
@@ -4632,75 +3916,75 @@ async function searchUsers(query) {
     await supabase
       .from("profiles")
       .select(
-        "id, full_name, username, avatar_url"
+        "id,full_name,username,avatar_url"
       )
       .ilike(
         "username",
-        `%${query}%`
+        "%" + query + "%"
       )
       .limit(8);
 
 
   if (error) {
 
-    results.innerHTML =
-      `<div class="empty">
-        Search unavailable.
-      </div>`;
+    console.warn(
+      "Search:",
+      error.message
+    );
 
-    results.classList.remove(
+    container.classList.add(
       "hidden"
     );
 
     return;
-
   }
 
 
   if (!data?.length) {
 
-    results.innerHTML =
+    container.innerHTML =
       `<div class="empty">
         No users found.
       </div>`;
 
-    results.classList.remove(
+    container.classList.remove(
       "hidden"
     );
 
     return;
-
   }
 
 
-  results.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   data.forEach(
     profile => {
 
-      const row =
+      const button =
         document.createElement(
           "button"
         );
 
 
-      row.type =
+      button.type =
         "button";
 
 
-      row.className =
+      button.className =
         "search-result";
 
 
-      row.innerHTML = `
+      button.innerHTML = `
 
         <img
           class="result-avatar"
           src="${escapeHtml(
             profile.avatar_url ||
             fallbackAvatar(
-              profile.full_name
+              profile.full_name ||
+              profile.username
             )
           )}"
           alt="">
@@ -4727,212 +4011,434 @@ async function searchUsers(query) {
           </div>
 
         </div>
+
       `;
 
 
-      row.onclick = () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        window.location.href =
-          `./Profile.html?id=${
+          window.location.href =
+            "./Profile.html?id=" +
             encodeURIComponent(
               profile.id
-            )
-          }`;
+            );
 
-      };
+        }
+      );
 
 
-      results.appendChild(
-        row
+      container.appendChild(
+        button
       );
 
     }
   );
 
 
-  results.classList.remove(
+  container.classList.remove(
     "hidden"
   );
 
 }
 
 
-/* =====================================================
-   EVENT LISTENERS
-===================================================== */
-
-$("themeButton").onclick =
-  () => {
-
-    applyTheme(
-      document.body
-        .classList
-        .contains("dark")
-        ? "light"
-        : "dark"
-    );
-
-  };
-
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 async function logout() {
 
-  await supabase.auth.signOut();
+  try {
 
-  window.location.href =
-    "./auth.html?mode=login";
+    const {
+      error
+    } =
+      await supabase.auth.signOut();
+
+
+    if (error) {
+
+      showToast(
+        error.message
+      );
+
+      return;
+    }
+
+
+    window.location.href =
+      "./auth.html?mode=login";
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "Unable to log out."
+    );
+
+  }
 
 }
 
 
-$("logoutButton").onclick =
-  logout;
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+$("themeButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      const isDark =
+        document.body
+          .classList
+          .contains("dark");
 
 
-$("logoutRow").onclick =
-  logout;
+      applyTheme(
+        isDark
+          ? "light"
+          : "dark"
+      );
+
+    }
+  );
 
 
-$("followButton").onclick =
-  toggleFollow;
+$("logoutTopButton")
+  .addEventListener(
+    "click",
+    logout
+  );
 
 
-$("chatButton").onclick =
-  () => {
+$("logoutButton")
+  .addEventListener(
+    "click",
+    logout
+  );
 
-    window.location.href =
-      `./chat.html?user=${
+
+$("followButton")
+  .addEventListener(
+    "click",
+    toggleFollow
+  );
+
+
+$("chatButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "./chat.html?user=" +
         encodeURIComponent(
           viewedUserId
-        )
-      }`;
+        );
 
-  };
-
-
-$("editProfileButton").onclick =
-  openEditProfile;
+    }
+  );
 
 
-$("editInfoButton").onclick =
-  openEditProfile;
+$("editProfileButton")
+  .addEventListener(
+    "click",
+    openEditProfile
+  );
 
 
-$("kycButton").onclick =
-  openKyc;
+$("editInfoButton")
+  .addEventListener(
+    "click",
+    openEditProfile
+  );
 
 
-$("badgeButton").onclick =
-  openBadgeManager;
+$("cancelEditButton")
+  .addEventListener(
+    "click",
+    () => closeModal(
+      "editModal"
+    )
+  );
 
 
-$("myFollowersButton").onclick =
-  () =>
-    showPeople(
-      "followers"
-    );
+$("saveProfileButton")
+  .addEventListener(
+    "click",
+    saveProfile
+  );
 
 
-$("myFollowingButton").onclick =
-  () =>
-    showPeople(
-      "following"
-    );
-
-
-$("followersStat").onclick =
-  () =>
-    showPeople(
-      "followers"
-    );
-
-
-$("followingStat").onclick =
-  () =>
-    showPeople(
-      "following"
-    );
-
-
-$("myPostsButton").onclick =
-  () => {
-
-    document
-      .getElementById(
-        "postsGrid"
+$("myFollowersButton")
+  .addEventListener(
+    "click",
+    () =>
+      showPeople(
+        "followers"
       )
-      ?.scrollIntoView({
+  );
+
+
+$("myFollowingButton")
+  .addEventListener(
+    "click",
+    () =>
+      showPeople(
+        "following"
+      )
+  );
+
+
+$("followersStat")
+  .addEventListener(
+    "click",
+    () =>
+      showPeople(
+        "followers"
+      )
+  );
+
+
+$("followingStat")
+  .addEventListener(
+    "click",
+    () =>
+      showPeople(
+        "following"
+      )
+  );
+
+
+$("myPostsButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      $("postsSection")?.scrollIntoView({
         behavior: "smooth"
       });
 
-  };
-
-
-$("postsStat").onclick =
-  () => {
-
-    document
-      .getElementById(
-        "postsGrid"
-      )
-      ?.scrollIntoView({
+      $("postsGrid").scrollIntoView({
         behavior: "smooth"
       });
 
-  };
+    }
+  );
 
 
-$("settingsButton").onclick =
-  () => {
+$("badgesButton")
+  .addEventListener(
+    "click",
+    () => {
 
-    showToast(
-      "Account Settings will be available here."
-    );
+      showToast(
+        "Badge management is ready."
+      );
 
-  };
-
-
-$("likesStat").onclick =
-  () => {
-
-    showToast(
-      `${$("likesCount").textContent} likes`
-    );
-
-  };
+    }
+  );
 
 
-/* =====================================================
-   CLOSE MODAL ON BACKDROP
-===================================================== */
+$("kycButton")
+  .addEventListener(
+    "click",
+    () =>
+      openModal(
+        "kycModal"
+      )
+  );
+
+
+$("mcpButton")
+  .addEventListener(
+    "click",
+    () =>
+      openModal(
+        "mcpModal"
+      )
+  );
+
+
+$("settingsButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "Account settings coming next."
+      );
+
+    }
+  );
+
+
+$("submitKycButton")
+  .addEventListener(
+    "click",
+    async () => {
+
+      const name =
+        $("kycName")
+          .value
+          .trim();
+
+      const type =
+        $("kycDocumentType")
+          .value;
+
+
+      if (!name || !type) {
+
+        showToast(
+          "Please complete the required fields."
+        );
+
+        return;
+      }
+
+
+      showToast(
+        "KYC submission requires storage configuration."
+      );
+
+    }
+  );
+
+
+$("submitMcpButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      const business =
+        $("mcpBusinessName")
+          .value
+          .trim();
+
+      const reason =
+        $("mcpReason")
+          .value
+          .trim();
+
+
+      if (!business || !reason) {
+
+        showToast(
+          "Please complete the application."
+        );
+
+        return;
+      }
+
+
+      showToast(
+        "MCP application prepared."
+      );
+
+      closeModal(
+        "mcpModal"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   CLOSE MODALS
+========================================================= */
 
 document
-  .querySelectorAll(".modal")
-  .forEach(modal => {
+  .querySelectorAll(
+    "[data-close]"
+  )
+  .forEach(
+    button => {
 
-    modal.addEventListener(
-      "click",
-      event => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        if (
-          event.target === modal
-        ) {
-
-          modal.classList.remove(
-            "open"
+          closeModal(
+            button.dataset.close
           );
 
         }
+      );
 
-      }
-    );
-
-  });
+    }
+  );
 
 
-/* =====================================================
+document
+  .querySelectorAll(
+    ".modal"
+  )
+  .forEach(
+    modal => {
+
+      modal.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target ===
+            modal
+          ) {
+
+            modal.classList.remove(
+              "open"
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   CLOSE SEARCH
+========================================================= */
+
+document.addEventListener(
+  "click",
+  event => {
+
+    const box =
+      document.querySelector(
+        ".search-box"
+      );
+
+
+    if (
+      box &&
+      !box.contains(
+        event.target
+      )
+    ) {
+
+      $("searchResults")
+        .classList
+        .add("hidden");
+
+    }
+
+  }
+);
+
+
+/* =========================================================
    START
-===================================================== */
+========================================================= */
 
 init();
 
