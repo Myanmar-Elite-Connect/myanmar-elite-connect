@@ -9,3 +9,13 @@ window.supabaseClient =
     SUPABASE_URL,
     SUPABASE_KEY
   );
+
+/* Shared app navigation: every page that loads supabase.js gets the same
+   Home / Listing / Chat / Profile navigation without duplicating markup. */
+(function(){
+  if(document.querySelector('script[data-mec-nav]')) return;
+  const s=document.createElement('script');
+  s.src='./site-nav.js';
+  s.dataset.mecNav='1';
+  document.head.appendChild(s);
+})();
