@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
@@ -104,6 +105,13 @@
       --green:#2d8a61;
       --red:#c94b4b;
 
+      --badge-region:#3867a6;
+      --badge-category:#d8b45c;
+      --badge-verified:#2d8a61;
+      --badge-mcp:#8c6b20;
+      --badge-shop:#7a55a8;
+      --badge-feedback:#536b83;
+
       --shadow:
         0 16px 45px rgba(13,35,64,.07);
 
@@ -123,6 +131,13 @@
 
       --navy:#f3f6fa;
 
+      --badge-region:#6f9edb;
+      --badge-category:#f0ce72;
+      --badge-verified:#58c892;
+      --badge-mcp:#e2c36b;
+      --badge-shop:#b08ad9;
+      --badge-feedback:#8ea5bb;
+
       --shadow:
         0 18px 50px rgba(0,0,0,.28);
 
@@ -137,9 +152,7 @@
 
     .topbar{
       position:sticky;
-
       top:0;
-
       z-index:1000;
 
       height:70px;
@@ -291,7 +304,7 @@
 
 
     /* =====================================================
-       LANGUAGE BUTTON
+       LANGUAGE
     ====================================================== */
 
     .language-button{
@@ -345,7 +358,6 @@
       justify-content:center;
 
       line-height:1;
-
       white-space:nowrap;
     }
 
@@ -459,7 +471,6 @@
 
     .hero-content{
       position:relative;
-
       z-index:2;
 
       max-width:720px;
@@ -625,9 +636,7 @@
 
     .section-title{
       font-size:18px;
-
       font-weight:950;
-
       letter-spacing:-.3px;
     }
 
@@ -728,7 +737,7 @@
 
 
     /* =====================================================
-       COMPACT FILTER
+       FILTER
     ====================================================== */
 
     .filter-head{
@@ -853,7 +862,6 @@
       background:var(--surface);
 
       font-size:9px;
-
       font-weight:850;
 
       white-space:nowrap;
@@ -940,6 +948,11 @@
       transform:scale(1.035);
     }
 
+
+    /* =====================================================
+       CATEGORY LABEL
+    ====================================================== */
+
     .listing-category{
       position:absolute;
 
@@ -960,6 +973,102 @@
 
       text-transform:uppercase;
     }
+
+
+    /* =====================================================
+       BADGES
+    ====================================================== */
+
+    .listing-badges{
+      position:absolute;
+
+      top:10px;
+      right:10px;
+
+      max-width:72%;
+
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-end;
+
+      flex-wrap:wrap;
+
+      gap:4px;
+    }
+
+    .mec-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      min-height:20px;
+
+      padding:
+        3px 6px;
+
+      border:
+        1px solid transparent;
+
+      border-radius:6px;
+
+      font-size:7px;
+
+      line-height:1;
+
+      font-weight:950;
+
+      letter-spacing:.25px;
+
+      white-space:nowrap;
+
+      box-shadow:
+        0 3px 9px rgba(0,0,0,.08);
+    }
+
+    .mec-badge.region{
+      color:#fff;
+
+      background:var(--badge-region);
+    }
+
+    .mec-badge.category{
+      color:#071a34;
+
+      background:var(--badge-category);
+    }
+
+    .mec-badge.verified{
+      color:#fff;
+
+      background:var(--badge-verified);
+    }
+
+    .mec-badge.mcp{
+      color:#071a34;
+
+      background:var(--badge-mcp);
+    }
+
+    .mec-badge.shop{
+      color:#fff;
+
+      background:var(--badge-shop);
+    }
+
+    .mec-badge.feedback{
+      color:#fff;
+
+      background:var(--badge-feedback);
+    }
+
+    .mec-badge-icon{
+      margin-right:3px;
+    }
+
+
+    /* =====================================================
+       LISTING BODY
+    ====================================================== */
 
     .listing-body{
       padding:12px;
@@ -1016,6 +1125,28 @@
 
 
     /* =====================================================
+       OWNER BADGES
+    ====================================================== */
+
+    .owner-badges{
+      display:flex;
+      align-items:center;
+
+      flex-wrap:wrap;
+
+      gap:4px;
+
+      margin-top:8px;
+    }
+
+    .owner-badges .mec-badge{
+      min-height:18px;
+
+      font-size:6.5px;
+    }
+
+
+    /* =====================================================
        STATES
     ====================================================== */
 
@@ -1062,7 +1193,6 @@
       color:var(--text);
 
       font-size:13px;
-
       font-weight:900;
     }
 
@@ -1159,8 +1289,7 @@
       animation:
         floatBubble 4.3s ease-in-out infinite;
 
-      animation-delay:
-        -.9s;
+      animation-delay:-.9s;
     }
 
     .floating-label{
@@ -1224,7 +1353,7 @@
 
 
     /* =====================================================
-       MOBILE BOTTOM NAV
+       MOBILE NAV
     ====================================================== */
 
     .mobile-nav{
@@ -1290,7 +1419,6 @@
 
     .mobile-icon{
       font-size:17px;
-
       line-height:1;
     }
 
@@ -1350,12 +1478,8 @@
 
       .language-button{
         min-width:70px;
-
         height:37px;
-
-        padding:
-          0 7px;
-
+        padding:0 7px;
         font-size:11px;
       }
 
@@ -1454,7 +1578,6 @@
 
       .listing-title{
         font-size:10px;
-
         min-height:27px;
       }
 
@@ -1466,11 +1589,27 @@
         font-size:7px;
       }
 
+      .listing-badges{
+        top:8px;
+        right:8px;
+
+        max-width:75%;
+
+        gap:3px;
+      }
+
+      .mec-badge{
+        min-height:18px;
+
+        padding:
+          3px 5px;
+
+        font-size:6px;
+      }
+
       .floating-actions{
         left:12px;
-
         bottom:82px;
-
         gap:9px;
       }
 
@@ -1498,7 +1637,6 @@
 
       .language-button{
         min-width:68px;
-
         font-size:10px;
       }
 
@@ -1520,6 +1658,10 @@
 
       .listing-grid{
         gap:8px;
+      }
+
+      .listing-badges{
+        max-width:70%;
       }
 
       .floating-actions{
@@ -1545,8 +1687,6 @@
     <div class="topbar-inner">
 
 
-      <!-- BRAND -->
-
       <a
         href="./general.html"
         class="brand"
@@ -1565,8 +1705,6 @@
 
       </a>
 
-
-      <!-- DESKTOP NAV -->
 
       <nav
         class="desktop-nav"
@@ -1593,12 +1731,8 @@
       </nav>
 
 
-      <!-- HEADER ACTIONS -->
-
       <div class="header-actions">
 
-
-        <!-- LANGUAGE -->
 
         <button
           class="language-button"
@@ -1612,19 +1746,14 @@
             🇺🇸
           </span>
 
-          <span>
-            /
-          </span>
+          <span>/</span>
 
-          <span
-            id="langMM">
+          <span id="langMM">
             🇲🇲
           </span>
 
         </button>
 
-
-        <!-- THEME -->
 
         <button
           class="icon-button"
@@ -1637,8 +1766,6 @@
 
         </button>
 
-
-        <!-- PROFILE -->
 
         <a
           href="./profile.html"
@@ -1668,9 +1795,6 @@
     class="floating-actions"
     aria-label="Quick actions">
 
-
-    <!-- FEEDBACK -->
-
     <a
       href="./feedback.html"
       class="floating-bubble feedback"
@@ -1684,8 +1808,6 @@
 
     </a>
 
-
-    <!-- ALL MARKET -->
 
     <a
       href="./allmarket.html"
@@ -1710,14 +1832,11 @@
   <main class="page">
 
 
-    <!-- ===================================================
-         HERO
-    ==================================================== -->
+    <!-- HERO -->
 
     <section class="hero">
 
       <div class="hero-content">
-
 
         <div class="eyebrow">
 
@@ -1745,8 +1864,6 @@
 
         </p>
 
-
-        <!-- SEARCH -->
 
         <div class="search-wrap">
 
@@ -1779,12 +1896,9 @@
     </section>
 
 
-    <!-- ===================================================
-         EXPLORE
-    ==================================================== -->
+    <!-- EXPLORE -->
 
     <section class="section">
-
 
       <div class="section-head">
 
@@ -1793,17 +1907,13 @@
           <div
             class="section-title"
             id="exploreTitle">
-
             Explore
-
           </div>
 
           <div
             class="section-subtitle"
             id="exploreSubtitle">
-
             Choose what you are looking for.
-
           </div>
 
         </div>
@@ -1813,8 +1923,6 @@
 
       <div class="category-grid">
 
-
-        <!-- CAR -->
 
         <a
           href="./car.html"
@@ -1835,8 +1943,6 @@
         </a>
 
 
-        <!-- PROPERTY -->
-
         <a
           href="./property.html"
           class="category-card">
@@ -1855,8 +1961,6 @@
 
         </a>
 
-
-        <!-- GEMS -->
 
         <a
           href="./gem.html"
@@ -1881,12 +1985,9 @@
     </section>
 
 
-    <!-- ===================================================
-         FILTER
-    ==================================================== -->
+    <!-- FILTER -->
 
     <section class="section">
-
 
       <div class="filter-head">
 
@@ -1906,9 +2007,7 @@
         <div
           class="listing-meta"
           id="resultCount">
-
           —
-
         </div>
 
       </div>
@@ -1918,8 +2017,6 @@
 
         <div class="filter-row">
 
-
-          <!-- CATEGORY -->
 
           <div class="field">
 
@@ -1956,8 +2053,6 @@
           </div>
 
 
-          <!-- REGION -->
-
           <div class="field">
 
             <select
@@ -1975,8 +2070,6 @@
           </div>
 
 
-          <!-- MIN PRICE -->
-
           <div class="field">
 
             <input
@@ -1989,8 +2082,6 @@
 
           </div>
 
-
-          <!-- MAX PRICE -->
 
           <div class="field">
 
@@ -2005,12 +2096,9 @@
           </div>
 
 
-          <!-- CLEAR -->
-
           <button
             class="clear-button"
             type="button"
-            onclick="clearFilters"
             id="clearButton">
 
             Clear
@@ -2024,12 +2112,9 @@
     </section>
 
 
-    <!-- ===================================================
-         LATEST LISTINGS
-    ==================================================== -->
+    <!-- LISTINGS -->
 
     <section class="section">
-
 
       <div class="section-head">
 
@@ -2038,17 +2123,13 @@
           <div
             class="section-title"
             id="latestTitle">
-
             Latest Listings
-
           </div>
 
           <div
             class="section-subtitle"
             id="latestSubtitle">
-
             Recently added on Myanmar Elite Connect.
-
           </div>
 
         </div>
@@ -2086,9 +2167,7 @@
 
 
   <!-- =====================================================
-       MOBILE BOTTOM NAV
-       ONLY:
-       HOME / ADD LISTING / CHAT / PROFILE
+       MOBILE NAV
   ====================================================== -->
 
   <nav
@@ -2097,8 +2176,6 @@
 
     <div class="mobile-nav-inner">
 
-
-      <!-- HOME -->
 
       <a
         href="./general.html"
@@ -2115,8 +2192,6 @@
       </a>
 
 
-      <!-- ADD LISTING -->
-
       <a
         href="./add-listing.html">
 
@@ -2131,8 +2206,6 @@
       </a>
 
 
-      <!-- CHAT -->
-
       <a
         href="./chat.html">
 
@@ -2146,8 +2219,6 @@
 
       </a>
 
-
-      <!-- PROFILE -->
 
       <a
         href="./profile.html">
@@ -2172,7 +2243,6 @@
   ====================================================== -->
 
   <script>
-
 
     /* =====================================================
        LANGUAGE
@@ -2379,9 +2449,7 @@
 
 
     let currentLanguage =
-      localStorage.getItem(
-        "mec_language"
-      ) || "en";
+      localStorage.getItem("mec_language") || "en";
 
 
     function updateLanguage(){
@@ -2396,173 +2464,91 @@
           : "en";
 
 
-      document.getElementById(
-        "heroTitle"
-      ).innerHTML =
+      document.getElementById("heroTitle").innerHTML =
         t.heroTitle;
 
-
-      document.getElementById(
-        "heroDescription"
-      ).textContent =
+      document.getElementById("heroDescription").textContent =
         t.heroDescription;
 
-
-      document.getElementById(
-        "exploreTitle"
-      ).textContent =
+      document.getElementById("exploreTitle").textContent =
         t.exploreTitle;
 
-
-      document.getElementById(
-        "exploreSubtitle"
-      ).textContent =
+      document.getElementById("exploreSubtitle").textContent =
         t.exploreSubtitle;
 
-
-      document.getElementById(
-        "carTitle"
-      ).textContent =
+      document.getElementById("carTitle").textContent =
         t.cars;
 
-
-      document.getElementById(
-        "carDescription"
-      ).textContent =
+      document.getElementById("carDescription").textContent =
         t.carDescription;
 
-
-      document.getElementById(
-        "propertyTitle"
-      ).textContent =
+      document.getElementById("propertyTitle").textContent =
         t.property;
 
-
-      document.getElementById(
-        "propertyDescription"
-      ).textContent =
+      document.getElementById("propertyDescription").textContent =
         t.propertyDescription;
 
-
-      document.getElementById(
-        "gemTitle"
-      ).textContent =
+      document.getElementById("gemTitle").textContent =
         t.gems;
 
-
-      document.getElementById(
-        "gemDescription"
-      ).textContent =
+      document.getElementById("gemDescription").textContent =
         t.gemDescription;
 
-
-      document.getElementById(
-        "filterTitle"
-      ).textContent =
+      document.getElementById("filterTitle").textContent =
         t.filter;
 
-
-      document.getElementById(
-        "allCategoriesOption"
-      ).textContent =
+      document.getElementById("allCategoriesOption").textContent =
         t.allCategories;
 
-
-      document.getElementById(
-        "carOption"
-      ).textContent =
+      document.getElementById("carOption").textContent =
         t.car;
 
-
-      document.getElementById(
-        "propertyOption"
-      ).textContent =
+      document.getElementById("propertyOption").textContent =
         t.propertyOption;
 
-
-      document.getElementById(
-        "gemOption"
-      ).textContent =
+      document.getElementById("gemOption").textContent =
         t.gem;
 
-
-      document.getElementById(
-        "allLocationsOption"
-      ).textContent =
+      document.getElementById("allLocationsOption").textContent =
         t.allLocations;
 
-
-      document.getElementById(
-        "minPrice"
-      ).placeholder =
+      document.getElementById("minPrice").placeholder =
         t.minPrice;
 
-
-      document.getElementById(
-        "maxPrice"
-      ).placeholder =
+      document.getElementById("maxPrice").placeholder =
         t.maxPrice;
 
-
-      document.getElementById(
-        "clearButton"
-      ).textContent =
+      document.getElementById("clearButton").textContent =
         t.clear;
 
-
-      document.getElementById(
-        "latestTitle"
-      ).textContent =
+      document.getElementById("latestTitle").textContent =
         t.latest;
 
-
-      document.getElementById(
-        "latestSubtitle"
-      ).textContent =
+      document.getElementById("latestSubtitle").textContent =
         t.latestSubtitle;
 
-
-      document.getElementById(
-        "searchInput"
-      ).placeholder =
+      document.getElementById("searchInput").placeholder =
         t.searchPlaceholder;
 
-
-      document.querySelector(
-        ".search-button"
-      ).textContent =
+      document.querySelector(".search-button").textContent =
         t.search;
 
-
-      document.getElementById(
-        "navHome"
-      ).textContent =
+      document.getElementById("navHome").textContent =
         t.home;
 
-
-      document.getElementById(
-        "navAddListing"
-      ).textContent =
+      document.getElementById("navAddListing").textContent =
         t.addListing;
 
-
-      document.getElementById(
-        "navChat"
-      ).textContent =
+      document.getElementById("navChat").textContent =
         t.chat;
 
-
-      document.getElementById(
-        "navProfile"
-      ).textContent =
+      document.getElementById("navProfile").textContent =
         t.profile;
-
 
       document.querySelector(
         ".floating-bubble.feedback .floating-label"
       ).textContent =
         t.feedback;
-
 
       document.querySelector(
         ".floating-bubble.market .floating-label"
@@ -2570,20 +2556,25 @@
         t.allMarket;
 
 
-      document.getElementById(
-        "langEN"
-      ).classList.toggle(
+      document.getElementById("langEN").classList.toggle(
         "active",
         currentLanguage === "en"
       );
 
-
-      document.getElementById(
-        "langMM"
-      ).classList.toggle(
+      document.getElementById("langMM").classList.toggle(
         "active",
         currentLanguage === "mm"
       );
+
+
+      /*
+       * Re-render listings so badge language changes too.
+       */
+      if(allListings.length){
+
+        applyFilters();
+
+      }
 
     }
 
@@ -2599,12 +2590,10 @@
             ? "mm"
             : "en";
 
-
         localStorage.setItem(
           "mec_language",
           currentLanguage
         );
-
 
         updateLanguage();
 
@@ -2643,9 +2632,7 @@
     function toggleTheme(){
 
       const isDark =
-        document.body.classList.contains(
-          "dark"
-        );
+        document.body.classList.contains("dark");
 
 
       applyTheme(
@@ -2685,31 +2672,24 @@
     function loadRegions(){
 
       const select =
-        document.getElementById(
-          "regionFilter"
-        );
+        document.getElementById("regionFilter");
 
 
       regions.forEach(
         region => {
 
           const option =
-            document.createElement(
-              "option"
-            );
+            document.createElement("option");
 
 
           option.value =
             region;
 
-
           option.textContent =
             region;
 
 
-          select.appendChild(
-            option
-          );
+          select.appendChild(option);
 
         }
       );
@@ -2724,26 +2704,11 @@
     function escapeHTML(value){
 
       return String(value ?? "")
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
     }
 
@@ -2764,9 +2729,7 @@
         text.includes("car") ||
         text.includes("ကား")
       ){
-
         return "car";
-
       }
 
 
@@ -2776,9 +2739,7 @@
         text.includes("ခြံ") ||
         text.includes("မြေ")
       ){
-
         return "property";
-
       }
 
 
@@ -2786,13 +2747,662 @@
         text.includes("gem") ||
         text.includes("ကျောက်")
       ){
-
         return "gem";
+      }
 
+
+      if(
+        text.includes("shop") ||
+        text.includes("ဆိုင်")
+      ){
+        return "shop";
+      }
+
+
+      if(
+        text.includes("feedback") ||
+        text.includes("အကြံပြု")
+      ){
+        return "feedback";
       }
 
 
       return "";
+
+    }
+
+
+    /* =====================================================
+       REGION BADGE MAP
+    ====================================================== */
+
+    const regionBadgeMap = {
+
+      "ကချင်ပြည်နယ်":"KCN",
+      "ကယားပြည်နယ်":"KY",
+      "ကရင်ပြည်နယ်":"KR",
+      "ချင်းပြည်နယ်":"CH",
+      "မွန်ပြည်နယ်":"MN",
+      "ရခိုင်ပြည်နယ်":"RK",
+      "ရှမ်းပြည်နယ်":"SH",
+
+      "စစ်ကိုင်းတိုင်းဒေသကြီး":"SAG",
+      "တနင်္သာရီတိုင်းဒေသကြီး":"TN",
+      "ပဲခူးတိုင်းဒေသကြီး":"BG",
+      "မကွေးတိုင်းဒေသကြီး":"MG",
+      "မန္တလေးတိုင်းဒေသကြီး":"MDY",
+      "ရန်ကုန်တိုင်းဒေသကြီး":"YGN",
+      "ဧရာဝတီတိုင်းဒေသကြီး":"AY"
+
+    };
+
+
+    function getRegionBadgeCode(region){
+
+      if(!region){
+        return "";
+      }
+
+
+      return (
+        regionBadgeMap[region] ||
+        String(region)
+          .trim()
+          .toUpperCase()
+      );
+
+    }
+
+
+    /* =====================================================
+       CATEGORY BADGE
+    ====================================================== */
+
+    function getCategoryBadgeCode(item){
+
+      const category =
+        normalizeCategory(
+          item.category ||
+          item.type
+        );
+
+
+      const map = {
+
+        car:"CAR",
+
+        property:"PROPERTY",
+
+        gem:"GEM",
+
+        shop:"SHOP",
+
+        feedback:"FEEDBACK"
+
+      };
+
+
+      return map[category] || "";
+
+    }
+
+
+    /* =====================================================
+       BADGE HTML
+    ====================================================== */
+
+    function badgeHTML(
+      code,
+      type,
+      icon = ""
+    ){
+
+      if(!code){
+        return "";
+      }
+
+
+      return `
+        <span
+          class="mec-badge ${escapeHTML(type)}"
+          title="${escapeHTML(code)}">
+
+          ${
+            icon
+              ? `
+                <span class="mec-badge-icon">
+                  ${icon}
+                </span>
+              `
+              : ""
+          }
+
+          ${escapeHTML(code)}
+
+        </span>
+      `;
+
+    }
+
+
+    function renderListingBadges(item){
+
+      const region =
+        item.region ||
+        item.state ||
+        "";
+
+
+      const regionCode =
+        getRegionBadgeCode(region);
+
+
+      const categoryCode =
+        getCategoryBadgeCode(item);
+
+
+      let html = "";
+
+
+      if(regionCode){
+
+        html += badgeHTML(
+          regionCode,
+          "region"
+        );
+
+      }
+
+
+      if(categoryCode){
+
+        html += badgeHTML(
+          categoryCode,
+          categoryCode === "SHOP"
+            ? "shop"
+            : categoryCode === "FEEDBACK"
+              ? "feedback"
+              : "category"
+        );
+
+      }
+
+
+      return html;
+
+    }
+
+
+    /* =====================================================
+       BADGE DATA
+    ====================================================== */
+
+    let badgeCatalog = [];
+
+    let profileBadgesCache = new Map();
+
+    let listingBadgesCache = new Map();
+
+
+    async function loadBadgeCatalog(){
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("mec_badges")
+            .select("*")
+            .eq("active", true);
+
+
+        if(error){
+
+          console.warn(
+            "Badge catalog unavailable:",
+            error
+          );
+
+          badgeCatalog = [];
+
+          return;
+
+        }
+
+
+        badgeCatalog =
+          data || [];
+
+      }
+      catch(error){
+
+        console.warn(
+          "Badge catalog error:",
+          error
+        );
+
+        badgeCatalog = [];
+
+      }
+
+    }
+
+
+    function getBadgeByCode(code){
+
+      return badgeCatalog.find(
+        badge =>
+          String(
+            badge.code || ""
+          ).toUpperCase() ===
+          String(
+            code || ""
+          ).toUpperCase()
+      );
+
+    }
+
+
+    function isTrustBadge(code){
+
+      return (
+        code === "VERIFIED" ||
+        code === "MCP"
+      );
+
+    }
+
+
+    function renderTrustBadges(
+      badges
+    ){
+
+      if(!Array.isArray(badges)){
+        return "";
+      }
+
+
+      let html = "";
+
+
+      badges.forEach(
+        badge => {
+
+          const code =
+            String(
+              badge.code ||
+              badge.badge_code ||
+              ""
+            ).toUpperCase();
+
+
+          if(
+            !isTrustBadge(code)
+          ){
+            return;
+          }
+
+
+          if(code === "VERIFIED"){
+
+            html += badgeHTML(
+              "VERIFIED",
+              "verified",
+              "✓"
+            );
+
+          }
+
+
+          if(code === "MCP"){
+
+            html += badgeHTML(
+              "MCP",
+              "mcp",
+              "★"
+            );
+
+          }
+
+        }
+      );
+
+
+      return html;
+
+    }
+
+
+    /* =====================================================
+       PROFILE BADGES
+    ====================================================== */
+
+    async function loadProfileBadges(
+      userIds
+    ){
+
+      profileBadgesCache =
+        new Map();
+
+
+      const ids =
+        [
+          ...new Set(
+            (userIds || [])
+              .filter(Boolean)
+          )
+        ];
+
+
+      if(!ids.length){
+        return;
+      }
+
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("mec_profile_badges")
+            .select("*")
+            .in(
+              "user_id",
+              ids
+            );
+
+
+        if(error){
+
+          console.warn(
+            "Profile badge query failed:",
+            error
+          );
+
+          return;
+
+        }
+
+
+        (data || []).forEach(
+          row => {
+
+            const userId =
+              row.user_id ||
+              row.profile_id;
+
+
+            const badgeId =
+              row.badge_id;
+
+
+            let badge =
+              badgeCatalog.find(
+                item =>
+                  String(item.id) ===
+                  String(badgeId)
+              );
+
+
+            if(!badge && row.code){
+
+              badge =
+                getBadgeByCode(
+                  row.code
+                );
+
+            }
+
+
+            if(!badge){
+              return;
+            }
+
+
+            if(
+              !profileBadgesCache.has(
+                userId
+              )
+            ){
+
+              profileBadgesCache.set(
+                userId,
+                []
+              );
+
+            }
+
+
+            profileBadgesCache
+              .get(userId)
+              .push(badge);
+
+          }
+        );
+
+      }
+      catch(error){
+
+        console.warn(
+          "Profile badge loading error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       LISTING BADGES
+    ====================================================== */
+
+    async function loadListingBadges(
+      listingIds
+    ){
+
+      listingBadgesCache =
+        new Map();
+
+
+      const ids =
+        [
+          ...new Set(
+            (listingIds || [])
+              .filter(Boolean)
+          )
+        ];
+
+
+      if(!ids.length){
+        return;
+      }
+
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("mec_listing_badges")
+            .select("*")
+            .in(
+              "listing_id",
+              ids
+            );
+
+
+        if(error){
+
+          console.warn(
+            "Listing badge query failed:",
+            error
+          );
+
+          return;
+
+        }
+
+
+        (data || []).forEach(
+          row => {
+
+            const listingId =
+              row.listing_id;
+
+
+            let badge =
+              badgeCatalog.find(
+                item =>
+                  String(item.id) ===
+                  String(row.badge_id)
+              );
+
+
+            if(!badge && row.code){
+
+              badge =
+                getBadgeByCode(
+                  row.code
+                );
+
+            }
+
+
+            if(!badge){
+              return;
+            }
+
+
+            if(
+              !listingBadgesCache.has(
+                listingId
+              )
+            ){
+
+              listingBadgesCache.set(
+                listingId,
+                []
+              );
+
+            }
+
+
+            listingBadgesCache
+              .get(listingId)
+              .push(badge);
+
+          }
+        );
+
+      }
+      catch(error){
+
+        console.warn(
+          "Listing badge loading error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function getOwnerId(item){
+
+      return (
+        item.user_id ||
+        item.owner_id ||
+        item.profile_id ||
+        item.created_by ||
+        null
+      );
+
+    }
+
+
+    function getListingTrustBadges(
+      item
+    ){
+
+      const ownerId =
+        getOwnerId(item);
+
+
+      const profileBadges =
+        profileBadgesCache.get(
+          ownerId
+        ) || [];
+
+
+      const listingBadges =
+        listingBadgesCache.get(
+          item.id
+        ) || [];
+
+
+      const all =
+        [
+          ...profileBadges,
+          ...listingBadges
+        ];
+
+
+      const unique =
+        new Map();
+
+
+      all.forEach(
+        badge => {
+
+          const code =
+            String(
+              badge.code ||
+              ""
+            ).toUpperCase();
+
+
+          if(
+            isTrustBadge(code)
+          ){
+
+            unique.set(
+              code,
+              badge
+            );
+
+          }
+
+        }
+      );
+
+
+      return [
+        ...unique.values()
+      ];
+
+    }
+
+
+    function renderOwnerTrustBadges(
+      item
+    ){
+
+      const badges =
+        getListingTrustBadges(
+          item
+        );
+
+
+      return renderTrustBadges(
+        badges
+      );
 
     }
 
@@ -2851,18 +3461,14 @@
         Number.isNaN(number)
       ){
 
-        return escapeHTML(
-          price
-        );
+        return escapeHTML(price);
 
       }
 
 
       return (
         "MMK " +
-        number.toLocaleString(
-          "en-US"
-        )
+        number.toLocaleString("en-US")
       );
 
     }
@@ -2890,18 +3496,14 @@
       ].filter(Boolean);
 
 
-      if(
-        !parts.length
-      ){
+      if(!parts.length){
 
         return "Myanmar";
 
       }
 
 
-      return parts.join(
-        " · "
-      );
+      return parts.join(" · ");
 
     }
 
@@ -2935,7 +3537,6 @@
           error
         );
 
-
         return null;
 
       }
@@ -2955,9 +3556,7 @@
         !image ||
         !image.parentElement
       ){
-
         return;
-
       }
 
 
@@ -2966,21 +3565,16 @@
 
 
       if(
-        image.parentElement
-          .querySelector(
-            ".avatar-placeholder"
-          )
+        image.parentElement.querySelector(
+          ".avatar-placeholder"
+        )
       ){
-
         return;
-
       }
 
 
       const placeholder =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
 
       placeholder.className =
@@ -2998,16 +3592,12 @@
     }
 
 
-    async function loadAvatar(
-      user
-    ){
+    async function loadAvatar(user){
 
       if(!user){
 
         showAvatarPlaceholder(
-          document.getElementById(
-            "avatar"
-          )
+          document.getElementById("avatar")
         );
 
         return;
@@ -3023,16 +3613,11 @@
           await supabaseClient
             .from("profiles")
             .select("avatar_url")
-            .eq(
-              "id",
-              user.id
-            )
+            .eq("id", user.id)
             .maybeSingle();
 
 
-        if(
-          data?.avatar_url
-        ){
+        if(data?.avatar_url){
 
           document.getElementById(
             "avatar"
@@ -3043,9 +3628,7 @@
         else{
 
           showAvatarPlaceholder(
-            document.getElementById(
-              "avatar"
-            )
+            document.getElementById("avatar")
           );
 
         }
@@ -3060,9 +3643,7 @@
 
 
         showAvatarPlaceholder(
-          document.getElementById(
-            "avatar"
-          )
+          document.getElementById("avatar")
         );
 
       }
@@ -3136,15 +3717,43 @@
 
         allListings =
           (data || []).filter(
-            item => {
-
-              return normalizeCategory(
+            item =>
+              normalizeCategory(
                 item.category ||
                 item.type
-              );
-
-            }
+              )
           );
+
+
+        /*
+         * Load badge information after listings.
+         */
+        await loadBadgeCatalog();
+
+
+        const userIds =
+          allListings
+            .map(getOwnerId)
+            .filter(Boolean);
+
+
+        const listingIds =
+          allListings
+            .map(item => item.id)
+            .filter(Boolean);
+
+
+        await Promise.all([
+
+          loadProfileBadges(
+            userIds
+          ),
+
+          loadListingBadges(
+            listingIds
+          )
+
+        ]);
 
 
         applyFilters();
@@ -3152,9 +3761,7 @@
       }
       catch(error){
 
-        console.error(
-          error
-        );
+        console.error(error);
 
 
         showState(
@@ -3208,23 +3815,18 @@
       const minPrice =
         minPriceValue === ""
           ? null
-          : Number(
-              minPriceValue
-            );
+          : Number(minPriceValue);
 
 
       const maxPrice =
         maxPriceValue === ""
           ? null
-          : Number(
-              maxPriceValue
-            );
+          : Number(maxPriceValue);
 
 
       const filtered =
         allListings.filter(
           item => {
-
 
             const itemCategory =
               normalizeCategory(
@@ -3237,9 +3839,7 @@
               category &&
               itemCategory !== category
             ){
-
               return false;
-
             }
 
 
@@ -3253,16 +3853,12 @@
               region &&
               itemRegion !== region
             ){
-
               return false;
-
             }
 
 
             const price =
-              Number(
-                item.price
-              );
+              Number(item.price);
 
 
             if(
@@ -3272,9 +3868,7 @@
                 price < minPrice
               )
             ){
-
               return false;
-
             }
 
 
@@ -3285,9 +3879,7 @@
                 price > maxPrice
               )
             ){
-
               return false;
-
             }
 
 
@@ -3313,13 +3905,9 @@
 
 
               if(
-                !searchable.includes(
-                  search
-                )
+                !searchable.includes(search)
               ){
-
                 return false;
-
               }
 
             }
@@ -3331,9 +3919,7 @@
         );
 
 
-      renderListings(
-        filtered
-      );
+      renderListings(filtered);
 
     }
 
@@ -3374,9 +3960,7 @@
        RENDER
     ====================================================== */
 
-    function renderListings(
-      items
-    ){
+    function renderListings(items){
 
       const container =
         document.getElementById(
@@ -3394,15 +3978,12 @@
         }`;
 
 
-      if(
-        !items.length
-      ){
+      if(!items.length){
 
         showState(
           "No listings found",
           "Try another category, location or price range."
         );
-
 
         return;
 
@@ -3411,17 +3992,13 @@
 
       container.innerHTML =
         items
-          .map(
-            renderListingCard
-          )
+          .map(renderListingCard)
           .join("");
 
     }
 
 
-    function renderListingCard(
-      item
-    ){
+    function renderListingCard(item){
 
       const id =
         item.id;
@@ -3436,14 +4013,11 @@
 
       const categoryLabel = {
 
-        car:
-          "Car",
-
-        property:
-          "Property",
-
-        gem:
-          "Gem"
+        car:"Car",
+        property:"Property",
+        gem:"Gem",
+        shop:"Shop",
+        feedback:"Feedback"
 
       }[
         category
@@ -3457,26 +4031,36 @@
 
 
       const image =
-        getListingImage(
-          item
-        );
+        getListingImage(item);
 
 
       const location =
-        formatLocation(
-          item
-        );
+        formatLocation(item);
+
+
+      /*
+       * Automatic region + category badges.
+       */
+      const automaticBadges =
+        renderListingBadges(item);
+
+
+      /*
+       * VERIFIED / MCP from profile or listing badge assignment.
+       */
+      const trustBadges =
+        renderOwnerTrustBadges(item);
 
 
       return `
 
         <a
           class="listing-card"
-          href="./listing-detail.html?id=${encodeURIComponent(
-            id
-          )}">
+          href="./listing-detail.html?id=${encodeURIComponent(id)}">
+
 
           <div class="listing-image">
+
 
             ${
               image
@@ -3485,12 +4069,8 @@
 
               `
                 <img
-                  src="${escapeHTML(
-                    image
-                  )}"
-                  alt="${escapeHTML(
-                    title
-                  )}"
+                  src="${escapeHTML(image)}"
+                  alt="${escapeHTML(title)}"
                   loading="lazy"
                   onerror="
                     this.style.display='none';
@@ -3521,9 +4101,19 @@
 
             <div class="listing-category">
 
-              ${categoryLabel}
+              ${escapeHTML(categoryLabel)}
 
             </div>
+
+
+            <!-- REGION + CATEGORY -->
+
+            <div class="listing-badges">
+
+              ${automaticBadges}
+
+            </div>
+
 
           </div>
 
@@ -3533,18 +4123,14 @@
 
             <div class="listing-title">
 
-              ${escapeHTML(
-                title
-              )}
+              ${escapeHTML(title)}
 
             </div>
 
 
             <div class="listing-price">
 
-              ${formatPrice(
-                item.price
-              )}
+              ${formatPrice(item.price)}
 
             </div>
 
@@ -3553,20 +4139,34 @@
 
               <span
                 class="listing-location-icon">
-
                 ⌖
-
               </span>
 
               <span>
-
-                ${escapeHTML(
-                  location
-                )}
-
+                ${escapeHTML(location)}
               </span>
 
             </div>
+
+
+            ${
+              trustBadges
+
+              ?
+
+              `
+                <div class="owner-badges">
+
+                  ${trustBadges}
+
+                </div>
+              `
+
+              :
+
+              ""
+
+            }
 
 
           </div>
@@ -3604,15 +4204,11 @@
           </div>
 
           <strong>
-            ${escapeHTML(
-              title
-            )}
+            ${escapeHTML(title)}
           </strong>
 
           <span>
-            ${escapeHTML(
-              message
-            )}
+            ${escapeHTML(message)}
           </span>
 
         </div>
@@ -3638,9 +4234,7 @@
       "keydown",
       event => {
 
-        if(
-          event.key === "Enter"
-        ){
+        if(event.key === "Enter"){
 
           applyFilters();
 
@@ -3659,12 +4253,11 @@
     ].forEach(
       id => {
 
-        document.getElementById(
-          id
-        ).addEventListener(
-          "change",
-          applyFilters
-        );
+        document.getElementById(id)
+          .addEventListener(
+            "change",
+            applyFilters
+          );
 
       }
     );
@@ -3691,19 +4284,17 @@
       );
 
 
-      updateLanguage();
-
-
       loadRegions();
+
+
+      updateLanguage();
 
 
       const user =
         await getCurrentUser();
 
 
-      await loadAvatar(
-        user
-      );
+      await loadAvatar(user);
 
 
       await loadListings();
