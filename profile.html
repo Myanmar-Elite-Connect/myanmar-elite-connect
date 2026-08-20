@@ -18,19 +18,18 @@
 
 :root{
   --bg:#f5f7fb;
-  --card:#fff;
+  --card:#ffffff;
   --soft:#f7f9fc;
   --text:#10233f;
   --muted:#748197;
   --border:rgba(16,35,63,.10);
 
   --gold:#d8b45c;
-  --gold-light:#f2d98d;
+  --gold2:#f2d98d;
 
   --green:#2d8a61;
   --blue:#3c70d9;
   --red:#c94b4b;
-  --purple:#7658c7;
 
   --shadow:0 16px 45px rgba(16,35,63,.07);
 }
@@ -42,18 +41,27 @@ body.dark{
   --text:#f4f7fb;
   --muted:#92a0b3;
   --border:rgba(255,255,255,.09);
+
   --shadow:0 18px 50px rgba(0,0,0,.28);
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
   min-height:100vh;
   color:var(--text);
   background:var(--bg);
+
   font-family:
     Inter,
     "Noto Sans Myanmar",
     "Myanmar Text",
     system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
 }
 
@@ -83,9 +91,8 @@ img{
   max-width:100%;
 }
 
-
 /* =====================================================
-   HEADER
+   TOPBAR
 ===================================================== */
 
 .topbar{
@@ -108,7 +115,7 @@ body.dark .topbar{
 }
 
 .topbar-inner{
-  width:min(1180px,94%);
+  width:min(1200px,94%);
   height:100%;
 
   margin:auto;
@@ -117,31 +124,26 @@ body.dark .topbar{
   align-items:center;
   justify-content:space-between;
 
-  gap:15px;
+  gap:18px;
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:10px;
+
+  flex:none;
 }
 
-.brand-logo{
-  width:40px;
-  height:40px;
+.brand img{
+  width:39px;
+  height:39px;
 
-  overflow:hidden;
-
-  border:1px solid var(--border);
   border-radius:11px;
 
-  background:var(--card);
-}
-
-.brand-logo img{
-  width:100%;
-  height:100%;
   object-fit:contain;
+
+  background:var(--card);
 }
 
 .brand-name{
@@ -154,46 +156,34 @@ body.dark .topbar{
   color:var(--gold);
 }
 
-
-/* ONLY 4 NAV ITEMS */
+/* DESKTOP NAV */
 
 .nav{
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:3px;
+
+  margin-left:auto;
 }
 
-.nav a,
-.nav button{
-  height:38px;
+.nav a{
+  padding:9px 12px;
 
-  padding:0 13px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border:0;
   border-radius:10px;
 
   color:var(--muted);
-  background:transparent;
 
-  font-size:11px;
-  font-weight:900;
+  font-size:12px;
+  font-weight:850;
+
+  transition:.2s ease;
 }
 
 .nav a:hover,
-.nav a.active,
-.nav button:hover{
-  color:var(--gold);
+.nav a.active{
   background:var(--soft);
+  color:var(--gold);
 }
-
-.nav .logout{
-  color:var(--red);
-}
-
 
 /* HEADER ACTIONS */
 
@@ -211,43 +201,39 @@ body.dark .topbar{
   place-items:center;
 
   border:1px solid var(--border);
-  border-radius:11px;
+  border-radius:12px;
 
   color:var(--text);
   background:var(--card);
+
+  transition:.2s ease;
 }
 
-.profile-mini{
-  width:40px;
-  height:40px;
-
-  overflow:hidden;
-
-  border:1px solid var(--gold);
-  border-radius:12px;
-
-  background:var(--soft);
+.icon-btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(216,180,92,.6);
 }
 
-.profile-mini img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.logout-btn{
+  width:auto;
+  padding:0 13px;
 
+  color:var(--red);
+
+  font-size:10px;
+  font-weight:900;
+}
 
 /* =====================================================
    MAIN
 ===================================================== */
 
 .container{
-  width:min(1180px,94%);
+  width:min(1200px,94%);
 
   margin:auto;
 
-  padding:
-    28px 0
-    100px;
+  padding:28px 0 100px;
 }
 
 .eyebrow{
@@ -256,31 +242,29 @@ body.dark .topbar{
   font-size:9px;
   font-weight:950;
 
-  letter-spacing:1.5px;
+  letter-spacing:1.3px;
 
   text-transform:uppercase;
 }
 
-.page-title{
+h1{
   margin-top:5px;
 
-  font-size:
-    clamp(27px,4vw,38px);
-
+  font-size:clamp(27px,4vw,38px);
   line-height:1.1;
 
   font-weight:950;
+
   letter-spacing:-1px;
 }
 
-.page-subtitle{
+.subtitle{
   margin-top:7px;
 
   color:var(--muted);
 
   font-size:11px;
 }
-
 
 /* =====================================================
    PROFILE HERO
@@ -291,10 +275,7 @@ body.dark .topbar{
 
   display:grid;
 
-  grid-template-columns:
-    auto
-    minmax(0,1fr)
-    auto;
+  grid-template-columns:auto 1fr auto;
 
   align-items:center;
 
@@ -303,7 +284,7 @@ body.dark .topbar{
   padding:22px;
 
   border:1px solid var(--border);
-  border-radius:20px;
+  border-radius:18px;
 
   background:var(--card);
 
@@ -332,6 +313,7 @@ body.dark .topbar{
 .avatar img{
   width:100%;
   height:100%;
+
   object-fit:cover;
 }
 
@@ -339,7 +321,7 @@ body.dark .topbar{
   position:absolute;
 
   right:0;
-  bottom:1px;
+  bottom:2px;
 
   width:34px;
   height:34px;
@@ -351,9 +333,9 @@ body.dark .topbar{
   border-radius:50%;
 
   color:#071a34;
+
   background:var(--gold);
 
-  font-size:20px;
   font-weight:950;
 }
 
@@ -361,18 +343,14 @@ body.dark .topbar{
   display:none;
 }
 
-
-/* PROFILE INFO */
-
 .profile-name{
   display:flex;
   align-items:center;
-
   flex-wrap:wrap;
 
   gap:8px;
 
-  font-size:24px;
+  font-size:23px;
   font-weight:950;
 }
 
@@ -385,116 +363,96 @@ body.dark .topbar{
   font-size:10px;
 }
 
-
 /* =====================================================
    BADGES
 ===================================================== */
 
 .badges{
   display:flex;
-
+  align-items:center;
   flex-wrap:wrap;
 
   gap:6px;
 
-  margin-top:11px;
+  margin-top:10px;
 }
 
 .badge{
-  min-height:24px;
-
-  padding:
-    4px 9px;
-
   display:inline-flex;
   align-items:center;
   gap:5px;
 
+  min-height:25px;
+
+  padding:4px 8px;
+
+  border:1px solid rgba(216,180,92,.25);
   border-radius:999px;
+
+  color:var(--text);
+
+  background:rgba(216,180,92,.08);
 
   font-size:8px;
   font-weight:950;
-
-  letter-spacing:.15px;
 }
 
-.badge.region{
-  color:#174d86;
-  background:#e5f0ff;
-  border:1px solid #c6ddfb;
-}
-
-.badge.car{
-  color:#215ca7;
-  background:#eaf2ff;
-  border:1px solid #cbdcff;
-}
-
-.badge.property{
-  color:#79571b;
-  background:#fff5dc;
-  border:1px solid #ead18f;
-}
-
-.badge.gem{
-  color:#7043a6;
-  background:#f3eaff;
-  border:1px solid #d9c4f6;
-}
-
-.badge.shop{
-  color:#9b5a20;
-  background:#fff0e1;
-  border:1px solid #f0cba8;
-}
-
-.badge.feedback{
-  color:#26734f;
-  background:#e7f7ee;
-  border:1px solid #bde5cd;
+.badge-icon{
+  color:var(--gold);
+  font-weight:950;
 }
 
 .badge.verified{
   color:#fff;
   background:var(--green);
+  border-color:transparent;
+}
+
+.badge.verified .badge-icon{
+  color:#fff;
 }
 
 .badge.mcp{
   color:#071a34;
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
+  background:linear-gradient(
+    135deg,
+    var(--gold2),
+    var(--gold)
+  );
+
+  border-color:transparent;
 }
 
+.badge.region{
+  color:var(--blue);
+  border-color:rgba(60,112,217,.2);
+  background:rgba(60,112,217,.08);
+}
+
+.badge.category{
+  color:var(--gold);
+}
 
 /* =====================================================
-   HERO BUTTONS
+   BUTTONS
 ===================================================== */
 
 .hero-actions{
   display:flex;
 
-  align-items:center;
-
-  justify-content:flex-end;
+  gap:8px;
 
   flex-wrap:wrap;
 
-  gap:8px;
+  justify-content:flex-end;
 }
 
-.btn{
+.primary-btn,
+.secondary-btn,
+.danger-btn{
   min-height:40px;
 
-  padding:
-    0 14px;
-
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  padding:0 14px;
 
   border-radius:10px;
 
@@ -502,7 +460,7 @@ body.dark .topbar{
   font-weight:900;
 }
 
-.btn-primary{
+.primary-btn{
   border:0;
 
   color:#071a34;
@@ -510,12 +468,12 @@ body.dark .topbar{
   background:
     linear-gradient(
       135deg,
-      var(--gold-light),
+      var(--gold2),
       var(--gold)
     );
 }
 
-.btn-secondary{
+.secondary-btn{
   border:1px solid var(--border);
 
   color:var(--text);
@@ -523,7 +481,11 @@ body.dark .topbar{
   background:var(--soft);
 }
 
-.btn-danger{
+.secondary-btn:hover{
+  border-color:rgba(216,180,92,.55);
+}
+
+.danger-btn{
   border:1px solid rgba(201,75,75,.2);
 
   color:var(--red);
@@ -531,26 +493,12 @@ body.dark .topbar{
   background:rgba(201,75,75,.07);
 }
 
-.btn-blue{
-  border:0;
-
-  color:#fff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #386ed7,
-      #3156ad
-    );
-}
-
-
 /* =====================================================
    SOCIAL
 ===================================================== */
 
 .social-actions{
-  display:none;
+  display:flex;
 
   flex-wrap:wrap;
 
@@ -562,8 +510,7 @@ body.dark .topbar{
 .social-btn{
   min-height:38px;
 
-  padding:
-    0 14px;
+  padding:0 14px;
 
   border:1px solid var(--border);
   border-radius:10px;
@@ -576,6 +523,10 @@ body.dark .topbar{
   font-weight:900;
 }
 
+.social-btn:hover{
+  border-color:rgba(216,180,92,.55);
+}
+
 .social-btn.active{
   border-color:var(--gold);
 
@@ -584,10 +535,17 @@ body.dark .topbar{
   background:var(--gold);
 }
 
+.social-btn.following{
+  color:#fff;
+
+  border-color:var(--green);
+
+  background:var(--green);
+}
+
 .social-btn.report{
   color:var(--red);
 }
-
 
 /* =====================================================
    STATS
@@ -596,8 +554,7 @@ body.dark .topbar{
 .stats{
   display:grid;
 
-  grid-template-columns:
-    repeat(5,1fr);
+  grid-template-columns:repeat(5,1fr);
 
   gap:10px;
 
@@ -605,16 +562,14 @@ body.dark .topbar{
 }
 
 .stat{
-  min-width:0;
-
   padding:15px 8px;
 
   border:1px solid var(--border);
   border-radius:14px;
 
-  text-align:center;
-
   background:var(--card);
+
+  text-align:center;
 }
 
 .stat strong{
@@ -635,7 +590,6 @@ body.dark .topbar{
   font-weight:800;
 }
 
-
 /* =====================================================
    TABS
 ===================================================== */
@@ -643,7 +597,7 @@ body.dark .topbar{
 .tabs{
   display:flex;
 
-  gap:7px;
+  gap:6px;
 
   overflow-x:auto;
 
@@ -661,8 +615,7 @@ body.dark .topbar{
 
   height:40px;
 
-  padding:
-    0 15px;
+  padding:0 15px;
 
   border:1px solid var(--border);
   border-radius:10px;
@@ -683,11 +636,10 @@ body.dark .topbar{
   background:
     linear-gradient(
       135deg,
-      var(--gold-light),
+      var(--gold2),
       var(--gold)
     );
 }
-
 
 /* =====================================================
    PANELS
@@ -723,10 +675,8 @@ body.dark .topbar{
   color:var(--muted);
 
   font-size:10px;
-
-  line-height:1.65;
+  line-height:1.6;
 }
-
 
 /* =====================================================
    POSTS
@@ -737,9 +687,9 @@ body.dark .topbar{
 
   gap:7px;
 
-  overflow-x:auto;
-
   margin-top:15px;
+
+  overflow-x:auto;
 
   scrollbar-width:none;
 }
@@ -753,8 +703,7 @@ body.dark .topbar{
 
   height:34px;
 
-  padding:
-    0 12px;
+  padding:0 11px;
 
   border:1px solid var(--border);
   border-radius:9px;
@@ -770,9 +719,9 @@ body.dark .topbar{
 .post-filter button.active{
   color:#071a34;
 
-  border-color:transparent;
-
   background:var(--gold);
+
+  border-color:transparent;
 }
 
 .posts-grid{
@@ -819,12 +768,11 @@ body.dark .topbar{
 }
 
 .post-title{
-  min-height:30px;
-
   margin-top:5px;
 
-  font-size:11px;
+  min-height:30px;
 
+  font-size:11px;
   line-height:1.4;
 
   font-weight:950;
@@ -867,10 +815,6 @@ body.dark .topbar{
 
   min-height:32px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
   border:1px solid var(--border);
   border-radius:8px;
 
@@ -885,7 +829,6 @@ body.dark .topbar{
 .post-actions .delete{
   color:var(--red);
 }
-
 
 /* =====================================================
    COMMENTS
@@ -940,6 +883,7 @@ body.dark .topbar{
   display:flex;
 
   align-items:center;
+
   justify-content:space-between;
 
   gap:8px;
@@ -952,17 +896,21 @@ body.dark .topbar{
 
 .comment-date{
   color:var(--muted);
+
   font-size:8px;
 }
 
 .comment-text{
   margin-top:6px;
 
+  color:var(--text);
+
   font-size:10px;
 
   line-height:1.6;
 
   white-space:pre-wrap;
+
   word-break:break-word;
 }
 
@@ -979,7 +927,6 @@ body.dark .topbar{
   font-weight:900;
 }
 
-
 /* =====================================================
    FORM
 ===================================================== */
@@ -987,8 +934,7 @@ body.dark .topbar{
 .form-grid{
   display:grid;
 
-  grid-template-columns:
-    1fr 1fr;
+  grid-template-columns:1fr 1fr;
 
   gap:12px;
 
@@ -1056,7 +1002,6 @@ select:focus{
   margin-top:15px;
 }
 
-
 /* =====================================================
    KYC
 ===================================================== */
@@ -1120,8 +1065,7 @@ select:focus{
 .kyc-grid{
   display:grid;
 
-  grid-template-columns:
-    1fr 1fr;
+  grid-template-columns:1fr 1fr;
 
   gap:12px;
 
@@ -1149,9 +1093,9 @@ select:focus{
   width:100%;
   height:100%;
 
-  opacity:0;
-
   cursor:pointer;
+
+  opacity:0;
 
   z-index:2;
 }
@@ -1171,9 +1115,9 @@ select:focus{
 }
 
 .upload-icon{
-  color:var(--gold);
-
   font-size:28px;
+
+  color:var(--gold);
 }
 
 .upload-placeholder strong{
@@ -1215,21 +1159,6 @@ select:focus{
   font-size:9px;
 }
 
-
-/* =====================================================
-   FRIEND
-===================================================== */
-
-.friend-status{
-  margin-top:7px;
-
-  color:var(--muted);
-
-  font-size:9px;
-  font-weight:800;
-}
-
-
 /* =====================================================
    MODAL
 ===================================================== */
@@ -1244,6 +1173,7 @@ select:focus{
   display:none;
 
   align-items:center;
+
   justify-content:center;
 
   padding:18px;
@@ -1265,13 +1195,12 @@ select:focus{
 
   background:var(--card);
 
-  box-shadow:
-    0 25px 70px
-    rgba(0,0,0,.3);
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
 }
 
 .modal-title{
   font-size:17px;
+
   font-weight:950;
 }
 
@@ -1295,25 +1224,24 @@ select:focus{
   margin-top:14px;
 }
 
-
 /* =====================================================
    EMPTY / LOADING
 ===================================================== */
 
 .empty{
-  grid-column:1/-1;
-
   padding:45px 15px;
 
   text-align:center;
 
   color:var(--muted);
+
+  grid-column:1/-1;
 }
 
 .empty-icon{
-  color:var(--gold);
-
   font-size:30px;
+
+  color:var(--gold);
 }
 
 .empty strong{
@@ -1335,8 +1263,6 @@ select:focus{
 }
 
 .loading{
-  grid-column:1/-1;
-
   padding:30px;
 
   text-align:center;
@@ -1344,8 +1270,9 @@ select:focus{
   color:var(--muted);
 
   font-size:10px;
-}
 
+  grid-column:1/-1;
+}
 
 /* =====================================================
    TOAST
@@ -1386,12 +1313,12 @@ select:focus{
 
 .toast.show{
   transform:translateY(0);
+
   opacity:1;
 }
 
-
 /* =====================================================
-   MOBILE NAV — 4 ITEMS ONLY
+   MOBILE NAV
 ===================================================== */
 
 .mobile-nav{
@@ -1412,6 +1339,7 @@ select:focus{
   background:rgba(255,255,255,.95);
 
   backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
 }
 
 body.dark .mobile-nav{
@@ -1427,39 +1355,31 @@ body.dark .mobile-nav{
     repeat(4,1fr);
 }
 
-.mobile-nav a,
-.mobile-nav button{
-  border:0;
-
+.mobile-nav a{
   display:flex;
 
   flex-direction:column;
 
   align-items:center;
+
   justify-content:center;
 
   gap:4px;
 
   color:var(--muted);
 
-  background:transparent;
-
   font-size:9px;
-  font-weight:850;
+
+  font-weight:800;
 }
 
 .mobile-nav a.active{
   color:var(--gold);
 }
 
-.mobile-nav .logout{
-  color:var(--red);
-}
-
 .mobile-icon{
   font-size:17px;
 }
-
 
 /* =====================================================
    RESPONSIVE
@@ -1485,13 +1405,12 @@ body.dark .mobile-nav{
   }
 }
 
-
-@media(max-width:760px){
+@media(max-width:700px){
 
   .profile-hero{
-    grid-template-columns:
-      auto
-      minmax(0,1fr);
+    grid-template-columns:auto 1fr;
+
+    gap:15px;
   }
 
   .hero-actions{
@@ -1500,15 +1419,14 @@ body.dark .mobile-nav{
     justify-content:flex-start;
   }
 
-  .kyc-grid{
-    grid-template-columns:1fr;
+  .avatar-wrap,
+  .avatar{
+    width:86px;
+    height:86px;
   }
-}
 
-
-@media(max-width:600px){
-
-  .form-grid{
+  .form-grid,
+  .kyc-grid{
     grid-template-columns:1fr;
   }
 
@@ -1517,18 +1435,20 @@ body.dark .mobile-nav{
   }
 
   .posts-grid{
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns:1fr 1fr;
 
     gap:9px;
   }
 
-  .stats{
-    gap:5px;
+  .panel{
+    padding:14px;
   }
 
-  .stat{
-    padding:12px 4px;
+  .stats{
+    grid-template-columns:
+      repeat(5,1fr);
+
+    gap:5px;
   }
 
   .stat strong{
@@ -1540,16 +1460,38 @@ body.dark .mobile-nav{
   }
 }
 
+@media(max-width:520px){
 
-@media(max-width:450px){
+  .header-actions{
+    gap:5px;
+  }
+
+  .logout-btn{
+    padding:0 9px;
+  }
+
+  .profile-name{
+    font-size:19px;
+  }
+
+  .social-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .social-btn{
+    width:100%;
+  }
+
+  .social-btn.report{
+    grid-column:1/-1;
+  }
+}
+
+@media(max-width:420px){
 
   .brand-name{
     display:none;
-  }
-
-  .header-actions .icon-btn{
-    width:38px;
-    height:38px;
   }
 
   .profile-hero{
@@ -1570,8 +1512,7 @@ body.dark .mobile-nav{
     justify-content:center;
   }
 
-  .hero-actions,
-  .social-actions{
+  .hero-actions{
     justify-content:center;
   }
 
@@ -1579,16 +1520,18 @@ body.dark .mobile-nav{
     grid-template-columns:1fr;
   }
 
-  .comment-form{
-    flex-direction:column;
+  .stats{
+    gap:3px;
+  }
+
+  .stat{
+    padding:11px 3px;
   }
 }
 </style>
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      HEADER
@@ -1600,15 +1543,12 @@ body.dark .mobile-nav{
 
     <a
       href="./general.html"
-      class="brand">
+      class="brand"
+      aria-label="Myanmar Elite Connect">
 
-      <div class="brand-logo">
-
-        <img
-          src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
-          alt="Myanmar Elite Connect">
-
-      </div>
+      <img
+        src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+        alt="Myanmar Elite Connect">
 
       <div class="brand-name">
         Myanmar <span>Elite</span> Connect
@@ -1617,12 +1557,16 @@ body.dark .mobile-nav{
     </a>
 
 
-    <!-- DESKTOP NAV — ONLY 4 -->
+    <!-- ONLY 4 NAV ITEMS -->
 
     <nav class="nav">
 
       <a href="./general.html">
         Home
+      </a>
+
+      <a href="./add-listing.html">
+        Add Listing
       </a>
 
       <a href="./chat.html">
@@ -1634,13 +1578,6 @@ body.dark .mobile-nav{
         class="active">
         Profile
       </a>
-
-      <button
-        id="desktopLogout"
-        class="logout"
-        type="button">
-        Logout
-      </button>
 
     </nav>
 
@@ -1656,24 +1593,12 @@ body.dark .mobile-nav{
       </button>
 
 
-      <a
-        href="./chat.html"
-        class="icon-btn"
-        aria-label="Chat">
-        ◌
-      </a>
-
-
-      <a
-        href="./profile.html"
-        class="profile-mini">
-
-        <img
-          id="miniAvatar"
-          src=""
-          alt="Profile">
-
-      </a>
+      <button
+        id="logoutButton"
+        class="icon-btn logout-btn"
+        type="button">
+        Log Out
+      </button>
 
     </div>
 
@@ -1688,23 +1613,18 @@ body.dark .mobile-nav{
 
 <main class="container">
 
-
   <div class="eyebrow">
     Myanmar Elite Connect
   </div>
 
-
-  <h1
-    id="pageTitle"
-    class="page-title">
+  <h1 id="pageTitle">
     My Profile
   </h1>
 
-
   <p
     id="pageSubtitle"
-    class="page-subtitle">
-    Manage your profile, badges, listings and verification.
+    class="subtitle">
+    Manage your profile, listings and verification.
   </p>
 
 
@@ -1713,7 +1633,6 @@ body.dark .mobile-nav{
   ==================================================== -->
 
   <section class="profile-hero">
-
 
     <div class="avatar-wrap">
 
@@ -1746,7 +1665,6 @@ body.dark .mobile-nav{
 
     <div class="profile-info">
 
-
       <div class="profile-name">
 
         <span id="profileName">
@@ -1773,12 +1691,11 @@ body.dark .mobile-nav{
       <div
         id="badges"
         class="badges">
-      </div>
 
+        <span class="loading">
+          Loading badges...
+        </span>
 
-      <div
-        id="friendStatus"
-        class="friend-status">
       </div>
 
     </div>
@@ -1788,10 +1705,9 @@ body.dark .mobile-nav{
       id="ownerActions"
       class="hero-actions">
 
-
       <button
         id="editProfileButton"
-        class="btn btn-primary"
+        class="primary-btn"
         type="button">
 
         Edit Profile
@@ -1801,40 +1717,12 @@ body.dark .mobile-nav{
 
       <a
         href="./add-listing.html"
-        class="btn btn-secondary">
+        class="secondary-btn"
+        style="display:grid;place-items:center;">
 
-        + Post Listing
+        + Add Listing
 
       </a>
-
-    </div>
-
-
-    <div
-      id="visitorActions"
-      class="hero-actions"
-      style="display:none;">
-
-
-      <button
-        id="friendButton"
-        class="btn btn-primary"
-        type="button">
-
-        + Add Friend
-
-      </button>
-
-
-      <button
-        id="chatButton"
-        class="btn btn-blue"
-        type="button">
-
-        Chat
-
-      </button>
-
 
     </div>
 
@@ -1842,12 +1730,32 @@ body.dark .mobile-nav{
 
 
   <!-- ===================================================
-       SOCIAL
+       SOCIAL ACTIONS
   ==================================================== -->
 
   <div
     id="socialActions"
-    class="social-actions">
+    class="social-actions"
+    style="display:none;">
+
+    <button
+      id="followButton"
+      class="social-btn"
+      type="button">
+
+      + Follow
+
+    </button>
+
+
+    <button
+      id="messageButton"
+      class="social-btn"
+      type="button">
+
+      💬 Message
+
+    </button>
 
 
     <button
@@ -1877,7 +1785,7 @@ body.dark .mobile-nav{
       class="social-btn report"
       type="button">
 
-      ⚑ Report
+      ⚑ Report Profile
 
     </button>
 
@@ -1889,7 +1797,6 @@ body.dark .mobile-nav{
   ==================================================== -->
 
   <section class="stats">
-
 
     <div class="stat">
 
@@ -1945,12 +1852,12 @@ body.dark .mobile-nav{
 
     <div class="stat">
 
-      <strong id="kycStatusShort">
-        —
+      <strong id="followStat">
+        0
       </strong>
 
       <span>
-        KYC
+        Followers
       </span>
 
     </div>
@@ -1963,7 +1870,6 @@ body.dark .mobile-nav{
   ==================================================== -->
 
   <div class="tabs">
-
 
     <button
       class="tab active"
@@ -2002,7 +1908,7 @@ body.dark .mobile-nav{
       data-tab="kyc"
       type="button">
 
-      KYC
+      KYC Verification
 
     </button>
 
@@ -2017,11 +1923,9 @@ body.dark .mobile-nav{
     id="postsPanel"
     class="panel active">
 
-
     <div class="panel-title">
       Listings
     </div>
-
 
     <p class="panel-description">
       Car, Property and Gem listings belonging to this profile.
@@ -2029,7 +1933,6 @@ body.dark .mobile-nav{
 
 
     <div class="post-filter">
-
 
       <button
         class="post-category active"
@@ -2070,16 +1973,6 @@ body.dark .mobile-nav{
 
       </button>
 
-
-      <button
-        class="post-category"
-        data-category="shop"
-        type="button">
-
-        Shop
-
-      </button>
-
     </div>
 
 
@@ -2104,11 +1997,9 @@ body.dark .mobile-nav{
     id="commentsPanel"
     class="panel">
 
-
     <div class="panel-title">
       Profile Comments
     </div>
-
 
     <p class="panel-description">
       Members can leave comments on this profile.
@@ -2119,7 +2010,6 @@ body.dark .mobile-nav{
       id="commentForm"
       class="comment-form">
 
-
       <textarea
         id="commentInput"
         maxlength="1000"
@@ -2128,7 +2018,7 @@ body.dark .mobile-nav{
 
 
       <button
-        class="btn btn-primary"
+        class="primary-btn"
         type="submit">
 
         Comment
@@ -2159,11 +2049,9 @@ body.dark .mobile-nav{
     id="profilePanel"
     class="panel">
 
-
     <div class="panel-title">
       Profile Information
     </div>
-
 
     <p class="panel-description">
       Update the information shown on your profile.
@@ -2172,9 +2060,7 @@ body.dark .mobile-nav{
 
     <form id="profileForm">
 
-
       <div class="form-grid">
-
 
         <div class="form-group">
 
@@ -2217,65 +2103,21 @@ body.dark .mobile-nav{
               Select Region / State
             </option>
 
-            <option value="Ayeyarwady">
-              Ayeyarwady Region
-            </option>
-
-            <option value="Bago">
-              Bago Region
-            </option>
-
-            <option value="Chin">
-              Chin State
-            </option>
-
-            <option value="Kachin">
-              Kachin State
-            </option>
-
-            <option value="Kayah">
-              Kayah State
-            </option>
-
-            <option value="Kayin">
-              Kayin State
-            </option>
-
-            <option value="Magway">
-              Magway Region
-            </option>
-
-            <option value="Mandalay">
-              Mandalay Region
-            </option>
-
-            <option value="Mon">
-              Mon State
-            </option>
-
-            <option value="Naypyidaw">
-              Naypyidaw Union Territory
-            </option>
-
-            <option value="Rakhine">
-              Rakhine State
-            </option>
-
-            <option value="Sagaing">
-              Sagaing Region
-            </option>
-
-            <option value="Shan">
-              Shan State
-            </option>
-
-            <option value="Tanintharyi">
-              Tanintharyi Region
-            </option>
-
-            <option value="Yangon">
-              Yangon Region
-            </option>
+            <option>Ayeyarwady Region</option>
+            <option>Bago Region</option>
+            <option>Chin State</option>
+            <option>Kachin State</option>
+            <option>Kayah State</option>
+            <option>Kayin State</option>
+            <option>Magway Region</option>
+            <option>Mandalay Region</option>
+            <option>Mon State</option>
+            <option>Naypyidaw Union Territory</option>
+            <option>Rakhine State</option>
+            <option>Sagaing Region</option>
+            <option>Shan State</option>
+            <option>Tanintharyi Region</option>
+            <option>Yangon Region</option>
 
           </select>
 
@@ -2300,11 +2142,10 @@ body.dark .mobile-nav{
 
       <div class="form-actions">
 
-
         <button
-          id="cancelProfileButton"
-          class="btn btn-secondary"
-          type="button">
+          type="button"
+          class="secondary-btn"
+          id="cancelProfileButton">
 
           Cancel
 
@@ -2312,9 +2153,9 @@ body.dark .mobile-nav{
 
 
         <button
-          id="saveProfileButton"
-          class="btn btn-primary"
-          type="submit">
+          type="submit"
+          class="primary-btn"
+          id="saveProfileButton">
 
           Save Changes
 
@@ -2335,19 +2176,16 @@ body.dark .mobile-nav{
     id="kycPanel"
     class="panel">
 
-
     <div class="panel-title">
       KYC Verification
     </div>
 
-
     <p class="panel-description">
-      Upload your identity documents for administrator review.
+      Your identity documents are stored privately and reviewed by the administrator.
     </p>
 
 
     <div class="kyc-status">
-
 
       <div
         id="kycStatusDot"
@@ -2360,7 +2198,6 @@ body.dark .mobile-nav{
         <strong id="kycStatusTitle">
           Not submitted
         </strong>
-
 
         <span id="kycStatusText">
           Submit your documents to request verification.
@@ -2378,7 +2215,6 @@ body.dark .mobile-nav{
 
 
     <form id="kycForm">
-
 
       <div
         class="form-group"
@@ -2410,7 +2246,6 @@ body.dark .mobile-nav{
 
       <div class="kyc-grid">
 
-
         <div class="upload-box">
 
           <input
@@ -2440,7 +2275,7 @@ body.dark .mobile-nav{
           <img
             id="kycFrontPreview"
             class="upload-preview"
-            alt="Document front preview">
+            alt="Front preview">
 
         </div>
 
@@ -2474,7 +2309,7 @@ body.dark .mobile-nav{
           <img
             id="kycBackPreview"
             class="upload-preview"
-            alt="Document back preview">
+            alt="Back preview">
 
         </div>
 
@@ -2485,7 +2320,7 @@ body.dark .mobile-nav{
 
         <button
           id="submitKycButton"
-          class="btn btn-primary"
+          class="primary-btn"
           type="submit">
 
           Submit for Verification
@@ -2502,13 +2337,12 @@ body.dark .mobile-nav{
 
 
 <!-- =====================================================
-     MOBILE NAV — EXACTLY 4
+     MOBILE NAV — ONLY 4 ITEMS
 ===================================================== -->
 
 <nav class="mobile-nav">
 
   <div class="mobile-nav-inner">
-
 
     <a href="./general.html">
 
@@ -2517,6 +2351,17 @@ body.dark .mobile-nav{
       </div>
 
       Home
+
+    </a>
+
+
+    <a href="./add-listing.html">
+
+      <div class="mobile-icon">
+        ＋
+      </div>
+
+      Add Listing
 
     </a>
 
@@ -2544,20 +2389,6 @@ body.dark .mobile-nav{
 
     </a>
 
-
-    <button
-      id="mobileLogout"
-      class="logout"
-      type="button">
-
-      <div class="mobile-icon">
-        ↪
-      </div>
-
-      Logout
-
-    </button>
-
   </div>
 
 </nav>
@@ -2571,14 +2402,11 @@ body.dark .mobile-nav{
   id="reportModal"
   class="modal">
 
-
   <div class="modal-card">
-
 
     <div class="modal-title">
       Report Profile
     </div>
-
 
     <p class="modal-description">
       Report this profile to Myanmar Elite Connect administrators.
@@ -2642,7 +2470,7 @@ body.dark .mobile-nav{
 
       <button
         id="cancelReportButton"
-        class="btn btn-secondary"
+        class="secondary-btn"
         type="button">
 
         Cancel
@@ -2652,7 +2480,7 @@ body.dark .mobile-nav{
 
       <button
         id="submitReportButton"
-        class="btn btn-danger"
+        class="danger-btn"
         type="button">
 
         Submit Report
@@ -2685,18 +2513,22 @@ const KYC_BUCKET =
 
 
 let currentUser = null;
+
 let profileData = null;
 
 let targetProfileId = null;
+
 let isOwner = false;
 
 let allPosts = [];
+
 let activePostCategory = "all";
 
 let currentKyc = null;
+
 let currentReaction = null;
 
-let friendRecord = null;
+let isFollowing = false;
 
 
 /* =====================================================
@@ -2724,16 +2556,21 @@ function normalize(value){
 }
 
 
-function toast(message){
+function toast(
+  message,
+  type="success"
+){
 
   const element =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
   element.textContent =
     message;
 
   element.className =
-    "toast show";
+    `toast show ${type}`;
 
   clearTimeout(
     window.__toastTimer
@@ -2802,20 +2639,26 @@ function formatPrice(item){
 function formatLocation(item){
 
   const values = [
+
     item.city,
     item.township,
     item.address
+
   ]
   .map(
     value =>
-      String(value || "").trim()
+      String(value || "")
+        .trim()
   )
   .filter(Boolean);
 
+
   const unique = [];
+
 
   values.forEach(
     value=>{
+
       if(
         !unique.some(
           x =>
@@ -2823,10 +2666,16 @@ function formatLocation(item){
             normalize(value)
         )
       ){
-        unique.push(value);
+
+        unique.push(
+          value
+        );
+
       }
+
     }
   );
+
 
   return unique.length
     ? unique.join(" · ")
@@ -2838,56 +2687,17 @@ function formatLocation(item){
 function getCover(item){
 
   if(
-    Array.isArray(item.images) &&
+    Array.isArray(
+      item.images
+    ) &&
     item.images.length
   ){
+
     return item.images[0];
+
   }
 
   return "";
-
-}
-
-
-/* =====================================================
-   REGION BADGES
-===================================================== */
-
-const REGION_BADGES = {
-
-  Ayeyarwady:"AYW",
-  Bago:"BGO",
-  Chin:"CHN",
-  Kachin:"KCN",
-  Kayah:"KYH",
-  Kayin:"KYN",
-  Magway:"MGW",
-  Mandalay:"MDY",
-  Mon:"MON",
-  Naypyidaw:"NPW",
-  Rakhine:"RKH",
-  Sagaing:"SGG",
-  Shan:"SHN",
-  Tanintharyi:"TNI",
-  Yangon:"YGN"
-
-};
-
-
-function regionBadge(city){
-
-  const code =
-    REGION_BADGES[city];
-
-  if(!code){
-    return "";
-  }
-
-  return `
-    <span class="badge region">
-      ◆ ${escapeHTML(code)}
-    </span>
-  `;
 
 }
 
@@ -2903,12 +2713,14 @@ function applyTheme(theme){
     theme === "dark"
   );
 
+
   document.getElementById(
     "themeButton"
   ).textContent =
     theme === "dark"
       ? "☀"
       : "☾";
+
 
   localStorage.setItem(
     "mec_theme",
@@ -2920,9 +2732,11 @@ function applyTheme(theme){
 
 document.getElementById(
   "themeButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
   ()=>{
+
     const dark =
       document.body.classList.contains(
         "dark"
@@ -2933,6 +2747,7 @@ document.getElementById(
         ? "light"
         : "dark"
     );
+
   }
 );
 
@@ -2941,38 +2756,63 @@ document.getElementById(
    LOGOUT
 ===================================================== */
 
-async function logout(){
+document.getElementById(
+  "logoutButton"
+)
+.addEventListener(
+  "click",
+  async ()=>{
 
-  try{
+    const button =
+      document.getElementById(
+        "logoutButton"
+      );
 
-    await supabaseClient.auth.signOut();
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Logging out...";
+
+
+    try{
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .auth
+          .signOut();
+
+
+      if(error){
+        throw error;
+      }
+
+
+      window.location.href =
+        "./auth.html";
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      toast(
+        error.message ||
+        "Could not log out.",
+        "error"
+      );
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Log Out";
+
+    }
 
   }
-  catch(error){
-
-    console.error(error);
-
-  }
-
-  window.location.href =
-    "./auth.html";
-
-}
-
-
-document.getElementById(
-  "desktopLogout"
-).addEventListener(
-  "click",
-  logout
-);
-
-
-document.getElementById(
-  "mobileLogout"
-).addEventListener(
-  "click",
-  logout
 );
 
 
@@ -2986,11 +2826,15 @@ async function requireUser(){
     data,
     error
   } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient
+      .auth
+      .getUser();
+
 
   if(error){
     throw error;
   }
+
 
   if(!data?.user){
 
@@ -2999,6 +2843,7 @@ async function requireUser(){
 
     return null;
   }
+
 
   return data.user;
 
@@ -3015,6 +2860,7 @@ function getTargetProfileId(){
     new URLSearchParams(
       window.location.search
     );
+
 
   return (
     params.get("id") ||
@@ -3043,8 +2889,12 @@ async function loadProfile(){
         phone,
         avatar_url,
         city,
+        region_code,
+        region_name,
         bio,
         role,
+        is_verified,
+        is_mcp,
         created_at
         `
       )
@@ -3054,9 +2904,11 @@ async function loadProfile(){
       )
       .maybeSingle();
 
+
   if(error){
     throw error;
   }
+
 
   if(!data){
 
@@ -3066,255 +2918,17 @@ async function loadProfile(){
 
   }
 
+
   profileData =
     data;
+
 
   isOwner =
     currentUser.id ===
     targetProfileId;
 
+
   renderProfile();
-
-}
-
-
-/* =====================================================
-   LOAD BADGES
-===================================================== */
-
-async function loadBadges(){
-
-  const container =
-    document.getElementById(
-      "badges"
-    );
-
-  let html = "";
-
-
-  /* REGION */
-
-  html +=
-    regionBadge(
-      profileData.city
-    );
-
-
-  /*
-     Badge records expected:
-
-     profile_badges
-     ----------------
-     id
-     profile_id
-     badge_type
-     badge_code
-     badge_label
-     is_active
-     created_at
-  */
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profile_badges")
-        .select(
-          `
-          id,
-          profile_id,
-          badge_type,
-          badge_code,
-          badge_label,
-          is_active
-          `
-        )
-        .eq(
-          "profile_id",
-          targetProfileId
-        )
-        .eq(
-          "is_active",
-          true
-        );
-
-    if(!error && Array.isArray(data)){
-
-      data.forEach(
-        badge=>{
-
-          const type =
-            normalize(
-              badge.badge_type
-            );
-
-          const code =
-            badge.badge_code ||
-            "";
-
-          const label =
-            badge.badge_label ||
-            "";
-
-          if(
-            type === "verified"
-          ){
-
-            html += `
-              <span class="badge verified">
-                ✓ VERIFIED
-              </span>
-            `;
-
-          }
-          else if(
-            type === "mcp" ||
-            type === "mec" ||
-            type === "mec_certified_partner"
-          ){
-
-            html += `
-              <span class="badge mcp">
-                ★ MCP
-                ${label
-                  ? `· ${escapeHTML(label)}`
-                  : ""}
-              </span>
-            `;
-
-          }
-          else if(
-            type === "car"
-          ){
-
-            html += `
-              <span class="badge car">
-                🚗 CAR
-                ${code
-                  ? `· ${escapeHTML(code)}`
-                  : ""}
-              </span>
-            `;
-
-          }
-          else if(
-            type === "property"
-          ){
-
-            html += `
-              <span class="badge property">
-                ◆ PROPERTY
-                ${code
-                  ? `· ${escapeHTML(code)}`
-                  : ""}
-              </span>
-            `;
-
-          }
-          else if(
-            type === "gem"
-          ){
-
-            html += `
-              <span class="badge gem">
-                ◆ GEM
-                ${code
-                  ? `· ${escapeHTML(code)}`
-                  : ""}
-              </span>
-            `;
-
-          }
-          else if(
-            type === "shop"
-          ){
-
-            html += `
-              <span class="badge shop">
-                ▣ SHOP
-                ${code
-                  ? `· ${escapeHTML(code)}`
-                  : ""}
-              </span>
-            `;
-
-          }
-          else if(
-            type === "feedback"
-          ){
-
-            html += `
-              <span class="badge feedback">
-                ★ FEEDBACK
-                ${code
-                  ? `· ${escapeHTML(code)}`
-                  : ""}
-              </span>
-            `;
-
-          }
-          else if(
-            label
-          ){
-
-            html += `
-              <span class="badge region">
-                ${escapeHTML(label)}
-              </span>
-            `;
-
-          }
-
-        }
-      );
-
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Badge loading:",
-      error
-    );
-
-  }
-
-
-  /*
-     KYC APPROVED
-     automatically shows VERIFIED
-     even if the profile_badges table
-     has not been populated yet.
-  */
-
-  if(
-    currentKyc &&
-    normalize(
-      currentKyc.status
-    ) === "approved"
-  ){
-
-    if(
-      !html.includes("VERIFIED")
-    ){
-
-      html += `
-        <span class="badge verified">
-          ✓ VERIFIED
-        </span>
-      `;
-
-    }
-
-  }
-
-
-  container.innerHTML =
-    html;
 
 }
 
@@ -3347,48 +2961,13 @@ function renderProfile(){
   document.getElementById(
     "profileLocation"
   ).textContent =
+    profileData.region_name ||
     profileData.city
-      ? `⌖ ${profileData.city}`
+      ? `⌖ ${
+          profileData.region_name ||
+          profileData.city
+        }`
       : "Location not set";
-
-
-  const avatar =
-    profileData.avatar_url ||
-    "";
-
-
-  const avatarElement =
-    document.getElementById(
-      "avatar"
-    );
-
-
-  const miniAvatar =
-    document.getElementById(
-      "miniAvatar"
-    );
-
-
-  if(avatar){
-
-    avatarElement.src =
-      avatar;
-
-    miniAvatar.src =
-      avatar;
-
-  }
-  else{
-
-    avatarElement.removeAttribute(
-      "src"
-    );
-
-    miniAvatar.removeAttribute(
-      "src"
-    );
-
-  }
 
 
   document.getElementById(
@@ -3403,9 +2982,39 @@ function renderProfile(){
     "pageSubtitle"
   ).textContent =
     isOwner
-      ? "Manage your profile, badges, listings and verification."
-      : "View profile, badges, listings and community activity.";
+      ? "Manage your profile, listings and verification."
+      : "View profile, listings and community activity.";
 
+
+  /* AVATAR */
+
+  const avatar =
+    profileData.avatar_url ||
+    "";
+
+
+  const avatarElement =
+    document.getElementById(
+      "avatar"
+    );
+
+
+  if(avatar){
+
+    avatarElement.src =
+      avatar;
+
+  }
+  else{
+
+    avatarElement.removeAttribute(
+      "src"
+    );
+
+  }
+
+
+  /* OWNER / VISITOR UI */
 
   document.getElementById(
     "ownerActions"
@@ -3413,14 +3022,6 @@ function renderProfile(){
     isOwner
       ? "flex"
       : "none";
-
-
-  document.getElementById(
-    "visitorActions"
-  ).style.display =
-    isOwner
-      ? "none"
-      : "flex";
 
 
   document.getElementById(
@@ -3489,12 +3090,368 @@ function renderProfile(){
 
 
 /* =====================================================
+   BADGES
+===================================================== */
+
+async function loadBadges(){
+
+  const container =
+    document.getElementById(
+      "badges"
+    );
+
+
+  container.innerHTML =
+    `<span class="loading">
+      Loading badges...
+    </span>`;
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profile_badges")
+      .select(
+        `
+        id,
+        profile_id,
+        badge_code,
+        granted_at,
+        granted_by
+        `
+      )
+      .eq(
+        "profile_id",
+        targetProfileId
+      )
+      .order(
+        "granted_at",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      "Badge load error:",
+      error
+    );
+
+    container.innerHTML =
+      "";
+
+    return;
+
+  }
+
+
+  let rows =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  /*
+    IMPORTANT:
+    profile_badges uses badge_code.
+    badges uses slug.
+  */
+
+  const codes =
+    [
+      ...new Set(
+        rows
+          .map(
+            row =>
+              row.badge_code
+          )
+          .filter(Boolean)
+      )
+    ];
+
+
+  if(!codes.length){
+
+    /*
+      Also respect profiles.is_verified / is_mcp.
+      These are displayed even if an old
+      database setup did not create a
+      profile_badges row for them.
+    */
+
+    const fallback =
+      [];
+
+    if(profileData.is_verified){
+      fallback.push({
+        slug:"verified",
+        name:"Verified",
+        icon:"✓",
+        type:"verified"
+      });
+    }
+
+    if(profileData.is_mcp){
+      fallback.push({
+        slug:"mcp",
+        name:"MEC Certified Partner",
+        icon:"MCP",
+        type:"mcp"
+      });
+    }
+
+    if(
+      !fallback.length
+    ){
+
+      container.innerHTML =
+        `<span
+          style="
+            color:var(--muted);
+            font-size:8px;
+          ">
+          No badges yet
+        </span>`;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      fallback
+        .map(
+          badge =>
+            renderBadge(
+              badge
+            )
+        )
+        .join("");
+
+    return;
+
+  }
+
+
+  const {
+    data:definitions,
+    error:definitionError
+  } =
+    await supabaseClient
+      .from("badges")
+      .select(
+        "id,name,slug,description,icon"
+      )
+      .in(
+        "slug",
+        codes
+      );
+
+
+  if(definitionError){
+
+    console.error(
+      "Badge definition error:",
+      definitionError
+    );
+
+    container.innerHTML =
+      "";
+
+    return;
+
+  }
+
+
+  const definitionMap =
+    {};
+
+
+  (definitions || [])
+    .forEach(
+      badge=>{
+        definitionMap[
+          normalize(
+            badge.slug
+          )
+        ] =
+          badge;
+      }
+    );
+
+
+  const rendered =
+    rows
+      .map(
+        row=>{
+
+          const badge =
+            definitionMap[
+              normalize(
+                row.badge_code
+              )
+            ];
+
+
+          if(!badge){
+            return "";
+          }
+
+
+          return renderBadge(
+            badge
+          );
+
+        }
+      )
+      .filter(Boolean);
+
+
+  /*
+    Add Verified / MCP from profile flags
+    if they are not already assigned.
+  */
+
+  const existingSlugs =
+    new Set(
+      rows.map(
+        row =>
+          normalize(
+            row.badge_code
+          )
+      )
+    );
+
+
+  if(
+    profileData.is_verified &&
+    !existingSlugs.has(
+      "verified"
+    )
+  ){
+
+    rendered.unshift(
+      renderBadge({
+        slug:"verified",
+        name:"Verified",
+        icon:"✓"
+      })
+    );
+
+  }
+
+
+  if(
+    profileData.is_mcp &&
+    !existingSlugs.has(
+      "mcp"
+    )
+  ){
+
+    rendered.unshift(
+      renderBadge({
+        slug:"mcp",
+        name:"MEC Certified Partner",
+        icon:"MCP"
+      })
+    );
+
+  }
+
+
+  container.innerHTML =
+    rendered.length
+      ? rendered.join("")
+      : `
+        <span
+          style="
+            color:var(--muted);
+            font-size:8px;
+          ">
+          No badges yet
+        </span>
+      `;
+
+}
+
+
+function renderBadge(badge){
+
+  const slug =
+    normalize(
+      badge.slug
+    );
+
+
+  let type =
+    "category";
+
+
+  if(
+    slug === "verified"
+  ){
+
+    type =
+      "verified";
+
+  }
+  else if(
+    slug === "mcp"
+  ){
+
+    type =
+      "mcp";
+
+  }
+  else if(
+    slug.startsWith(
+      "region-"
+    )
+  ){
+
+    type =
+      "region";
+
+  }
+
+
+  return `
+    <span
+      class="badge ${type}"
+      title="${escapeHTML(
+        badge.description || ""
+      )}">
+
+      <span class="badge-icon">
+        ${escapeHTML(
+          badge.icon || "◆"
+        )}
+      </span>
+
+      <span>
+        ${escapeHTML(
+          badge.name || badge.slug
+        )}
+      </span>
+
+    </span>
+  `;
+
+}
+
+
+/* =====================================================
    PROFILE PHOTO
 ===================================================== */
 
 document.getElementById(
   "avatarInput"
-).addEventListener(
+)
+.addEventListener(
   "change",
   async function(){
 
@@ -3502,8 +3459,10 @@ document.getElementById(
       return;
     }
 
+
     const file =
       this.files?.[0];
+
 
     if(!file){
       return;
@@ -3515,11 +3474,14 @@ document.getElementById(
         "image/jpeg",
         "image/png",
         "image/webp"
-      ].includes(file.type)
+      ].includes(
+        file.type
+      )
     ){
 
       toast(
-        "Please select JPG, PNG or WebP."
+        "Please select JPG, PNG or WebP.",
+        "error"
       );
 
       this.value = "";
@@ -3535,7 +3497,8 @@ document.getElementById(
     ){
 
       toast(
-        "Profile photo must be 5MB or smaller."
+        "Profile photo must be 5MB or smaller.",
+        "error"
       );
 
       this.value = "";
@@ -3564,7 +3527,7 @@ document.getElementById(
 
 
       const {
-        error
+        error:uploadError
       } =
         await supabaseClient
           .storage
@@ -3582,8 +3545,8 @@ document.getElementById(
           );
 
 
-      if(error){
-        throw error;
+      if(uploadError){
+        throw uploadError;
       }
 
 
@@ -3632,7 +3595,7 @@ document.getElementById(
 
 
       toast(
-        "Profile photo updated."
+        "Profile photo updated successfully."
       );
 
     }
@@ -3642,7 +3605,8 @@ document.getElementById(
 
       toast(
         error.message ||
-        "Could not upload profile photo."
+        "Could not upload profile photo.",
+        "error"
       );
 
     }
@@ -3657,12 +3621,47 @@ document.getElementById(
 
 
 /* =====================================================
+   EDIT PROFILE BUTTON
+===================================================== */
+
+document.getElementById(
+  "editProfileButton"
+)
+.addEventListener(
+  "click",
+  ()=>{
+
+    if(!isOwner){
+      return;
+    }
+
+
+    openTab(
+      "profile"
+    );
+
+
+    setTimeout(
+      ()=>{
+        document.getElementById(
+          "fullName"
+        ).focus();
+      },
+      50
+    );
+
+  }
+);
+
+
+/* =====================================================
    PROFILE UPDATE
 ===================================================== */
 
 document.getElementById(
   "profileForm"
-).addEventListener(
+)
+.addEventListener(
   "submit",
   async function(event){
 
@@ -3684,24 +3683,32 @@ document.getElementById(
 
       full_name:
         document
-          .getElementById("fullName")
+          .getElementById(
+            "fullName"
+          )
           .value
           .trim(),
 
       phone:
         document
-          .getElementById("phone")
+          .getElementById(
+            "phone"
+          )
           .value
           .trim(),
 
       city:
         document
-          .getElementById("city")
+          .getElementById(
+            "city"
+          )
           .value,
 
       bio:
         document
-          .getElementById("bio")
+          .getElementById(
+            "bio"
+          )
           .value
           .trim()
 
@@ -3711,7 +3718,8 @@ document.getElementById(
     if(!payload.full_name){
 
       toast(
-        "Please enter your name."
+        "Please enter your name.",
+        "error"
       );
 
       return;
@@ -3733,15 +3741,12 @@ document.getElementById(
       } =
         await supabaseClient
           .from("profiles")
-          .upsert(
-            {
-              id:
-                currentUser.id,
-              ...payload
-            },
-            {
-              onConflict:"id"
-            }
+          .update(
+            payload
+          )
+          .eq(
+            "id",
+            currentUser.id
           );
 
 
@@ -3763,6 +3768,11 @@ document.getElementById(
         "Profile saved successfully."
       );
 
+
+      openTab(
+        "posts"
+      );
+
     }
     catch(error){
 
@@ -3770,7 +3780,8 @@ document.getElementById(
 
       toast(
         error.message ||
-        "Could not save profile."
+        "Could not save profile.",
+        "error"
       );
 
     }
@@ -3788,11 +3799,24 @@ document.getElementById(
 );
 
 
+/* =====================================================
+   CANCEL PROFILE
+===================================================== */
+
 document.getElementById(
   "cancelProfileButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
-  renderProfile
+  ()=>{
+
+    renderProfile();
+
+    openTab(
+      "posts"
+    );
+
+  }
 );
 
 
@@ -3855,8 +3879,7 @@ async function loadPosts(){
         [
           "car",
           "property",
-          "gem",
-          "shop"
+          "gem"
         ]
       )
       .order(
@@ -3874,13 +3897,21 @@ async function loadPosts(){
     grid.innerHTML =
       `
         <div class="empty">
-          <div class="empty-icon">!</div>
+
+          <div class="empty-icon">
+            !
+          </div>
+
           <strong>
             Could not load listings
           </strong>
+
           <span>
-            Please try again.
+            ${escapeHTML(
+              error.message
+            )}
           </span>
+
         </div>
       `;
 
@@ -3915,7 +3946,9 @@ function updateStats(){
   ).textContent =
     allPosts.filter(
       item =>
-        normalize(item.status) ===
+        normalize(
+          item.status
+        ) ===
         "approved"
     ).length;
 
@@ -3938,8 +3971,11 @@ function renderPosts(){
           activePostCategory ===
           "all"
         ){
+
           return true;
+
         }
+
 
         return normalize(
           item.category
@@ -3955,13 +3991,19 @@ function renderPosts(){
     grid.innerHTML =
       `
         <div class="empty">
-          <div class="empty-icon">◇</div>
+
+          <div class="empty-icon">
+            ◇
+          </div>
+
           <strong>
             No listings yet
           </strong>
+
           <span>
             This profile has no listings in this category.
           </span>
+
         </div>
       `;
 
@@ -3972,7 +4014,9 @@ function renderPosts(){
 
   grid.innerHTML =
     posts
-      .map(postCard)
+      .map(
+        postCard
+      )
       .join("");
 
 }
@@ -3985,49 +4029,46 @@ function postCard(item){
 
 
   const category =
-    normalize(item.category)
-      .toUpperCase();
+    normalize(
+      item.category
+    ).toUpperCase();
 
 
   const image =
     cover
-      ?
-      `
+      ? `
         <img
           class="post-image"
           src="${escapeHTML(cover)}"
-          alt="${escapeHTML(item.title || "Listing")}"
-          loading="lazy">
+          alt="${escapeHTML(
+            item.title ||
+            "Listing"
+          )}"
+          loading="lazy"
+          onerror="this.style.display='none';">
       `
       :
-      `
-        <div class="post-image"></div>
-      `;
+      `<div class="post-image"></div>`;
 
 
   const ownerButtons =
     isOwner
-      ?
-      `
+      ? `
         <a
-          href="./add-listing.html?id=${encodeURIComponent(item.id)}">
-
+          href="./add-listing.html?id=${encodeURIComponent(
+            item.id
+          )}">
           Edit
-
         </a>
-
 
         <button
           class="delete"
           type="button"
           onclick="deleteListing('${item.id}')">
-
           Delete
-
         </button>
       `
-      :
-      "";
+      : "";
 
 
   return `
@@ -4038,7 +4079,9 @@ function postCard(item){
       <div class="post-content">
 
         <div class="post-category">
-          ${escapeHTML(category)}
+          ${escapeHTML(
+            category
+          )}
         </div>
 
         <div class="post-title">
@@ -4076,10 +4119,10 @@ function postCard(item){
         <div class="post-actions">
 
           <a
-            href="./listing-detail.html?id=${encodeURIComponent(item.id)}">
-
-            View
-
+            href="./listing-detail.html?id=${encodeURIComponent(
+              item.id
+            )}">
+            View Detail
           </a>
 
           ${ownerButtons}
@@ -4115,10 +4158,15 @@ async function deleteListing(id){
 
   if(
     !confirm(
-      `Delete "${post.title || "this listing"}"?`
+      `Delete "${
+        post.title ||
+        "this listing"
+      }"?`
     )
   ){
+
     return;
+
   }
 
 
@@ -4159,7 +4207,8 @@ async function deleteListing(id){
 
     toast(
       error.message ||
-      "Could not delete listing."
+      "Could not delete listing.",
+      "error"
     );
 
   }
@@ -4181,15 +4230,16 @@ document.querySelectorAll(
       "click",
       function(){
 
-        document.querySelectorAll(
-          ".post-category"
-        )
-        .forEach(
-          x =>
-            x.classList.remove(
-              "active"
-            )
-        );
+        document
+          .querySelectorAll(
+            ".post-category"
+          )
+          .forEach(
+            x =>
+              x.classList.remove(
+                "active"
+              )
+          );
 
 
         this.classList.add(
@@ -4233,31 +4283,39 @@ async function loadReactions(){
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     return;
 
   }
 
 
+  const rows =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
   const likes =
-    (data || [])
-      .filter(
-        x =>
-          normalize(x.reaction) ===
-          "like"
-      )
-      .length;
+    rows.filter(
+      x =>
+        normalize(
+          x.reaction
+        ) ===
+        "like"
+    ).length;
 
 
   const dislikes =
-    (data || [])
-      .filter(
-        x =>
-          normalize(x.reaction) ===
-          "dislike"
-      )
-      .length;
+    rows.filter(
+      x =>
+        normalize(
+          x.reaction
+        ) ===
+        "dislike"
+    ).length;
 
 
   document.getElementById(
@@ -4285,7 +4343,7 @@ async function loadReactions(){
 
 
   currentReaction =
-    (data || []).find(
+    rows.find(
       x =>
         x.user_id ===
         currentUser.id
@@ -4299,18 +4357,26 @@ async function loadReactions(){
 
 function updateReactionButtons(){
 
-  document.getElementById(
-    "likeButton"
-  ).classList.toggle(
+  const like =
+    document.getElementById(
+      "likeButton"
+    );
+
+
+  const dislike =
+    document.getElementById(
+      "dislikeButton"
+    );
+
+
+  like.classList.toggle(
     "active",
     currentReaction?.reaction ===
       "like"
   );
 
 
-  document.getElementById(
-    "dislikeButton"
-  ).classList.toggle(
+  dislike.classList.toggle(
     "active",
     currentReaction?.reaction ===
       "dislike"
@@ -4319,12 +4385,15 @@ function updateReactionButtons(){
 }
 
 
-async function setReaction(reaction){
+async function setReaction(
+  reaction
+){
 
   if(isOwner){
 
     toast(
-      "You cannot react to your own profile."
+      "You cannot react to your own profile.",
+      "error"
     );
 
     return;
@@ -4344,7 +4413,9 @@ async function setReaction(reaction){
         error
       } =
         await supabaseClient
-          .from("profile_reactions")
+          .from(
+            "profile_reactions"
+          )
           .delete()
           .eq(
             "id",
@@ -4367,7 +4438,9 @@ async function setReaction(reaction){
         error
       } =
         await supabaseClient
-          .from("profile_reactions")
+          .from(
+            "profile_reactions"
+          )
           .upsert(
             {
               profile_id:
@@ -4402,7 +4475,8 @@ async function setReaction(reaction){
 
     toast(
       error.message ||
-      "Could not update reaction."
+      "Could not update reaction.",
+      "error"
     );
 
   }
@@ -4412,20 +4486,325 @@ async function setReaction(reaction){
 
 document.getElementById(
   "likeButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
   ()=>{
-    setReaction("like");
+    setReaction(
+      "like"
+    );
   }
 );
 
 
 document.getElementById(
   "dislikeButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
   ()=>{
-    setReaction("dislike");
+    setReaction(
+      "dislike"
+    );
+  }
+);
+
+
+/* =====================================================
+   FOLLOW
+===================================================== */
+
+async function loadFollowState(){
+
+  if(isOwner){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from(
+        "profile_follows"
+      )
+      .select(
+        "id,follower_id,following_id"
+      )
+      .eq(
+        "follower_id",
+        currentUser.id
+      )
+      .eq(
+        "following_id",
+        targetProfileId
+      )
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Follow state:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  isFollowing =
+    Boolean(data);
+
+
+  updateFollowButton();
+
+
+  await loadFollowerCount();
+
+}
+
+
+function updateFollowButton(){
+
+  const button =
+    document.getElementById(
+      "followButton"
+    );
+
+
+  if(isFollowing){
+
+    button.textContent =
+      "✓ Following";
+
+    button.classList.add(
+      "following"
+    );
+
+  }
+  else{
+
+    button.textContent =
+      "+ Follow";
+
+    button.classList.remove(
+      "following"
+    );
+
+  }
+
+}
+
+
+async function loadFollowerCount(){
+
+  const {
+    count,
+    error
+  } =
+    await supabaseClient
+      .from(
+        "profile_follows"
+      )
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "following_id",
+        targetProfileId
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "followStat"
+  ).textContent =
+    count || 0;
+
+}
+
+
+async function toggleFollow(){
+
+  if(isOwner){
+    return;
+  }
+
+
+  const button =
+    document.getElementById(
+      "followButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  try{
+
+    if(isFollowing){
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from(
+            "profile_follows"
+          )
+          .delete()
+          .eq(
+            "follower_id",
+            currentUser.id
+          )
+          .eq(
+            "following_id",
+            targetProfileId
+          );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      isFollowing =
+        false;
+
+
+      toast(
+        "Unfollowed."
+      );
+
+    }
+    else{
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from(
+            "profile_follows"
+          )
+          .insert({
+
+            follower_id:
+              currentUser.id,
+
+            following_id:
+              targetProfileId
+
+          });
+
+
+      if(error){
+
+        if(
+          error.code ===
+          "23505"
+        ){
+
+          isFollowing =
+            true;
+
+        }
+        else{
+
+          throw error;
+
+        }
+
+      }
+      else{
+
+        isFollowing =
+          true;
+
+      }
+
+
+      toast(
+        "Following profile."
+      );
+
+    }
+
+
+    updateFollowButton();
+
+    await loadFollowerCount();
+
+  }
+  catch(error){
+
+    console.error(
+      error
+    );
+
+    toast(
+      error.message ||
+      "Could not update follow status.",
+      "error"
+    );
+
+  }
+  finally{
+
+    button.disabled =
+      false;
+
+  }
+
+}
+
+
+document.getElementById(
+  "followButton"
+)
+.addEventListener(
+  "click",
+  toggleFollow
+);
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+document.getElementById(
+  "messageButton"
+)
+.addEventListener(
+  "click",
+  ()=>{
+
+    if(isOwner){
+      return;
+    }
+
+
+    window.location.href =
+      `./chat.html?user=${encodeURIComponent(
+        targetProfileId
+      )}`;
+
   }
 );
 
@@ -4455,9 +4834,17 @@ async function loadComments(){
     error
   } =
     await supabaseClient
-      .from("profile_comments")
+      .from(
+        "profile_comments"
+      )
       .select(
-        "id,profile_id,user_id,comment,created_at"
+        `
+        id,
+        profile_id,
+        user_id,
+        comment,
+        created_at
+        `
       )
       .eq(
         "profile_id",
@@ -4473,17 +4860,25 @@ async function loadComments(){
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     list.innerHTML =
       `
         <div class="empty">
+
           <strong>
             Could not load comments
           </strong>
+
           <span>
-            Please try again.
+            ${escapeHTML(
+              error.message
+            )}
           </span>
+
         </div>
       `;
 
@@ -4497,13 +4892,19 @@ async function loadComments(){
     list.innerHTML =
       `
         <div class="empty">
-          <div class="empty-icon">◎</div>
+
+          <div class="empty-icon">
+            ◎
+          </div>
+
           <strong>
             No comments yet
           </strong>
+
           <span>
             Be the first to comment.
           </span>
+
         </div>
       `;
 
@@ -4523,7 +4924,8 @@ async function loadComments(){
     ];
 
 
-  let profileMap = {};
+  let profileMap =
+    {};
 
 
   if(userIds.length){
@@ -4532,7 +4934,9 @@ async function loadComments(){
       data:users
     } =
       await supabaseClient
-        .from("profiles")
+        .from(
+          "profiles"
+        )
         .select(
           "id,full_name,avatar_url"
         )
@@ -4545,10 +4949,12 @@ async function loadComments(){
     (users || [])
       .forEach(
         user=>{
+
           profileMap[
             user.id
           ] =
             user;
+
         }
       );
 
@@ -4601,19 +5007,15 @@ async function loadComments(){
 
               ${
                 own
-                  ?
-                  `
+                  ? `
                     <button
                       class="comment-delete"
                       type="button"
                       onclick="deleteComment('${comment.id}')">
-
                       Delete comment
-
                     </button>
                   `
-                  :
-                  ""
+                  : ""
               }
 
             </article>
@@ -4628,7 +5030,8 @@ async function loadComments(){
 
 document.getElementById(
   "commentForm"
-).addEventListener(
+)
+.addEventListener(
   "submit",
   async function(event){
 
@@ -4656,19 +5059,21 @@ document.getElementById(
         error
       } =
         await supabaseClient
-          .from("profile_comments")
-          .insert(
-            {
-              profile_id:
-                targetProfileId,
+          .from(
+            "profile_comments"
+          )
+          .insert({
 
-              user_id:
-                currentUser.id,
+            profile_id:
+              targetProfileId,
 
-              comment:
-                comment
-            }
-          );
+            user_id:
+              currentUser.id,
+
+            comment:
+              comment
+
+          });
 
 
       if(error){
@@ -4676,8 +5081,7 @@ document.getElementById(
       }
 
 
-      input.value =
-        "";
+      input.value = "";
 
 
       toast(
@@ -4690,11 +5094,15 @@ document.getElementById(
     }
     catch(error){
 
-      console.error(error);
+      console.error(
+        error
+      );
+
 
       toast(
         error.message ||
-        "Could not post comment."
+        "Could not post comment.",
+        "error"
       );
 
     }
@@ -4711,7 +5119,9 @@ async function deleteComment(id){
       error
     } =
       await supabaseClient
-        .from("profile_comments")
+        .from(
+          "profile_comments"
+        )
         .delete()
         .eq(
           "id",
@@ -4738,11 +5148,15 @@ async function deleteComment(id){
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     toast(
       error.message ||
-      "Could not delete comment."
+      "Could not delete comment.",
+      "error"
     );
 
   }
@@ -4752,320 +5166,6 @@ async function deleteComment(id){
 
 window.deleteComment =
   deleteComment;
-
-
-/* =====================================================
-   FRIEND SYSTEM
-===================================================== */
-
-async function loadFriendStatus(){
-
-  if(isOwner){
-    return;
-  }
-
-
-  /*
-    Expected table:
-
-    friendships
-    ----------------
-    id
-    requester_id
-    addressee_id
-    status
-    created_at
-  */
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("friendships")
-        .select(
-          `
-          id,
-          requester_id,
-          addressee_id,
-          status
-          `
-        )
-        .or(
-          `and(requester_id.eq.${currentUser.id},addressee_id.eq.${targetProfileId}),and(requester_id.eq.${targetProfileId},addressee_id.eq.${currentUser.id})`
-        )
-        .maybeSingle();
-
-
-    if(error){
-
-      console.error(error);
-
-      return;
-
-    }
-
-
-    friendRecord =
-      data || null;
-
-
-    renderFriendStatus();
-
-  }
-  catch(error){
-
-    console.error(error);
-
-  }
-
-}
-
-
-function renderFriendStatus(){
-
-  const button =
-    document.getElementById(
-      "friendButton"
-    );
-
-
-  const chat =
-    document.getElementById(
-      "chatButton"
-    );
-
-
-  const status =
-    document.getElementById(
-      "friendStatus"
-    );
-
-
-  if(!friendRecord){
-
-    button.textContent =
-      "+ Add Friend";
-
-    button.disabled =
-      false;
-
-    chat.style.display =
-      "none";
-
-    status.textContent =
-      "";
-
-    return;
-
-  }
-
-
-  const state =
-    normalize(
-      friendRecord.status
-    );
-
-
-  if(state === "accepted"){
-
-    button.textContent =
-      "✓ Friends";
-
-    button.disabled =
-      true;
-
-    chat.style.display =
-      "inline-flex";
-
-    status.textContent =
-      "You are friends.";
-
-  }
-  else if(
-    state === "pending"
-  ){
-
-    const sentByMe =
-      friendRecord.requester_id ===
-      currentUser.id;
-
-
-    button.textContent =
-      sentByMe
-        ? "Request Sent"
-        : "Accept Friend";
-
-    button.disabled =
-      sentByMe;
-
-    chat.style.display =
-      "none";
-
-    status.textContent =
-      sentByMe
-        ? "Friend request pending."
-        : "This person sent you a friend request.";
-
-  }
-
-}
-
-
-document.getElementById(
-  "friendButton"
-).addEventListener(
-  "click",
-  async ()=>{
-
-    if(isOwner){
-      return;
-    }
-
-
-    if(
-      friendRecord &&
-      normalize(
-        friendRecord.status
-      ) ===
-      "pending" &&
-      friendRecord.addressee_id ===
-      currentUser.id
-    ){
-
-      try{
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("friendships")
-            .update({
-              status:
-                "accepted"
-            })
-            .eq(
-              "id",
-              friendRecord.id
-            );
-
-
-        if(error){
-          throw error;
-        }
-
-
-        toast(
-          "Friend request accepted."
-        );
-
-
-        await loadFriendStatus();
-
-      }
-      catch(error){
-
-        console.error(error);
-
-        toast(
-          error.message ||
-          "Could not accept request."
-        );
-
-      }
-
-      return;
-
-    }
-
-
-    if(friendRecord){
-      return;
-    }
-
-
-    const button =
-      document.getElementById(
-        "friendButton"
-      );
-
-
-    button.disabled =
-      true;
-
-
-    try{
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("friendships")
-          .insert(
-            {
-              requester_id:
-                currentUser.id,
-
-              addressee_id:
-                targetProfileId,
-
-              status:
-                "pending"
-            }
-          );
-
-
-      if(error){
-        throw error;
-      }
-
-
-      toast(
-        "Friend request sent."
-      );
-
-
-      await loadFriendStatus();
-
-    }
-    catch(error){
-
-      console.error(error);
-
-      button.disabled =
-        false;
-
-      toast(
-        error.message ||
-        "Could not send friend request."
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   CHAT
-===================================================== */
-
-document.getElementById(
-  "chatButton"
-).addEventListener(
-  "click",
-  ()=>{
-
-    window.location.href =
-      `./chat.html?user=${encodeURIComponent(
-        targetProfileId
-      )}`;
-
-  }
-);
 
 
 /* =====================================================
@@ -5080,24 +5180,30 @@ const reportModal =
 
 document.getElementById(
   "reportProfileButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
   ()=>{
+
     reportModal.classList.add(
       "show"
     );
+
   }
 );
 
 
 document.getElementById(
   "cancelReportButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
   ()=>{
+
     reportModal.classList.remove(
       "show"
     );
+
   }
 );
 
@@ -5123,7 +5229,8 @@ reportModal.addEventListener(
 
 document.getElementById(
   "submitReportButton"
-).addEventListener(
+)
+.addEventListener(
   "click",
   async ()=>{
 
@@ -5136,7 +5243,8 @@ document.getElementById(
     const details =
       document.getElementById(
         "reportDetails"
-      ).value.trim();
+      ).value
+      .trim();
 
 
     const button =
@@ -5155,27 +5263,27 @@ document.getElementById(
         error
       } =
         await supabaseClient
-          .from("profile_reports")
-          .insert(
-            {
+          .from(
+            "profile_reports"
+          )
+          .insert({
 
-              profile_id:
-                targetProfileId,
+            profile_id:
+              targetProfileId,
 
-              reporter_id:
-                currentUser.id,
+            reporter_id:
+              currentUser.id,
 
-              reason:
-                reason,
+            reason:
+              reason,
 
-              details:
-                details,
+            details:
+              details,
 
-              status:
-                "pending"
+            status:
+              "pending"
 
-            }
-          );
+          });
 
 
       if(error){
@@ -5185,8 +5293,7 @@ document.getElementById(
 
       document.getElementById(
         "reportDetails"
-      ).value =
-        "";
+      ).value = "";
 
 
       reportModal.classList.remove(
@@ -5195,17 +5302,21 @@ document.getElementById(
 
 
       toast(
-        "Report submitted."
+        "Report submitted to admin."
       );
 
     }
     catch(error){
 
-      console.error(error);
+      console.error(
+        error
+      );
+
 
       toast(
         error.message ||
-        "Could not submit report."
+        "Could not submit report.",
+        "error"
       );
 
     }
@@ -5236,7 +5347,9 @@ async function loadKyc(){
     error
   } =
     await supabaseClient
-      .from("kyc_submissions")
+      .from(
+        "kyc_submissions"
+      )
       .select(
         `
         id,
@@ -5268,7 +5381,9 @@ async function loadKyc(){
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     return;
 
@@ -5309,12 +5424,6 @@ function renderKyc(){
     );
 
 
-  const short =
-    document.getElementById(
-      "kycStatusShort"
-    );
-
-
   const rejection =
     document.getElementById(
       "kycRejection"
@@ -5343,10 +5452,6 @@ function renderKyc(){
 
     text.textContent =
       "Submit your documents to request verification.";
-
-
-    short.textContent =
-      "—";
 
 
     submit.disabled =
@@ -5379,10 +5484,6 @@ function renderKyc(){
       "Your documents are waiting for admin review.";
 
 
-    short.textContent =
-      "Pending";
-
-
     submit.disabled =
       true;
 
@@ -5400,10 +5501,6 @@ function renderKyc(){
 
     text.textContent =
       "Your identity has been verified by Myanmar Elite Connect.";
-
-
-    short.textContent =
-      "Verified";
 
 
     submit.disabled =
@@ -5425,10 +5522,6 @@ function renderKyc(){
       "Please correct the problem and submit again.";
 
 
-    short.textContent =
-      "Rejected";
-
-
     submit.disabled =
       false;
 
@@ -5442,21 +5535,16 @@ function renderKyc(){
 
 
       rejection.textContent =
-        `Reason: ${currentKyc.rejection_reason}`;
+        `Reason: ${
+          currentKyc.rejection_reason
+        }`;
 
     }
 
   }
 
-
-  loadBadges();
-
 }
 
-
-/* =====================================================
-   KYC PREVIEW
-===================================================== */
 
 function previewFile(
   inputId,
@@ -5483,16 +5571,18 @@ function previewFile(
           "image/jpeg",
           "image/png",
           "image/webp"
-        ].includes(file.type)
+        ].includes(
+          file.type
+        )
       ){
 
         toast(
-          "Please select JPG, PNG or WebP."
+          "Please select JPG, PNG or WebP.",
+          "error"
         );
 
 
-        this.value =
-          "";
+        this.value = "";
 
 
         return;
@@ -5551,10 +5641,6 @@ previewFile(
 );
 
 
-/* =====================================================
-   KYC UPLOAD
-===================================================== */
-
 async function uploadKycImage(
   file,
   side
@@ -5574,7 +5660,9 @@ async function uploadKycImage(
       "image/jpeg",
       "image/png",
       "image/webp"
-    ].includes(file.type)
+    ].includes(
+      file.type
+    )
   ){
 
     throw new Error(
@@ -5637,7 +5725,8 @@ async function uploadKycImage(
 
 document.getElementById(
   "kycForm"
-).addEventListener(
+)
+.addEventListener(
   "submit",
   async function(event){
 
@@ -5658,7 +5747,8 @@ document.getElementById(
     ){
 
       toast(
-        "Your KYC is already under review."
+        "Your KYC is already under review.",
+        "error"
       );
 
       return;
@@ -5713,42 +5803,42 @@ document.getElementById(
         error
       } =
         await supabaseClient
-          .from("kyc_submissions")
-          .insert(
-            {
-
-              user_id:
-                currentUser.id,
-
-              full_name:
-                profileData.full_name ||
-                "",
-
-              document_type:
-                document.getElementById(
-                  "documentType"
-                ).value,
-
-              front_image_url:
-                frontPath,
-
-              back_image_url:
-                backPath,
-
-              status:
-                "pending",
-
-              rejection_reason:
-                null,
-
-              reviewed_by:
-                null,
-
-              reviewed_at:
-                null
-
-            }
+          .from(
+            "kyc_submissions"
           )
+          .insert({
+
+            user_id:
+              currentUser.id,
+
+            full_name:
+              profileData.full_name ||
+              "",
+
+            document_type:
+              document.getElementById(
+                "documentType"
+              ).value,
+
+            front_image_url:
+              frontPath,
+
+            back_image_url:
+              backPath,
+
+            status:
+              "pending",
+
+            rejection_reason:
+              null,
+
+            reviewed_by:
+              null,
+
+            reviewed_at:
+              null
+
+          })
           .select()
           .single();
 
@@ -5791,17 +5881,21 @@ document.getElementById(
 
 
       toast(
-        "KYC submitted for admin review."
+        "KYC submitted. Waiting for admin approval."
       );
 
     }
     catch(error){
 
-      console.error(error);
+      console.error(
+        error
+      );
+
 
       toast(
         error.message ||
-        "KYC submission failed."
+        "KYC submission failed.",
+        "error"
       );
 
     }
@@ -5810,8 +5904,10 @@ document.getElementById(
       button.disabled =
         false;
 
+
       button.textContent =
         "Submit for Verification";
+
 
       renderKyc();
 
@@ -5850,6 +5946,85 @@ const tabMap = {
 };
 
 
+function openTab(
+  tabName
+){
+
+  const tab =
+    document.querySelector(
+      `.tab[data-tab="${tabName}"]`
+    );
+
+
+  if(!tab){
+    return;
+  }
+
+
+  if(
+    tab.style.display ===
+    "none"
+  ){
+
+    return;
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".tab"
+    )
+    .forEach(
+      button =>
+        button.classList.remove(
+          "active"
+        )
+    );
+
+
+  tab.classList.add(
+    "active"
+  );
+
+
+  Object.values(
+    tabMap
+  )
+  .forEach(
+    panel =>
+      panel.classList.remove(
+        "active"
+      )
+  );
+
+
+  tabMap[
+    tabName
+  ].classList.add(
+    "active"
+  );
+
+
+  if(
+    tabName ===
+    "profile"
+  ){
+
+    document
+      .getElementById(
+        "profilePanel"
+      )
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+  }
+
+}
+
+
 document.querySelectorAll(
   ".tab"
 )
@@ -5860,48 +6035,9 @@ document.querySelectorAll(
       "click",
       function(){
 
-        const target =
-          this.dataset.tab;
-
-
-        if(
-          !tabMap[target]
-        ){
-          return;
-        }
-
-
-        document.querySelectorAll(
-          ".tab"
-        )
-        .forEach(
-          x =>
-            x.classList.remove(
-              "active"
-            )
+        openTab(
+          this.dataset.tab
         );
-
-
-        this.classList.add(
-          "active"
-        );
-
-
-        Object.values(
-          tabMap
-        )
-        .forEach(
-          panel =>
-            panel.classList.remove(
-              "active"
-            )
-        );
-
-
-        tabMap[target]
-          .classList.add(
-            "active"
-          );
 
       }
     );
@@ -5940,25 +6076,28 @@ async function init(){
 
     await loadProfile();
 
-    await loadKyc();
-
     await loadPosts();
 
     await loadComments();
 
     await loadReactions();
 
-    await loadFriendStatus();
+    await loadFollowState();
 
+    await loadKyc();
 
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     toast(
       error.message ||
-      "Could not load profile."
+      "Could not load profile.",
+      "error"
     );
 
   }
