@@ -2,61 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
 
   <title>Profile — Myanmar Elite Connect</title>
 
-  <meta
-    name="description"
-    content="Myanmar Elite Connect user profile"
-  >
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     :root {
       --bg: #f5f7fb;
       --surface: #ffffff;
-      --surface-2: #f0f3f8;
+      --surface-soft: #f1f4f8;
       --text: #10233f;
-      --muted: #748096;
-      --border: rgba(16,35,63,.09);
-
+      --muted: #738096;
       --navy: #071a34;
-      --navy-2: #173b62;
-
+      --navy-2: #12385f;
       --gold: #d7b35a;
-      --gold-light: #f1d487;
-
-      --danger: #d94b5b;
-      --success: #2f9e68;
-
-      --shadow:
-        0 18px 55px rgba(16,35,63,.09);
-
+      --gold-soft: #f6e5aa;
+      --green: #21a366;
+      --red: #d84c4c;
+      --border: rgba(16,35,63,.09);
+      --shadow: 0 18px 50px rgba(16,35,63,.09);
       --radius: 18px;
     }
 
     body.dark {
       --bg: #071321;
       --surface: #0d1d31;
-      --surface-2: #12263d;
-
-      --text: #f5f7fb;
-      --muted: #98a7ba;
-      --border: rgba(255,255,255,.09);
-
-      --navy: #f5f7fb;
+      --surface-soft: #12263d;
+      --text: #f4f7fb;
+      --muted: #94a3b7;
+      --navy: #f4f7fb;
       --navy-2: #dce5ef;
-
-      --shadow:
-        0 20px 60px rgba(0,0,0,.30);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 18px 50px rgba(0,0,0,.28);
     }
 
     html {
@@ -65,7 +51,8 @@
 
     body {
       min-height: 100vh;
-
+      background: var(--bg);
+      color: var(--text);
       font-family:
         Inter,
         "Noto Sans Myanmar",
@@ -75,13 +62,6 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
-      background: var(--bg);
-      color: var(--text);
-
-      transition:
-        background .25s ease,
-        color .25s ease;
     }
 
     button,
@@ -102,20 +82,24 @@
 
     img {
       max-width: 100%;
-      display: block;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding-bottom: 95px;
     }
 
     /* =====================================================
-       TOP NAV
+       TOP HEADER
     ===================================================== */
 
     .topbar {
-      position: fixed;
-
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
-
       z-index: 1000;
 
       height: 68px;
@@ -127,35 +111,27 @@
           transparent
         );
 
-      border-bottom:
-        1px solid var(--border);
+      border-bottom: 1px solid var(--border);
 
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
 
     .topbar-inner {
-      width:
-        min(
-          1180px,
-          calc(100% - 28px)
-        );
-
+      width: min(1180px, calc(100% - 28px));
       height: 100%;
-
       margin: auto;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 15px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-
       gap: 10px;
-
       min-width: 0;
     }
 
@@ -165,30 +141,24 @@
 
       border-radius: 11px;
 
-      background: var(--surface);
-
-      border:
-        1px solid var(--border);
-
       display: grid;
       place-items: center;
 
       overflow: hidden;
 
-      flex: 0 0 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
     }
 
     .brand-logo img {
       width: 82%;
       height: 82%;
-
       object-fit: contain;
     }
 
     .brand-name {
       font-size: 14px;
-      font-weight: 850;
-
+      font-weight: 900;
       white-space: nowrap;
     }
 
@@ -206,67 +176,140 @@
       width: 39px;
       height: 39px;
 
-      border-radius: 11px;
-
-      border:
-        1px solid var(--border);
-
-      background: var(--surface);
-
-      color: var(--text);
-
       display: grid;
       place-items: center;
 
-      transition:
-        transform .18s ease,
-        border-color .18s ease;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+
+      background: var(--surface);
+      color: var(--text);
+
+      transition: .2s ease;
     }
 
     .icon-button:hover {
-      transform: translateY(-2px);
-      border-color: rgba(215,179,90,.6);
+      transform: translateY(-1px);
+      border-color: rgba(215,179,90,.55);
     }
 
     /* =====================================================
-       PAGE
+       MAIN
     ===================================================== */
 
-    .page {
-      width:
-        min(
-          900px,
-          calc(100% - 28px)
-        );
-
-      margin:
-        0 auto;
-
-      padding:
-        92px 0 110px;
+    .main {
+      width: min(940px, calc(100% - 24px));
+      margin: 20px auto 0;
     }
 
     /* =====================================================
-       PROFILE HEADER
+       SEARCH
+    ===================================================== */
+
+    .search-box {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 48px;
+
+      padding:
+        0 48px 0 17px;
+
+      border-radius: 14px;
+
+      border: 1px solid var(--border);
+      outline: none;
+
+      background: var(--surface);
+      color: var(--text);
+
+      box-shadow: 0 8px 25px rgba(16,35,63,.05);
+    }
+
+    .search-input:focus {
+      border-color: rgba(215,179,90,.7);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: .55;
+    }
+
+    .search-results {
+      margin-top: 8px;
+
+      border-radius: 15px;
+
+      overflow: hidden;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+
+      box-shadow: var(--shadow);
+    }
+
+    .search-result {
+      padding: 12px 14px;
+
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-result:last-child {
+      border-bottom: 0;
+    }
+
+    .result-avatar {
+      width: 42px;
+      height: 42px;
+
+      flex: 0 0 42px;
+
+      border-radius: 50%;
+      object-fit: cover;
+
+      background: var(--surface-soft);
+    }
+
+    .result-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .result-name {
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .result-username {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* =====================================================
+       PROFILE CARD
     ===================================================== */
 
     .profile-card {
-      background:
-        linear-gradient(
-          145deg,
-          var(--surface),
-          var(--surface-2)
-        );
-
-      border:
-        1px solid var(--border);
-
-      border-radius:
-        24px;
-
-      box-shadow:
-        var(--shadow);
-
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
       overflow: hidden;
     }
 
@@ -275,70 +318,62 @@
 
       background:
         radial-gradient(
-          circle at 85% 15%,
-          rgba(215,179,90,.28),
-          transparent 35%
+          circle at 80% 20%,
+          rgba(215,179,90,.24),
+          transparent 30%
         ),
         linear-gradient(
           135deg,
-          #071a34,
-          #173b62
+          var(--navy),
+          var(--navy-2)
         );
 
       position: relative;
     }
 
-    body.dark .profile-cover {
+    .profile-cover::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
       background:
-        radial-gradient(
-          circle at 85% 15%,
-          rgba(215,179,90,.24),
-          transparent 35%
-        ),
         linear-gradient(
-          135deg,
-          #102b4d,
-          #071321
+          120deg,
+          transparent,
+          rgba(255,255,255,.06)
         );
     }
 
-    .profile-main {
-      padding:
-        0 22px 24px;
+    .profile-body {
+      padding: 0 20px 22px;
     }
 
     .profile-head {
-      margin-top: -53px;
-
       display: flex;
       align-items: flex-end;
-
+      justify-content: space-between;
       gap: 18px;
+
+      margin-top: -54px;
+
+      position: relative;
+      z-index: 2;
     }
 
     .avatar-wrap {
       position: relative;
-
-      width: 106px;
-      height: 106px;
-
-      flex: 0 0 106px;
     }
 
     .avatar {
-      width: 106px;
-      height: 106px;
+      width: 108px;
+      height: 108px;
 
       border-radius: 50%;
 
       object-fit: cover;
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--gold-light),
-          var(--navy-2)
-        );
+      background: var(--surface-soft);
 
       border:
         5px solid var(--surface);
@@ -347,182 +382,195 @@
         0 12px 28px rgba(0,0,0,.16);
     }
 
-    .avatar-edit {
+    .verified-dot {
       position: absolute;
 
-      right: 2px;
-      bottom: 2px;
+      right: 4px;
+      bottom: 8px;
 
-      width: 32px;
-      height: 32px;
-
-      border-radius: 50%;
-
-      border:
-        3px solid var(--surface);
-
-      background: var(--navy);
-
-      color: var(--surface);
+      width: 27px;
+      height: 27px;
 
       display: grid;
       place-items: center;
 
-      font-size: 13px;
+      border-radius: 50%;
+
+      background: #1686f8;
+      color: white;
+
+      border: 3px solid var(--surface);
+
+      font-size: 12px;
+      font-weight: 900;
     }
 
-    .profile-title-area {
-      flex: 1;
-
-      min-width: 0;
-
-      padding-bottom: 5px;
-    }
-
-    .name-line {
+    .profile-actions {
       display: flex;
       align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
 
+    .btn {
+      min-height: 42px;
+
+      padding: 0 15px;
+
+      border-radius: 12px;
+
+      border: 1px solid var(--border);
+
+      background: var(--surface);
+      color: var(--text);
+
+      font-size: 12px;
+      font-weight: 850;
+
+      transition: .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #071a34,
+          #173e68
+        );
+
+      border-color: transparent;
+    }
+
+    body.dark .btn-primary {
+      color: #071a34;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-soft),
+          var(--gold)
+        );
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #071a34;
+      border-color: var(--gold);
+    }
+
+    .btn-danger {
+      color: var(--red);
+    }
+
+    .profile-name-row {
+      margin-top: 14px;
+
+      display: flex;
+      align-items: center;
       gap: 7px;
 
       flex-wrap: wrap;
     }
 
     .profile-name {
-      font-size: 23px;
-      font-weight: 900;
-
-      letter-spacing: -.6px;
+      font-size: 25px;
+      line-height: 1.15;
+      font-weight: 950;
+      letter-spacing: -.7px;
     }
 
-    .verified {
-      width: 20px;
-      height: 20px;
+    .mcp-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
 
-      border-radius: 50%;
-
-      background: #2f9e68;
-
-      color: white;
-
-      display: grid;
-      place-items: center;
-
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .mcp-pill {
-      padding:
-        4px 8px;
+      padding: 5px 8px;
 
       border-radius: 999px;
 
-      background:
-        rgba(215,179,90,.14);
-
-      border:
-        1px solid
-        rgba(215,179,90,.35);
-
+      background: rgba(215,179,90,.14);
       color: var(--gold);
 
+      border: 1px solid rgba(215,179,90,.25);
+
       font-size: 10px;
-      font-weight: 850;
+      font-weight: 900;
     }
 
     .username {
+      margin-top: 4px;
+
       color: var(--muted);
 
-      font-size: 13px;
-
-      margin-top: 3px;
-    }
-
-    .profile-actions {
-      display: flex;
-      gap: 8px;
-
-      margin-top: 17px;
-
-      flex-wrap: wrap;
-    }
-
-    .primary-button,
-    .secondary-button,
-    .danger-button {
-      min-height: 43px;
-
-      border-radius: 12px;
-
-      padding:
-        0 16px;
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 7px;
-
       font-size: 12px;
-      font-weight: 850;
-
-      border: 1px solid transparent;
-
-      transition:
-        transform .18s ease,
-        opacity .18s ease,
-        border-color .18s ease;
     }
 
-    .primary-button {
-      background:
-        linear-gradient(
-          135deg,
-          var(--navy),
-          var(--navy-2)
-        );
-
-      color:
-        var(--surface);
-    }
-
-    body.dark .primary-button {
-      background:
-        linear-gradient(
-          135deg,
-          var(--gold-light),
-          var(--gold)
-        );
-
-      color:
-        #071a34;
-    }
-
-    .secondary-button {
-      background: var(--surface);
+    .bio {
+      margin-top: 12px;
 
       color: var(--text);
 
-      border:
-        1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.7;
     }
 
-    .danger-button {
-      background:
-        rgba(217,75,91,.10);
+    .location {
+      margin-top: 8px;
 
-      color: var(--danger);
+      color: var(--muted);
 
-      border:
-        1px solid
-        rgba(217,75,91,.20);
+      font-size: 12px;
     }
 
-    .primary-button:hover,
-    .secondary-button:hover,
-    .danger-button:hover {
-      transform: translateY(-2px);
+    /* =====================================================
+       BADGES
+    ===================================================== */
+
+    .badges {
+      margin-top: 14px;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      padding: 6px 9px;
+
+      border-radius: 999px;
+
+      background: var(--surface-soft);
+
+      border: 1px solid var(--border);
+
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .badge.region {
+      border-color: rgba(215,179,90,.4);
+      color: var(--gold);
+    }
+
+    .badge.category {
+      border-color: rgba(35,110,175,.22);
+      color: var(--navy-2);
+    }
+
+    .badge.trust {
+      border-color: rgba(33,163,102,.3);
+      color: var(--green);
     }
 
     /* =====================================================
@@ -530,255 +578,139 @@
     ===================================================== */
 
     .stats {
+      margin-top: 20px;
+
       display: grid;
+      grid-template-columns: repeat(4, 1fr);
 
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      margin-top: 22px;
-
-      border-top:
-        1px solid var(--border);
-
-      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .stat {
+      padding: 15px 8px;
+
       text-align: center;
 
-      padding:
-        7px 5px;
-
-      border-right:
-        1px solid var(--border);
-
       cursor: pointer;
+
+      border-right: 1px solid var(--border);
     }
 
     .stat:last-child {
       border-right: 0;
     }
 
-    .stat-number {
+    .stat-value {
+      display: block;
+
       font-size: 19px;
-      font-weight: 900;
+      font-weight: 950;
     }
 
     .stat-label {
+      display: block;
+
+      margin-top: 3px;
+
       color: var(--muted);
 
       font-size: 10px;
-
-      margin-top: 3px;
+      font-weight: 700;
     }
 
     /* =====================================================
-       BIO
+       SETTINGS STYLE ROWS
     ===================================================== */
 
-    .bio {
-      margin-top: 19px;
-
-      color: var(--muted);
-
-      font-size: 13px;
-
-      line-height: 1.75;
-    }
-
-    .location {
-      margin-top: 9px;
-
-      display: flex;
-      align-items: center;
-
-      gap: 6px;
-
-      color: var(--muted);
-
-      font-size: 11px;
-    }
-
-    /* =====================================================
-       BADGES
-    ===================================================== */
-
-    .section {
-      margin-top: 18px;
-
-      background: var(--surface);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: var(--radius);
-
-      box-shadow:
-        0 10px 35px rgba(16,35,63,.05);
-
-      padding: 18px;
+    .settings-section {
+      margin-top: 16px;
     }
 
     .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      margin-bottom: 13px;
-    }
-
-    .section-title h2 {
-      font-size: 14px;
-      font-weight: 900;
-    }
-
-    .section-title span {
-      color: var(--muted);
-
-      font-size: 10px;
-    }
-
-    .badge-list {
-      display: flex;
-
-      gap: 9px;
-
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      min-height: 41px;
-
-      padding:
-        6px 10px;
-
-      border-radius: 12px;
-
-      display: inline-flex;
-      align-items: center;
-
-      gap: 7px;
-
-      background:
-        var(--surface-2);
-
-      border:
-        1px solid var(--border);
-
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .badge-icon {
-      width: 27px;
-      height: 27px;
-
-      border-radius: 9px;
-
-      display: grid;
-      place-items: center;
-
-      background:
-        rgba(215,179,90,.14);
-
-      color: var(--gold);
-
-      font-size: 14px;
-    }
-
-    .empty {
-      color: var(--muted);
+      margin: 0 4px 8px;
 
       font-size: 12px;
+      font-weight: 900;
 
-      padding: 12px 0;
+      color: var(--muted);
+
+      text-transform: uppercase;
+      letter-spacing: .7px;
     }
 
-    /* =====================================================
-       FUNCTION MENU
-    ===================================================== */
-
-    .function-list {
-      display: flex;
-      flex-direction: column;
-
+    .settings-list {
+      display: grid;
       gap: 8px;
     }
 
-    .function-item {
+    .setting-row {
       width: 100%;
 
-      min-height: 57px;
+      min-height: 62px;
 
-      padding:
-        8px 13px;
-
-      border-radius: 14px;
-
-      background: var(--surface);
-
-      border:
-        1px solid var(--border);
-
-      color: var(--text);
+      padding: 11px 13px;
 
       display: flex;
       align-items: center;
 
       gap: 12px;
 
+      background: var(--surface);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 15px;
+
+      color: var(--text);
+
       text-align: left;
 
-      transition:
-        transform .18s ease,
-        background .18s ease,
-        border-color .18s ease;
+      transition: .2s ease;
     }
 
-    .function-item:hover {
-      transform: translateX(3px);
-
-      background: var(--surface-2);
-
-      border-color:
-        rgba(215,179,90,.35);
+    .setting-row:hover {
+      transform: translateY(-1px);
+      border-color: rgba(215,179,90,.4);
     }
 
-    .function-icon {
+    .setting-icon {
       width: 39px;
       height: 39px;
 
       flex: 0 0 39px;
 
-      border-radius: 11px;
-
       display: grid;
       place-items: center;
 
-      background:
-        var(--surface-2);
+      border-radius: 11px;
+
+      background: var(--surface-soft);
 
       font-size: 17px;
     }
 
-    .function-text {
+    .setting-content {
       flex: 1;
+      min-width: 0;
     }
 
-    .function-name {
-      font-size: 12px;
+    .setting-title {
+      font-size: 13px;
       font-weight: 850;
     }
 
-    .function-description {
-      margin-top: 2px;
+    .setting-description {
+      margin-top: 3px;
 
       color: var(--muted);
 
-      font-size: 9px;
+      font-size: 10px;
+      line-height: 1.45;
     }
 
-    .arrow {
+    .setting-arrow {
       color: var(--muted);
       font-size: 18px;
     }
@@ -787,39 +719,50 @@
        POSTS
     ===================================================== */
 
-    .posts {
+    .posts-section {
+      margin-top: 20px;
+    }
+
+    .posts-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 10px;
+    }
+
+    .posts-title {
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .posts-grid {
       display: grid;
-
       grid-template-columns:
-        repeat(2, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-      gap: 9px;
+      gap: 8px;
     }
 
     .post-card {
-      background:
-        var(--surface-2);
+      min-width: 0;
 
-      border:
-        1px solid var(--border);
+      background: var(--surface);
 
-      border-radius: 14px;
+      border: 1px solid var(--border);
+
+      border-radius: 15px;
 
       overflow: hidden;
     }
 
     .post-image {
       width: 100%;
-      aspect-ratio: 1 / .72;
+      aspect-ratio: 1 / 1;
 
       object-fit: cover;
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--surface-2),
-          var(--surface)
-        );
+      background: var(--surface-soft);
     }
 
     .post-info {
@@ -827,7 +770,7 @@
     }
 
     .post-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 850;
 
       display: -webkit-box;
@@ -838,155 +781,73 @@
     }
 
     .post-price {
+      margin-top: 5px;
+
       color: var(--gold);
 
       font-size: 11px;
       font-weight: 900;
-
-      margin-top: 5px;
     }
 
-    .post-status {
-      margin-top: 5px;
+    .empty {
+      padding: 28px 15px;
+
+      text-align: center;
+
+      background: var(--surface);
+
+      border: 1px dashed var(--border);
+
+      border-radius: 15px;
 
       color: var(--muted);
 
-      font-size: 9px;
-    }
-
-    /* =====================================================
-       BOTTOM NAV
-    ===================================================== */
-
-    .bottom-nav {
-      position: fixed;
-
-      bottom: 0;
-      left: 0;
-      right: 0;
-
-      z-index: 1000;
-
-      height: 68px;
-
-      background:
-        color-mix(
-          in srgb,
-          var(--surface) 94%,
-          transparent
-        );
-
-      border-top:
-        1px solid var(--border);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .bottom-inner {
-      width:
-        min(
-          560px,
-          calc(100% - 20px)
-        );
-
-      height: 100%;
-
-      margin: auto;
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      align-items: center;
-    }
-
-    .nav-item {
-      height: 100%;
-
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: 3px;
-
-      color: var(--muted);
-
-      font-size: 9px;
-      font-weight: 800;
-    }
-
-    .nav-icon {
-      font-size: 19px;
-    }
-
-    .nav-item.active {
-      color: var(--gold);
+      font-size: 12px;
     }
 
     /* =====================================================
        MODAL
     ===================================================== */
 
-    .modal-backdrop {
+    .modal {
       position: fixed;
-
       inset: 0;
 
-      z-index: 2000;
-
-      background:
-        rgba(3,10,20,.58);
+      z-index: 3000;
 
       display: none;
 
       align-items: flex-end;
       justify-content: center;
 
-      padding: 12px;
+      background: rgba(0,0,0,.52);
     }
 
-    .modal-backdrop.show {
+    .modal.open {
       display: flex;
     }
 
-    .modal {
-      width:
-        min(
-          520px,
-          100%
-        );
+    .modal-card {
+      width: min(620px, 100%);
 
-      max-height:
-        min(
-          82vh,
-          720px
-        );
+      max-height: 92vh;
 
-      overflow: auto;
+      overflow-y: auto;
 
       background: var(--surface);
 
-      border:
-        1px solid var(--border);
-
       border-radius:
-        22px 22px 16px 16px;
+        22px 22px 0 0;
 
-      box-shadow:
-        0 25px 90px rgba(0,0,0,.30);
+      padding: 18px;
 
-      animation:
-        modalIn .22s ease;
+      animation: slideUp .22s ease;
     }
 
-    @keyframes modalIn {
+    @keyframes slideUp {
       from {
-        transform: translateY(25px);
-        opacity: 0;
+        transform: translateY(30px);
+        opacity: .7;
       }
 
       to {
@@ -995,121 +856,29 @@
       }
     }
 
-    .modal-header {
-      position: sticky;
-
-      top: 0;
-
-      z-index: 2;
-
-      padding:
-        15px 17px;
-
-      background: var(--surface);
-
-      border-bottom:
-        1px solid var(--border);
-
+    .modal-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      margin-bottom: 16px;
     }
 
     .modal-title {
-      font-size: 14px;
-      font-weight: 900;
+      font-size: 17px;
+      font-weight: 950;
     }
 
     .close-button {
-      width: 34px;
-      height: 34px;
+      width: 35px;
+      height: 35px;
 
+      border: 0;
       border-radius: 10px;
 
-      background: var(--surface-2);
-
+      background: var(--surface-soft);
       color: var(--text);
-
-      border:
-        1px solid var(--border);
     }
-
-    .modal-body {
-      padding: 14px 17px 18px;
-    }
-
-    .user-row {
-      display: flex;
-      align-items: center;
-
-      gap: 11px;
-
-      padding: 10px 0;
-
-      border-bottom:
-        1px solid var(--border);
-    }
-
-    .user-row:last-child {
-      border-bottom: 0;
-    }
-
-    .user-avatar {
-      width: 43px;
-      height: 43px;
-
-      border-radius: 50%;
-
-      object-fit: cover;
-
-      background: var(--surface-2);
-    }
-
-    .user-info {
-      flex: 1;
-
-      min-width: 0;
-    }
-
-    .user-name {
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .user-username {
-      color: var(--muted);
-
-      font-size: 10px;
-
-      margin-top: 2px;
-    }
-
-    .row-actions {
-      display: flex;
-      gap: 5px;
-    }
-
-    .small-button {
-      min-height: 34px;
-
-      padding: 0 9px;
-
-      border-radius: 9px;
-
-      border:
-        1px solid var(--border);
-
-      background: var(--surface-2);
-
-      color: var(--text);
-
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    /* =====================================================
-       EDIT PROFILE
-    ===================================================== */
 
     .form-group {
       margin-bottom: 13px;
@@ -1120,77 +889,240 @@
 
       margin-bottom: 6px;
 
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .form-control {
+      width: 100%;
+
+      min-height: 45px;
+
+      padding: 10px 12px;
+
+      border-radius: 11px;
+
+      border: 1px solid var(--border);
+
+      background: var(--surface);
+      color: var(--text);
+
+      outline: none;
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-control:focus {
+      border-color: rgba(215,179,90,.7);
+    }
+
+    .form-help {
+      margin-top: 5px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .avatar-picker {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      margin-bottom: 15px;
+    }
+
+    .avatar-preview {
+      width: 75px;
+      height: 75px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+      background: var(--surface-soft);
+
+      border: 1px solid var(--border);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+
+      margin-top: 18px;
+    }
+
+    .modal-actions .btn {
+      flex: 1;
+    }
+
+    /* =====================================================
+       LIST
+    ===================================================== */
+
+    .person-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .person {
+      padding: 10px;
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      background: var(--surface-soft);
+
+      border-radius: 13px;
+    }
+
+    .person-avatar {
+      width: 43px;
+      height: 43px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+      background: var(--surface);
+    }
+
+    .person-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .person-name {
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .person-username {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .person-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .small-btn {
+      min-height: 34px;
+
+      padding: 0 9px;
+
+      border-radius: 9px;
+
+      border: 1px solid var(--border);
+
+      background: var(--surface);
+
+      color: var(--text);
+
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    /* =====================================================
+       KYC
+    ===================================================== */
+
+    .kyc-status {
+      padding: 10px 12px;
+
+      border-radius: 11px;
+
+      margin-bottom: 14px;
+
+      background: var(--surface-soft);
+
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .kyc-status.approved {
+      color: var(--green);
+      border: 1px solid rgba(33,163,102,.2);
+    }
+
+    .kyc-status.pending {
+      color: var(--gold);
+      border: 1px solid rgba(215,179,90,.25);
+    }
+
+    .kyc-status.rejected {
+      color: var(--red);
+      border: 1px solid rgba(216,76,76,.2);
+    }
+
+    /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+    .bottom-nav {
+      position: fixed;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      z-index: 2000;
+
+      height: 74px;
+
+      padding-bottom:
+        env(safe-area-inset-bottom);
+
+      background:
+        color-mix(
+          in srgb,
+          var(--surface) 94%,
+          transparent
+        );
+
+      border-top: 1px solid var(--border);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      width: min(620px, calc(100% - 18px));
+      height: 100%;
+
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 4px;
+
       color: var(--muted);
 
       font-size: 10px;
       font-weight: 800;
     }
 
-    .form-input,
-    .form-select,
-    .form-textarea {
-      width: 100%;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 11px;
-
-      background: var(--surface-2);
-
-      color: var(--text);
-
-      outline: none;
-
-      padding:
-        11px 12px;
-
-      font-size: 12px;
+    .nav-icon {
+      font-size: 19px;
+      line-height: 1;
     }
 
-    .form-textarea {
-      min-height: 95px;
-      resize: vertical;
-    }
-
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      border-color:
-        rgba(215,179,90,.65);
-    }
-
-    .save-button {
-      width: 100%;
-
-      min-height: 46px;
-
-      border: 0;
-
-      border-radius: 12px;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--navy),
-          var(--navy-2)
-        );
-
-      color: white;
-
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    body.dark .save-button {
-      color: #071a34;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--gold-light),
-          var(--gold)
-        );
+    .nav-item.active {
+      color: var(--gold);
     }
 
     /* =====================================================
@@ -1201,133 +1133,84 @@
       position: fixed;
 
       left: 50%;
-      bottom: 84px;
+      bottom: 88px;
+
+      z-index: 5000;
 
       transform:
         translate(-50%, 15px);
 
-      z-index: 3000;
+      opacity: 0;
 
-      min-width: 220px;
+      pointer-events: none;
 
-      max-width:
-        calc(100% - 40px);
-
-      padding:
-        11px 14px;
+      padding: 11px 15px;
 
       border-radius: 12px;
 
-      background:
-        var(--navy);
-
-      color:
-        var(--surface);
-
-      text-align: center;
+      background: var(--navy);
+      color: var(--surface);
 
       font-size: 11px;
       font-weight: 800;
 
-      opacity: 0;
-      pointer-events: none;
-
-      transition:
-        opacity .2s ease,
-        transform .2s ease;
+      transition: .2s ease;
     }
 
     .toast.show {
-      opacity: 1;
-
       transform:
         translate(-50%, 0);
+
+      opacity: 1;
     }
 
     /* =====================================================
-       LOADING
+       MOBILE
     ===================================================== */
 
-    .loading {
-      min-height: 300px;
-
-      display: grid;
-      place-items: center;
-
-      color: var(--muted);
-
-      font-size: 12px;
-    }
-
-    .spinner {
-      width: 25px;
-      height: 25px;
-
-      border:
-        3px solid var(--border);
-
-      border-top-color:
-        var(--gold);
-
-      border-radius: 50%;
-
-      animation:
-        spin .7s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-
-    @media (max-width: 650px) {
+    @media (max-width: 600px) {
 
       .brand-name {
         display: none;
       }
 
-      .page {
+      .main {
         width:
-          calc(100% - 18px);
+          calc(100% - 14px);
 
-        padding-top: 82px;
+        margin-top: 10px;
       }
 
       .profile-cover {
         height: 115px;
       }
 
+      .profile-body {
+        padding:
+          0 14px 18px;
+      }
+
       .profile-head {
-        gap: 12px;
+        align-items: flex-end;
       }
 
-      .avatar-wrap,
       .avatar {
-        width: 91px;
-        height: 91px;
-      }
-
-      .profile-name {
-        font-size: 20px;
+        width: 92px;
+        height: 92px;
       }
 
       .profile-actions {
-        display: grid;
-
-        grid-template-columns:
-          repeat(2, 1fr);
-
-        width: 100%;
+        gap: 5px;
       }
 
-      .profile-actions button,
-      .profile-actions a {
-        width: 100%;
+      .profile-actions .btn {
+        min-height: 38px;
+        padding: 0 10px;
+        font-size: 10px;
+      }
+
+      .profile-name {
+        font-size: 22px;
       }
 
       .stats {
@@ -1335,42 +1218,34 @@
           repeat(4, 1fr);
       }
 
-      .stat-number {
+      .stat {
+        padding: 12px 4px;
+      }
+
+      .stat-value {
         font-size: 16px;
       }
 
-      .stat-label {
-        font-size: 9px;
+      .posts-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 420px) {
-
-      .profile-main {
-        padding:
-          0 14px 19px;
-      }
+    @media (max-width: 390px) {
 
       .profile-head {
+        flex-direction: column;
         align-items: flex-start;
       }
 
-      .profile-title-area {
-        padding-top: 54px;
-      }
-
-      .avatar-wrap {
-        margin-bottom: 5px;
-      }
-
       .profile-actions {
-        grid-template-columns:
-          1fr 1fr;
+        width: 100%;
+        justify-content: flex-start;
       }
 
-      .posts {
-        grid-template-columns:
-          1fr 1fr;
+      .profile-actions .btn {
+        flex: 1;
       }
     }
   </style>
@@ -1378,25 +1253,25 @@
 
 <body>
 
-  <!-- =====================================================
-       TOP BAR
-  ====================================================== -->
+<div class="app">
+
+  <!-- ===================================================
+       HEADER
+  ==================================================== -->
 
   <header class="topbar">
 
     <div class="topbar-inner">
 
       <a
-        href="index.html"
+        href="./index.html"
         class="brand"
         aria-label="Myanmar Elite Connect">
 
         <div class="brand-logo">
-
           <img
             src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
             alt="Myanmar Elite Connect">
-
         </div>
 
         <div class="brand-name">
@@ -1409,22 +1284,18 @@
 
         <button
           class="icon-button"
-          id="languageButton"
           type="button"
-          title="Language">
-
-          EN
-
+          id="themeButton"
+          aria-label="Change theme">
+          ☾
         </button>
 
         <button
           class="icon-button"
-          id="themeButton"
           type="button"
-          title="Theme">
-
-          ☾
-
+          id="logoutButton"
+          aria-label="Log out">
+          ⇥
         </button>
 
       </div>
@@ -1434,635 +1305,465 @@
   </header>
 
 
-  <!-- =====================================================
+  <!-- ===================================================
        MAIN
-  ====================================================== -->
+  ==================================================== -->
 
-  <main class="page">
+  <main class="main">
 
-    <div id="loadingState" class="loading">
+    <!-- SEARCH USERNAME -->
 
-      <div>
-        <div class="spinner"></div>
+    <section class="search-box">
+
+      <input
+        id="usernameSearch"
+        class="search-input"
+        type="search"
+        autocomplete="off"
+        placeholder="Search username..."
+        aria-label="Search username">
+
+      <span class="search-icon">⌕</span>
+
+      <div
+        id="searchResults"
+        class="search-results hidden">
       </div>
 
-    </div>
+    </section>
 
 
-    <div id="profileContent" style="display:none;">
+    <!-- PROFILE -->
 
+    <section class="profile-card">
 
-      <!-- =================================================
-           PROFILE CARD
-      ================================================== -->
+      <div class="profile-cover"></div>
 
-      <section class="profile-card">
+      <div class="profile-body">
 
-        <div class="profile-cover"></div>
+        <div class="profile-head">
 
-        <div class="profile-main">
+          <div class="avatar-wrap">
 
-          <div class="profile-head">
+            <img
+              id="profileAvatar"
+              class="avatar"
+              src=""
+              alt="Profile photo">
 
-
-            <!-- AVATAR -->
-
-            <div class="avatar-wrap">
-
-              <img
-                id="avatar"
-                class="avatar"
-                src=""
-                alt="Profile photo">
-
-              <button
-                id="avatarButton"
-                class="avatar-edit"
-                type="button"
-                title="Change profile photo">
-
-                ✎
-
-              </button>
-
-              <input
-                id="avatarInput"
-                type="file"
-                accept="image/*"
-                hidden>
-
-            </div>
-
-
-            <!-- TITLE -->
-
-            <div class="profile-title-area">
-
-              <div class="name-line">
-
-                <h1
-                  id="profileName"
-                  class="profile-name">
-                  —
-                </h1>
-
-                <span
-                  id="verifiedBadge"
-                  class="verified"
-                  style="display:none;">
-                  ✓
-                </span>
-
-                <span
-                  id="mcpBadge"
-                  class="mcp-pill"
-                  style="display:none;">
-                  MCP
-                </span>
-
-              </div>
-
-              <div
-                id="profileUsername"
-                class="username">
-                @username
-              </div>
-
+            <div
+              id="verifiedDot"
+              class="verified-dot hidden">
+              ✓
             </div>
 
           </div>
-
-
-          <!-- ACTIONS -->
 
           <div class="profile-actions">
 
             <button
-              id="editProfileButton"
-              class="primary-button"
-              type="button">
-
-              ✎ Edit Profile
-
-            </button>
-
-            <button
               id="followButton"
-              class="primary-button"
               type="button"
-              style="display:none;">
-
-              ＋ Follow
-
+              class="btn btn-primary hidden">
+              Follow
             </button>
 
             <button
               id="chatButton"
-              class="secondary-button"
-              type="button">
-
-              💬 Chat
-
+              type="button"
+              class="btn hidden">
+              Chat
             </button>
 
             <button
-              id="likeButton"
-              class="secondary-button"
-              type="button">
-
-              ♡ Like
-
+              id="editProfileButton"
+              type="button"
+              class="btn hidden">
+              Edit Profile
             </button>
 
           </div>
 
-
-          <!-- STATS -->
-
-          <div class="stats">
-
-            <div
-              class="stat"
-              id="postsStat">
-
-              <div
-                id="postsCount"
-                class="stat-number">
-                0
-              </div>
-
-              <div class="stat-label">
-                Posts
-              </div>
-
-            </div>
-
-            <div
-              class="stat"
-              id="followersStat">
-
-              <div
-                id="followersCount"
-                class="stat-number">
-                0
-              </div>
-
-              <div class="stat-label">
-                Followers
-              </div>
-
-            </div>
-
-            <div
-              class="stat"
-              id="followingStat">
-
-              <div
-                id="followingCount"
-                class="stat-number">
-                0
-              </div>
-
-              <div class="stat-label">
-                Following
-              </div>
-
-            </div>
-
-            <div
-              class="stat">
-
-              <div
-                id="likesCount"
-                class="stat-number">
-                0
-              </div>
-
-              <div class="stat-label">
-                Likes
-              </div>
-
-            </div>
-
-          </div>
+        </div>
 
 
-          <!-- BIO -->
+        <div class="profile-name-row">
 
-          <p
-            id="profileBio"
-            class="bio">
-            No bio yet.
-          </p>
+          <h1
+            id="profileName"
+            class="profile-name">
+            Loading...
+          </h1>
+
+          <span
+            id="mcpMark"
+            class="mcp-mark hidden">
+            ★ MCP
+          </span>
+
+        </div>
+
+
+        <div
+          id="profileUsername"
+          class="username">
+          @username
+        </div>
+
+
+        <div
+          id="profileBio"
+          class="bio">
+        </div>
+
+
+        <div
+          id="profileLocation"
+          class="location">
+        </div>
+
+
+        <div
+          id="profileBadges"
+          class="badges">
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
 
           <div
-            id="profileLocation"
-            class="location">
+            class="stat"
+            id="likesStat">
 
-            📍 —
-            
+            <span
+              id="likesCount"
+              class="stat-value">
+              0
+            </span>
+
+            <span class="stat-label">
+              Likes
+            </span>
+
+          </div>
+
+
+          <div
+            class="stat"
+            id="followersStat">
+
+            <span
+              id="followersCount"
+              class="stat-value">
+              0
+            </span>
+
+            <span class="stat-label">
+              Followers
+            </span>
+
+          </div>
+
+
+          <div
+            class="stat"
+            id="followingStat">
+
+            <span
+              id="followingCount"
+              class="stat-value">
+              0
+            </span>
+
+            <span class="stat-label">
+              Following
+            </span>
+
+          </div>
+
+
+          <div
+            class="stat"
+            id="postsStat">
+
+            <span
+              id="postsCount"
+              class="stat-value">
+              0
+            </span>
+
+            <span class="stat-label">
+              Posts
+            </span>
+
           </div>
 
         </div>
 
-      </section>
+      </div>
+
+    </section>
 
 
-      <!-- =================================================
-           BADGES
-      ================================================== -->
+    <!-- ===================================================
+         OWN PROFILE FUNCTIONS
+    ==================================================== -->
 
-      <section class="section">
+    <section
+      id="ownFunctions"
+      class="settings-section hidden">
 
-        <div class="section-title">
+      <div class="section-title">
+        Profile Functions
+      </div>
 
-          <h2>Badges</h2>
+      <div class="settings-list">
 
-          <span id="badgeCount">
-            0 badges
-          </span>
 
-        </div>
+        <button
+          type="button"
+          class="setting-row"
+          id="myPostsButton">
 
-        <div
-          id="badgeList"
-          class="badge-list">
-
-          <div class="empty">
-            No badges yet.
+          <div class="setting-icon">
+            📝
           </div>
 
-        </div>
+          <div class="setting-content">
 
-      </section>
-
-
-      <!-- =================================================
-           FUNCTIONS
-      ================================================== -->
-
-      <section class="section">
-
-        <div class="section-title">
-
-          <h2>Profile</h2>
-
-          <span>Functions</span>
-
-        </div>
-
-
-        <div class="function-list">
-
-
-          <!-- MY POSTS -->
-
-          <button
-            class="function-item"
-            id="myPostsButton"
-            type="button">
-
-            <div class="function-icon">
-              📝
+            <div class="setting-title">
+              My Posts
             </div>
 
-            <div class="function-text">
-
-              <div class="function-name">
-                My Posts
-              </div>
-
-              <div class="function-description">
-                View posts created by this profile
-              </div>
-
+            <div class="setting-description">
+              View all listings and posts created by you.
             </div>
 
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- FOLLOWERS -->
-
-          <button
-            class="function-item"
-            id="followersButton"
-            type="button">
-
-            <div class="function-icon">
-              👥
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                Followers
-              </div>
-
-              <div class="function-description">
-                People who follow this profile
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- FOLLOWING -->
-
-          <button
-            class="function-item"
-            id="followingButton"
-            type="button">
-
-            <div class="function-icon">
-              ➜
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                Following
-              </div>
-
-              <div class="function-description">
-                Profiles followed by this account
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- BADGE PAGE -->
-
-          <button
-            class="function-item"
-            id="badgePageButton"
-            type="button">
-
-            <div class="function-icon">
-              🏅
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                Badge Center
-              </div>
-
-              <div class="function-description">
-                View badge information and achievements
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- KYC -->
-
-          <button
-            class="function-item"
-            id="kycButton"
-            type="button">
-
-            <div class="function-icon">
-              🛡️
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                KYC Verification
-              </div>
-
-              <div
-                id="kycDescription"
-                class="function-description">
-                Verify your identity
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- MCP -->
-
-          <button
-            class="function-item"
-            id="mcpButton"
-            type="button">
-
-            <div class="function-icon">
-              ⭐
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                MCP Application
-              </div>
-
-              <div
-                id="mcpDescription"
-                class="function-description">
-                Apply to become an MEC MCP
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- EDIT PROFILE -->
-
-          <button
-            class="function-item"
-            id="editProfileMenuButton"
-            type="button">
-
-            <div class="function-icon">
-              ⚙️
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                Edit Profile
-              </div>
-
-              <div class="function-description">
-                Name, username, bio, location and photo
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-          <!-- LOGOUT -->
-
-          <button
-            class="function-item"
-            id="logoutButton"
-            type="button">
-
-            <div class="function-icon">
-              🚪
-            </div>
-
-            <div class="function-text">
-
-              <div class="function-name">
-                Log Out
-              </div>
-
-              <div class="function-description">
-                Sign out of this account
-              </div>
-
-            </div>
-
-            <div class="arrow">
-              ›
-            </div>
-
-          </button>
-
-
-        </div>
-
-      </section>
-
-
-      <!-- =================================================
-           POSTS
-      ================================================== -->
-
-      <section class="section">
-
-        <div class="section-title">
-
-          <h2 id="postsTitle">
-            Posts
-          </h2>
-
-          <span>
-            Recent
-          </span>
-
-        </div>
-
-        <div
-          id="postsGrid"
-          class="posts">
-
-          <div class="empty">
-            No posts yet.
           </div>
 
-        </div>
+          <div class="setting-arrow">
+            ›
+          </div>
 
-      </section>
+        </button>
 
-    </div>
+
+        <button
+          type="button"
+          class="setting-row"
+          id="badgeButton">
+
+          <div class="setting-icon">
+            🏅
+          </div>
+
+          <div class="setting-content">
+
+            <div class="setting-title">
+              My Badges
+            </div>
+
+            <div class="setting-description">
+              View your region, seller and verification badges.
+            </div>
+
+          </div>
+
+          <div class="setting-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="setting-row"
+          id="kycButton">
+
+          <div class="setting-icon">
+            🛡️
+          </div>
+
+          <div class="setting-content">
+
+            <div class="setting-title">
+              KYC Verification
+            </div>
+
+            <div
+              id="kycDescription"
+              class="setting-description">
+              Verify your identity.
+            </div>
+
+          </div>
+
+          <div class="setting-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="setting-row"
+          id="mcpButton">
+
+          <div class="setting-icon">
+            ★
+          </div>
+
+          <div class="setting-content">
+
+            <div class="setting-title">
+              MCP
+            </div>
+
+            <div class="setting-description">
+              Apply for Myanmar Elite Connect Certified Partner.
+            </div>
+
+          </div>
+
+          <div class="setting-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="setting-row"
+          id="settingsButton">
+
+          <div class="setting-icon">
+            ⚙
+          </div>
+
+          <div class="setting-content">
+
+            <div class="setting-title">
+              Account Settings
+            </div>
+
+            <div class="setting-description">
+              Manage your profile and account information.
+            </div>
+
+          </div>
+
+          <div class="setting-arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="setting-row"
+          id="logoutRow">
+
+          <div class="setting-icon">
+            ⇥
+          </div>
+
+          <div class="setting-content">
+
+            <div class="setting-title">
+              Log Out
+            </div>
+
+            <div class="setting-description">
+              Sign out of this account.
+            </div>
+
+          </div>
+
+          <div class="setting-arrow">
+            ›
+          </div>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         POSTS
+    ==================================================== -->
+
+    <section class="posts-section">
+
+      <div class="posts-header">
+
+        <h2 class="posts-title">
+          Posts
+        </h2>
+
+      </div>
+
+      <div
+        id="postsGrid"
+        class="posts-grid">
+      </div>
+
+    </section>
 
   </main>
 
 
-  <!-- =====================================================
-       BOTTOM NAVIGATION
-  ====================================================== -->
+  <!-- ===================================================
+       BOTTOM NAV
+  ==================================================== -->
 
   <nav class="bottom-nav">
 
-    <div class="bottom-inner">
+    <div class="nav-inner">
 
       <a
         class="nav-item"
-        href="index.html">
+        href="./index.html">
 
-        <div class="nav-icon">
-          🏠
-        </div>
-
-        <div>
-          Home
-        </div>
+        <span class="nav-icon">⌂</span>
+        <span>Home</span>
 
       </a>
 
 
       <a
         class="nav-item"
-        href="addlisting.html">
+        href="./addlisting.html">
 
-        <div class="nav-icon">
-          ＋
-        </div>
-
-        <div>
-          Add Listing
-        </div>
+        <span class="nav-icon">＋</span>
+        <span>Add Listing</span>
 
       </a>
 
 
       <a
         class="nav-item"
-        href="chat.html">
+        href="./chat.html">
 
-        <div class="nav-icon">
-          💬
-        </div>
-
-        <div>
-          Chat
-        </div>
+        <span class="nav-icon">◌</span>
+        <span>Chat</span>
 
       </a>
 
 
       <a
         class="nav-item active"
-        href="profile.html">
+        href="./Profile.html">
 
-        <div class="nav-icon">
-          👤
-        </div>
-
-        <div>
-          Profile
-        </div>
+        <span class="nav-icon">◎</span>
+        <span>Profile</span>
 
       </a>
 
@@ -2070,2556 +1771,3252 @@
 
   </nav>
 
+</div>
 
-  <!-- =====================================================
-       FOLLOWERS / FOLLOWING MODAL
-  ====================================================== -->
 
-  <div
-    id="userListModal"
-    class="modal-backdrop">
+<!-- =====================================================
+     FOLLOWERS / FOLLOWING MODAL
+====================================================== -->
 
-    <div class="modal">
+<div
+  id="peopleModal"
+  class="modal">
 
-      <div class="modal-header">
+  <div class="modal-card">
 
-        <div
-          id="userListTitle"
-          class="modal-title">
-          Followers
-        </div>
+    <div class="modal-head">
 
-        <button
-          id="closeUserList"
-          class="close-button"
-          type="button">
-          ×
-        </button>
+      <h2
+        id="peopleModalTitle"
+        class="modal-title">
+        Followers
+      </h2>
 
-      </div>
+      <button
+        type="button"
+        class="close-button"
+        onclick="closeModal('peopleModal')">
+        ×
+      </button>
 
-      <div
-        id="userListBody"
-        class="modal-body">
+    </div>
 
-        <div class="empty">
-          Loading...
+    <div
+      id="peopleList"
+      class="person-list">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     EDIT PROFILE MODAL
+====================================================== -->
+
+<div
+  id="editModal"
+  class="modal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2 class="modal-title">
+        Edit Profile
+      </h2>
+
+      <button
+        type="button"
+        class="close-button"
+        onclick="closeModal('editModal')">
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="avatar-picker">
+
+      <img
+        id="editAvatarPreview"
+        class="avatar-preview"
+        src=""
+        alt="Preview">
+
+      <div>
+
+        <label
+          for="avatarInput"
+          class="btn"
+          style="display:inline-flex;align-items:center;">
+          Change Photo
+        </label>
+
+        <input
+          id="avatarInput"
+          type="file"
+          accept="image/*"
+          class="hidden">
+
+        <div class="form-help">
+          JPG, PNG or WEBP
         </div>
 
       </div>
 
     </div>
 
-  </div>
+
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="fullNameInput">
+        Full Name
+      </label>
+
+      <input
+        id="fullNameInput"
+        class="form-control"
+        type="text"
+        maxlength="80">
+
+    </div>
 
 
-  <!-- =====================================================
-       EDIT PROFILE MODAL
-  ====================================================== -->
+    <div class="form-group">
 
-  <div
-    id="editModal"
-    class="modal-backdrop">
+      <label
+        class="form-label"
+        for="usernameInput">
+        Username
+      </label>
 
-    <div class="modal">
+      <input
+        id="usernameInput"
+        class="form-control"
+        type="text"
+        maxlength="30"
+        placeholder="username">
 
-      <div class="modal-header">
-
-        <div class="modal-title">
-          Edit Profile
-        </div>
-
-        <button
-          id="closeEditModal"
-          class="close-button"
-          type="button">
-          ×
-        </button>
-
+      <div class="form-help">
+        Username is used for public profile search.
       </div>
 
-      <div class="modal-body">
+    </div>
 
 
-        <div class="form-group">
+    <div class="form-group">
 
-          <label class="form-label">
-            Name
-          </label>
+      <label
+        class="form-label"
+        for="bioInput">
+        Bio
+      </label>
 
-          <input
-            id="editName"
-            class="form-input"
-            type="text"
-            maxlength="80">
+      <textarea
+        id="bioInput"
+        class="form-control"
+        maxlength="500"
+        placeholder="Tell people about yourself...">
+      </textarea>
 
-        </div>
-
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Username
-          </label>
-
-          <input
-            id="editUsername"
-            class="form-input"
-            type="text"
-            maxlength="30"
-            placeholder="username">
-
-        </div>
+    </div>
 
 
-        <div class="form-group">
+    <div class="form-group">
 
-          <label class="form-label">
-            Bio
-          </label>
+      <label
+        class="form-label"
+        for="cityInput">
+        City
+      </label>
 
-          <textarea
-            id="editBio"
-            class="form-textarea"
-            maxlength="300"></textarea>
+      <input
+        id="cityInput"
+        class="form-control"
+        type="text"
+        maxlength="80">
 
-        </div>
-
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Region / State
-          </label>
-
-          <select
-            id="editRegion"
-            class="form-select">
-
-            <option value="">
-              Select Region / State
-            </option>
-
-          </select>
-
-        </div>
+    </div>
 
 
-        <div class="form-group">
+    <div class="form-group">
 
-          <label class="form-label">
-            City / District
-          </label>
+      <label
+        class="form-label"
+        for="regionInput">
+        Region / State
+      </label>
 
-          <input
-            id="editCity"
-            class="form-input"
-            type="text"
-            maxlength="80"
-            placeholder="City / District">
+      <select
+        id="regionInput"
+        class="form-control">
 
-        </div>
+        <option value="">
+          Select Region / State
+        </option>
 
+      </select>
 
-        <button
-          id="saveProfileButton"
-          class="save-button"
-          type="button">
-
-          Save Changes
-
-        </button>
-
+      <div class="form-help">
+        Selecting a region automatically gives the matching region badge.
       </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="sellerTypeInput">
+        Seller / Field
+      </label>
+
+      <select
+        id="sellerTypeInput"
+        class="form-control">
+
+        <option value="">
+          Select Field
+        </option>
+
+        <option value="car">
+          Car
+        </option>
+
+        <option value="property">
+          Property
+        </option>
+
+        <option value="gem">
+          Gem
+        </option>
+
+        <option value="feedback">
+          Feedback
+        </option>
+
+        <option value="all_market">
+          All Market
+        </option>
+
+      </select>
+
+      <div class="form-help">
+        Selecting a field automatically gives the matching badge.
+      </div>
+
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button
+        type="button"
+        class="btn"
+        onclick="closeModal('editModal')">
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        id="saveProfileButton"
+        class="btn btn-primary">
+        Save Changes
+      </button>
 
     </div>
 
   </div>
 
+</div>
 
-  <!-- =====================================================
-       TOAST
-  ====================================================== -->
 
-  <div
-    id="toast"
-    class="toast">
+<!-- =====================================================
+     KYC MODAL
+====================================================== -->
+
+<div
+  id="kycModal"
+  class="modal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2 class="modal-title">
+        KYC Verification
+      </h2>
+
+      <button
+        type="button"
+        class="close-button"
+        onclick="closeModal('kycModal')">
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      id="kycStatusBox"
+      class="kyc-status">
+      Loading KYC status...
+    </div>
+
+
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="kycName">
+        Full Name
+      </label>
+
+      <input
+        id="kycName"
+        class="form-control"
+        type="text">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="kycDocumentType">
+        Document Type
+      </label>
+
+      <select
+        id="kycDocumentType"
+        class="form-control">
+
+        <option value="">
+          Select Document
+        </option>
+
+        <option value="NRC">
+          NRC
+        </option>
+
+        <option value="Passport">
+          Passport
+        </option>
+
+        <option value="Driver License">
+          Driver License
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="kycFront">
+        Front Image
+      </label>
+
+      <input
+        id="kycFront"
+        class="form-control"
+        type="file"
+        accept="image/*">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label
+        class="form-label"
+        for="kycBack">
+        Back Image
+      </label>
+
+      <input
+        id="kycBack"
+        class="form-control"
+        type="file"
+        accept="image/*">
+
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button
+        type="button"
+        class="btn"
+        onclick="closeModal('kycModal')">
+        Close
+      </button>
+
+      <button
+        type="button"
+        id="submitKycButton"
+        class="btn btn-primary">
+        Submit KYC
+      </button>
+
+    </div>
+
   </div>
 
+</div>
 
-  <script>
 
-    /* =====================================================
-       SUPABASE
-    ===================================================== */
+<!-- =====================================================
+     TOAST
+====================================================== -->
 
-    const SUPABASE_URL =
-      "https://ikjwisfsdcupibgjiuvp.supabase.co";
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
+<!-- =====================================================
+     SUPABASE
+     IMPORTANT:
+     Use the existing supabase.js.
+     Do NOT put another public key here.
+====================================================== -->
+
+<script src="./supabase.js"></script>
+
+
+<script>
+"use strict";
+
+/* =======================================================
+   GLOBAL STATE
+======================================================= */
+
+let currentUser = null;
+let currentProfile = null;
+let viewedUserId = null;
+
+let regionList = [];
+let searchTimer = null;
+
+
+/* =======================================================
+   BASIC HELPERS
+======================================================= */
+
+const $ = (id) =>
+  document.getElementById(id);
+
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+function showToast(message) {
+
+  const toast = $("toast");
+
+  if (!toast) return;
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(showToast.timer);
+
+  showToast.timer =
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2600);
+
+}
+
+
+function openModal(id) {
+
+  const modal = $(id);
+
+  if (modal) {
+    modal.classList.add("open");
+  }
+
+}
+
+
+function closeModal(id) {
+
+  const modal = $(id);
+
+  if (modal) {
+    modal.classList.remove("open");
+  }
+
+}
+
+
+function formatNumber(number) {
+
+  return new Intl.NumberFormat(
+    "en-US"
+  ).format(Number(number || 0));
+
+}
+
+
+function formatPrice(price, currency) {
+
+  if (
+    price === null ||
+    price === undefined ||
+    price === ""
+  ) {
+    return "";
+  }
+
+  return `${formatNumber(price)} ${currency || ""}`.trim();
+
+}
+
+
+function fileExtension(file) {
+
+  const name =
+    file?.name || "";
+
+  const parts =
+    name.split(".");
+
+  return (
+    parts.length > 1
+      ? parts.pop()
+      : "jpg"
+  ).toLowerCase();
+
+}
+
+
+function fallbackAvatar(name) {
+
+  const safe =
+    String(name || "U")
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+  return (
+    "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="200"
+        height="200">
+
+        <rect
+          width="200"
+          height="200"
+          fill="#e9eef5"/>
+
+        <text
+          x="50%"
+          y="55%"
+          text-anchor="middle"
+          font-size="78"
+          font-family="Arial"
+          font-weight="700"
+          fill="#10233f">
+          ${safe}
+        </text>
+
+      </svg>
+    `)
+  );
+
+}
+
+
+/* =======================================================
+   AUTH
+======================================================= */
+
+async function getCurrentUser() {
+
+  const {
+    data,
+    error
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error(
+      "getUser error:",
+      error
+    );
+
+    return null;
+  }
+
+  return data?.user || null;
+
+}
+
+
+/* =======================================================
+   PROFILE TARGET
+======================================================= */
+
+function getRequestedProfileId() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return (
+    params.get("id") ||
+    params.get("user") ||
+    params.get("profile")
+  );
+
+}
+
+
+async function resolveProfileId() {
+
+  const directId =
+    getRequestedProfileId();
+
+  if (directId) {
+    return directId;
+  }
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const username =
+    params.get("username");
+
+  if (username) {
+
+    const {
+      data,
+      error
+    } = await supabase
+      .from("profiles")
+      .select("id")
+      .ilike(
+        "username",
+        username
+      )
+      .limit(1);
+
+    if (!error && data?.length) {
+      return data[0].id;
+    }
+
+  }
+
+  return currentUser?.id || null;
+
+}
+
+
+/* =======================================================
+   LOAD PROFILE
+======================================================= */
+
+async function loadProfile(userId) {
+
+  if (!userId) {
+
+    showToast(
+      "Profile could not be found."
+    );
+
+    return;
+
+  }
+
+  viewedUserId = userId;
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      full_name,
+      username,
+      bio,
+      avatar_url,
+      city,
+      region_code,
+      region_name,
+      role,
+      seller_type,
+      is_verified,
+      is_mcp,
+      created_at
+    `)
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (error) {
+
+    console.error(
+      "Profile loading error:",
+      error
+    );
+
+    showToast(
+      "Unable to load profile."
+    );
+
+    return;
+
+  }
+
+  if (!data) {
+
+    showToast(
+      "Profile not found."
+    );
+
+    return;
+
+  }
+
+  currentProfile = data;
+
+  renderProfile(data);
+
+  await Promise.all([
+    loadProfileBadges(userId),
+    loadProfileStats(userId),
+    loadUserPosts(userId),
+    loadKycStatus(userId)
+  ]);
+
+  setupProfileMode();
+
+}
+
+
+/* =======================================================
+   RENDER PROFILE
+======================================================= */
+
+function renderProfile(profile) {
+
+  const name =
+    profile.full_name ||
+    profile.username ||
+    "MEC User";
+
+  $("profileName").textContent =
+    name;
+
+  $("profileUsername").textContent =
+    profile.username
+      ? `@${profile.username}`
+      : "@username";
+
+  $("profileBio").textContent =
+    profile.bio || "";
+
+  const locationParts = [];
+
+  if (profile.city) {
+    locationParts.push(
+      profile.city
+    );
+  }
+
+  if (profile.region_name) {
+    locationParts.push(
+      profile.region_name
+    );
+  }
+
+  if (profile.region_code) {
+    locationParts.push(
+      profile.region_code
+    );
+  }
+
+  $("profileLocation").textContent =
+    locationParts.length
+      ? `📍 ${locationParts.join(" · ")}`
+      : "";
+
+  const avatar =
+    profile.avatar_url ||
+    fallbackAvatar(name);
+
+  $("profileAvatar").src =
+    avatar;
+
+  $("profileAvatar").onerror =
+    () => {
+      $("profileAvatar").src =
+        fallbackAvatar(name);
+    };
+
+  $("verifiedDot")
+    .classList.toggle(
+      "hidden",
+      !profile.is_verified
+    );
+
+  $("mcpMark")
+    .classList.toggle(
+      "hidden",
+      !profile.is_mcp
+    );
+
+}
+
+
+/* =======================================================
+   PROFILE MODE
+======================================================= */
+
+function setupProfileMode() {
+
+  const isOwn =
+    currentUser &&
+    currentUser.id === viewedUserId;
+
+  $("ownFunctions")
+    .classList.toggle(
+      "hidden",
+      !isOwn
+    );
+
+  $("editProfileButton")
+    .classList.toggle(
+      "hidden",
+      !isOwn
+    );
+
+  $("followButton")
+    .classList.toggle(
+      "hidden",
+      isOwn
+    );
+
+  $("chatButton")
+    .classList.toggle(
+      "hidden",
+      isOwn
+    );
+
+  if (!isOwn) {
+
+    loadFollowState();
+
+  }
+
+}
+
+
+/* =======================================================
+   BADGES
+======================================================= */
+
+async function loadProfileBadges(userId) {
+
+  const container =
+    $("profileBadges");
+
+  container.innerHTML = "";
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("mec_profile_badges")
+    .select(`
+      id,
+      badge_id,
+      created_at,
+      mec_badges (
+        id,
+        code,
+        name,
+        label_en,
+        label_mm,
+        icon,
+        badge_type,
+        active
+      )
+    `)
+    .eq("user_id", userId)
+    .order(
+      "created_at",
+      {
+        ascending: true
+      }
+    );
+
+  if (error) {
+
+    console.error(
+      "Badge error:",
+      error
+    );
+
+    return;
+
+  }
+
+  const badges =
+    (data || [])
+      .map(row => row.mec_badges)
+      .filter(
+        badge =>
+          badge &&
+          badge.active
+      );
+
+  if (!badges.length) {
+    return;
+  }
+
+  badges.forEach(
+    badge => {
+
+      const item =
+        document.createElement(
+          "span"
+        );
+
+      item.className =
+        `badge ${badge.badge_type || ""}`;
+
+      item.innerHTML = `
+        <span>
+          ${escapeHtml(
+            badge.icon || "🏷️"
+          )}
+        </span>
+
+        <span>
+          ${escapeHtml(
+            badge.label_en ||
+            badge.name ||
+            badge.code
+          )}
+        </span>
+      `;
+
+      container.appendChild(item);
+
+    }
+  );
+
+}
+
+
+/* =======================================================
+   STATS
+======================================================= */
+
+async function loadProfileStats(userId) {
+
+  const [
+    followersResult,
+    followingResult,
+    likesResult,
+    postsResult
+  ] = await Promise.all([
+
+    supabase
+      .from("profile_follows")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "following_id",
+        userId
+      ),
+
+    supabase
+      .from("profile_follows")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "follower_id",
+        userId
+      ),
+
+    supabase
+      .from("profile_reactions")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "profile_id",
+        userId
+      )
+      .eq(
+        "reaction",
+        "like"
+      ),
+
+    supabase
+      .from("listings")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        userId
+      )
+
+  ]);
+
+
+  $("followersCount").textContent =
+    formatNumber(
+      followersResult.count || 0
+    );
+
+  $("followingCount").textContent =
+    formatNumber(
+      followingResult.count || 0
+    );
+
+  $("likesCount").textContent =
+    formatNumber(
+      likesResult.count || 0
+    );
+
+  $("postsCount").textContent =
+    formatNumber(
+      postsResult.count || 0
+    );
+
+}
+
+
+/* =======================================================
+   FOLLOW STATE
+======================================================= */
+
+async function loadFollowState() {
+
+  if (
+    !currentUser ||
+    !viewedUserId ||
+    currentUser.id === viewedUserId
+  ) {
+    return;
+  }
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("profile_follows")
+    .select("id")
+    .eq(
+      "follower_id",
+      currentUser.id
+    )
+    .eq(
+      "following_id",
+      viewedUserId
+    )
+    .maybeSingle();
+
+  if (error) {
+
+    console.error(
+      "Follow state error:",
+      error
+    );
+
+    return;
+
+  }
+
+  const button =
+    $("followButton");
+
+  if (data) {
+
+    button.textContent =
+      "Following";
+
+    button.classList.remove(
+      "btn-primary"
+    );
+
+  } else {
+
+    button.textContent =
+      "Follow";
+
+    button.classList.add(
+      "btn-primary"
+    );
+
+  }
+
+}
+
+
+async function toggleFollow() {
+
+  if (!currentUser) {
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+  if (
+    !viewedUserId ||
+    viewedUserId === currentUser.id
+  ) {
+    return;
+  }
+
+  const {
+    data: existing,
+    error: checkError
+  } = await supabase
+    .from("profile_follows")
+    .select("id")
+    .eq(
+      "follower_id",
+      currentUser.id
+    )
+    .eq(
+      "following_id",
+      viewedUserId
+    )
+    .maybeSingle();
+
+  if (checkError) {
+
+    console.error(
+      checkError
+    );
+
+    showToast(
+      "Unable to update follow."
+    );
+
+    return;
+
+  }
+
+
+  if (existing) {
+
+    const {
+      error
+    } = await supabase
+      .from("profile_follows")
+      .delete()
+      .eq(
+        "id",
+        existing.id
+      );
+
+    if (error) {
+
+      console.error(error);
+
+      showToast(
+        "Unable to unfollow."
+      );
+
+      return;
+
+    }
+
+    showToast(
+      "Unfollowed."
+    );
+
+  } else {
+
+    const {
+      error
+    } = await supabase
+      .from("profile_follows")
+      .insert({
+        follower_id:
+          currentUser.id,
+        following_id:
+          viewedUserId
+      });
+
+    if (error) {
+
+      console.error(error);
+
+      showToast(
+        "Unable to follow this profile."
+      );
+
+      return;
+
+    }
+
+    showToast(
+      "Following."
+    );
+
+  }
+
+
+  await Promise.all([
+    loadFollowState(),
+    loadProfileStats(
+      viewedUserId
+    )
+  ]);
+
+}
+
+
+/* =======================================================
+   FOLLOWERS / FOLLOWING
+======================================================= */
+
+async function openPeopleList(type) {
+
+  if (!viewedUserId) return;
+
+  const isFollowers =
+    type === "followers";
+
+  $("peopleModalTitle").textContent =
+    isFollowers
+      ? "Followers"
+      : "Following";
+
+  const list =
+    $("peopleList");
+
+  list.innerHTML =
+    `<div class="empty">
+      Loading...
+    </div>`;
+
+  openModal(
+    "peopleModal"
+  );
+
+
+  const column =
+    isFollowers
+      ? "follower_id"
+      : "following_id";
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("profile_follows")
+    .select(
+      `${column}, created_at`
+    )
+    .eq(
+      isFollowers
+        ? "following_id"
+        : "follower_id",
+      viewedUserId
+    )
+    .order(
+      "created_at",
+      {
+        ascending: false
+      }
+    )
+    .limit(100);
+
+  if (error) {
+
+    console.error(
+      error
+    );
+
+    list.innerHTML =
+      `<div class="empty">
+        Unable to load list.
+      </div>`;
+
+    return;
+
+  }
+
+  const ids =
+    (data || [])
+      .map(row => row[column])
+      .filter(Boolean);
+
+
+  if (!ids.length) {
+
+    list.innerHTML =
+      `<div class="empty">
+        No ${isFollowers ? "followers" : "following"} yet.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const {
+    data: people,
+    error: peopleError
+  } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      full_name,
+      username,
+      avatar_url,
+      is_verified
+    `)
+    .in(
+      "id",
+      ids
+    );
+
+
+  if (peopleError) {
+
+    console.error(
+      peopleError
+    );
+
+    list.innerHTML =
+      `<div class="empty">
+        Unable to load profiles.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const byId =
+    new Map(
+      (people || [])
+        .map(person => [
+          person.id,
+          person
+        ])
+    );
+
+
+  list.innerHTML = "";
+
+
+  ids.forEach(
+    id => {
+
+      const person =
+        byId.get(id);
+
+      if (!person) return;
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "person";
+
+      const avatar =
+        person.avatar_url ||
+        fallbackAvatar(
+          person.full_name ||
+          person.username
+        );
+
+      row.innerHTML = `
+
+        <img
+          class="person-avatar"
+          src="${escapeHtml(avatar)}"
+          alt="">
+
+        <div class="person-info">
+
+          <div class="person-name">
+            ${escapeHtml(
+              person.full_name ||
+              person.username ||
+              "MEC User"
+            )}
+
+            ${
+              person.is_verified
+                ? " ✓"
+                : ""
+            }
+          </div>
+
+          <div class="person-username">
+            ${
+              person.username
+                ? "@" +
+                  escapeHtml(
+                    person.username
+                  )
+                : ""
+            }
+          </div>
+
+        </div>
+
+        <div class="person-actions">
+
+          <button
+            class="small-btn"
+            type="button"
+            onclick="openProfile('${person.id}')">
+            View
+          </button>
+
+          ${
+            currentUser &&
+            currentUser.id !== person.id
+              ? `
+                <button
+                  class="small-btn"
+                  type="button"
+                  onclick="chatWith('${person.id}')">
+                  Chat
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+
+      `;
+
+      list.appendChild(row);
+
+    }
+  );
+
+}
+
+
+/* =======================================================
+   OPEN PROFILE
+======================================================= */
+
+function openProfile(userId) {
+
+  if (!userId) return;
+
+  window.location.href =
+    `./Profile.html?id=${encodeURIComponent(userId)}`;
+
+}
+
+
+/* =======================================================
+   SEARCH USERNAME
+======================================================= */
+
+async function searchUsername(keyword) {
+
+  const container =
+    $("searchResults");
+
+  const value =
+    String(keyword || "")
+      .trim()
+      .replace(/^@/, "");
+
+  if (value.length < 2) {
+
+    container.innerHTML = "";
+    container.classList.add(
+      "hidden"
+    );
+
+    return;
+
+  }
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      full_name,
+      username,
+      avatar_url,
+      is_verified
+    `)
+    .ilike(
+      "username",
+      `%${value}%`
+    )
+    .limit(10);
+
+
+  if (error) {
+
+    console.error(
+      "Username search:",
+      error
+    );
+
+    container.innerHTML = "";
+    container.classList.add(
+      "hidden"
+    );
+
+    return;
+
+  }
+
+
+  if (!data?.length) {
+
+    container.innerHTML =
+      `<div class="search-result">
+        <div class="result-info">
+          <div class="result-name">
+            No user found
+          </div>
+        </div>
+      </div>`;
+
+    container.classList.remove(
+      "hidden"
+    );
+
+    return;
+
+  }
+
+
+  container.innerHTML = "";
+
+
+  data.forEach(
+    person => {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "search-result";
+
+      const avatar =
+        person.avatar_url ||
+        fallbackAvatar(
+          person.full_name ||
+          person.username
+        );
+
+
+      row.innerHTML = `
+
+        <img
+          class="result-avatar"
+          src="${escapeHtml(avatar)}"
+          alt="">
+
+        <div class="result-info">
+
+          <div class="result-name">
+            ${escapeHtml(
+              person.full_name ||
+              person.username ||
+              "MEC User"
+            )}
+            ${
+              person.is_verified
+                ? " ✓"
+                : ""
+            }
+          </div>
+
+          <div class="result-username">
+            ${
+              person.username
+                ? "@" +
+                  escapeHtml(
+                    person.username
+                  )
+                : ""
+            }
+          </div>
+
+        </div>
+
+        <div class="result-actions">
+
+          <button
+            type="button"
+            class="small-btn"
+            onclick="openProfile('${person.id}')">
+            View
+          </button>
+
+          ${
+            currentUser &&
+            currentUser.id !== person.id
+              ? `
+                <button
+                  type="button"
+                  class="small-btn"
+                  onclick="chatWith('${person.id}')">
+                  Chat
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+
+      `;
+
+      container.appendChild(row);
+
+    }
+  );
+
+
+  container.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =======================================================
+   CHAT
+======================================================= */
+
+async function chatWith(otherUserId) {
+
+  if (
+    !currentUser ||
+    !otherUserId
+  ) {
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+  if (
+    currentUser.id === otherUserId
+  ) {
+    return;
+  }
+
+
+  const first =
+    currentUser.id < otherUserId
+      ? currentUser.id
+      : otherUserId;
+
+  const second =
+    currentUser.id < otherUserId
+      ? otherUserId
+      : currentUser.id;
+
+
+  let {
+    data: room,
+    error: roomError
+  } = await supabase
+    .from("chat_rooms")
+    .select(`
+      id,
+      user_one,
+      user_two
+    `)
+    .eq(
+      "user_one",
+      first
+    )
+    .eq(
+      "user_two",
+      second
+    )
+    .maybeSingle();
+
+
+  if (roomError) {
+
+    console.error(
+      roomError
+    );
+
+    showToast(
+      "Unable to open chat."
+    );
+
+    return;
+
+  }
+
+
+  if (!room) {
+
+    const result =
+      await supabase
+        .from("chat_rooms")
+        .insert({
+          user_one: first,
+          user_two: second
+        })
+        .select(
+          "id"
+        )
+        .single();
+
+    if (result.error) {
+
+      console.error(
+        result.error
+      );
+
+      showToast(
+        "Unable to create chat."
+      );
+
+      return;
+
+    }
+
+    room =
+      result.data;
+
+  }
+
+
+  window.location.href =
+    `./chat.html?room=${encodeURIComponent(room.id)}&user=${encodeURIComponent(otherUserId)}`;
+
+}
+
+
+/* =======================================================
+   POSTS
+======================================================= */
+
+async function loadUserPosts(userId) {
+
+  const grid =
+    $("postsGrid");
+
+  grid.innerHTML =
+    `<div class="empty">
+      Loading posts...
+    </div>`;
+
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("listings")
+    .select(`
+      id,
+      title,
+      price,
+      currency,
+      description,
+      show_photo_url,
+      images,
+      status,
+      category,
+      created_at
+    `)
+    .eq(
+      "user_id",
+      userId
+    )
+    .order(
+      "created_at",
+      {
+        ascending: false
+      }
+    )
+    .limit(40);
+
+
+  if (error) {
+
+    console.error(
+      "Posts error:",
+      error
+    );
+
+    grid.innerHTML =
+      `<div class="empty">
+        Unable to load posts.
+      </div>`;
+
+    return;
+
+  }
+
+
+  if (!data?.length) {
+
+    grid.innerHTML =
+      `<div class="empty">
+        No posts yet.
+      </div>`;
+
+    return;
+
+  }
+
+
+  grid.innerHTML = "";
+
+
+  data.forEach(
+    post => {
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+      card.className =
+        "post-card";
+
+
+      const image =
+        post.show_photo_url ||
+        post.images?.[0] ||
+        fallbackAvatar(
+          post.title
+        );
+
+
+      card.innerHTML = `
+
+        <img
+          class="post-image"
+          src="${escapeHtml(image)}"
+          alt="${escapeHtml(
+            post.title
+          )}">
+
+        <div class="post-info">
+
+          <div class="post-title">
+            ${escapeHtml(
+              post.title
+            )}
+          </div>
+
+          ${
+            post.price !== null &&
+            post.price !== undefined
+              ? `
+                <div class="post-price">
+                  ${escapeHtml(
+                    formatPrice(
+                      post.price,
+                      post.currency
+                    )
+                  )}
+                </div>
+              `
+              : ""
+          }
+
+        </div>
+
+      `;
+
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          /*
+            Keep this simple:
+            open listing page only if your existing
+            listing detail page exists.
+          */
+
+          window.location.href =
+            `./listing.html?id=${encodeURIComponent(post.id)}`;
+
+        }
+      );
+
+
+      grid.appendChild(card);
+
+    }
+  );
+
+}
+
+
+/* =======================================================
+   EDIT PROFILE
+======================================================= */
+
+async function openEditProfile() {
+
+  if (
+    !currentUser ||
+    currentUser.id !== viewedUserId
+  ) {
+    return;
+  }
+
+
+  const profile =
+    currentProfile;
+
+  $("fullNameInput").value =
+    profile.full_name || "";
+
+  $("usernameInput").value =
+    profile.username || "";
+
+  $("bioInput").value =
+    profile.bio || "";
+
+  $("cityInput").value =
+    profile.city || "";
+
+  $("regionInput").value =
+    profile.region_code || "";
+
+  $("sellerTypeInput").value =
+    profile.seller_type || "";
+
+
+  $("editAvatarPreview").src =
+    profile.avatar_url ||
+    fallbackAvatar(
+      profile.full_name ||
+      profile.username
+    );
+
+
+  await loadRegions();
+
+  $("regionInput").value =
+    profile.region_code || "";
+
+
+  $("sellerTypeInput").value =
+    profile.seller_type || "";
+
+
+  openModal(
+    "editModal"
+  );
+
+}
+
+
+/* =======================================================
+   REGIONS
+======================================================= */
+
+async function loadRegions() {
+
+  const select =
+    $("regionInput");
+
+  if (
+    regionList.length
+  ) {
+
+    renderRegions();
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("mec_regions")
+    .select(`
+      code,
+      name_en,
+      name_mm,
+      region_type
+    `)
+    .order(
+      "name_en",
+      {
+        ascending: true
+      }
+    );
+
+
+  if (error) {
+
+    console.error(
+      "Region error:",
+      error
+    );
 
     /*
-      Existing public/anon key for the
-      Myanmar-Elite-Connect Supabase project.
+      Fallback so edit profile does not
+      break even if the region query fails.
     */
 
-    const SUPABASE_PUBLIC_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlrandpc2ZzZGN1cGliZ2ppdXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMTMzODEsImV4cCI6MjEwMjY4OTM4MX0.25tHs8U6nVhL5XNPJy2M8P6TkPS_Q5jHwZljLVFCyNI";
-
-    const client =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLIC_KEY
-      );
-
-
-    /* =====================================================
-       STATE
-    ===================================================== */
-
-    let currentUser = null;
-
-    let profileUser = null;
-
-    let isOwnProfile = false;
-
-    let isFollowing = false;
-
-    let isLiked = false;
-
-    let followers = [];
-
-    let following = [];
-
-    let posts = [];
-
-    let badges = [];
-
-
-    /* =====================================================
-       HELPERS
-    ===================================================== */
-
-    const $ = id =>
-      document.getElementById(id);
-
-
-    function escapeHtml(value) {
-
-      if (value === null || value === undefined) {
-        return "";
+    regionList = [
+      {
+        code: "KCN",
+        name_en: "Kachin",
+        name_mm: "ကချင်ပြည်နယ်"
+      },
+      {
+        code: "KY",
+        name_en: "Kayah",
+        name_mm: "ကယားပြည်နယ်"
+      },
+      {
+        code: "KR",
+        name_en: "Kayin",
+        name_mm: "ကရင်ပြည်နယ်"
+      },
+      {
+        code: "CH",
+        name_en: "Chin",
+        name_mm: "ချင်းပြည်နယ်"
+      },
+      {
+        code: "MN",
+        name_en: "Mon",
+        name_mm: "မွန်ပြည်နယ်"
+      },
+      {
+        code: "RK",
+        name_en: "Rakhine",
+        name_mm: "ရခိုင်ပြည်နယ်"
+      },
+      {
+        code: "SH",
+        name_en: "Shan",
+        name_mm: "ရှမ်းပြည်နယ်"
+      },
+      {
+        code: "SAG",
+        name_en: "Sagaing",
+        name_mm: "စစ်ကိုင်းတိုင်းဒေသကြီး"
+      },
+      {
+        code: "TN",
+        name_en: "Tanintharyi",
+        name_mm: "တနင်္သာရီတိုင်းဒေသကြီး"
+      },
+      {
+        code: "BG",
+        name_en: "Bago",
+        name_mm: "ပဲခူးတိုင်းဒေသကြီး"
+      },
+      {
+        code: "MG",
+        name_en: "Magway",
+        name_mm: "မကွေးတိုင်းဒေသကြီး"
+      },
+      {
+        code: "MDY",
+        name_en: "Mandalay",
+        name_mm: "မန္တလေးတိုင်းဒေသကြီး"
+      },
+      {
+        code: "YGN",
+        name_en: "Yangon",
+        name_mm: "ရန်ကုန်တိုင်းဒေသကြီး"
+      },
+      {
+        code: "AY",
+        name_en: "Ayeyarwady",
+        name_mm: "ဧရာဝတီတိုင်းဒေသကြီး"
       }
+    ];
 
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+  } else {
 
-    }
+    regionList =
+      data || [];
 
-
-    function showToast(message) {
-
-      const toast =
-        $("toast");
-
-      toast.textContent =
-        message;
-
-      toast.classList.add("show");
-
-      clearTimeout(
-        showToast.timer
-      );
-
-      showToast.timer =
-        setTimeout(() => {
-
-          toast.classList.remove("show");
-
-        }, 2600);
-
-    }
+  }
 
 
-    function avatarFallback(name) {
+  renderRegions();
 
-      const text =
-        (name || "M")
-          .trim()
-          .charAt(0)
-          .toUpperCase();
-
-      return (
-        "https://ui-avatars.com/api/?name=" +
-        encodeURIComponent(text) +
-        "&background=102b4d&color=ffffff&size=256"
-      );
-
-    }
+}
 
 
-    function formatPrice(price, currency) {
+function renderRegions() {
 
-      if (
-        price === null ||
-        price === undefined ||
-        price === ""
-      ) {
-        return "";
-      }
+  const select =
+    $("regionInput");
 
-      const number =
-        Number(price);
-
-      if (
-        Number.isNaN(number)
-      ) {
-        return String(price);
-      }
-
-      return (
-        number.toLocaleString() +
-        (currency
-          ? " " + currency
-          : "")
-      );
-
-    }
+  select.innerHTML =
+    `<option value="">
+      Select Region / State
+    </option>`;
 
 
-    function getProfileTarget() {
+  regionList.forEach(
+    region => {
 
-      const params =
-        new URLSearchParams(
-          window.location.search
+      const option =
+        document.createElement(
+          "option"
         );
 
-      return {
-        id:
-          params.get("id"),
-        username:
-          params.get("username")
-      };
+      option.value =
+        region.code;
+
+      option.textContent =
+        `${region.name_mm || region.name_en} — ${region.code}`;
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+/* =======================================================
+   AVATAR PREVIEW
+======================================================= */
+
+$("avatarInput")
+  .addEventListener(
+    "change",
+    event => {
+
+      const file =
+        event.target.files?.[0];
+
+      if (!file) return;
+
+      const url =
+        URL.createObjectURL(file);
+
+      $("editAvatarPreview").src =
+        url;
+
+    }
+  );
+
+
+/* =======================================================
+   SAVE PROFILE
+======================================================= */
+
+async function saveProfile() {
+
+  if (!currentUser) {
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    $("saveProfileButton");
+
+  button.disabled = true;
+
+  button.textContent =
+    "Saving...";
+
+
+  try {
+
+    const fullName =
+      $("fullNameInput")
+        .value
+        .trim();
+
+    const username =
+      $("usernameInput")
+        .value
+        .trim()
+        .replace(/^@/, "")
+        .toLowerCase();
+
+    const bio =
+      $("bioInput")
+        .value
+        .trim();
+
+    const city =
+      $("cityInput")
+        .value
+        .trim();
+
+    const regionCode =
+      $("regionInput")
+        .value || null;
+
+    const sellerType =
+      $("sellerTypeInput")
+        .value || null;
+
+
+    if (
+      username &&
+      !/^[a-z0-9._-]{3,30}$/.test(
+        username
+      )
+    ) {
+
+      showToast(
+        "Username must be 3–30 characters."
+      );
+
+      return;
 
     }
 
 
-    /* =====================================================
-       THEME
-    ===================================================== */
+    /*
+      Check username before saving.
+      This avoids the unique-index error becoming
+      an unexplained failure.
+    */
 
-    function applyTheme() {
-
-      const saved =
-        localStorage.getItem(
-          "mec_theme"
-        ) || "light";
-
-      document.body.classList.toggle(
-        "dark",
-        saved === "dark"
-      );
-
-      $("themeButton").textContent =
-        saved === "dark"
-          ? "☀"
-          : "☾";
-    }
-
-
-    $("themeButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          const dark =
-            document.body.classList.contains(
-              "dark"
-            );
-
-          localStorage.setItem(
-            "mec_theme",
-            dark
-              ? "light"
-              : "dark"
-          );
-
-          applyTheme();
-
-        }
-      );
-
-
-    /* =====================================================
-       LANGUAGE
-    ===================================================== */
-
-    $("languageButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          const current =
-            localStorage.getItem(
-              "mec_language"
-            ) || "en";
-
-          const next =
-            current === "en"
-              ? "mm"
-              : "en";
-
-          localStorage.setItem(
-            "mec_language",
-            next
-          );
-
-          showToast(
-            next === "mm"
-              ? "မြန်မာဘာသာ ရွေးထားပါသည်"
-              : "English selected"
-          );
-
-        }
-      );
-
-
-    /* =====================================================
-       AUTH
-    ===================================================== */
-
-    async function loadCurrentUser() {
+    if (username) {
 
       const {
-        data,
+        data: existing,
         error
-      } =
-        await client.auth.getUser();
-
-      if (error) {
-        console.error(error);
-      }
-
-      currentUser =
-        data?.user || null;
-
-      return currentUser;
-    }
-
-
-    /* =====================================================
-       LOAD PROFILE
-    ===================================================== */
-
-    async function loadProfile() {
-
-      const target =
-        getProfileTarget();
-
-      let query =
-        client
-          .from("profiles")
-          .select(`
-            id,
-            full_name,
-            username,
-            bio,
-            avatar_url,
-            city,
-            region_code,
-            region_name,
-            role,
-            seller_type,
-            is_verified,
-            is_mcp,
-            created_at
-          `);
-
-      if (target.id) {
-
-        query =
-          query.eq(
-            "id",
-            target.id
-          );
-
-      } else if (target.username) {
-
-        query =
-          query.eq(
-            "username",
-            target.username
-          );
-
-      } else if (currentUser) {
-
-        query =
-          query.eq(
-            "id",
-            currentUser.id
-          );
-
-      } else {
-
-        throw new Error(
-          "No profile selected."
-        );
-
-      }
-
-      const {
-        data,
-        error
-      } =
-        await query.maybeSingle();
+      } = await supabase
+        .from("profiles")
+        .select("id")
+        .ilike(
+          "username",
+          username
+        )
+        .neq(
+          "id",
+          currentUser.id
+        )
+        .limit(1);
 
       if (error) {
         throw error;
       }
 
-      if (!data) {
-
-        throw new Error(
-          "Profile not found."
-        );
-
-      }
-
-      profileUser =
-        data;
-
-      isOwnProfile =
-        !!currentUser &&
-        currentUser.id === data.id;
-
-    }
-
-
-    /* =====================================================
-       RENDER PROFILE
-    ===================================================== */
-
-    function renderProfile() {
-
-      const name =
-        profileUser.full_name ||
-        profileUser.username ||
-        "MEC User";
-
-      $("profileName")
-        .textContent =
-        name;
-
-      $("profileUsername")
-        .textContent =
-        profileUser.username
-          ? "@" + profileUser.username
-          : "@username";
-
-      $("profileBio")
-        .textContent =
-        profileUser.bio ||
-        "No bio yet.";
-
-      const locationParts =
-        [
-          profileUser.region_name,
-          profileUser.city
-        ]
-        .filter(Boolean);
-
-      $("profileLocation")
-        .textContent =
-        locationParts.length
-          ? "📍 " +
-            locationParts.join(" • ")
-          : "📍 Location not set";
-
-      $("verifiedBadge")
-        .style.display =
-        profileUser.is_verified
-          ? "grid"
-          : "none";
-
-      $("mcpBadge")
-        .style.display =
-        profileUser.is_mcp
-          ? "inline-flex"
-          : "none";
-
-      const avatar =
-        profileUser.avatar_url ||
-        avatarFallback(name);
-
-      $("avatar")
-        .src =
-        avatar;
-
-      if (isOwnProfile) {
-
-        $("editProfileButton")
-          .style.display =
-          "inline-flex";
-
-        $("followButton")
-          .style.display =
-          "none";
-
-        $("avatarButton")
-          .style.display =
-          "grid";
-
-      } else {
-
-        $("editProfileButton")
-          .style.display =
-          "none";
-
-        $("followButton")
-          .style.display =
-          "inline-flex";
-
-        $("avatarButton")
-          .style.display =
-          "none";
-
-      }
-
-      $("followButton")
-        .textContent =
-        isFollowing
-          ? "✓ Following"
-          : "＋ Follow";
-
-      $("likeButton")
-        .textContent =
-        isLiked
-          ? "♥ Liked"
-          : "♡ Like";
-
-      $("postsCount")
-        .textContent =
-        posts.length;
-
-      $("followersCount")
-        .textContent =
-        followers.length;
-
-      $("followingCount")
-        .textContent =
-        following.length;
-
-      $("likesCount")
-        .textContent =
-        "—";
-
-      $("postsTitle")
-        .textContent =
-        isOwnProfile
-          ? "My Posts"
-          : "Posts";
-
-      $("kycDescription")
-        .textContent =
-        profileUser.is_verified
-          ? "KYC verified ✓"
-          : "Verify your identity";
-
-      $("mcpDescription")
-        .textContent =
-        profileUser.is_mcp
-          ? "MCP verified profile"
-          : "Apply to become an MEC MCP";
-
-    }
-
-
-    /* =====================================================
-       FOLLOW STATUS
-    ===================================================== */
-
-    async function loadFollowStatus() {
-
-      if (
-        !currentUser ||
-        !profileUser ||
-        currentUser.id === profileUser.id
-      ) {
-        isFollowing = false;
-        return;
-      }
-
-      const {
-        data,
-        error
-      } =
-        await client
-          .from("profile_follows")
-          .select("id")
-          .eq(
-            "follower_id",
-            currentUser.id
-          )
-          .eq(
-            "following_id",
-            profileUser.id
-          )
-          .maybeSingle();
-
-      if (error) {
-        console.error(
-          "Follow status:",
-          error
-        );
-
-        isFollowing = false;
-
-        return;
-      }
-
-      isFollowing =
-        !!data;
-
-    }
-
-
-    /* =====================================================
-       FOLLOW
-    ===================================================== */
-
-    async function toggleFollow() {
-
-      if (!currentUser) {
+      if (existing?.length) {
 
         showToast(
-          "Please log in first."
+          "That username is already taken."
         );
 
         return;
 
       }
 
-      if (
-        !profileUser ||
-        currentUser.id === profileUser.id
-      ) {
-        return;
+    }
+
+
+    let avatarUrl =
+      currentProfile.avatar_url ||
+      null;
+
+
+    const file =
+      $("avatarInput")
+        .files?.[0];
+
+
+    if (file) {
+
+      const path =
+        `${currentUser.id}/avatar-${Date.now()}.${fileExtension(file)}`;
+
+
+      const {
+        error: uploadError
+      } = await supabase.storage
+        .from("profile-avatars")
+        .upload(
+          path,
+          file,
+          {
+            upsert: false,
+            cacheControl: "3600",
+            contentType:
+              file.type
+          }
+        );
+
+
+      if (uploadError) {
+        throw uploadError;
       }
 
-      const button =
-        $("followButton");
 
-      button.disabled =
-        true;
+      const {
+        data: publicData
+      } = supabase.storage
+        .from("profile-avatars")
+        .getPublicUrl(path);
 
-      try {
 
-        if (isFollowing) {
+      avatarUrl =
+        publicData?.publicUrl ||
+        avatarUrl;
 
-          const {
-            error
-          } =
-            await client
-              .from("profile_follows")
-              .delete()
-              .eq(
-                "follower_id",
-                currentUser.id
+    }
+
+
+    const {
+      error: updateError
+    } = await supabase
+      .from("profiles")
+      .update({
+
+        full_name:
+          fullName || null,
+
+        username:
+          username || null,
+
+        bio:
+          bio || null,
+
+        city:
+          city || null,
+
+        region_code:
+          regionCode,
+
+        region_name:
+          regionCode
+            ? (
+                regionList.find(
+                  r =>
+                    r.code ===
+                    regionCode
+                )?.name_en ||
+                null
               )
-              .eq(
-                "following_id",
-                profileUser.id
-              );
+            : null,
 
-          if (error) {
-            throw error;
-          }
+        seller_type:
+          sellerType,
 
-          isFollowing = false;
+        avatar_url:
+          avatarUrl
 
-          showToast(
-            "Unfollowed"
-          );
+      })
+      .eq(
+        "id",
+        currentUser.id
+      );
 
-        } else {
 
-          const {
-            error
-          } =
-            await client
-              .from("profile_follows")
-              .insert({
-                follower_id:
-                  currentUser.id,
+    if (updateError) {
+      throw updateError;
+    }
 
-                following_id:
-                  profileUser.id
-              });
 
-          if (error) {
+    showToast(
+      "Profile updated successfully."
+    );
 
-            if (
-              error.code === "23505"
-            ) {
 
-              isFollowing = true;
+    closeModal(
+      "editModal"
+    );
 
-            } else {
 
-              throw error;
+    await loadProfile(
+      currentUser.id
+    );
 
-            }
 
-          } else {
+  } catch (error) {
 
-            isFollowing = true;
+    console.error(
+      "Save profile error:",
+      error
+    );
 
-          }
+    showToast(
+      error?.message ||
+      "Unable to save profile."
+    );
 
-          showToast(
-            "Following"
-          );
+  } finally {
 
+    button.disabled = false;
+
+    button.textContent =
+      "Save Changes";
+
+  }
+
+}
+
+
+/* =======================================================
+   KYC STATUS
+======================================================= */
+
+async function loadKycStatus(userId) {
+
+  if (
+    !currentUser ||
+    currentUser.id !== userId
+  ) {
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } = await supabase
+    .from("kyc_submissions")
+    .select(`
+      id,
+      status,
+      rejection_reason,
+      full_name,
+      document_type,
+      created_at
+    `)
+    .eq(
+      "user_id",
+      userId
+    )
+    .order(
+      "created_at",
+      {
+        ascending: false
+      }
+    )
+    .limit(1);
+
+
+  if (error) {
+
+    console.error(
+      "KYC status error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if (!data?.length) {
+
+    $("kycDescription")
+      .textContent =
+      "Not submitted yet.";
+
+    return;
+
+  }
+
+
+  const kyc =
+    data[0];
+
+
+  if (
+    kyc.status ===
+    "approved"
+  ) {
+
+    $("kycDescription")
+      .textContent =
+      "✓ Verified";
+
+  } else if (
+    kyc.status ===
+    "pending"
+  ) {
+
+    $("kycDescription")
+      .textContent =
+      "Pending admin review.";
+
+  } else if (
+    kyc.status ===
+    "rejected"
+  ) {
+
+    $("kycDescription")
+      .textContent =
+      "Rejected — submit again.";
+
+  } else {
+
+    $("kycDescription")
+      .textContent =
+      kyc.status ||
+      "Unknown status.";
+
+  }
+
+}
+
+
+/* =======================================================
+   OPEN KYC
+======================================================= */
+
+async function openKyc() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  await loadKycStatus(
+    currentUser.id
+  );
+
+
+  const {
+    data
+  } = await supabase
+    .from("kyc_submissions")
+    .select(`
+      full_name,
+      document_type,
+      status
+    `)
+    .eq(
+      "user_id",
+      currentUser.id
+    )
+    .order(
+      "created_at",
+      {
+        ascending: false
+      }
+    )
+    .limit(1);
+
+
+  if (data?.length) {
+
+    const kyc =
+      data[0];
+
+    $("kycName").value =
+      kyc.full_name ||
+      currentProfile.full_name ||
+      "";
+
+    $("kycDocumentType").value =
+      kyc.document_type ||
+      "";
+
+    const box =
+      $("kycStatusBox");
+
+    box.textContent =
+      `Status: ${
+        kyc.status || "unknown"
+      }`;
+
+    box.className =
+      "kyc-status " +
+      (
+        kyc.status === "approved"
+          ? "approved"
+          : kyc.status === "pending"
+            ? "pending"
+            : kyc.status === "rejected"
+              ? "rejected"
+              : ""
+      );
+
+  } else {
+
+    $("kycName").value =
+      currentProfile.full_name ||
+      "";
+
+    $("kycDocumentType").value =
+      "";
+
+    $("kycStatusBox").textContent =
+      "Not submitted yet.";
+
+    $("kycStatusBox").className =
+      "kyc-status";
+
+  }
+
+
+  openModal(
+    "kycModal"
+  );
+
+}
+
+
+/* =======================================================
+   SUBMIT KYC
+======================================================= */
+
+async function submitKyc() {
+
+  if (!currentUser) {
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    $("submitKycButton");
+
+  button.disabled = true;
+
+  button.textContent =
+    "Uploading...";
+
+
+  try {
+
+    const fullName =
+      $("kycName")
+        .value
+        .trim();
+
+    const documentType =
+      $("kycDocumentType")
+        .value;
+
+    const frontFile =
+      $("kycFront")
+        .files?.[0];
+
+    const backFile =
+      $("kycBack")
+        .files?.[0];
+
+
+    if (
+      !fullName ||
+      !documentType ||
+      !frontFile ||
+      !backFile
+    ) {
+
+      showToast(
+        "Please complete all KYC fields."
+      );
+
+      return;
+
+    }
+
+
+    const timestamp =
+      Date.now();
+
+
+    const frontPath =
+      `${currentUser.id}/front-${timestamp}.${fileExtension(frontFile)}`;
+
+    const backPath =
+      `${currentUser.id}/back-${timestamp}.${fileExtension(backFile)}`;
+
+
+    const {
+      error: frontError
+    } = await supabase.storage
+      .from("kyc-documents")
+      .upload(
+        frontPath,
+        frontFile,
+        {
+          upsert: false,
+          contentType:
+            frontFile.type
         }
+      );
 
-        await loadSocialLists();
 
-        renderProfile();
-
-      } catch (error) {
-
-        console.error(error);
-
-        showToast(
-          error.message ||
-          "Unable to update follow."
-        );
-
-      } finally {
-
-        button.disabled =
-          false;
-
-      }
-
+    if (frontError) {
+      throw frontError;
     }
 
 
-    /* =====================================================
-       PROFILE LIKE
-       profile_reactions table
-    ===================================================== */
-
-    async function loadLikeStatus() {
-
-      if (
-        !currentUser ||
-        !profileUser
-      ) {
-        return;
-      }
-
-      const {
-        data,
-        error
-      } =
-        await client
-          .from("profile_reactions")
-          .select("id")
-          .eq(
-            "user_id",
-            currentUser.id
-          )
-          .eq(
-            "profile_id",
-            profileUser.id
-          )
-          .eq(
-            "reaction",
-            "like"
-          )
-          .maybeSingle();
-
-      if (error) {
-
-        console.error(
-          "Like status:",
-          error
-        );
-
-        isLiked = false;
-
-        return;
-      }
-
-      isLiked =
-        !!data;
-
-    }
-
-
-    async function toggleLike() {
-
-      if (!currentUser) {
-
-        showToast(
-          "Please log in first."
-        );
-
-        return;
-
-      }
-
-      if (
-        currentUser.id === profileUser.id
-      ) {
-
-        showToast(
-          "You cannot like your own profile."
-        );
-
-        return;
-
-      }
-
-      try {
-
-        if (isLiked) {
-
-          const {
-            error
-          } =
-            await client
-              .from("profile_reactions")
-              .delete()
-              .eq(
-                "user_id",
-                currentUser.id
-              )
-              .eq(
-                "profile_id",
-                profileUser.id
-              )
-              .eq(
-                "reaction",
-                "like"
-              );
-
-          if (error) {
-            throw error;
-          }
-
-          isLiked = false;
-
-          showToast(
-            "Like removed."
-          );
-
-        } else {
-
-          const {
-            error
-          } =
-            await client
-              .from("profile_reactions")
-              .insert({
-                user_id:
-                  currentUser.id,
-
-                profile_id:
-                  profileUser.id,
-
-                reaction:
-                  "like"
-              });
-
-          if (error) {
-            throw error;
-          }
-
-          isLiked = true;
-
-          showToast(
-            "Profile liked."
-          );
-
+    const {
+      error: backError
+    } = await supabase.storage
+      .from("kyc-documents")
+      .upload(
+        backPath,
+        backFile,
+        {
+          upsert: false,
+          contentType:
+            backFile.type
         }
+      );
 
-        renderProfile();
 
-      } catch (error) {
+    if (backError) {
+      throw backError;
+    }
 
-        console.error(error);
 
-        showToast(
-          error.message ||
-          "Unable to update like."
+    /*
+      Create a fresh pending submission.
+      Admin panel will see this record.
+    */
+
+    const {
+      error: insertError
+    } = await supabase
+      .from("kyc_submissions")
+      .insert({
+
+        user_id:
+          currentUser.id,
+
+        full_name:
+          fullName,
+
+        document_type:
+          documentType,
+
+        front_image_url:
+          frontPath,
+
+        back_image_url:
+          backPath,
+
+        status:
+          "pending",
+
+        rejection_reason:
+          null
+
+      });
+
+
+    if (insertError) {
+      throw insertError;
+    }
+
+
+    showToast(
+      "KYC submitted successfully."
+    );
+
+
+    closeModal(
+      "kycModal"
+    );
+
+
+    $("kycFront").value = "";
+    $("kycBack").value = "";
+
+
+    await loadKycStatus(
+      currentUser.id
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "KYC submit error:",
+      error
+    );
+
+    showToast(
+      error?.message ||
+      "KYC submission failed."
+    );
+
+  } finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      "Submit KYC";
+
+  }
+
+}
+
+
+/* =======================================================
+   LOGOUT
+======================================================= */
+
+async function logout() {
+
+  const {
+    error
+  } = await supabase.auth.signOut();
+
+  if (error) {
+
+    console.error(
+      error
+    );
+
+    showToast(
+      "Logout failed."
+    );
+
+    return;
+
+  }
+
+
+  window.location.href =
+    "./auth.html?mode=login";
+
+}
+
+
+/* =======================================================
+   THEME
+======================================================= */
+
+function applyTheme(theme) {
+
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
+  $("themeButton")
+    .textContent =
+    theme === "dark"
+      ? "☀"
+      : "☾";
+
+  localStorage.setItem(
+    "mec_theme",
+    theme
+  );
+
+}
+
+
+function toggleTheme() {
+
+  const dark =
+    document.body.classList.contains(
+      "dark"
+    );
+
+  applyTheme(
+    dark
+      ? "light"
+      : "dark"
+  );
+
+}
+
+
+/* =======================================================
+   EVENT LISTENERS
+======================================================= */
+
+$("followButton")
+  .addEventListener(
+    "click",
+    toggleFollow
+  );
+
+
+$("chatButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      if (viewedUserId) {
+        chatWith(
+          viewedUserId
         );
-
       }
 
     }
+  );
 
 
-    /* =====================================================
-       SOCIAL LISTS
-       No 404 pages.
-       Everything opens inside modal.
-    ===================================================== */
+$("editProfileButton")
+  .addEventListener(
+    "click",
+    openEditProfile
+  );
 
-    async function loadSocialLists() {
 
-      if (!profileUser) {
-        return;
-      }
+$("saveProfileButton")
+  .addEventListener(
+    "click",
+    saveProfile
+  );
 
 
-      const followerResult =
-        await client
-          .from("profile_follows")
-          .select(`
-            follower_id,
-            created_at
-          `)
-          .eq(
-            "following_id",
-            profileUser.id
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
+$("kycButton")
+  .addEventListener(
+    "click",
+    openKyc
+  );
 
 
-      if (followerResult.error) {
+$("submitKycButton")
+  .addEventListener(
+    "click",
+    submitKyc
+  );
 
-        console.error(
-          followerResult.error
-        );
 
-        followers = [];
-
-      } else {
-
-        const ids =
-          followerResult.data
-            .map(
-              row =>
-                row.follower_id
-            );
-
-        followers =
-          await getUsersByIds(ids);
-
-      }
-
-
-      const followingResult =
-        await client
-          .from("profile_follows")
-          .select(`
-            following_id,
-            created_at
-          `)
-          .eq(
-            "follower_id",
-            profileUser.id
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (followingResult.error) {
-
-        console.error(
-          followingResult.error
-        );
-
-        following = [];
-
-      } else {
-
-        const ids =
-          followingResult.data
-            .map(
-              row =>
-                row.following_id
-            );
-
-        following =
-          await getUsersByIds(ids);
-
-      }
-
-    }
-
-
-    async function getUsersByIds(ids) {
-
-      if (!ids.length) {
-        return [];
-      }
-
-      const {
-        data,
-        error
-      } =
-        await client
-          .from("profiles")
-          .select(`
-            id,
-            full_name,
-            username,
-            avatar_url,
-            is_verified,
-            is_mcp
-          `)
-          .in(
-            "id",
-            ids
-          );
-
-      if (error) {
-
-        console.error(error);
-
-        return [];
-
-      }
-
-      const map =
-        new Map(
-          data.map(
-            user =>
-              [
-                user.id,
-                user
-              ]
-          )
-        );
-
-      return ids
-        .map(
-          id =>
-            map.get(id)
-        )
-        .filter(Boolean);
-
-    }
-
-
-    function openUserList(type) {
-
-      const modal =
-        $("userListModal");
-
-      const title =
-        $("userListTitle");
-
-      const body =
-        $("userListBody");
-
-      const list =
-        type === "followers"
-          ? followers
-          : following;
-
-      title.textContent =
-        type === "followers"
-          ? "Followers"
-          : "Following";
-
-      if (!list.length) {
-
-        body.innerHTML =
-          `<div class="empty">
-             ${
-               type === "followers"
-                 ? "No followers yet."
-                 : "Not following anyone yet."
-             }
-           </div>`;
-
-      } else {
-
-        body.innerHTML =
-          list
-            .map(
-              user =>
-                `
-                <div
-                  class="user-row">
-
-                  <img
-                    class="user-avatar"
-                    src="${
-                      escapeHtml(
-                        user.avatar_url ||
-                        avatarFallback(
-                          user.full_name ||
-                          user.username
-                        )
-                      )
-                    }"
-                    alt="">
-
-                  <div class="user-info">
-
-                    <div class="user-name">
-
-                      ${
-                        escapeHtml(
-                          user.full_name ||
-                          user.username ||
-                          "MEC User"
-                        )
-                      }
-
-                      ${
-                        user.is_verified
-                          ? " ✓"
-                          : ""
-                      }
-
-                    </div>
-
-                    <div
-                      class="user-username">
-
-                      ${
-                        user.username
-                          ? "@" +
-                            escapeHtml(
-                              user.username
-                            )
-                          : ""
-                      }
-
-                    </div>
-
-                  </div>
-
-                  <div
-                    class="row-actions">
-
-                    <button
-                      class="small-button"
-                      onclick="
-                        openProfile(
-                          '${user.id}'
-                        )
-                      ">
-
-                      View
-
-                    </button>
-
-                    ${
-                      currentUser &&
-                      currentUser.id !== user.id
-                        ? `
-                          <button
-                            class="small-button"
-                            onclick="
-                              openChat(
-                                '${user.id}'
-                              )
-                            ">
-
-                            Chat
-
-                          </button>
-                        `
-                        : ""
-                    }
-
-                  </div>
-
-                </div>
-                `
-            )
-            .join("");
-
-      }
-
-      modal.classList.add("show");
-
-    }
-
-
-    function closeUserList() {
-
-      $("userListModal")
-        .classList.remove("show");
-
-    }
-
-
-    function openProfile(id) {
+$("mcpButton")
+  .addEventListener(
+    "click",
+    () => {
 
       window.location.href =
-        "profile.html?id=" +
-        encodeURIComponent(id);
+        "./MCP.html";
 
     }
+  );
 
 
-    function openChat(id) {
+$("badgeButton")
+  .addEventListener(
+    "click",
+    () => {
 
       window.location.href =
-        "chat.html?user=" +
-        encodeURIComponent(id);
+        "./Badge.html";
 
     }
+  );
 
 
-    /* =====================================================
-       POSTS
-    ===================================================== */
+$("myPostsButton")
+  .addEventListener(
+    "click",
+    () => {
 
-    async function loadPosts() {
-
-      if (!profileUser) {
-        return;
-      }
-
-      const {
-        data,
-        error
-      } =
-        await client
-          .from("listings")
-          .select(`
-            id,
-            title,
-            price,
-            currency,
-            description,
-            show_photo_url,
-            images,
-            status,
-            category,
-            created_at
-          `)
-          .eq(
-            "user_id",
-            profileUser.id
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          )
-          .limit(40);
-
-      if (error) {
-
-        console.error(
-          "Posts:",
-          error
-        );
-
-        posts = [];
-
-      } else {
-
-        posts =
-          data || [];
-
-      }
-
-      renderPosts();
-
-    }
-
-
-    function getPostImage(post) {
-
-      if (
-        post.show_photo_url
-      ) {
-        return post.show_photo_url;
-      }
-
-      if (
-        Array.isArray(post.images) &&
-        post.images.length
-      ) {
-        return post.images[0];
-      }
-
-      return "";
-
-    }
-
-
-    function renderPosts() {
-
-      const grid =
-        $("postsGrid");
-
-      if (!posts.length) {
-
-        grid.innerHTML =
-          `
-          <div
-            class="empty"
-            style="grid-column:1/-1;">
-            ${
-              isOwnProfile
-                ? "You have not created any posts yet."
-                : "This profile has no posts yet."
-            }
-          </div>
-          `;
-
-        return;
-
-      }
-
-      grid.innerHTML =
-        posts
-          .map(
-            post => {
-
-              const image =
-                getPostImage(post);
-
-              return `
-                <article
-                  class="post-card">
-
-                  ${
-                    image
-                      ? `
-                        <img
-                          class="post-image"
-                          src="${escapeHtml(image)}"
-                          alt="${escapeHtml(post.title)}">
-                      `
-                      : `
-                        <div
-                          class="post-image">
-                        </div>
-                      `
-                  }
-
-                  <div class="post-info">
-
-                    <div
-                      class="post-title">
-
-                      ${
-                        escapeHtml(
-                          post.title
-                        )
-                      }
-
-                    </div>
-
-                    <div class="post-price">
-
-                      ${
-                        formatPrice(
-                          post.price,
-                          post.currency
-                        )
-                      }
-
-                    </div>
-
-                    <div
-                      class="post-status">
-
-                      ${
-                        escapeHtml(
-                          post.status ||
-                          "Pending"
-                        )
-                      }
-
-                    </div>
-
-                  </div>
-
-                </article>
-              `;
-
-            }
-          )
-          .join("");
-
-    }
-
-
-    /* =====================================================
-       BADGES
-    ===================================================== */
-
-    async function loadBadges() {
-
-      if (!profileUser) {
-        return;
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await client
-          .from("mec_profile_badges")
-          .select(`
-            id,
-            badge_id,
-            created_at,
-            mec_badges (
-              id,
-              code,
-              name,
-              label_en,
-              label_mm,
-              icon,
-              badge_type,
-              active
-            )
-          `)
-          .eq(
-            "user_id",
-            profileUser.id
-          )
-          .order(
-            "created_at",
-            {
-              ascending: true
-            }
-          );
-
-
-      if (error) {
-
-        console.error(
-          "Badges:",
-          error
-        );
-
-        badges = [];
-
-      } else {
-
-        badges =
-          (data || [])
-            .filter(
-              row =>
-                row.mec_badges
-            )
-            .map(
-              row =>
-                row.mec_badges
-            );
-
-      }
-
-      renderBadges();
-
-    }
-
-
-    function renderBadges() {
-
-      const list =
-        $("badgeList");
-
-      $("badgeCount")
-        .textContent =
-        badges.length +
-        " badge" +
-        (
-          badges.length === 1
-            ? ""
-            : "s"
-        );
-
-      if (!badges.length) {
-
-        list.innerHTML =
-          `
-          <div class="empty">
-            No badges yet.
-          </div>
-          `;
-
-        return;
-
-      }
-
-      list.innerHTML =
-        badges
-          .map(
-            badge =>
-              `
-              <div
-                class="badge"
-                title="${escapeHtml(
-                  badge.name
-                )}">
-
-                <div
-                  class="badge-icon">
-
-                  ${
-                    badge.icon ||
-                    "🏅"
-                  }
-
-                </div>
-
-                <span>
-
-                  ${
-                    escapeHtml(
-                      badge.label_en ||
-                      badge.name
-                    )
-                  }
-
-                </span>
-
-              </div>
-              `
-          )
-          .join("");
-
-    }
-
-
-    /* =====================================================
-       REGIONS
-    ===================================================== */
-
-    async function loadRegions() {
-
-      const {
-        data,
-        error
-      } =
-        await client
-          .from("mec_regions")
-          .select(`
-            code,
-            name_en,
-            name_mm,
-            region_type
-          `)
-          .order(
-            "name_en",
-            {
-              ascending: true
-            }
-          );
-
-      if (error) {
-
-        console.error(
-          "Regions:",
-          error
-        );
-
-        return;
-
-      }
-
-      const select =
-        $("editRegion");
-
-      select.innerHTML =
-        `<option value="">
-          Select Region / State
-        </option>`;
-
-      (data || [])
-        .forEach(
-          region => {
-
-            const option =
-              document.createElement(
-                "option"
-              );
-
-            option.value =
-              region.code;
-
-            option.textContent =
-              region.name_en +
-              (
-                region.name_mm
-                  ? " / " +
-                    region.name_mm
-                  : ""
-              );
-
-            option.dataset.name =
-              region.name_en;
-
-            select.appendChild(
-              option
-            );
-
-          }
-        );
-
-    }
-
-
-    /* =====================================================
-       EDIT PROFILE
-    ===================================================== */
-
-    function openEditProfile() {
-
-      if (!isOwnProfile) {
-        return;
-      }
-
-      $("editName").value =
-        profileUser.full_name ||
-        "";
-
-      $("editUsername").value =
-        profileUser.username ||
-        "";
-
-      $("editBio").value =
-        profileUser.bio ||
-        "";
-
-      $("editCity").value =
-        profileUser.city ||
-        "";
-
-      $("editRegion").value =
-        profileUser.region_code ||
-        "";
-
-      $("editModal")
-        .classList.add("show");
-
-    }
-
-
-    function closeEditProfile() {
-
-      $("editModal")
-        .classList.remove("show");
-
-    }
-
-
-    async function saveProfile() {
-
-      if (!currentUser) {
-
-        showToast(
-          "Please log in first."
-        );
-
-        return;
-
-      }
-
-      const name =
-        $("editName")
-          .value
-          .trim();
-
-      const username =
-        $("editUsername")
-          .value
-          .trim()
-          .toLowerCase()
-          .replace(
-            /^@/,
-            ""
-          );
-
-      const bio =
-        $("editBio")
-          .value
-          .trim();
-
-      const city =
-        $("editCity")
-          .value
-          .trim();
-
-      const regionCode =
-        $("editRegion")
-          .value;
-
-      const selectedRegion =
-        $("editRegion")
-          .selectedOptions[0];
-
-      const regionName =
-        selectedRegion?.dataset?.name ||
-        null;
-
-
-      if (
-        username &&
-        !/^[a-z0-9._-]{3,30}$/.test(
-          username
+      document
+        .querySelector(
+          ".posts-section"
         )
+        ?.scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+  );
+
+
+$("settingsButton")
+  .addEventListener(
+    "click",
+    openEditProfile
+  );
+
+
+$("logoutButton")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+$("logoutRow")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+$("themeButton")
+  .addEventListener(
+    "click",
+    toggleTheme
+  );
+
+
+$("followersStat")
+  .addEventListener(
+    "click",
+    () => {
+      openPeopleList(
+        "followers"
+      );
+    }
+  );
+
+
+$("followingStat")
+  .addEventListener(
+    "click",
+    () => {
+      openPeopleList(
+        "following"
+      );
+    }
+  );
+
+
+$("postsStat")
+  .addEventListener(
+    "click",
+    () => {
+
+      document
+        .querySelector(
+          ".posts-section"
+        )
+        ?.scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+  );
+
+
+$("likesStat")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "Profile likes: " +
+        $("likesCount").textContent
+      );
+
+    }
+  );
+
+
+$("usernameSearch")
+  .addEventListener(
+    "input",
+    event => {
+
+      clearTimeout(
+        searchTimer
+      );
+
+      searchTimer =
+        setTimeout(
+          () => {
+
+            searchUsername(
+              event.target.value
+            );
+
+          },
+          250
+        );
+
+    }
+  );
+
+
+$("usernameSearch")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key === "Enter"
       ) {
 
-        showToast(
-          "Username must use 3–30 letters, numbers, dot, underscore or hyphen."
-        );
+        const value =
+          event.target.value
+            .trim()
+            .replace(/^@/, "");
 
-        return;
+        if (value) {
 
-      }
-
-
-      const button =
-        $("saveProfileButton");
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Saving...";
-
-
-      try {
-
-        if (username) {
-
-          const {
-            data: existing,
-            error:
-              usernameError
-          } =
-            await client
-              .from("profiles")
-              .select("id")
-              .eq(
-                "username",
-                username
-              )
-              .neq(
-                "id",
-                currentUser.id
-              )
-              .maybeSingle();
-
-          if (usernameError) {
-            throw usernameError;
-          }
-
-          if (existing) {
-
-            showToast(
-              "That username is already taken."
-            );
-
-            return;
-
-          }
+          window.location.href =
+            `./Profile.html?username=${encodeURIComponent(value)}`;
 
         }
-
-
-        const {
-          error
-        } =
-          await client
-            .from("profiles")
-            .update({
-
-              full_name:
-                name || null,
-
-              username:
-                username || null,
-
-              bio:
-                bio || null,
-
-              city:
-                city || null,
-
-              region_code:
-                regionCode || null,
-
-              region_name:
-                regionName
-
-            })
-            .eq(
-              "id",
-              currentUser.id
-            );
-
-
-        if (error) {
-          throw error;
-        }
-
-
-        profileUser = {
-          ...profileUser,
-
-          full_name:
-            name || null,
-
-          username:
-            username || null,
-
-          bio:
-            bio || null,
-
-          city:
-            city || null,
-
-          region_code:
-            regionCode || null,
-
-          region_name:
-            regionName
-        };
-
-
-        renderProfile();
-
-        closeEditProfile();
-
-        showToast(
-          "Profile updated successfully."
-        );
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showToast(
-          error.message ||
-          "Unable to save profile."
-        );
-
-      } finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Save Changes";
 
       }
 
     }
+  );
 
 
-    /* =====================================================
-       PROFILE PHOTO
-       Storage:
-       listing-images/profiles/{user_id}/
-    ===================================================== */
+document.addEventListener(
+  "click",
+  event => {
 
-    $("avatarButton")
-      .addEventListener(
-        "click",
-        () => {
+    const search =
+      $("searchResults");
 
-          if (!isOwnProfile) {
-            return;
-          }
-
-          $("avatarInput")
-            .click();
-
-        }
+    const box =
+      document.querySelector(
+        ".search-box"
       );
 
+    if (
+      search &&
+      box &&
+      !box.contains(
+        event.target
+      )
+    ) {
 
-    $("avatarInput")
-      .addEventListener(
-        "change",
-        async event => {
-
-          const file =
-            event.target.files?.[0];
-
-          if (!file) {
-            return;
-          }
-
-          if (
-            !file.type.startsWith(
-              "image/"
-            )
-          ) {
-
-            showToast(
-              "Please choose an image file."
-            );
-
-            return;
-
-          }
-
-
-          if (
-            file.size >
-            5 * 1024 * 1024
-          ) {
-
-            showToast(
-              "Profile photo must be 5MB or smaller."
-            );
-
-            return;
-
-          }
-
-
-          try {
-
-            showToast(
-              "Uploading profile photo..."
-            );
-
-
-            const extension =
-              (
-                file.name
-                  .split(".")
-                  .pop() ||
-                "jpg"
-              )
-              .toLowerCase();
-
-            const path =
-              "profiles/" +
-              currentUser.id +
-              "/avatar-" +
-              Date.now() +
-              "." +
-              extension;
-
-
-            const {
-              error:
-                uploadError
-            } =
-              await client.storage
-                .from("listing-images")
-                .upload(
-                  path,
-                  file,
-                  {
-                    cacheControl:
-                      "3600",
-
-                    upsert:
-                      true
-                  }
-                );
-
-
-            if (uploadError) {
-              throw uploadError;
-            }
-
-
-            const {
-              data:
-                publicData
-            } =
-              client.storage
-                .from(
-                  "listing-images"
-                )
-                .getPublicUrl(
-                  path
-                );
-
-
-            const avatarUrl =
-              publicData.publicUrl;
-
-
-            const {
-              error:
-                updateError
-            } =
-              await client
-                .from("profiles")
-                .update({
-                  avatar_url:
-                    avatarUrl
-                })
-                .eq(
-                  "id",
-                  currentUser.id
-                );
-
-
-            if (updateError) {
-              throw updateError;
-            }
-
-
-            profileUser.avatar_url =
-              avatarUrl;
-
-            $("avatar").src =
-              avatarUrl;
-
-            showToast(
-              "Profile photo updated."
-            );
-
-
-          } catch (error) {
-
-            console.error(error);
-
-            showToast(
-              error.message ||
-              "Unable to upload profile photo."
-            );
-
-          } finally {
-
-            event.target.value =
-              "";
-
-          }
-
-        }
+      search.classList.add(
+        "hidden"
       );
-
-
-    /* =====================================================
-       KYC
-    ===================================================== */
-
-    $("kycButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          if (!isOwnProfile) {
-
-            showToast(
-              "KYC is only available for your own profile."
-            );
-
-            return;
-
-          }
-
-          window.location.href =
-            "kyc.html";
-
-        }
-      );
-
-
-    /* =====================================================
-       MCP
-    ===================================================== */
-
-    $("mcpButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          if (!isOwnProfile) {
-
-            showToast(
-              "MCP application is only available for your own profile."
-            );
-
-            return;
-
-          }
-
-          window.location.href =
-            "MCP.html";
-
-        }
-      );
-
-
-    /* =====================================================
-       BADGE CENTER
-    ===================================================== */
-
-    $("badgePageButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          window.location.href =
-            "Badge.html";
-
-        }
-      );
-
-
-    /* =====================================================
-       CHAT
-    ===================================================== */
-
-    $("chatButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          if (!currentUser) {
-
-            showToast(
-              "Please log in first."
-            );
-
-            return;
-
-          }
-
-          if (
-            currentUser.id ===
-            profileUser.id
-          ) {
-
-            window.location.href =
-              "chat.html";
-
-            return;
-
-          }
-
-          openChat(
-            profileUser.id
-          );
-
-        }
-      );
-
-
-    /* =====================================================
-       FOLLOW BUTTON
-    ===================================================== */
-
-    $("followButton")
-      .addEventListener(
-        "click",
-        toggleFollow
-      );
-
-
-    /* =====================================================
-       LIKE BUTTON
-    ===================================================== */
-
-    $("likeButton")
-      .addEventListener(
-        "click",
-        toggleLike
-      );
-
-
-    /* =====================================================
-       SOCIAL MODALS
-    ===================================================== */
-
-    $("followersStat")
-      .addEventListener(
-        "click",
-        () =>
-          openUserList(
-            "followers"
-          )
-      );
-
-    $("followingStat")
-      .addEventListener(
-        "click",
-        () =>
-          openUserList(
-            "following"
-          )
-      );
-
-    $("followersButton")
-      .addEventListener(
-        "click",
-        () =>
-          openUserList(
-            "followers"
-          )
-      );
-
-    $("followingButton")
-      .addEventListener(
-        "click",
-        () =>
-          openUserList(
-            "following"
-          )
-      );
-
-    $("closeUserList")
-      .addEventListener(
-        "click",
-        closeUserList
-      );
-
-    $("userListModal")
-      .addEventListener(
-        "click",
-        event => {
-
-          if (
-            event.target ===
-            $("userListModal")
-          ) {
-            closeUserList();
-          }
-
-        }
-      );
-
-
-    /* =====================================================
-       MY POSTS
-    ===================================================== */
-
-    $("postsStat")
-      .addEventListener(
-        "click",
-        () => {
-
-          $("postsGrid")
-            .scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
-
-        }
-      );
-
-
-    $("myPostsButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          $("postsGrid")
-            .scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
-
-        }
-      );
-
-
-    /* =====================================================
-       EDIT PROFILE
-    ===================================================== */
-
-    $("editProfileButton")
-      .addEventListener(
-        "click",
-        openEditProfile
-      );
-
-    $("editProfileMenuButton")
-      .addEventListener(
-        "click",
-        openEditProfile
-      );
-
-    $("closeEditModal")
-      .addEventListener(
-        "click",
-        closeEditProfile
-      );
-
-    $("saveProfileButton")
-      .addEventListener(
-        "click",
-        saveProfile
-      );
-
-    $("editModal")
-      .addEventListener(
-        "click",
-        event => {
-
-          if (
-            event.target ===
-            $("editModal")
-          ) {
-            closeEditProfile();
-          }
-
-        }
-      );
-
-
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
-
-    async function logout() {
-
-      try {
-
-        const {
-          error
-        } =
-          await client.auth.signOut();
-
-        if (error) {
-          throw error;
-        }
-
-        window.location.href =
-          "index.html";
-
-      } catch (error) {
-
-        console.error(error);
-
-        showToast(
-          "Unable to log out."
-        );
-
-      }
 
     }
 
-
-    $("logoutButton")
-      .addEventListener(
-        "click",
-        logout
-      );
+  }
+);
 
 
-    /* =====================================================
-       INIT
-    ===================================================== */
+/* =======================================================
+   INITIALIZE
+======================================================= */
 
-    async function init() {
+async function init() {
 
-      applyTheme();
+  const savedTheme =
+    localStorage.getItem(
+      "mec_theme"
+    ) || "light";
 
-      try {
-
-        await loadCurrentUser();
-
-        await loadProfile();
-
-        await Promise.all([
-          loadFollowStatus(),
-          loadLikeStatus(),
-          loadSocialLists(),
-          loadPosts(),
-          loadBadges(),
-          loadRegions()
-        ]);
-
-        renderProfile();
-
-        $("loadingState")
-          .style.display =
-          "none";
-
-        $("profileContent")
-          .style.display =
-          "block";
+  applyTheme(
+    savedTheme
+  );
 
 
-      } catch (error) {
-
-        console.error(
-          "PROFILE INIT ERROR:",
-          error
-        );
-
-        $("loadingState")
-          .innerHTML =
-          `
-          <div
-            style="
-              text-align:center;
-              padding:30px;
-            ">
-
-            <div
-              style="
-                font-size:38px;
-                margin-bottom:12px;
-              ">
-              ⚠️
-            </div>
-
-            <strong>
-              Unable to load profile
-            </strong>
-
-            <div
-              style="
-                margin-top:7px;
-                color:var(--muted);
-                font-size:11px;
-                line-height:1.6;
-              ">
-
-              ${
-                escapeHtml(
-                  error.message ||
-                  "Unknown error"
-                )
-              }
-
-            </div>
-
-            <button
-              onclick="location.reload()"
-              class="primary-button"
-              style="
-                margin-top:18px;
-              ">
-
-              Retry
-
-            </button>
-
-          </div>
-          `;
-
-      }
-
-    }
+  currentUser =
+    await getCurrentUser();
 
 
-    init();
+  if (!currentUser) {
 
-  </script>
+    window.location.href =
+      "./auth.html?mode=login";
+
+    return;
+
+  }
+
+
+  viewedUserId =
+    await resolveProfileId();
+
+
+  if (!viewedUserId) {
+
+    showToast(
+      "Profile not found."
+    );
+
+    return;
+
+  }
+
+
+  await loadRegions();
+
+  await loadProfile(
+    viewedUserId
+  );
+
+}
+
+
+init();
+
+</script>
 
 </body>
 </html>
