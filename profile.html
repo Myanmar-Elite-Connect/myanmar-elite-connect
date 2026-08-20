@@ -23,11 +23,15 @@
   --text:#10233f;
   --muted:#748197;
   --border:rgba(16,35,63,.10);
+
   --gold:#d8b45c;
-  --gold2:#f2d98d;
+  --gold-light:#f2d98d;
+
   --green:#2d8a61;
-  --red:#c94b4b;
   --blue:#3c70d9;
+  --red:#c94b4b;
+  --purple:#7658c7;
+
   --shadow:0 16px 45px rgba(16,35,63,.07);
 }
 
@@ -53,12 +57,20 @@ body{
     sans-serif;
 }
 
-button,input,textarea,select{
+button,
+input,
+textarea,
+select{
   font:inherit;
 }
 
 button{
   cursor:pointer;
+}
+
+button:disabled{
+  cursor:not-allowed;
+  opacity:.55;
 }
 
 a{
@@ -71,16 +83,24 @@ img{
   max-width:100%;
 }
 
-/* HEADER */
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 .topbar{
   position:sticky;
   top:0;
   z-index:100;
+
   height:70px;
+
   border-bottom:1px solid var(--border);
+
   background:rgba(255,255,255,.92);
+
   backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
 }
 
 body.dark .topbar{
@@ -88,13 +108,16 @@ body.dark .topbar{
 }
 
 .topbar-inner{
-  width:min(1200px,94%);
+  width:min(1180px,94%);
   height:100%;
+
   margin:auto;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:18px;
+
+  gap:15px;
 }
 
 .brand{
@@ -103,12 +126,22 @@ body.dark .topbar{
   gap:10px;
 }
 
-.brand img{
-  width:39px;
-  height:39px;
+.brand-logo{
+  width:40px;
+  height:40px;
+
+  overflow:hidden;
+
+  border:1px solid var(--border);
   border-radius:11px;
-  object-fit:contain;
+
   background:var(--card);
+}
+
+.brand-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 
 .brand-name{
@@ -121,25 +154,48 @@ body.dark .topbar{
   color:var(--gold);
 }
 
+
+/* ONLY 4 NAV ITEMS */
+
 .nav{
   display:flex;
   align-items:center;
-  gap:3px;
+  gap:4px;
 }
 
-.nav a{
-  padding:9px 12px;
+.nav a,
+.nav button{
+  height:38px;
+
+  padding:0 13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:0;
   border-radius:10px;
+
   color:var(--muted);
-  font-size:12px;
-  font-weight:850;
+  background:transparent;
+
+  font-size:11px;
+  font-weight:900;
 }
 
 .nav a:hover,
-.nav a.active{
-  background:var(--soft);
+.nav a.active,
+.nav button:hover{
   color:var(--gold);
+  background:var(--soft);
 }
+
+.nav .logout{
+  color:var(--red);
+}
+
+
+/* HEADER ACTIONS */
 
 .header-actions{
   display:flex;
@@ -150,20 +206,26 @@ body.dark .topbar{
 .icon-btn{
   width:40px;
   height:40px;
+
   display:grid;
   place-items:center;
+
   border:1px solid var(--border);
-  border-radius:12px;
-  background:var(--card);
+  border-radius:11px;
+
   color:var(--text);
+  background:var(--card);
 }
 
 .profile-mini{
   width:40px;
   height:40px;
+
   overflow:hidden;
-  border:1px solid var(--border);
+
+  border:1px solid var(--gold);
   border-radius:12px;
+
   background:var(--soft);
 }
 
@@ -173,53 +235,84 @@ body.dark .topbar{
   object-fit:cover;
 }
 
-/* MAIN */
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .container{
-  width:min(1200px,94%);
+  width:min(1180px,94%);
+
   margin:auto;
-  padding:28px 0 100px;
+
+  padding:
+    28px 0
+    100px;
 }
 
 .eyebrow{
   color:var(--gold);
+
   font-size:9px;
   font-weight:950;
-  letter-spacing:1.3px;
+
+  letter-spacing:1.5px;
+
   text-transform:uppercase;
 }
 
-h1{
+.page-title{
   margin-top:5px;
-  font-size:clamp(27px,4vw,38px);
+
+  font-size:
+    clamp(27px,4vw,38px);
+
   line-height:1.1;
+
   font-weight:950;
   letter-spacing:-1px;
 }
 
-.subtitle{
+.page-subtitle{
   margin-top:7px;
+
   color:var(--muted);
+
   font-size:11px;
 }
 
-/* PROFILE HERO */
+
+/* =====================================================
+   PROFILE HERO
+===================================================== */
 
 .profile-hero{
   margin-top:18px;
+
   display:grid;
-  grid-template-columns:auto 1fr auto;
+
+  grid-template-columns:
+    auto
+    minmax(0,1fr)
+    auto;
+
   align-items:center;
+
   gap:22px;
+
   padding:22px;
+
   border:1px solid var(--border);
-  border-radius:18px;
+  border-radius:20px;
+
   background:var(--card);
+
   box-shadow:var(--shadow);
 }
 
 .avatar-wrap{
   position:relative;
+
   width:112px;
   height:112px;
 }
@@ -227,9 +320,12 @@ h1{
 .avatar{
   width:112px;
   height:112px;
+
   overflow:hidden;
+
   border:3px solid var(--gold);
   border-radius:50%;
+
   background:var(--soft);
 }
 
@@ -241,16 +337,23 @@ h1{
 
 .avatar-upload{
   position:absolute;
+
   right:0;
-  bottom:2px;
+  bottom:1px;
+
   width:34px;
   height:34px;
+
   display:grid;
   place-items:center;
+
   border:3px solid var(--card);
   border-radius:50%;
+
   color:#071a34;
   background:var(--gold);
+
+  font-size:20px;
   font-weight:950;
 }
 
@@ -258,97 +361,226 @@ h1{
   display:none;
 }
 
+
+/* PROFILE INFO */
+
 .profile-name{
   display:flex;
   align-items:center;
-  flex-wrap:wrap;
-  gap:8px;
-  font-size:23px;
-  font-weight:950;
-}
 
-.verified{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  padding:5px 8px;
-  border-radius:999px;
-  color:#fff;
-  background:var(--green);
-  font-size:8px;
+  flex-wrap:wrap;
+
+  gap:8px;
+
+  font-size:24px;
   font-weight:950;
 }
 
 .profile-email,
 .profile-location{
   margin-top:6px;
+
   color:var(--muted);
+
   font-size:10px;
 }
 
-.hero-actions{
+
+/* =====================================================
+   BADGES
+===================================================== */
+
+.badges{
   display:flex;
-  gap:8px;
+
   flex-wrap:wrap;
-  justify-content:flex-end;
+
+  gap:6px;
+
+  margin-top:11px;
 }
 
-.primary-btn,
-.secondary-btn,
-.danger-btn{
+.badge{
+  min-height:24px;
+
+  padding:
+    4px 9px;
+
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+
+  border-radius:999px;
+
+  font-size:8px;
+  font-weight:950;
+
+  letter-spacing:.15px;
+}
+
+.badge.region{
+  color:#174d86;
+  background:#e5f0ff;
+  border:1px solid #c6ddfb;
+}
+
+.badge.car{
+  color:#215ca7;
+  background:#eaf2ff;
+  border:1px solid #cbdcff;
+}
+
+.badge.property{
+  color:#79571b;
+  background:#fff5dc;
+  border:1px solid #ead18f;
+}
+
+.badge.gem{
+  color:#7043a6;
+  background:#f3eaff;
+  border:1px solid #d9c4f6;
+}
+
+.badge.shop{
+  color:#9b5a20;
+  background:#fff0e1;
+  border:1px solid #f0cba8;
+}
+
+.badge.feedback{
+  color:#26734f;
+  background:#e7f7ee;
+  border:1px solid #bde5cd;
+}
+
+.badge.verified{
+  color:#fff;
+  background:var(--green);
+}
+
+.badge.mcp{
+  color:#071a34;
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
+}
+
+
+/* =====================================================
+   HERO BUTTONS
+===================================================== */
+
+.hero-actions{
+  display:flex;
+
+  align-items:center;
+
+  justify-content:flex-end;
+
+  flex-wrap:wrap;
+
+  gap:8px;
+}
+
+.btn{
   min-height:40px;
-  padding:0 14px;
+
+  padding:
+    0 14px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
   border-radius:10px;
+
   font-size:10px;
   font-weight:900;
 }
 
-.primary-btn{
+.btn-primary{
   border:0;
+
   color:#071a34;
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
 }
 
-.secondary-btn{
+.btn-secondary{
   border:1px solid var(--border);
+
   color:var(--text);
+
   background:var(--soft);
 }
 
-.danger-btn{
+.btn-danger{
   border:1px solid rgba(201,75,75,.2);
+
   color:var(--red);
+
   background:rgba(201,75,75,.07);
 }
 
-button:disabled{
-  cursor:not-allowed;
-  opacity:.55;
+.btn-blue{
+  border:0;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #386ed7,
+      #3156ad
+    );
 }
 
-/* SOCIAL */
+
+/* =====================================================
+   SOCIAL
+===================================================== */
 
 .social-actions{
-  display:flex;
+  display:none;
+
   flex-wrap:wrap;
+
   gap:8px;
+
   margin-top:14px;
 }
 
 .social-btn{
   min-height:38px;
-  padding:0 14px;
+
+  padding:
+    0 14px;
+
   border:1px solid var(--border);
   border-radius:10px;
+
   color:var(--text);
+
   background:var(--card);
+
   font-size:10px;
   font-weight:900;
 }
 
 .social-btn.active{
   border-color:var(--gold);
+
   color:#071a34;
+
   background:var(--gold);
 }
 
@@ -356,44 +588,67 @@ button:disabled{
   color:var(--red);
 }
 
-/* STATS */
+
+/* =====================================================
+   STATS
+===================================================== */
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+
+  grid-template-columns:
+    repeat(5,1fr);
+
   gap:10px;
+
   margin-top:12px;
 }
 
 .stat{
+  min-width:0;
+
   padding:15px 8px;
+
   border:1px solid var(--border);
   border-radius:14px;
-  background:var(--card);
+
   text-align:center;
+
+  background:var(--card);
 }
 
 .stat strong{
   display:block;
+
   font-size:19px;
   font-weight:950;
 }
 
 .stat span{
   display:block;
+
   margin-top:4px;
+
   color:var(--muted);
+
   font-size:9px;
   font-weight:800;
 }
 
-/* TABS */
+
+/* =====================================================
+   TABS
+===================================================== */
 
 .tabs{
   display:flex;
-  gap:6px;
+
+  gap:7px;
+
   overflow-x:auto;
+
   margin-top:20px;
+
   scrollbar-width:none;
 }
 
@@ -403,29 +658,53 @@ button:disabled{
 
 .tab{
   flex:none;
+
   height:40px;
-  padding:0 15px;
+
+  padding:
+    0 15px;
+
   border:1px solid var(--border);
   border-radius:10px;
+
   color:var(--muted);
+
   background:var(--card);
+
   font-size:10px;
   font-weight:900;
 }
 
 .tab.active{
   border-color:transparent;
+
   color:#071a34;
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
 }
+
+
+/* =====================================================
+   PANELS
+===================================================== */
 
 .panel{
   display:none;
+
   margin-top:12px;
+
   padding:20px;
+
   border:1px solid var(--border);
   border-radius:18px;
+
   background:var(--card);
+
   box-shadow:var(--shadow);
 }
 
@@ -440,18 +719,28 @@ button:disabled{
 
 .panel-description{
   margin-top:5px;
+
   color:var(--muted);
+
   font-size:10px;
-  line-height:1.6;
+
+  line-height:1.65;
 }
 
-/* POSTS */
+
+/* =====================================================
+   POSTS
+===================================================== */
 
 .post-filter{
   display:flex;
+
   gap:7px;
-  margin-top:15px;
+
   overflow-x:auto;
+
+  margin-top:15px;
+
   scrollbar-width:none;
 }
 
@@ -461,40 +750,58 @@ button:disabled{
 
 .post-filter button{
   flex:none;
+
   height:34px;
-  padding:0 11px;
+
+  padding:
+    0 12px;
+
   border:1px solid var(--border);
   border-radius:9px;
+
   color:var(--muted);
+
   background:var(--soft);
+
   font-size:9px;
   font-weight:900;
 }
 
 .post-filter button.active{
   color:#071a34;
-  background:var(--gold);
+
   border-color:transparent;
+
+  background:var(--gold);
 }
 
 .posts-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+
   gap:13px;
+
   margin-top:14px;
 }
 
 .post-card{
   overflow:hidden;
+
   border:1px solid var(--border);
   border-radius:15px;
+
   background:var(--soft);
 }
 
 .post-image{
   width:100%;
+
   aspect-ratio:4/3;
+
   object-fit:cover;
+
   background:#dce3ec;
 }
 
@@ -504,51 +811,73 @@ button:disabled{
 
 .post-category{
   color:var(--gold);
+
   font-size:8px;
   font-weight:950;
+
   text-transform:uppercase;
 }
 
 .post-title{
-  margin-top:5px;
   min-height:30px;
+
+  margin-top:5px;
+
   font-size:11px;
+
   line-height:1.4;
+
   font-weight:950;
 }
 
 .post-price{
   margin-top:7px;
+
   font-size:12px;
   font-weight:950;
 }
 
 .post-location{
   margin-top:5px;
+
   color:var(--muted);
+
   font-size:8px;
 }
 
 .post-status{
   margin-top:6px;
+
   color:var(--muted);
+
   font-size:8px;
 }
 
 .post-actions{
   display:flex;
+
   gap:6px;
+
   margin-top:10px;
 }
 
 .post-actions a,
 .post-actions button{
   flex:1;
+
   min-height:32px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
   border:1px solid var(--border);
   border-radius:8px;
+
   color:var(--text);
+
   background:var(--card);
+
   font-size:8px;
   font-weight:900;
 }
@@ -557,48 +886,62 @@ button:disabled{
   color:var(--red);
 }
 
-/* COMMENTS */
+
+/* =====================================================
+   COMMENTS
+===================================================== */
 
 .comment-form{
   display:flex;
+
   gap:8px;
+
   margin-top:15px;
 }
 
 .comment-form textarea{
   flex:1;
+
   min-height:46px;
   max-height:120px;
+
   padding:11px;
+
   resize:vertical;
+
   border:1px solid var(--border);
   border-radius:11px;
+
   outline:none;
+
   color:var(--text);
+
   background:var(--soft);
 }
 
-.comment-form button{
-  align-self:flex-end;
-}
-
 .comments-list{
-  margin-top:16px;
   display:grid;
+
   gap:9px;
+
+  margin-top:16px;
 }
 
 .comment{
   padding:12px;
+
   border:1px solid var(--border);
   border-radius:12px;
+
   background:var(--soft);
 }
 
 .comment-head{
   display:flex;
+
   align-items:center;
   justify-content:space-between;
+
   gap:8px;
 }
 
@@ -614,28 +957,41 @@ button:disabled{
 
 .comment-text{
   margin-top:6px;
-  color:var(--text);
+
   font-size:10px;
+
   line-height:1.6;
+
   white-space:pre-wrap;
   word-break:break-word;
 }
 
 .comment-delete{
   margin-top:7px;
+
   border:0;
+
   color:var(--red);
+
   background:transparent;
+
   font-size:8px;
   font-weight:900;
 }
 
-/* FORM */
+
+/* =====================================================
+   FORM
+===================================================== */
 
 .form-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:12px;
+
   margin-top:17px;
 }
 
@@ -645,8 +1001,11 @@ button:disabled{
 
 label{
   display:block;
+
   margin-bottom:6px;
+
   color:var(--muted);
+
   font-size:9px;
   font-weight:900;
 }
@@ -655,22 +1014,29 @@ input,
 textarea,
 select{
   width:100%;
+
   border:1px solid var(--border);
   border-radius:11px;
+
   outline:none;
+
   color:var(--text);
+
   background:var(--soft);
 }
 
 input,
 select{
   height:43px;
+
   padding:0 12px;
 }
 
 textarea{
   min-height:100px;
+
   padding:11px 12px;
+
   resize:vertical;
 }
 
@@ -682,29 +1048,44 @@ select:focus{
 
 .form-actions{
   display:flex;
+
   justify-content:flex-end;
+
   gap:8px;
+
   margin-top:15px;
 }
 
-/* KYC */
+
+/* =====================================================
+   KYC
+===================================================== */
 
 .kyc-status{
   display:flex;
+
   align-items:center;
+
   gap:10px;
+
   margin-top:15px;
+
   padding:13px;
+
   border:1px solid var(--border);
   border-radius:12px;
+
   background:var(--soft);
 }
 
 .status-dot{
   width:10px;
   height:10px;
+
   flex:none;
+
   border-radius:50%;
+
   background:var(--muted);
 }
 
@@ -722,94 +1103,151 @@ select:focus{
 
 .kyc-status strong{
   display:block;
+
   font-size:11px;
 }
 
 .kyc-status span{
   display:block;
+
   margin-top:3px;
+
   color:var(--muted);
+
   font-size:9px;
 }
 
 .kyc-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:12px;
+
   margin-top:15px;
 }
 
 .upload-box{
   position:relative;
+
   min-height:170px;
+
   overflow:hidden;
+
   border:1px dashed rgba(216,180,92,.55);
   border-radius:14px;
+
   background:var(--soft);
 }
 
 .upload-box input{
   position:absolute;
+
   inset:0;
+
   width:100%;
   height:100%;
-  cursor:pointer;
+
   opacity:0;
+
+  cursor:pointer;
+
   z-index:2;
 }
 
 .upload-placeholder{
   min-height:170px;
+
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
+
   justify-content:center;
+
   text-align:center;
 }
 
 .upload-icon{
-  font-size:28px;
   color:var(--gold);
+
+  font-size:28px;
 }
 
 .upload-placeholder strong{
   margin-top:8px;
+
   font-size:11px;
 }
 
 .upload-placeholder span{
   margin-top:4px;
+
   color:var(--muted);
+
   font-size:9px;
 }
 
 .upload-preview{
   display:none;
+
   width:100%;
   height:170px;
+
   object-fit:cover;
 }
 
 .rejection{
   display:none;
+
   margin-top:10px;
+
   padding:11px;
+
   border-radius:10px;
+
   color:var(--red);
+
   background:rgba(201,75,75,.07);
+
   font-size:9px;
 }
 
-/* REPORT MODAL */
+
+/* =====================================================
+   FRIEND
+===================================================== */
+
+.friend-status{
+  margin-top:7px;
+
+  color:var(--muted);
+
+  font-size:9px;
+  font-weight:800;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
 
 .modal{
   position:fixed;
+
   inset:0;
+
   z-index:500;
+
   display:none;
+
   align-items:center;
   justify-content:center;
+
   padding:18px;
+
   background:rgba(0,0,0,.55);
 }
 
@@ -819,11 +1257,17 @@ select:focus{
 
 .modal-card{
   width:min(500px,100%);
+
   padding:20px;
+
   border:1px solid var(--border);
   border-radius:18px;
+
   background:var(--card);
-  box-shadow:0 25px 70px rgba(0,0,0,.3);
+
+  box-shadow:
+    0 25px 70px
+    rgba(0,0,0,.3);
 }
 
 .modal-title{
@@ -833,72 +1277,110 @@ select:focus{
 
 .modal-description{
   margin-top:5px;
+
   color:var(--muted);
+
   font-size:9px;
+
   line-height:1.6;
 }
 
 .modal-actions{
   display:flex;
+
   justify-content:flex-end;
+
   gap:8px;
+
   margin-top:14px;
 }
 
-/* EMPTY */
+
+/* =====================================================
+   EMPTY / LOADING
+===================================================== */
 
 .empty{
-  padding:45px 15px;
-  text-align:center;
-  color:var(--muted);
   grid-column:1/-1;
+
+  padding:45px 15px;
+
+  text-align:center;
+
+  color:var(--muted);
 }
 
 .empty-icon{
-  font-size:30px;
   color:var(--gold);
+
+  font-size:30px;
 }
 
 .empty strong{
   display:block;
+
   margin-top:9px;
+
   color:var(--text);
+
   font-size:13px;
 }
 
 .empty span{
   display:block;
+
   margin-top:5px;
+
   font-size:9px;
 }
 
 .loading{
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
-  font-size:10px;
   grid-column:1/-1;
+
+  padding:30px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:10px;
 }
 
-/* TOAST */
+
+/* =====================================================
+   TOAST
+===================================================== */
 
 .toast{
   position:fixed;
+
   right:18px;
   bottom:18px;
+
   z-index:999;
+
   max-width:340px;
+
   padding:12px 15px;
+
   border:1px solid var(--border);
   border-radius:11px;
+
   color:var(--text);
+
   background:var(--card);
+
   box-shadow:var(--shadow);
+
   font-size:10px;
   font-weight:800;
+
   transform:translateY(20px);
+
   opacity:0;
+
   pointer-events:none;
+
   transition:.2s ease;
 }
 
@@ -907,18 +1389,28 @@ select:focus{
   opacity:1;
 }
 
-/* MOBILE */
+
+/* =====================================================
+   MOBILE NAV — 4 ITEMS ONLY
+===================================================== */
 
 .mobile-nav{
   display:none;
+
   position:fixed;
+
   left:0;
   right:0;
   bottom:0;
+
   z-index:200;
+
   height:67px;
+
   border-top:1px solid var(--border);
+
   background:rgba(255,255,255,.95);
+
   backdrop-filter:blur(18px);
 }
 
@@ -928,30 +1420,53 @@ body.dark .mobile-nav{
 
 .mobile-nav-inner{
   height:100%;
+
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+
+  grid-template-columns:
+    repeat(4,1fr);
 }
 
-.mobile-nav a{
+.mobile-nav a,
+.mobile-nav button{
+  border:0;
+
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
   justify-content:center;
+
   gap:4px;
+
   color:var(--muted);
+
+  background:transparent;
+
   font-size:9px;
-  font-weight:800;
+  font-weight:850;
 }
 
 .mobile-nav a.active{
   color:var(--gold);
 }
 
+.mobile-nav .logout{
+  color:var(--red);
+}
+
 .mobile-icon{
   font-size:17px;
 }
 
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
 @media(max-width:1000px){
+
   .nav{
     display:none;
   }
@@ -965,33 +1480,35 @@ body.dark .mobile-nav{
   }
 
   .posts-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  .stats{
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
   }
 }
 
-@media(max-width:700px){
+
+@media(max-width:760px){
+
   .profile-hero{
-    grid-template-columns:auto 1fr;
-    gap:15px;
+    grid-template-columns:
+      auto
+      minmax(0,1fr);
   }
 
   .hero-actions{
     grid-column:1/-1;
+
     justify-content:flex-start;
   }
 
-  .avatar-wrap,
-  .avatar{
-    width:86px;
-    height:86px;
-  }
-
-  .form-grid,
   .kyc-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+@media(max-width:600px){
+
+  .form-grid{
     grid-template-columns:1fr;
   }
 
@@ -1000,16 +1517,18 @@ body.dark .mobile-nav{
   }
 
   .posts-grid{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:
+      1fr 1fr;
+
     gap:9px;
   }
 
-  .panel{
-    padding:14px;
+  .stats{
+    gap:5px;
   }
 
-  .stats{
-    grid-template-columns:repeat(5,1fr);
+  .stat{
+    padding:12px 4px;
   }
 
   .stat strong{
@@ -1021,13 +1540,21 @@ body.dark .mobile-nav{
   }
 }
 
-@media(max-width:420px){
+
+@media(max-width:450px){
+
   .brand-name{
     display:none;
   }
 
+  .header-actions .icon-btn{
+    width:38px;
+    height:38px;
+  }
+
   .profile-hero{
     grid-template-columns:1fr;
+
     text-align:center;
   }
 
@@ -1036,6 +1563,10 @@ body.dark .mobile-nav{
   }
 
   .profile-name{
+    justify-content:center;
+  }
+
+  .badges{
     justify-content:center;
   }
 
@@ -1048,101 +1579,153 @@ body.dark .mobile-nav{
     grid-template-columns:1fr;
   }
 
-  .stats{
-    gap:5px;
-  }
-
-  .stat{
-    padding:11px 3px;
+  .comment-form{
+    flex-direction:column;
   }
 }
 </style>
 </head>
 
+
 <body>
 
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header class="topbar">
+
   <div class="topbar-inner">
 
-    <a href="./general.html" class="brand">
-      <img
-        src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
-        alt="Myanmar Elite Connect">
+    <a
+      href="./general.html"
+      class="brand">
+
+      <div class="brand-logo">
+
+        <img
+          src="https://lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"
+          alt="Myanmar Elite Connect">
+
+      </div>
 
       <div class="brand-name">
         Myanmar <span>Elite</span> Connect
       </div>
+
     </a>
 
+
+    <!-- DESKTOP NAV — ONLY 4 -->
+
     <nav class="nav">
-      <a href="./general.html">Home</a>
-      <a href="./buy.html">Buy</a>
-      <a href="./sell.html">Sell</a>
-      <a href="./car.html">Cars</a>
-      <a href="./property.html">Property</a>
-      <a href="./chat.html">Chat</a>
-      <a href="./profile.html" class="active">Profile</a>
+
+      <a href="./general.html">
+        Home
+      </a>
+
+      <a href="./chat.html">
+        Chat
+      </a>
+
+      <a
+        href="./profile.html"
+        class="active">
+        Profile
+      </a>
+
+      <button
+        id="desktopLogout"
+        class="logout"
+        type="button">
+        Logout
+      </button>
+
     </nav>
+
 
     <div class="header-actions">
 
       <button
         id="themeButton"
         class="icon-btn"
-        type="button">
+        type="button"
+        aria-label="Change theme">
         ☾
       </button>
 
+
       <a
-        href="./gem.html"
+        href="./chat.html"
         class="icon-btn"
-        aria-label="Gems">
-        ◆
+        aria-label="Chat">
+        ◌
       </a>
+
 
       <a
         href="./profile.html"
         class="profile-mini">
+
         <img
           id="miniAvatar"
           src=""
           alt="Profile">
+
       </a>
 
     </div>
+
   </div>
+
 </header>
 
 
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
 <main class="container">
+
 
   <div class="eyebrow">
     Myanmar Elite Connect
   </div>
 
-  <h1 id="pageTitle">
+
+  <h1
+    id="pageTitle"
+    class="page-title">
     My Profile
   </h1>
 
+
   <p
     id="pageSubtitle"
-    class="subtitle">
-    Manage your profile, listings and verification.
+    class="page-subtitle">
+    Manage your profile, badges, listings and verification.
   </p>
 
 
-  <!-- PROFILE HERO -->
+  <!-- ===================================================
+       PROFILE HERO
+  ==================================================== -->
 
   <section class="profile-hero">
+
 
     <div class="avatar-wrap">
 
       <div class="avatar">
+
         <img
           id="avatar"
           src=""
           alt="Profile photo">
+
       </div>
+
 
       <label
         id="avatarUploadButton"
@@ -1163,29 +1746,39 @@ body.dark .mobile-nav{
 
     <div class="profile-info">
 
+
       <div class="profile-name">
 
         <span id="profileName">
           Loading...
         </span>
 
-        <span
-          id="verifiedBadge"
-          class="verified"
-          style="display:none;">
-          ✓ Verified
-        </span>
-
       </div>
+
 
       <div
         id="profileEmail"
         class="profile-email">
       </div>
 
+
       <div
         id="profileLocation"
         class="profile-location">
+      </div>
+
+
+      <!-- BADGES -->
+
+      <div
+        id="badges"
+        class="badges">
+      </div>
+
+
+      <div
+        id="friendStatus"
+        class="friend-status">
       </div>
 
     </div>
@@ -1195,200 +1788,337 @@ body.dark .mobile-nav{
       id="ownerActions"
       class="hero-actions">
 
+
       <button
         id="editProfileButton"
-        class="primary-btn"
+        class="btn btn-primary"
         type="button">
+
         Edit Profile
+
       </button>
+
 
       <a
         href="./add-listing.html"
-        class="secondary-btn"
-        style="display:grid;place-items:center;">
+        class="btn btn-secondary">
+
         + Post Listing
+
       </a>
+
+    </div>
+
+
+    <div
+      id="visitorActions"
+      class="hero-actions"
+      style="display:none;">
+
+
+      <button
+        id="friendButton"
+        class="btn btn-primary"
+        type="button">
+
+        + Add Friend
+
+      </button>
+
+
+      <button
+        id="chatButton"
+        class="btn btn-blue"
+        type="button">
+
+        Chat
+
+      </button>
+
 
     </div>
 
   </section>
 
 
-  <!-- SOCIAL ACTIONS -->
+  <!-- ===================================================
+       SOCIAL
+  ==================================================== -->
 
   <div
     id="socialActions"
-    class="social-actions"
-    style="display:none;">
+    class="social-actions">
+
 
     <button
       id="likeButton"
       class="social-btn"
       type="button">
-      👍 Like <span id="likeCount">0</span>
+
+      👍 Like
+      <span id="likeCount">0</span>
+
     </button>
+
 
     <button
       id="dislikeButton"
       class="social-btn"
       type="button">
-      👎 Dislike <span id="dislikeCount">0</span>
+
+      👎 Dislike
+      <span id="dislikeCount">0</span>
+
     </button>
+
 
     <button
       id="reportProfileButton"
       class="social-btn report"
       type="button">
-      ⚑ Report Profile
+
+      ⚑ Report
+
     </button>
 
   </div>
 
 
-  <!-- STATS -->
+  <!-- ===================================================
+       STATS
+  ==================================================== -->
 
   <section class="stats">
 
-    <div class="stat">
-      <strong id="totalPosts">0</strong>
-      <span>Posts</span>
-    </div>
 
     <div class="stat">
-      <strong id="approvedPosts">0</strong>
-      <span>Approved</span>
+
+      <strong id="totalPosts">
+        0
+      </strong>
+
+      <span>
+        Posts
+      </span>
+
     </div>
 
-    <div class="stat">
-      <strong id="likeStat">0</strong>
-      <span>Likes</span>
-    </div>
 
     <div class="stat">
-      <strong id="dislikeStat">0</strong>
-      <span>Dislikes</span>
+
+      <strong id="approvedPosts">
+        0
+      </strong>
+
+      <span>
+        Approved
+      </span>
+
     </div>
 
+
     <div class="stat">
-      <strong id="kycStatusShort">—</strong>
-      <span>KYC</span>
+
+      <strong id="likeStat">
+        0
+      </strong>
+
+      <span>
+        Likes
+      </span>
+
+    </div>
+
+
+    <div class="stat">
+
+      <strong id="dislikeStat">
+        0
+      </strong>
+
+      <span>
+        Dislikes
+      </span>
+
+    </div>
+
+
+    <div class="stat">
+
+      <strong id="kycStatusShort">
+        —
+      </strong>
+
+      <span>
+        KYC
+      </span>
+
     </div>
 
   </section>
 
 
-  <!-- TABS -->
+  <!-- ===================================================
+       TABS
+  ==================================================== -->
 
   <div class="tabs">
+
 
     <button
       class="tab active"
       data-tab="posts"
       type="button">
+
       Posts
+
     </button>
 
+
     <button
-      id="commentsTab"
       class="tab"
       data-tab="comments"
       type="button">
+
       Comments
+
     </button>
+
 
     <button
       id="profileTab"
       class="tab"
       data-tab="profile"
       type="button">
+
       Profile
+
     </button>
+
 
     <button
       id="kycTab"
       class="tab"
       data-tab="kyc"
       type="button">
-      KYC Verification
+
+      KYC
+
     </button>
 
   </div>
 
 
-  <!-- POSTS -->
+  <!-- ===================================================
+       POSTS
+  ==================================================== -->
 
   <section
     id="postsPanel"
     class="panel active">
 
+
     <div class="panel-title">
       Listings
     </div>
+
 
     <p class="panel-description">
       Car, Property and Gem listings belonging to this profile.
     </p>
 
+
     <div class="post-filter">
+
 
       <button
         class="post-category active"
         data-category="all"
         type="button">
+
         All
+
       </button>
+
 
       <button
         class="post-category"
         data-category="car"
         type="button">
+
         Cars
+
       </button>
+
 
       <button
         class="post-category"
         data-category="property"
         type="button">
+
         Property
+
       </button>
+
 
       <button
         class="post-category"
         data-category="gem"
         type="button">
+
         Gems
+
+      </button>
+
+
+      <button
+        class="post-category"
+        data-category="shop"
+        type="button">
+
+        Shop
+
       </button>
 
     </div>
 
+
     <div
       id="postsGrid"
       class="posts-grid">
+
       <div class="loading">
         Loading listings...
       </div>
+
     </div>
 
   </section>
 
 
-  <!-- COMMENTS -->
+  <!-- ===================================================
+       COMMENTS
+  ==================================================== -->
 
   <section
     id="commentsPanel"
     class="panel">
 
+
     <div class="panel-title">
       Profile Comments
     </div>
+
 
     <p class="panel-description">
       Members can leave comments on this profile.
     </p>
 
+
     <form
       id="commentForm"
       class="comment-form">
+
 
       <textarea
         id="commentInput"
@@ -1396,42 +2126,55 @@ body.dark .mobile-nav{
         placeholder="Write a comment..."
         required></textarea>
 
+
       <button
-        class="primary-btn"
+        class="btn btn-primary"
         type="submit">
+
         Comment
+
       </button>
 
     </form>
 
+
     <div
       id="commentsList"
       class="comments-list">
+
       <div class="loading">
         Loading comments...
       </div>
+
     </div>
 
   </section>
 
 
-  <!-- PROFILE EDIT -->
+  <!-- ===================================================
+       PROFILE EDIT
+  ==================================================== -->
 
   <section
     id="profilePanel"
     class="panel">
 
+
     <div class="panel-title">
       Profile Information
     </div>
+
 
     <p class="panel-description">
       Update the information shown on your profile.
     </p>
 
+
     <form id="profileForm">
 
+
       <div class="form-grid">
+
 
         <div class="form-group">
 
@@ -1474,20 +2217,65 @@ body.dark .mobile-nav{
               Select Region / State
             </option>
 
-            <option>Ayeyarwady Region</option>
-            <option>Bago Region</option>
-            <option>Chin State</option>
-            <option>Kachin State</option>
-            <option>Kayah State</option>
-            <option>Kayin State</option>
-            <option>Magway Region</option>
-            <option>Mandalay Region</option>
-            <option>Mon State</option>
-            <option>Naypyidaw Union Territory</option>
-            <option>Rakhine State</option>
-            <option>Sagaing Region</option>
-            <option>Shan State</option>
-            <option>Tanintharyi Region</option>
+            <option value="Ayeyarwady">
+              Ayeyarwady Region
+            </option>
+
+            <option value="Bago">
+              Bago Region
+            </option>
+
+            <option value="Chin">
+              Chin State
+            </option>
+
+            <option value="Kachin">
+              Kachin State
+            </option>
+
+            <option value="Kayah">
+              Kayah State
+            </option>
+
+            <option value="Kayin">
+              Kayin State
+            </option>
+
+            <option value="Magway">
+              Magway Region
+            </option>
+
+            <option value="Mandalay">
+              Mandalay Region
+            </option>
+
+            <option value="Mon">
+              Mon State
+            </option>
+
+            <option value="Naypyidaw">
+              Naypyidaw Union Territory
+            </option>
+
+            <option value="Rakhine">
+              Rakhine State
+            </option>
+
+            <option value="Sagaing">
+              Sagaing Region
+            </option>
+
+            <option value="Shan">
+              Shan State
+            </option>
+
+            <option value="Tanintharyi">
+              Tanintharyi Region
+            </option>
+
+            <option value="Yangon">
+              Yangon Region
+            </option>
 
           </select>
 
@@ -1512,18 +2300,24 @@ body.dark .mobile-nav{
 
       <div class="form-actions">
 
-        <button
-          type="button"
-          class="secondary-btn"
-          id="cancelProfileButton">
-          Cancel
-        </button>
 
         <button
-          type="submit"
-          class="primary-btn"
-          id="saveProfileButton">
+          id="cancelProfileButton"
+          class="btn btn-secondary"
+          type="button">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          id="saveProfileButton"
+          class="btn btn-primary"
+          type="submit">
+
           Save Changes
+
         </button>
 
       </div>
@@ -1533,32 +2327,40 @@ body.dark .mobile-nav{
   </section>
 
 
-  <!-- KYC -->
+  <!-- ===================================================
+       KYC
+  ==================================================== -->
 
   <section
     id="kycPanel"
     class="panel">
 
+
     <div class="panel-title">
       KYC Verification
     </div>
 
+
     <p class="panel-description">
-      Your identity documents are stored privately and reviewed by the administrator.
+      Upload your identity documents for administrator review.
     </p>
 
+
     <div class="kyc-status">
+
 
       <div
         id="kycStatusDot"
         class="status-dot">
       </div>
 
+
       <div>
 
         <strong id="kycStatusTitle">
           Not submitted
         </strong>
+
 
         <span id="kycStatusText">
           Submit your documents to request verification.
@@ -1577,11 +2379,15 @@ body.dark .mobile-nav{
 
     <form id="kycForm">
 
-      <div class="form-group" style="margin-top:15px;">
+
+      <div
+        class="form-group"
+        style="margin-top:15px;">
 
         <label for="documentType">
           Document Type
         </label>
+
 
         <select id="documentType">
 
@@ -1604,6 +2410,7 @@ body.dark .mobile-nav{
 
       <div class="kyc-grid">
 
+
         <div class="upload-box">
 
           <input
@@ -1611,6 +2418,7 @@ body.dark .mobile-nav{
             type="file"
             accept="image/jpeg,image/png,image/webp"
             required>
+
 
           <div class="upload-placeholder">
 
@@ -1628,10 +2436,11 @@ body.dark .mobile-nav{
 
           </div>
 
+
           <img
             id="kycFrontPreview"
             class="upload-preview"
-            alt="Front preview">
+            alt="Document front preview">
 
         </div>
 
@@ -1643,6 +2452,7 @@ body.dark .mobile-nav{
             type="file"
             accept="image/jpeg,image/png,image/webp"
             required>
+
 
           <div class="upload-placeholder">
 
@@ -1660,10 +2470,11 @@ body.dark .mobile-nav{
 
           </div>
 
+
           <img
             id="kycBackPreview"
             class="upload-preview"
-            alt="Back preview">
+            alt="Document back preview">
 
         </div>
 
@@ -1674,9 +2485,11 @@ body.dark .mobile-nav{
 
         <button
           id="submitKycButton"
-          class="primary-btn"
+          class="btn btn-primary"
           type="submit">
+
           Submit for Verification
+
         </button>
 
       </div>
@@ -1688,65 +2501,96 @@ body.dark .mobile-nav{
 </main>
 
 
-<!-- MOBILE NAV -->
+<!-- =====================================================
+     MOBILE NAV — EXACTLY 4
+===================================================== -->
 
 <nav class="mobile-nav">
 
   <div class="mobile-nav-inner">
 
+
     <a href="./general.html">
-      <div class="mobile-icon">⌂</div>
+
+      <div class="mobile-icon">
+        ⌂
+      </div>
+
       Home
+
     </a>
 
-    <a href="./buy.html">
-      <div class="mobile-icon">◈</div>
-      Buy
-    </a>
-
-    <a href="./add-listing.html">
-      <div class="mobile-icon">＋</div>
-      Sell
-    </a>
 
     <a href="./chat.html">
-      <div class="mobile-icon">◌</div>
+
+      <div class="mobile-icon">
+        ◌
+      </div>
+
       Chat
+
     </a>
+
 
     <a
       href="./profile.html"
       class="active">
-      <div class="mobile-icon">♙</div>
+
+      <div class="mobile-icon">
+        ♙
+      </div>
+
       Profile
+
     </a>
+
+
+    <button
+      id="mobileLogout"
+      class="logout"
+      type="button">
+
+      <div class="mobile-icon">
+        ↪
+      </div>
+
+      Logout
+
+    </button>
 
   </div>
 
 </nav>
 
 
-<!-- REPORT MODAL -->
+<!-- =====================================================
+     REPORT MODAL
+===================================================== -->
 
 <div
   id="reportModal"
   class="modal">
 
+
   <div class="modal-card">
+
 
     <div class="modal-title">
       Report Profile
     </div>
 
+
     <p class="modal-description">
       Report this profile to Myanmar Elite Connect administrators.
     </p>
+
 
     <div style="margin-top:14px;">
 
       <label for="reportReason">
         Reason
       </label>
+
 
       <select id="reportReason">
 
@@ -1785,6 +2629,7 @@ body.dark .mobile-nav{
         Details
       </label>
 
+
       <textarea
         id="reportDetails"
         maxlength="1000"
@@ -1797,16 +2642,21 @@ body.dark .mobile-nav{
 
       <button
         id="cancelReportButton"
-        class="secondary-btn"
+        class="btn btn-secondary"
         type="button">
+
         Cancel
+
       </button>
+
 
       <button
         id="submitReportButton"
-        class="danger-btn"
+        class="btn btn-danger"
         type="button">
+
         Submit Report
+
       </button>
 
     </div>
@@ -1827,11 +2677,16 @@ body.dark .mobile-nav{
    CONFIG
 ===================================================== */
 
-const PROFILE_AVATAR_BUCKET = "profile-avatars";
-const KYC_BUCKET = "kyc-documents";
+const PROFILE_AVATAR_BUCKET =
+  "profile-avatars";
+
+const KYC_BUCKET =
+  "kyc-documents";
+
 
 let currentUser = null;
 let profileData = null;
+
 let targetProfileId = null;
 let isOwner = false;
 
@@ -1841,46 +2696,60 @@ let activePostCategory = "all";
 let currentKyc = null;
 let currentReaction = null;
 
+let friendRecord = null;
+
 
 /* =====================================================
    HELPERS
 ===================================================== */
 
 function escapeHTML(value){
+
   return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
 
+
 function normalize(value){
+
   return String(value || "")
     .trim()
     .toLowerCase();
+
 }
 
-function toast(message,type="success"){
+
+function toast(message){
 
   const element =
     document.getElementById("toast");
 
-  element.textContent = message;
+  element.textContent =
+    message;
 
   element.className =
-    `toast show ${type}`;
+    "toast show";
 
-  clearTimeout(window.__toastTimer);
+  clearTimeout(
+    window.__toastTimer
+  );
 
   window.__toastTimer =
     setTimeout(
       ()=>{
-        element.className = "toast";
+        element.className =
+          "toast";
       },
       3000
     );
+
 }
+
 
 function formatDate(value){
 
@@ -1888,9 +2757,14 @@ function formatDate(value){
     return "";
   }
 
-  const date = new Date(value);
+  const date =
+    new Date(value);
 
-  if(Number.isNaN(date.getTime())){
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
     return "";
   }
 
@@ -1902,7 +2776,9 @@ function formatDate(value){
       year:"numeric"
     }
   );
+
 }
+
 
 function formatPrice(item){
 
@@ -1919,7 +2795,9 @@ function formatPrice(item){
   return `${escapeHTML(
     item.currency || "MMK"
   )} ${price.toLocaleString()}`;
+
 }
+
 
 function formatLocation(item){
 
@@ -1936,22 +2814,26 @@ function formatLocation(item){
 
   const unique = [];
 
-  values.forEach(value=>{
-    if(
-      !unique.some(
-        x =>
-          normalize(x) ===
-          normalize(value)
-      )
-    ){
-      unique.push(value);
+  values.forEach(
+    value=>{
+      if(
+        !unique.some(
+          x =>
+            normalize(x) ===
+            normalize(value)
+        )
+      ){
+        unique.push(value);
+      }
     }
-  });
+  );
 
   return unique.length
     ? unique.join(" · ")
     : "Myanmar";
+
 }
+
 
 function getCover(item){
 
@@ -1963,6 +2845,50 @@ function getCover(item){
   }
 
   return "";
+
+}
+
+
+/* =====================================================
+   REGION BADGES
+===================================================== */
+
+const REGION_BADGES = {
+
+  Ayeyarwady:"AYW",
+  Bago:"BGO",
+  Chin:"CHN",
+  Kachin:"KCN",
+  Kayah:"KYH",
+  Kayin:"KYN",
+  Magway:"MGW",
+  Mandalay:"MDY",
+  Mon:"MON",
+  Naypyidaw:"NPW",
+  Rakhine:"RKH",
+  Sagaing:"SGG",
+  Shan:"SHN",
+  Tanintharyi:"TNI",
+  Yangon:"YGN"
+
+};
+
+
+function regionBadge(city){
+
+  const code =
+    REGION_BADGES[city];
+
+  if(!code){
+    return "";
+  }
+
+  return `
+    <span class="badge region">
+      ◆ ${escapeHTML(code)}
+    </span>
+  `;
+
 }
 
 
@@ -1988,7 +2914,9 @@ function applyTheme(theme){
     "mec_theme",
     theme
   );
+
 }
+
 
 document.getElementById(
   "themeButton"
@@ -2001,9 +2929,50 @@ document.getElementById(
       );
 
     applyTheme(
-      dark ? "light" : "dark"
+      dark
+        ? "light"
+        : "dark"
     );
   }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout(){
+
+  try{
+
+    await supabaseClient.auth.signOut();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+  }
+
+  window.location.href =
+    "./auth.html";
+
+}
+
+
+document.getElementById(
+  "desktopLogout"
+).addEventListener(
+  "click",
+  logout
+);
+
+
+document.getElementById(
+  "mobileLogout"
+).addEventListener(
+  "click",
+  logout
 );
 
 
@@ -2032,6 +3001,7 @@ async function requireUser(){
   }
 
   return data.user;
+
 }
 
 
@@ -2050,6 +3020,7 @@ function getTargetProfileId(){
     params.get("id") ||
     currentUser.id
   );
+
 }
 
 
@@ -2066,7 +3037,16 @@ async function loadProfile(){
     await supabaseClient
       .from("profiles")
       .select(
-        "id,full_name,phone,avatar_url,city,bio,role,created_at"
+        `
+        id,
+        full_name,
+        phone,
+        avatar_url,
+        city,
+        bio,
+        role,
+        created_at
+        `
       )
       .eq(
         "id",
@@ -2083,17 +3063,265 @@ async function loadProfile(){
     throw new Error(
       "Profile not found."
     );
+
   }
 
-  profileData = data;
+  profileData =
+    data;
 
   isOwner =
     currentUser.id ===
     targetProfileId;
 
   renderProfile();
+
 }
 
+
+/* =====================================================
+   LOAD BADGES
+===================================================== */
+
+async function loadBadges(){
+
+  const container =
+    document.getElementById(
+      "badges"
+    );
+
+  let html = "";
+
+
+  /* REGION */
+
+  html +=
+    regionBadge(
+      profileData.city
+    );
+
+
+  /*
+     Badge records expected:
+
+     profile_badges
+     ----------------
+     id
+     profile_id
+     badge_type
+     badge_code
+     badge_label
+     is_active
+     created_at
+  */
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profile_badges")
+        .select(
+          `
+          id,
+          profile_id,
+          badge_type,
+          badge_code,
+          badge_label,
+          is_active
+          `
+        )
+        .eq(
+          "profile_id",
+          targetProfileId
+        )
+        .eq(
+          "is_active",
+          true
+        );
+
+    if(!error && Array.isArray(data)){
+
+      data.forEach(
+        badge=>{
+
+          const type =
+            normalize(
+              badge.badge_type
+            );
+
+          const code =
+            badge.badge_code ||
+            "";
+
+          const label =
+            badge.badge_label ||
+            "";
+
+          if(
+            type === "verified"
+          ){
+
+            html += `
+              <span class="badge verified">
+                ✓ VERIFIED
+              </span>
+            `;
+
+          }
+          else if(
+            type === "mcp" ||
+            type === "mec" ||
+            type === "mec_certified_partner"
+          ){
+
+            html += `
+              <span class="badge mcp">
+                ★ MCP
+                ${label
+                  ? `· ${escapeHTML(label)}`
+                  : ""}
+              </span>
+            `;
+
+          }
+          else if(
+            type === "car"
+          ){
+
+            html += `
+              <span class="badge car">
+                🚗 CAR
+                ${code
+                  ? `· ${escapeHTML(code)}`
+                  : ""}
+              </span>
+            `;
+
+          }
+          else if(
+            type === "property"
+          ){
+
+            html += `
+              <span class="badge property">
+                ◆ PROPERTY
+                ${code
+                  ? `· ${escapeHTML(code)}`
+                  : ""}
+              </span>
+            `;
+
+          }
+          else if(
+            type === "gem"
+          ){
+
+            html += `
+              <span class="badge gem">
+                ◆ GEM
+                ${code
+                  ? `· ${escapeHTML(code)}`
+                  : ""}
+              </span>
+            `;
+
+          }
+          else if(
+            type === "shop"
+          ){
+
+            html += `
+              <span class="badge shop">
+                ▣ SHOP
+                ${code
+                  ? `· ${escapeHTML(code)}`
+                  : ""}
+              </span>
+            `;
+
+          }
+          else if(
+            type === "feedback"
+          ){
+
+            html += `
+              <span class="badge feedback">
+                ★ FEEDBACK
+                ${code
+                  ? `· ${escapeHTML(code)}`
+                  : ""}
+              </span>
+            `;
+
+          }
+          else if(
+            label
+          ){
+
+            html += `
+              <span class="badge region">
+                ${escapeHTML(label)}
+              </span>
+            `;
+
+          }
+
+        }
+      );
+
+    }
+
+  }
+  catch(error){
+
+    console.error(
+      "Badge loading:",
+      error
+    );
+
+  }
+
+
+  /*
+     KYC APPROVED
+     automatically shows VERIFIED
+     even if the profile_badges table
+     has not been populated yet.
+  */
+
+  if(
+    currentKyc &&
+    normalize(
+      currentKyc.status
+    ) === "approved"
+  ){
+
+    if(
+      !html.includes("VERIFIED")
+    ){
+
+      html += `
+        <span class="badge verified">
+          ✓ VERIFIED
+        </span>
+      `;
+
+    }
+
+  }
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* =====================================================
+   RENDER PROFILE
+===================================================== */
 
 function renderProfile(){
 
@@ -2101,10 +3329,12 @@ function renderProfile(){
     profileData.full_name ||
     "Member";
 
+
   document.getElementById(
     "profileName"
   ).textContent =
     name;
+
 
   document.getElementById(
     "profileEmail"
@@ -2112,6 +3342,7 @@ function renderProfile(){
     isOwner
       ? currentUser.email || ""
       : "";
+
 
   document.getElementById(
     "profileLocation"
@@ -2125,15 +3356,18 @@ function renderProfile(){
     profileData.avatar_url ||
     "";
 
+
   const avatarElement =
     document.getElementById(
       "avatar"
     );
 
+
   const miniAvatar =
     document.getElementById(
       "miniAvatar"
     );
+
 
   if(avatar){
 
@@ -2164,12 +3398,13 @@ function renderProfile(){
       ? "My Profile"
       : name;
 
+
   document.getElementById(
     "pageSubtitle"
   ).textContent =
     isOwner
-      ? "Manage your profile, listings and verification."
-      : "View profile, listings and community activity.";
+      ? "Manage your profile, badges, listings and verification."
+      : "View profile, badges, listings and community activity.";
 
 
   document.getElementById(
@@ -2179,12 +3414,22 @@ function renderProfile(){
       ? "flex"
       : "none";
 
+
+  document.getElementById(
+    "visitorActions"
+  ).style.display =
+    isOwner
+      ? "none"
+      : "flex";
+
+
   document.getElementById(
     "avatarUploadButton"
   ).style.display =
     isOwner
       ? "grid"
       : "none";
+
 
   document.getElementById(
     "profileTab"
@@ -2193,12 +3438,14 @@ function renderProfile(){
       ? "block"
       : "none";
 
+
   document.getElementById(
     "kycTab"
   ).style.display =
     isOwner
       ? "block"
       : "none";
+
 
   document.getElementById(
     "socialActions"
@@ -2215,21 +3462,29 @@ function renderProfile(){
     ).value =
       profileData.full_name || "";
 
+
     document.getElementById(
       "phone"
     ).value =
       profileData.phone || "";
+
 
     document.getElementById(
       "city"
     ).value =
       profileData.city || "";
 
+
     document.getElementById(
       "bio"
     ).value =
       profileData.bio || "";
+
   }
+
+
+  loadBadges();
+
 }
 
 
@@ -2254,6 +3509,7 @@ document.getElementById(
       return;
     }
 
+
     if(
       ![
         "image/jpeg",
@@ -2263,14 +3519,15 @@ document.getElementById(
     ){
 
       toast(
-        "Please select JPG, PNG or WebP.",
-        "error"
+        "Please select JPG, PNG or WebP."
       );
 
       this.value = "";
 
       return;
+
     }
+
 
     if(
       file.size >
@@ -2278,14 +3535,15 @@ document.getElementById(
     ){
 
       toast(
-        "Profile photo must be 5MB or smaller.",
-        "error"
+        "Profile photo must be 5MB or smaller."
       );
 
       this.value = "";
 
       return;
+
     }
+
 
     try{
 
@@ -2293,18 +3551,20 @@ document.getElementById(
         "Uploading profile photo..."
       );
 
+
       const extension =
         file.name
           .split(".")
           .pop()
           .toLowerCase();
 
+
       const path =
         `${currentUser.id}/avatar-${Date.now()}.${extension}`;
 
 
       const {
-        error:uploadError
+        error
       } =
         await supabaseClient
           .storage
@@ -2321,8 +3581,9 @@ document.getElementById(
             }
           );
 
-      if(uploadError){
-        throw uploadError;
+
+      if(error){
+        throw error;
       }
 
 
@@ -2357,6 +3618,7 @@ document.getElementById(
             currentUser.id
           );
 
+
       if(updateError){
         throw updateError;
       }
@@ -2365,10 +3627,12 @@ document.getElementById(
       profileData.avatar_url =
         avatarUrl;
 
+
       renderProfile();
 
+
       toast(
-        "Profile photo updated successfully."
+        "Profile photo updated."
       );
 
     }
@@ -2378,8 +3642,7 @@ document.getElementById(
 
       toast(
         error.message ||
-        "Could not upload profile photo.",
-        "error"
+        "Could not upload profile photo."
       );
 
     }
@@ -2405,14 +3668,17 @@ document.getElementById(
 
     event.preventDefault();
 
+
     if(!isOwner){
       return;
     }
+
 
     const button =
       document.getElementById(
         "saveProfileButton"
       );
+
 
     const payload = {
 
@@ -2445,15 +3711,16 @@ document.getElementById(
     if(!payload.full_name){
 
       toast(
-        "Please enter your name.",
-        "error"
+        "Please enter your name."
       );
 
       return;
+
     }
 
 
-    button.disabled = true;
+    button.disabled =
+      true;
 
     button.textContent =
       "Saving...";
@@ -2477,6 +3744,7 @@ document.getElementById(
             }
           );
 
+
       if(error){
         throw error;
       }
@@ -2487,7 +3755,9 @@ document.getElementById(
         ...payload
       };
 
+
       renderProfile();
+
 
       toast(
         "Profile saved successfully."
@@ -2500,14 +3770,14 @@ document.getElementById(
 
       toast(
         error.message ||
-        "Could not save profile.",
-        "error"
+        "Could not save profile."
       );
 
     }
     finally{
 
-      button.disabled = false;
+      button.disabled =
+        false;
 
       button.textContent =
         "Save Changes";
@@ -2537,8 +3807,13 @@ async function loadPosts(){
       "postsGrid"
     );
 
+
   grid.innerHTML =
-    `<div class="loading">Loading listings...</div>`;
+    `
+      <div class="loading">
+        Loading listings...
+      </div>
+    `;
 
 
   const {
@@ -2580,7 +3855,8 @@ async function loadPosts(){
         [
           "car",
           "property",
-          "gem"
+          "gem",
+          "shop"
         ]
       )
       .order(
@@ -2596,13 +3872,20 @@ async function loadPosts(){
     console.error(error);
 
     grid.innerHTML =
-      `<div class="empty">
-        <div class="empty-icon">!</div>
-        <strong>Could not load listings</strong>
-        <span>${escapeHTML(error.message)}</span>
-      </div>`;
+      `
+        <div class="empty">
+          <div class="empty-icon">!</div>
+          <strong>
+            Could not load listings
+          </strong>
+          <span>
+            Please try again.
+          </span>
+        </div>
+      `;
 
     return;
+
   }
 
 
@@ -2615,6 +3898,7 @@ async function loadPosts(){
   updateStats();
 
   renderPosts();
+
 }
 
 
@@ -2634,6 +3918,7 @@ function updateStats(){
         normalize(item.status) ===
         "approved"
     ).length;
+
 }
 
 
@@ -2647,7 +3932,7 @@ function renderPosts(){
 
   const posts =
     allPosts.filter(
-      item => {
+      item=>{
 
         if(
           activePostCategory ===
@@ -2668,13 +3953,20 @@ function renderPosts(){
   if(!posts.length){
 
     grid.innerHTML =
-      `<div class="empty">
-        <div class="empty-icon">◇</div>
-        <strong>No listings yet</strong>
-        <span>This profile has no listings in this category.</span>
-      </div>`;
+      `
+        <div class="empty">
+          <div class="empty-icon">◇</div>
+          <strong>
+            No listings yet
+          </strong>
+          <span>
+            This profile has no listings in this category.
+          </span>
+        </div>
+      `;
 
     return;
+
   }
 
 
@@ -2682,6 +3974,7 @@ function renderPosts(){
     posts
       .map(postCard)
       .join("");
+
 }
 
 
@@ -2690,6 +3983,7 @@ function postCard(item){
   const cover =
     getCover(item);
 
+
   const category =
     normalize(item.category)
       .toUpperCase();
@@ -2697,34 +3991,43 @@ function postCard(item){
 
   const image =
     cover
-      ? `
+      ?
+      `
         <img
           class="post-image"
           src="${escapeHTML(cover)}"
           alt="${escapeHTML(item.title || "Listing")}"
-          loading="lazy"
-          onerror="this.style.display='none';">
+          loading="lazy">
       `
       :
-      `<div class="post-image"></div>`;
+      `
+        <div class="post-image"></div>
+      `;
 
 
   const ownerButtons =
     isOwner
-      ? `
+      ?
+      `
         <a
           href="./add-listing.html?id=${encodeURIComponent(item.id)}">
+
           Edit
+
         </a>
+
 
         <button
           class="delete"
           type="button"
           onclick="deleteListing('${item.id}')">
+
           Delete
+
         </button>
       `
-      : "";
+      :
+      "";
 
 
   return `
@@ -2774,7 +4077,9 @@ function postCard(item){
 
           <a
             href="./listing-detail.html?id=${encodeURIComponent(item.id)}">
-            View Detail
+
+            View
+
           </a>
 
           ${ownerButtons}
@@ -2785,6 +4090,7 @@ function postCard(item){
 
     </article>
   `;
+
 }
 
 
@@ -2794,10 +4100,13 @@ async function deleteListing(id){
     return;
   }
 
+
   const post =
     allPosts.find(
-      item => item.id === id
+      item =>
+        item.id === id
     );
+
 
   if(!post){
     return;
@@ -2840,6 +4149,7 @@ async function deleteListing(id){
       "Listing deleted."
     );
 
+
     await loadPosts();
 
   }
@@ -2849,12 +4159,13 @@ async function deleteListing(id){
 
     toast(
       error.message ||
-      "Could not delete listing.",
-      "error"
+      "Could not delete listing."
     );
 
   }
+
 }
+
 
 window.deleteListing =
   deleteListing;
@@ -2863,39 +4174,44 @@ window.deleteListing =
 document.querySelectorAll(
   ".post-category"
 )
-.forEach(button=>{
+.forEach(
+  button=>{
 
-  button.addEventListener(
-    "click",
-    function(){
+    button.addEventListener(
+      "click",
+      function(){
 
-      document.querySelectorAll(
-        ".post-category"
-      )
-      .forEach(
-        x =>
-          x.classList.remove(
-            "active"
-          )
-      );
+        document.querySelectorAll(
+          ".post-category"
+        )
+        .forEach(
+          x =>
+            x.classList.remove(
+              "active"
+            )
+        );
 
-      this.classList.add(
-        "active"
-      );
 
-      activePostCategory =
-        this.dataset.category;
+        this.classList.add(
+          "active"
+        );
 
-      renderPosts();
 
-    }
-  );
+        activePostCategory =
+          this.dataset.category;
 
-});
+
+        renderPosts();
+
+      }
+    );
+
+  }
+);
 
 
 /* =====================================================
-   PROFILE REACTIONS
+   REACTIONS
 ===================================================== */
 
 async function loadReactions(){
@@ -2920,23 +4236,28 @@ async function loadReactions(){
     console.error(error);
 
     return;
+
   }
 
 
   const likes =
-    data.filter(
-      x =>
-        normalize(x.reaction) ===
-        "like"
-    ).length;
+    (data || [])
+      .filter(
+        x =>
+          normalize(x.reaction) ===
+          "like"
+      )
+      .length;
 
 
   const dislikes =
-    data.filter(
-      x =>
-        normalize(x.reaction) ===
-        "dislike"
-    ).length;
+    (data || [])
+      .filter(
+        x =>
+          normalize(x.reaction) ===
+          "dislike"
+      )
+      .length;
 
 
   document.getElementById(
@@ -2944,15 +4265,18 @@ async function loadReactions(){
   ).textContent =
     likes;
 
+
   document.getElementById(
     "dislikeCount"
   ).textContent =
     dislikes;
 
+
   document.getElementById(
     "likeStat"
   ).textContent =
     likes;
+
 
   document.getElementById(
     "dislikeStat"
@@ -2961,7 +4285,7 @@ async function loadReactions(){
 
 
   currentReaction =
-    data.find(
+    (data || []).find(
       x =>
         x.user_id ===
         currentUser.id
@@ -2969,34 +4293,29 @@ async function loadReactions(){
 
 
   updateReactionButtons();
+
 }
 
 
 function updateReactionButtons(){
 
-  const like =
-    document.getElementById(
-      "likeButton"
-    );
-
-  const dislike =
-    document.getElementById(
-      "dislikeButton"
-    );
-
-
-  like.classList.toggle(
+  document.getElementById(
+    "likeButton"
+  ).classList.toggle(
     "active",
     currentReaction?.reaction ===
       "like"
   );
 
 
-  dislike.classList.toggle(
+  document.getElementById(
+    "dislikeButton"
+  ).classList.toggle(
     "active",
     currentReaction?.reaction ===
       "dislike"
   );
+
 }
 
 
@@ -3005,11 +4324,11 @@ async function setReaction(reaction){
   if(isOwner){
 
     toast(
-      "You cannot react to your own profile.",
-      "error"
+      "You cannot react to your own profile."
     );
 
     return;
+
   }
 
 
@@ -3053,8 +4372,10 @@ async function setReaction(reaction){
             {
               profile_id:
                 targetProfileId,
+
               user_id:
                 currentUser.id,
+
               reaction:
                 reaction
             },
@@ -3081,11 +4402,11 @@ async function setReaction(reaction){
 
     toast(
       error.message ||
-      "Could not update reaction.",
-      "error"
+      "Could not update reaction."
     );
 
   }
+
 }
 
 
@@ -3120,8 +4441,13 @@ async function loadComments(){
       "commentsList"
     );
 
+
   list.innerHTML =
-    `<div class="loading">Loading comments...</div>`;
+    `
+      <div class="loading">
+        Loading comments...
+      </div>
+    `;
 
 
   const {
@@ -3150,25 +4476,39 @@ async function loadComments(){
     console.error(error);
 
     list.innerHTML =
-      `<div class="empty">
-        <strong>Could not load comments</strong>
-        <span>${escapeHTML(error.message)}</span>
-      </div>`;
+      `
+        <div class="empty">
+          <strong>
+            Could not load comments
+          </strong>
+          <span>
+            Please try again.
+          </span>
+        </div>
+      `;
 
     return;
+
   }
 
 
   if(!data?.length){
 
     list.innerHTML =
-      `<div class="empty">
-        <div class="empty-icon">◎</div>
-        <strong>No comments yet</strong>
-        <span>Be the first to comment.</span>
-      </div>`;
+      `
+        <div class="empty">
+          <div class="empty-icon">◎</div>
+          <strong>
+            No comments yet
+          </strong>
+          <span>
+            Be the first to comment.
+          </span>
+        </div>
+      `;
 
     return;
+
   }
 
 
@@ -3176,7 +4516,8 @@ async function loadComments(){
     [
       ...new Set(
         data.map(
-          x => x.user_id
+          x =>
+            x.user_id
         )
       )
     ];
@@ -3206,21 +4547,24 @@ async function loadComments(){
         user=>{
           profileMap[
             user.id
-          ] = user;
+          ] =
+            user;
         }
       );
+
   }
 
 
   list.innerHTML =
     data
       .map(
-        comment => {
+        comment=>{
 
           const user =
             profileMap[
               comment.user_id
             ] || {};
+
 
           const own =
             comment.user_id ===
@@ -3257,22 +4601,28 @@ async function loadComments(){
 
               ${
                 own
-                  ? `
+                  ?
+                  `
                     <button
                       class="comment-delete"
                       type="button"
                       onclick="deleteComment('${comment.id}')">
+
                       Delete comment
+
                     </button>
                   `
-                  : ""
+                  :
+                  ""
               }
 
             </article>
           `;
+
         }
       )
       .join("");
+
 }
 
 
@@ -3290,6 +4640,7 @@ document.getElementById(
         "commentInput"
       );
 
+
     const comment =
       input.value.trim();
 
@@ -3306,14 +4657,18 @@ document.getElementById(
       } =
         await supabaseClient
           .from("profile_comments")
-          .insert({
-            profile_id:
-              targetProfileId,
-            user_id:
-              currentUser.id,
-            comment:
-              comment
-          });
+          .insert(
+            {
+              profile_id:
+                targetProfileId,
+
+              user_id:
+                currentUser.id,
+
+              comment:
+                comment
+            }
+          );
 
 
       if(error){
@@ -3321,11 +4676,14 @@ document.getElementById(
       }
 
 
-      input.value = "";
+      input.value =
+        "";
+
 
       toast(
         "Comment posted."
       );
+
 
       await loadComments();
 
@@ -3336,8 +4694,7 @@ document.getElementById(
 
       toast(
         error.message ||
-        "Could not post comment.",
-        "error"
+        "Could not post comment."
       );
 
     }
@@ -3375,6 +4732,7 @@ async function deleteComment(id){
       "Comment deleted."
     );
 
+
     await loadComments();
 
   }
@@ -3384,19 +4742,334 @@ async function deleteComment(id){
 
     toast(
       error.message ||
-      "Could not delete comment.",
-      "error"
+      "Could not delete comment."
     );
 
   }
+
 }
+
 
 window.deleteComment =
   deleteComment;
 
 
 /* =====================================================
-   PROFILE REPORT
+   FRIEND SYSTEM
+===================================================== */
+
+async function loadFriendStatus(){
+
+  if(isOwner){
+    return;
+  }
+
+
+  /*
+    Expected table:
+
+    friendships
+    ----------------
+    id
+    requester_id
+    addressee_id
+    status
+    created_at
+  */
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("friendships")
+        .select(
+          `
+          id,
+          requester_id,
+          addressee_id,
+          status
+          `
+        )
+        .or(
+          `and(requester_id.eq.${currentUser.id},addressee_id.eq.${targetProfileId}),and(requester_id.eq.${targetProfileId},addressee_id.eq.${currentUser.id})`
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+      console.error(error);
+
+      return;
+
+    }
+
+
+    friendRecord =
+      data || null;
+
+
+    renderFriendStatus();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+function renderFriendStatus(){
+
+  const button =
+    document.getElementById(
+      "friendButton"
+    );
+
+
+  const chat =
+    document.getElementById(
+      "chatButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "friendStatus"
+    );
+
+
+  if(!friendRecord){
+
+    button.textContent =
+      "+ Add Friend";
+
+    button.disabled =
+      false;
+
+    chat.style.display =
+      "none";
+
+    status.textContent =
+      "";
+
+    return;
+
+  }
+
+
+  const state =
+    normalize(
+      friendRecord.status
+    );
+
+
+  if(state === "accepted"){
+
+    button.textContent =
+      "✓ Friends";
+
+    button.disabled =
+      true;
+
+    chat.style.display =
+      "inline-flex";
+
+    status.textContent =
+      "You are friends.";
+
+  }
+  else if(
+    state === "pending"
+  ){
+
+    const sentByMe =
+      friendRecord.requester_id ===
+      currentUser.id;
+
+
+    button.textContent =
+      sentByMe
+        ? "Request Sent"
+        : "Accept Friend";
+
+    button.disabled =
+      sentByMe;
+
+    chat.style.display =
+      "none";
+
+    status.textContent =
+      sentByMe
+        ? "Friend request pending."
+        : "This person sent you a friend request.";
+
+  }
+
+}
+
+
+document.getElementById(
+  "friendButton"
+).addEventListener(
+  "click",
+  async ()=>{
+
+    if(isOwner){
+      return;
+    }
+
+
+    if(
+      friendRecord &&
+      normalize(
+        friendRecord.status
+      ) ===
+      "pending" &&
+      friendRecord.addressee_id ===
+      currentUser.id
+    ){
+
+      try{
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("friendships")
+            .update({
+              status:
+                "accepted"
+            })
+            .eq(
+              "id",
+              friendRecord.id
+            );
+
+
+        if(error){
+          throw error;
+        }
+
+
+        toast(
+          "Friend request accepted."
+        );
+
+
+        await loadFriendStatus();
+
+      }
+      catch(error){
+
+        console.error(error);
+
+        toast(
+          error.message ||
+          "Could not accept request."
+        );
+
+      }
+
+      return;
+
+    }
+
+
+    if(friendRecord){
+      return;
+    }
+
+
+    const button =
+      document.getElementById(
+        "friendButton"
+      );
+
+
+    button.disabled =
+      true;
+
+
+    try{
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("friendships")
+          .insert(
+            {
+              requester_id:
+                currentUser.id,
+
+              addressee_id:
+                targetProfileId,
+
+              status:
+                "pending"
+            }
+          );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      toast(
+        "Friend request sent."
+      );
+
+
+      await loadFriendStatus();
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      button.disabled =
+        false;
+
+      toast(
+        error.message ||
+        "Could not send friend request."
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   CHAT
+===================================================== */
+
+document.getElementById(
+  "chatButton"
+).addEventListener(
+  "click",
+  ()=>{
+
+    window.location.href =
+      `./chat.html?user=${encodeURIComponent(
+        targetProfileId
+      )}`;
+
+  }
+);
+
+
+/* =====================================================
+   REPORT
 ===================================================== */
 
 const reportModal =
@@ -3432,14 +5105,18 @@ document.getElementById(
 reportModal.addEventListener(
   "click",
   event=>{
+
     if(
       event.target ===
       reportModal
     ){
+
       reportModal.classList.remove(
         "show"
       );
+
     }
+
   }
 );
 
@@ -3455,6 +5132,7 @@ document.getElementById(
         "reportReason"
       ).value;
 
+
     const details =
       document.getElementById(
         "reportDetails"
@@ -3467,7 +5145,9 @@ document.getElementById(
       );
 
 
-    button.disabled = true;
+    button.disabled =
+      true;
+
 
     try{
 
@@ -3476,24 +5156,26 @@ document.getElementById(
       } =
         await supabaseClient
           .from("profile_reports")
-          .insert({
+          .insert(
+            {
 
-            profile_id:
-              targetProfileId,
+              profile_id:
+                targetProfileId,
 
-            reporter_id:
-              currentUser.id,
+              reporter_id:
+                currentUser.id,
 
-            reason:
-              reason,
+              reason:
+                reason,
 
-            details:
-              details,
+              details:
+                details,
 
-            status:
-              "pending"
+              status:
+                "pending"
 
-          });
+            }
+          );
 
 
       if(error){
@@ -3503,7 +5185,9 @@ document.getElementById(
 
       document.getElementById(
         "reportDetails"
-      ).value = "";
+      ).value =
+        "";
+
 
       reportModal.classList.remove(
         "show"
@@ -3511,7 +5195,7 @@ document.getElementById(
 
 
       toast(
-        "Report submitted to admin."
+        "Report submitted."
       );
 
     }
@@ -3521,14 +5205,14 @@ document.getElementById(
 
       toast(
         error.message ||
-        "Could not submit report.",
-        "error"
+        "Could not submit report."
       );
 
     }
     finally{
 
-      button.disabled = false;
+      button.disabled =
+        false;
 
     }
 
@@ -3587,13 +5271,16 @@ async function loadKyc(){
     console.error(error);
 
     return;
+
   }
 
 
   currentKyc =
     data || null;
 
+
   renderKyc();
+
 }
 
 
@@ -3609,44 +5296,42 @@ function renderKyc(){
       "kycStatusDot"
     );
 
+
   const title =
     document.getElementById(
       "kycStatusTitle"
     );
+
 
   const text =
     document.getElementById(
       "kycStatusText"
     );
 
+
   const short =
     document.getElementById(
       "kycStatusShort"
     );
+
 
   const rejection =
     document.getElementById(
       "kycRejection"
     );
 
+
   const submit =
     document.getElementById(
       "submitKycButton"
-    );
-
-  const badge =
-    document.getElementById(
-      "verifiedBadge"
     );
 
 
   dot.className =
     "status-dot";
 
-  rejection.style.display =
-    "none";
 
-  badge.style.display =
+  rejection.style.display =
     "none";
 
 
@@ -3655,16 +5340,21 @@ function renderKyc(){
     title.textContent =
       "Not submitted";
 
+
     text.textContent =
       "Submit your documents to request verification.";
 
+
     short.textContent =
-      "Not submitted";
+      "—";
+
 
     submit.disabled =
       false;
 
+
     return;
+
   }
 
 
@@ -3680,14 +5370,18 @@ function renderKyc(){
       "pending"
     );
 
+
     title.textContent =
       "Pending review";
+
 
     text.textContent =
       "Your documents are waiting for admin review.";
 
+
     short.textContent =
       "Pending";
+
 
     submit.disabled =
       true;
@@ -3699,20 +5393,21 @@ function renderKyc(){
       "approved"
     );
 
+
     title.textContent =
       "KYC Approved";
+
 
     text.textContent =
       "Your identity has been verified by Myanmar Elite Connect.";
 
+
     short.textContent =
       "Verified";
 
+
     submit.disabled =
       true;
-
-    badge.style.display =
-      "inline-flex";
 
   }
   else if(status === "rejected"){
@@ -3721,14 +5416,18 @@ function renderKyc(){
       "rejected"
     );
 
+
     title.textContent =
       "KYC Rejected";
+
 
     text.textContent =
       "Please correct the problem and submit again.";
 
+
     short.textContent =
       "Rejected";
+
 
     submit.disabled =
       false;
@@ -3741,13 +5440,23 @@ function renderKyc(){
       rejection.style.display =
         "block";
 
+
       rejection.textContent =
         `Reason: ${currentKyc.rejection_reason}`;
+
     }
 
   }
+
+
+  loadBadges();
+
 }
 
+
+/* =====================================================
+   KYC PREVIEW
+===================================================== */
 
 function previewFile(
   inputId,
@@ -3763,6 +5472,7 @@ function previewFile(
       const file =
         this.files?.[0];
 
+
       if(!file){
         return;
       }
@@ -3777,13 +5487,16 @@ function previewFile(
       ){
 
         toast(
-          "Please select JPG, PNG or WebP.",
-          "error"
+          "Please select JPG, PNG or WebP."
         );
 
-        this.value = "";
+
+        this.value =
+          "";
+
 
         return;
+
       }
 
 
@@ -3791,6 +5504,7 @@ function previewFile(
         document.getElementById(
           previewId
         );
+
 
       const reader =
         new FileReader();
@@ -3802,8 +5516,10 @@ function previewFile(
           preview.src =
             event.target.result;
 
+
           preview.style.display =
             "block";
+
 
           preview
             .previousElementSibling
@@ -3819,6 +5535,7 @@ function previewFile(
 
     }
   );
+
 }
 
 
@@ -3827,11 +5544,16 @@ previewFile(
   "kycFrontPreview"
 );
 
+
 previewFile(
   "kycBack",
   "kycBackPreview"
 );
 
+
+/* =====================================================
+   KYC UPLOAD
+===================================================== */
 
 async function uploadKycImage(
   file,
@@ -3843,6 +5565,7 @@ async function uploadKycImage(
     throw new Error(
       `Please select the document ${side} image.`
     );
+
   }
 
 
@@ -3857,6 +5580,7 @@ async function uploadKycImage(
     throw new Error(
       "KYC images must be JPG, PNG or WebP."
     );
+
   }
 
 
@@ -3868,6 +5592,7 @@ async function uploadKycImage(
     throw new Error(
       "Each KYC image must be 8MB or smaller."
     );
+
   }
 
 
@@ -3887,7 +5612,9 @@ async function uploadKycImage(
   } =
     await supabaseClient
       .storage
-      .from(KYC_BUCKET)
+      .from(
+        KYC_BUCKET
+      )
       .upload(
         path,
         file,
@@ -3904,6 +5631,7 @@ async function uploadKycImage(
 
 
   return path;
+
 }
 
 
@@ -3925,15 +5653,16 @@ document.getElementById(
       currentKyc &&
       normalize(
         currentKyc.status
-      ) === "pending"
+      ) ===
+      "pending"
     ){
 
       toast(
-        "Your KYC is already under review.",
-        "error"
+        "Your KYC is already under review."
       );
 
       return;
+
     }
 
 
@@ -3941,6 +5670,7 @@ document.getElementById(
       document.getElementById(
         "kycFront"
       ).files?.[0];
+
 
     const back =
       document.getElementById(
@@ -3954,7 +5684,9 @@ document.getElementById(
       );
 
 
-    button.disabled = true;
+    button.disabled =
+      true;
+
 
     button.textContent =
       "Uploading...";
@@ -3967,6 +5699,7 @@ document.getElementById(
           front,
           "front"
         );
+
 
       const backPath =
         await uploadKycImage(
@@ -3981,39 +5714,41 @@ document.getElementById(
       } =
         await supabaseClient
           .from("kyc_submissions")
-          .insert({
+          .insert(
+            {
 
-            user_id:
-              currentUser.id,
+              user_id:
+                currentUser.id,
 
-            full_name:
-              profileData.full_name ||
-              "",
+              full_name:
+                profileData.full_name ||
+                "",
 
-            document_type:
-              document.getElementById(
-                "documentType"
-              ).value,
+              document_type:
+                document.getElementById(
+                  "documentType"
+                ).value,
 
-            front_image_url:
-              frontPath,
+              front_image_url:
+                frontPath,
 
-            back_image_url:
-              backPath,
+              back_image_url:
+                backPath,
 
-            status:
-              "pending",
+              status:
+                "pending",
 
-            rejection_reason:
-              null,
+              rejection_reason:
+                null,
 
-            reviewed_by:
-              null,
+              reviewed_by:
+                null,
 
-            reviewed_at:
-              null
+              reviewed_at:
+                null
 
-          })
+            }
+          )
           .select()
           .single();
 
@@ -4035,6 +5770,7 @@ document.getElementById(
       ).style.display =
         "none";
 
+
       document.getElementById(
         "kycBackPreview"
       ).style.display =
@@ -4055,7 +5791,7 @@ document.getElementById(
 
 
       toast(
-        "KYC submitted. Waiting for admin approval."
+        "KYC submitted for admin review."
       );
 
     }
@@ -4065,14 +5801,14 @@ document.getElementById(
 
       toast(
         error.message ||
-        "KYC submission failed.",
-        "error"
+        "KYC submission failed."
       );
 
     }
     finally{
 
-      button.disabled = false;
+      button.disabled =
+        false;
 
       button.textContent =
         "Submit for Verification";
@@ -4117,48 +5853,61 @@ const tabMap = {
 document.querySelectorAll(
   ".tab"
 )
-.forEach(button=>{
+.forEach(
+  button=>{
 
-  button.addEventListener(
-    "click",
-    function(){
+    button.addEventListener(
+      "click",
+      function(){
 
-      document.querySelectorAll(
-        ".tab"
-      )
-      .forEach(
-        x =>
-          x.classList.remove(
+        const target =
+          this.dataset.tab;
+
+
+        if(
+          !tabMap[target]
+        ){
+          return;
+        }
+
+
+        document.querySelectorAll(
+          ".tab"
+        )
+        .forEach(
+          x =>
+            x.classList.remove(
+              "active"
+            )
+        );
+
+
+        this.classList.add(
+          "active"
+        );
+
+
+        Object.values(
+          tabMap
+        )
+        .forEach(
+          panel =>
+            panel.classList.remove(
+              "active"
+            )
+        );
+
+
+        tabMap[target]
+          .classList.add(
             "active"
-          )
-      );
+          );
 
-      this.classList.add(
-        "active"
-      );
+      }
+    );
 
-
-      Object.values(
-        tabMap
-      )
-      .forEach(
-        panel =>
-          panel.classList.remove(
-            "active"
-          )
-      );
-
-
-      tabMap[
-        this.dataset.tab
-      ].classList.add(
-        "active"
-      );
-
-    }
-  );
-
-});
+  }
+);
 
 
 /* =====================================================
@@ -4179,6 +5928,7 @@ async function init(){
     currentUser =
       await requireUser();
 
+
     if(!currentUser){
       return;
     }
@@ -4190,13 +5940,15 @@ async function init(){
 
     await loadProfile();
 
+    await loadKyc();
+
     await loadPosts();
 
     await loadComments();
 
     await loadReactions();
 
-    await loadKyc();
+    await loadFriendStatus();
 
 
   }
@@ -4206,11 +5958,11 @@ async function init(){
 
     toast(
       error.message ||
-      "Could not load profile.",
-      "error"
+      "Could not load profile."
     );
 
   }
+
 }
 
 
