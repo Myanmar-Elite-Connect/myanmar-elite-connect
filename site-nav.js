@@ -3,9 +3,8 @@
   'use strict';
 
   const targetPages = new Set([
-    'general.html','buy.html','sell.html','listing.html','profile.html',
-    'car.html','gem.html','property.html','feedback.html','allmarket.html',
-    'add-listing.html'
+    'general.html','add-listing.html','buy.html','sell.html','listing.html','profile.html',
+    'chat.html','car.html','gem.html','property.html','feedback.html','allmarket.html'
   ]);
 
   const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
