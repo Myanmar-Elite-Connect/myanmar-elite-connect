@@ -10,6 +10,11 @@ window.supabaseClient =
     SUPABASE_KEY
   );
 
+/* Small shared DOM helper used by profile.html and other MEC pages. */
+window.$ = window.$ || function(id){
+  return document.getElementById(id);
+};
+
 /* Shared logo treatment: keep every occurrence of the MEC logo in a
    proportional rounded-square container. 18% keeps small logos subtle and
    larger logo cards consistently rounded without becoming circular. */
