@@ -1,0 +1,57 @@
+/* Myanmar Elite Connect — shared responsive layer
+   Visual-only: keeps desktop layouts intact and improves phone ergonomics. */
+:root{--mec-mobile-gutter:14px;--mec-touch:44px}
+html{overflow-x:hidden}
+body{overflow-x:hidden;-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility}
+img,video,iframe{max-width:100%}
+button,a,input,select,textarea{touch-action:manipulation}
+@media (max-width: 768px){
+  body{min-width:0!important}
+  .container,.page-container,.main-container,.content,.content-wrap,.page-content,.section-container{width:calc(100% - 28px)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
+  .topbar,.header,.site-header{height:58px!important}
+  .topbar-inner,.header-inner,.site-header-inner{width:calc(100% - 20px)!important;gap:8px!important}
+  .brand-name,.brand-text,.desktop-only{display:none!important}
+  .brand img,.brand-logo,.logo,.logo img{max-width:36px!important;max-height:36px!important}
+  .actions{gap:5px!important}
+  .icon-btn{width:40px!important;height:40px!important}
+  .card,.panel,.section-card,.listing-card,.content-card{border-radius:16px!important}
+  .card{padding:15px!important}
+  .layout,.two-column,.content-grid,.main-grid{grid-template-columns:1fr!important}
+  .form-grid{grid-template-columns:1fr!important}
+  .field.full{grid-column:auto!important}
+  h1{font-size:28px!important;letter-spacing:-.6px!important}
+  h2{font-size:22px!important}
+  h3{font-size:17px!important}
+  .subtitle{font-size:11px!important;line-height:1.7!important}
+  input,select{height:46px!important;font-size:12px!important}
+  textarea{font-size:12px!important}
+  button,.btn,.button{min-height:var(--mec-touch);max-width:100%}
+  .photo-preview,.gallery,.listing-grid,.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .listing-grid>*{min-width:0}
+  .horizontal-scroll,.category-row,.explore-row,.tabs,.chips{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;gap:8px!important}
+  .horizontal-scroll::-webkit-scrollbar,.category-row::-webkit-scrollbar,.explore-row::-webkit-scrollbar,.tabs::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+  .category-row>*,.explore-row>*,.tabs>*,.chips>*{flex:0 0 auto!important}
+  .filter-panel{max-width:100%!important}
+  .filter-panel .form-grid{grid-template-columns:1fr!important}
+  .mobile-nav{height:64px!important;padding-bottom:env(safe-area-inset-bottom)!important}
+  .mobile-nav-inner{height:64px!important}
+  .mobile-nav a{min-width:0!important;font-size:8px!important}
+  .mobile-icon{font-size:17px!important}
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  .mobile-nav~*{padding-bottom:0}
+  .preview-card{position:relative!important;top:auto!important}
+  .modal,.dialog,.sheet{width:min(94vw,520px)!important;max-width:94vw!important;margin:0 auto!important}
+  .modal-content,.dialog-content{padding:16px!important}
+  .theme-grid,.ui-theme-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .theme-card,.ui-theme-card{min-width:0!important}
+}
+@media (max-width: 390px){
+  .container,.page-container,.main-container,.content,.content-wrap,.page-content,.section-container{width:calc(100% - 22px)!important}
+  .card{padding:13px!important}
+  h1{font-size:25px!important}
+  .photo-preview,.gallery,.listing-grid,.grid,.theme-grid,.ui-theme-grid{grid-template-columns:1fr 1fr!important}
+  .topbar-inner,.header-inner,.site-header-inner{width:calc(100% - 14px)!important}
+}
+@media (min-width:769px){
+  body{padding-bottom:0!important}
+}
