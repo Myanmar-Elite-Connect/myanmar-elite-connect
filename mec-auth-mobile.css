@@ -1,0 +1,21 @@
+/* MEC auth mobile polish: visual only, no auth logic changes. */
+@media (max-width:700px){
+  body:has(#loginForm,#signupForm){overflow-x:hidden}
+  body:has(#loginForm,#signupForm) .auth-card,
+  body:has(#loginForm,#signupForm) .auth-container,
+  body:has(#loginForm,#signupForm) .auth-panel,
+  body:has(#loginForm,#signupForm) .card{width:min(92vw,430px);max-width:430px;margin-left:auto;margin-right:auto}
+  body:has(#loginForm,#signupForm) input,
+  body:has(#loginForm,#signupForm) select,
+  body:has(#loginForm,#signupForm) button{min-height:48px}
+  body:has(#loginForm,#signupForm) form{gap:12px}
+  body:has(#loginForm,#signupForm) .auth-tabs,
+  body:has(#loginForm,#signupForm) .tabs{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:5px;padding:4px;border-radius:13px}
+  body:has(#loginForm,#signupForm) .auth-tabs button,
+  body:has(#loginForm,#signupForm) .tabs button{width:100%;min-height:42px;border-radius:10px}
+  body:has(#loginForm,#signupForm) h1{font-size:26px;line-height:1.2}
+  body:has(#loginForm,#signupForm) .subtitle{font-size:11px;line-height:1.65}
+  body:has(#loginForm,#signupForm) .brand img,
+  body:has(#loginForm,#signupForm) .logo img{width:46px;height:46px}
+  body:has(#loginForm,#signupForm) .password-row{gap:8px}
+}
