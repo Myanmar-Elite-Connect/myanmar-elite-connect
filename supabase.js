@@ -10,12 +10,10 @@ window.supabaseClient =
     SUPABASE_KEY
   );
 
-/* Small shared DOM helper used by profile.html and other MEC pages. */
 window.$ = window.$ || function(id){
   return document.getElementById(id);
 };
 
-/* Shared logo treatment. */
 (function(){
   if(document.getElementById('mec-logo-style')) return;
   const style=document.createElement('style');
@@ -27,83 +25,58 @@ window.$ = window.$ || function(id){
   (document.head||document.documentElement).appendChild(style);
 })();
 
-/* Global Myanmar UI/UX theme layer. Visual-only; content and page logic are untouched. */
 (function(){
   if(document.querySelector('script[data-mec-themes]')) return;
-  const s=document.createElement('script');
-  s.src='./mec-themes.js';
-  s.dataset.mecThemes='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./mec-themes.js';s.dataset.mecThemes='1';document.head.appendChild(s);
 })();
 
-/* Shared responsive layer — visual only, keeps desktop UI intact. */
 (function(){
   if(document.querySelector('link[data-mec-responsive]')) return;
-  const l=document.createElement('link');
-  l.rel='stylesheet';
-  l.href='./mec-responsive.css';
-  l.dataset.mecResponsive='1';
-  document.head.appendChild(l);
+  const l=document.createElement('link');l.rel='stylesheet';l.href='./mec-responsive.css';l.dataset.mecResponsive='1';document.head.appendChild(l);
 })();
 
-/* Luxury entry splash for the public landing and authentication pages. */
 (function(){
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
   if(current!=='index.html' && current!=='auth.html') return;
-  if(document.querySelector('script[data-mec-splash]')) return;
-  const s=document.createElement('script');
-  s.src='./mec-splash.js';
-  s.dataset.mecSplash='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./mec-splash.js';s.dataset.mecSplash='1';document.head.appendChild(s);
 })();
 
-/* Shared app navigation: index.html is the public landing page and stays free of bottom navigation. */
 (function(){
-  if(document.querySelector('script[data-mec-nav]')) return;
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
   if(current==='index.html') return;
-  const s=document.createElement('script');
-  s.src='./site-nav.js';
-  s.dataset.mecNav='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./site-nav.js';s.dataset.mecNav='1';document.head.appendChild(s);
 })();
 
-/* General page UI: compact horizontal categories + collapsible filter. */
 (function(){
-  if(document.querySelector('script[data-mec-general-ui]')) return;
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
   if(current!=='general.html') return;
-  const s=document.createElement('script');
-  s.src='./general-ui.js';
-  s.dataset.mecGeneralUi='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./general-ui.js';s.dataset.mecGeneralUi='1';document.head.appendChild(s);
 })();
 
-/* Shared functional hardening: listing routing, profile actions, editing and detail contact/chat. */
+(function(){
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  if(current!=='add-listing.html') return;
+  const s=document.createElement('script');s.src='./mec-add-listing-fix.js';s.dataset.mecAddListingFix='1';document.head.appendChild(s);
+})();
+
 (function(){
   if(document.querySelector('script[data-mec-app-fixes]')) return;
-  const s=document.createElement('script');
-  s.src='./mec-app-fixes.js';
-  s.dataset.mecAppFixes='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./mec-app-fixes.js';s.dataset.mecAppFixes='1';document.head.appendChild(s);
 })();
 
-/* Own/public profile action fallback. */
 (function(){
   if(document.querySelector('script[data-mec-profile-fix]')) return;
-  const s=document.createElement('script');
-  s.src='./mec-profile-fix.js';
-  s.dataset.mecProfileFix='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./mec-profile-fix.js';s.dataset.mecProfileFix='1';document.head.appendChild(s);
 })();
 
-/* Admin review hardening and All Market category control. */
 (function(){
-  if(document.querySelector('script[data-mec-admin-fix]')) return;
   const current=(location.pathname.split('/').pop()||'').toLowerCase();
   if(current!=='admin.html') return;
-  const s=document.createElement('script');
-  s.src='./mec-admin-fix.js';
-  s.dataset.mecAdminFix='1';
-  document.head.appendChild(s);
+  const s=document.createElement('script');s.src='./mec-admin-fix.js';s.dataset.mecAdminFix='1';document.head.appendChild(s);
+})();
+
+(function(){
+  const current=(location.pathname.split('/').pop()||'').toLowerCase();
+  if(current!=='auth.html') return;
+  const l=document.createElement('link');l.rel='stylesheet';l.href='./mec-auth-mobile.css';l.dataset.mecAuthMobile='1';document.head.appendChild(l);
 })();
