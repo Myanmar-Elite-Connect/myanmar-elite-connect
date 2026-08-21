@@ -1,81 +1,51 @@
-/* MEC visual-only Myanmar UI/UX themes. No content, routes or business logic are changed. */
+/* Myanmar Elite Connect — site-wide Myanmar cultural UI/UX theme system */
 (function(){
 'use strict';
 const THEMES={
-'royal-myanmar':{name:'Royal Myanmar',bg:'#f6f2e8',surface:'#fffdf7',soft:'#f2ecdc',text:'#17243b',muted:'#6f7180',border:'rgba(93,67,25,.12)',gold:'#c99d38'},
-'burmese-lacquer':{name:'Burmese Lacquer',bg:'#170f0d',surface:'#211512',soft:'#2b1b17',text:'#f7ead0',muted:'#bcae9a',border:'rgba(218,180,92,.15)',gold:'#d7b55b'},
-'shwe-palace':{name:'Shwe Palace',bg:'#f8f1df',surface:'#fffaf0',soft:'#f4e8c8',text:'#263044',muted:'#77715f',border:'rgba(194,150,48,.16)',gold:'#c99427'},
-'yangon-heritage':{name:'Yangon Heritage',bg:'#f4f2e8',surface:'#fffef9',soft:'#e9eee5',text:'#19352f',muted:'#6c7b74',border:'rgba(36,85,68,.12)',gold:'#c5a24e'},
-'inle-serenity':{name:'Inle Serenity',bg:'#edf5f4',surface:'#fbffff',soft:'#e3efee',text:'#17343b',muted:'#6d8185',border:'rgba(35,101,111,.12)',gold:'#c8a557'},
-'bagan-sunset':{name:'Bagan Sunset',bg:'#f5ede3',surface:'#fffaf5',soft:'#efe0d0',text:'#3a2924',muted:'#816f65',border:'rgba(126,75,43,.14)',gold:'#c49a48'},
-'thanaka-classic':{name:'Thanaka Classic',bg:'#f5f0df',surface:'#fffdf4',soft:'#eee7cd',text:'#303325',muted:'#7b7d6b',border:'rgba(111,105,61,.14)',gold:'#bd9947'},
-'myanmar-silk':{name:'Myanmar Silk',bg:'#f7eef0',surface:'#fffafd',soft:'#f0dfe5',text:'#3a2230',muted:'#866f7b',border:'rgba(112,52,80,.12)',gold:'#c79a49'},
-'jade-myanmar':{name:'Jade Myanmar',bg:'#edf4ee',surface:'#fbfffc',soft:'#e0eee3',text:'#18352c',muted:'#6c8076',border:'rgba(35,104,74,.13)',gold:'#c6a24e'},
-'modern-myanmar':{name:'Modern Myanmar',bg:'#f5f7fb',surface:'#fff',soft:'#eef2f7',text:'#10233f',muted:'#718097',border:'rgba(16,35,63,.10)',gold:'#d8b45c'}
+original:{name:'Original',desc:'The original Myanmar Elite Connect design.',image:'',overlay:'',bg:'#f5f7fb',surface:'#ffffff',soft:'#f7f9fc',text:'#10233f',muted:'#718097',border:'rgba(16,35,63,.10)',gold:'#d8b45c'},
+shwedagon:{name:'Shwedagon Gold',desc:'Shwedagon Pagoda with refined gold and navy.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Shwedagon-Pagode.jpg?width=1800',overlay:'rgba(7,20,42,.62)',bg:'#081a31',surface:'rgba(255,255,255,.94)',soft:'rgba(248,244,231,.92)',text:'#10233f',muted:'#66758b',border:'rgba(216,180,92,.18)',gold:'#dfb95e'},
+kyaiktiyo:{name:'Kyaiktiyo Heritage',desc:'Kyaiktiyo Pagoda inspired heritage atmosphere.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Kyaiktiyo%20Pagoda.jpg?width=1800',overlay:'rgba(9,21,38,.58)',bg:'#10253a',surface:'rgba(255,253,247,.94)',soft:'rgba(247,240,224,.92)',text:'#182b3c',muted:'#69788a',border:'rgba(201,166,84,.18)',gold:'#d9b65c'},
+bagan:{name:'Bagan Heritage',desc:'Warm Bagan temples and classic Myanmar earth tones.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Bagan%20Temple.jpg?width=1800',overlay:'rgba(48,27,12,.52)',bg:'#3a2515',surface:'rgba(255,250,241,.94)',soft:'rgba(247,235,216,.92)',text:'#2a211a',muted:'#786b5d',border:'rgba(167,117,54,.18)',gold:'#c99b3b'},
+inle:{name:'Inle Serenity',desc:'Calm Inle Lake inspired by water, sky and gold.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Inle%20Lake%20%28Myanmar%29.jpg?width=1800',overlay:'rgba(5,34,48,.54)',bg:'#0b3344',surface:'rgba(247,252,252,.94)',soft:'rgba(228,241,242,.92)',text:'#102f3b',muted:'#647d84',border:'rgba(64,132,142,.18)',gold:'#d5b25a'},
+mandalay:{name:'Mandalay Palace',desc:'Mandalay royal heritage with elegant burgundy.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay%20Palace%2C%20Myanmar.jpg?width=1800',overlay:'rgba(50,13,23,.58)',bg:'#32121b',surface:'rgba(255,248,245,.94)',soft:'rgba(246,229,224,.92)',text:'#32121b',muted:'#806b6d',border:'rgba(155,73,77,.18)',gold:'#d8b45c'},
+lacquer:{name:'Burmese Lacquer',desc:'Dark lacquerware inspired luxury with gold.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Burmese%20lacquerware.jpg?width=1800',overlay:'rgba(8,8,8,.72)',bg:'#0b0b0b',surface:'rgba(25,25,25,.94)',soft:'rgba(40,40,40,.92)',text:'#f5f1e7',muted:'#a9a193',border:'rgba(216,180,92,.18)',gold:'#d8b45c'},
+thanaka:{name:'Thanaka Classic',desc:'Soft natural tones inspired by Myanmar thanaka.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Thanaka.jpg?width=1800',overlay:'rgba(82,61,35,.44)',bg:'#d9c8a8',surface:'rgba(255,252,244,.94)',soft:'rgba(246,239,224,.94)',text:'#3c3024',muted:'#776957',border:'rgba(111,90,50,.16)',gold:'#b88a2b'},
+silk:{name:'Myanmar Silk',desc:'Elegant silk-inspired burgundy and ivory.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Myanmar%20silk.jpg?width=1800',overlay:'rgba(54,25,38,.38)',bg:'#f6eef0',surface:'rgba(255,250,251,.94)',soft:'rgba(247,235,240,.93)',text:'#3c2730',muted:'#856f77',border:'rgba(126,72,95,.15)',gold:'#c69a50'},
+jade:{name:'Jade Myanmar',desc:'Myanmar jade-inspired green with understated gold.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Jade%20market%20Myanmar.jpg?width=1800',overlay:'rgba(8,48,36,.38)',bg:'#e8f2ed',surface:'rgba(251,255,252,.94)',soft:'rgba(231,244,237,.93)',text:'#17362c',muted:'#668176',border:'rgba(35,104,74,.15)',gold:'#b99743'},
+royal:{name:'Royal Myanmar',desc:'Deep navy, ivory and gold inspired by royal Myanmar.',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay%20Palace%2C%20Myanmar.jpg?width=1800',overlay:'rgba(5,18,38,.70)',bg:'#071a34',surface:'rgba(14,31,53,.94)',soft:'rgba(22,45,72,.92)',text:'#f6f2e7',muted:'#aeb9c8',border:'rgba(216,180,92,.18)',gold:'#d8b45c'}
 };
 const KEY='mec_ui_theme';
-function apply(id,save){
- const t=THEMES[id]||THEMES['modern-myanmar'];
- const r=document.documentElement;
- Object.entries({bg:t.bg,surface:t.surface,soft:t.soft,text:t.text,muted:t.muted,border:t.border,gold:t.gold}).forEach(([k,v])=>r.style.setProperty('--mec-'+k,v));
- r.dataset.mecTheme=id;
- let s=document.getElementById('mec-theme-style');
- if(!s){s=document.createElement('style');s.id='mec-theme-style';document.head.appendChild(s)}
- s.textContent=`
- body[data-mec-theme],body{background-color:var(--mec-bg)!important;color:var(--mec-text)!important}
- body[data-mec-theme] .card,body[data-mec-theme] .panel,body[data-mec-theme] .sidebar,body[data-mec-theme] .stat,body[data-mec-theme] .info-card,body[data-mec-theme] .listing-card,body[data-mec-theme] .post-card,body[data-mec-theme] .modal-box,body[data-mec-theme] .surface,body[data-mec-theme] .profile-card,body[data-mec-theme] .form-card{background:var(--mec-surface)!important;border-color:var(--mec-border)!important}
- body[data-mec-theme] input,body[data-mec-theme] select,body[data-mec-theme] textarea,body[data-mec-theme] .search,body[data-mec-theme] .filter{background:var(--mec-soft)!important;color:var(--mec-text)!important;border-color:var(--mec-border)!important}
- body[data-mec-theme] .topbar,body[data-mec-theme] .mobile-nav{background:var(--mec-surface)!important;border-color:var(--mec-border)!important}
- body[data-mec-theme] .nav a:hover,body[data-mec-theme] .nav a.active,body[data-mec-theme] .side-btn:hover,body[data-mec-theme] .side-btn.active{background:var(--mec-soft)!important;color:var(--mec-text)!important}
- body[data-mec-theme] .eyebrow,body[data-mec-theme] .section-note,body[data-mec-theme] .preview-category,body[data-mec-theme] .mobile-nav a.active{color:var(--mec-gold)!important}
- body[data-mec-theme] .publish-button,body[data-mec-theme] .btn.primary{background:linear-gradient(135deg,var(--mec-gold),var(--mec-gold))!important;border-color:var(--mec-gold)!important}
- #mec-theme-admin .mec-theme-btn{color:var(--mec-text)!important;background:var(--mec-soft)!important;border-color:var(--mec-border)!important}
- #mec-theme-admin .mec-theme-btn.active{color:var(--mec-gold)!important;border-color:var(--mec-gold)!important;background:var(--mec-surface)!important}
- `;
- if(document.body)document.body.setAttribute('data-mec-theme',id);
- if(save)localStorage.setItem(KEY,id);
-}
-async function load(){
- let id=localStorage.getItem(KEY)||'modern-myanmar';
- try{if(window.supabaseClient){const q=await window.supabaseClient.from('app_ui_settings').select('active_theme').eq('id',1).maybeSingle();if(!q.error&&q.data&&THEMES[q.data.active_theme])id=q.data.active_theme;}}catch(e){}
- apply(id,false);
-}
-function adminUI(){
- if(!/admin\.html$/i.test(location.pathname)||document.getElementById('mec-theme-admin'))return;
- const style=document.createElement('style');style.textContent=`
- #mec-theme-admin{font-family:Inter,"Noto Sans Myanmar",system-ui,sans-serif}
- #mec-theme-admin .mec-theme-btn{width:100%;display:flex;align-items:center;gap:9px;padding:11px 12px;margin-top:5px;border:1px solid transparent;border-radius:10px;font-size:11px;font-weight:900;cursor:pointer;text-align:left}
- #mec-theme-pop{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.62);backdrop-filter:blur(7px)}
- #mec-theme-pop.open{display:flex}
- .mec-theme-box{width:min(760px,100%);max-height:90vh;overflow:auto;padding:20px;border-radius:20px;background:var(--mec-surface);color:var(--mec-text);border:1px solid var(--mec-border);box-shadow:0 30px 100px #0005}
- .mec-theme-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:15px}.mec-theme-head h2{font-size:18px}.mec-theme-head p{margin-top:4px;color:var(--mec-muted);font-size:9px}.mec-theme-close{width:34px;height:34px;border:0;border-radius:9px;background:var(--mec-soft);color:var(--mec-text);font-size:18px}
- .mec-theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.mec-theme-option{padding:11px;border:1px solid var(--mec-border);border-radius:13px;background:var(--mec-soft);color:var(--mec-text);cursor:pointer;text-align:left}.mec-theme-option.active{border:2px solid var(--mec-gold);padding:10px}.mec-swatch{height:48px;border-radius:9px;margin-bottom:8px}.mec-theme-name{font-size:10px;font-weight:950}.mec-theme-desc{margin-top:3px;color:var(--mec-muted);font-size:8px}.mec-theme-save{width:100%;height:42px;margin-top:12px;border:0;border-radius:10px;background:var(--mec-gold);color:#071a34;font-size:10px;font-weight:950}.mec-theme-status{text-align:center;margin-top:7px;color:var(--mec-muted);font-size:9px}
- @media(max-width:600px){.mec-theme-grid{grid-template-columns:1fr}}
- `;document.head.appendChild(style);
- const side=document.querySelector('.sidebar');
- const holder=document.createElement('div');holder.id='mec-theme-admin';
- const btn=document.createElement('button');btn.type='button';btn.className='mec-theme-btn';btn.innerHTML='<span>🎨</span><span>UI / UX Themes</span>';
- if(side){const title=side.querySelector('.side-title');if(title)title.insertAdjacentElement('afterend',holder);else side.appendChild(holder);holder.appendChild(btn)}else{holder.style.cssText='position:fixed;right:15px;bottom:15px;z-index:9998';holder.appendChild(btn);document.body.appendChild(holder)}
- const pop=document.createElement('div');pop.id='mec-theme-pop';pop.innerHTML='<div class="mec-theme-box"><div class="mec-theme-head"><div><h2>Myanmar Culture UI / UX</h2><p>Background and visual style only. Your posts, functions and navigation are not changed.</p></div><button class="mec-theme-close" type="button">×</button></div><div class="mec-theme-grid"></div><button class="mec-theme-save" type="button">Save for all pages</button><div class="mec-theme-status">Choose a theme</div></div>';document.body.appendChild(pop);
- const grid=pop.querySelector('.mec-theme-grid'),status=pop.querySelector('.mec-theme-status');let selected=document.documentElement.dataset.mecTheme||localStorage.getItem(KEY)||'modern-myanmar';
- Object.entries(THEMES).forEach(([id,t])=>{const o=document.createElement('button');o.type='button';o.className='mec-theme-option'+(id===selected?' active':'');o.innerHTML=`<div class="mec-swatch" style="background:linear-gradient(135deg,${t.bg},${t.surface});box-shadow:inset 0 0 0 2px ${t.gold}66"></div><div class="mec-theme-name">${t.name}</div><div class="mec-theme-desc">Myanmar-inspired background</div>`;o.onclick=()=>{selected=id;grid.querySelectorAll('.mec-theme-option').forEach(x=>x.classList.remove('active'));o.classList.add('active');apply(id,true);status.textContent=t.name+' selected';};grid.appendChild(o)});
- btn.onclick=()=>pop.classList.add('open');pop.querySelector('.mec-theme-close').onclick=()=>pop.classList.remove('open');pop.onclick=e=>{if(e.target===pop)pop.classList.remove('open')};
- pop.querySelector('.mec-theme-save').onclick=async()=>{
-   status.textContent='Saving…';
-   try{
-     if(!window.supabaseClient) throw new Error('Supabase client is not ready');
-     const {data,error}=await window.supabaseClient.rpc('admin_set_ui_theme',{p_theme:selected});
-     if(error) throw error;
-     if(!data) throw new Error('No theme record was returned');
-     localStorage.setItem(KEY,selected);
-     apply(selected,false);
-     status.textContent='✓ Saved. All pages now use this theme.';
-   }catch(e){
-     console.error('Theme save failed:',e);
-     status.textContent='Save failed: '+(e?.message||'Unknown error');
-   }
- };
-}
-function boot(){load();setTimeout(adminUI,300)}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+const SB_URL='https://ikjwisfsdcupibgjiuvp.supabase.co';
+const SB_KEY='sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s';
+function install(){if(document.getElementById('mec-theme-style'))return;const s=document.createElement('style');s.id='mec-theme-style';s.textContent=`
+body[data-mec-theme]{background-color:var(--mec-bg)!important;color:var(--mec-text)!important;transition:background .35s ease,color .25s ease}
+body.mec-has-theme-image[data-mec-theme]{background-image:linear-gradient(var(--mec-overlay),var(--mec-overlay)),var(--mec-theme-image)!important;background-position:center top!important;background-size:cover!important;background-attachment:fixed!important;background-repeat:no-repeat!important}
+body[data-mec-theme] .card,body[data-mec-theme] .panel,body[data-mec-theme] .sidebar,body[data-mec-theme] .stat,body[data-mec-theme] .info-card,body[data-mec-theme] .listing-card,body[data-mec-theme] .post-card,body[data-mec-theme] .modal-box,body[data-mec-theme] .profile-card,body[data-mec-theme] .form-card,body[data-mec-theme] .surface{background:var(--mec-surface)!important;border-color:var(--mec-border)!important;color:var(--mec-text)!important}
+body[data-mec-theme] input,body[data-mec-theme] select,body[data-mec-theme] textarea,body[data-mec-theme] .search,body[data-mec-theme] .filter{background:var(--mec-soft)!important;color:var(--mec-text)!important;border-color:var(--mec-border)!important}
+body[data-mec-theme] .topbar,body[data-mec-theme] .mobile-nav,body[data-mec-theme] #mec-global-nav{background:var(--mec-surface)!important;border-color:var(--mec-border)!important}
+body[data-mec-theme] .nav a:hover,body[data-mec-theme] .nav a.active,body[data-mec-theme] .side-btn:hover,body[data-mec-theme] .side-btn.active{background:var(--mec-soft)!important;color:var(--mec-text)!important}
+body[data-mec-theme] .eyebrow,body[data-mec-theme] .section-note,body[data-mec-theme] .preview-category,body[data-mec-theme] .mobile-nav a.active,body[data-mec-theme] .mec-nav-label{color:var(--mec-gold)!important}
+body[data-mec-theme] .publish-button,body[data-mec-theme] .btn.primary{background:var(--mec-gold)!important;border-color:var(--mec-gold)!important}
+#mec-theme-view .mec-theme-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:15px}
+#mec-theme-view .mec-theme-option{position:relative;overflow:hidden;padding:0;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);cursor:pointer;text-align:left;transition:.2s}
+#mec-theme-view .mec-theme-option:hover{transform:translateY(-2px);border-color:var(--gold)}
+#mec-theme-view .mec-theme-option.active{border:2px solid var(--gold)}
+#mec-theme-view .mec-theme-swatch{height:105px;background-position:center;background-size:cover}
+#mec-theme-view .mec-theme-name{padding:9px 10px 2px;font-size:10px;font-weight:950}
+#mec-theme-view .mec-theme-desc{padding:0 10px 10px;color:var(--muted);font-size:8px;line-height:1.5}
+#mec-theme-view .mec-theme-active{position:absolute;right:7px;top:7px;display:none;padding:4px 6px;border-radius:6px;background:var(--gold);color:#071a34;font-size:7px;font-weight:950}
+#mec-theme-view .active .mec-theme-active{display:block}
+#mec-theme-view .mec-theme-footer{display:flex;justify-content:flex-end;gap:7px;padding:0 15px 15px;align-items:center}
+#mec-theme-view .mec-theme-status{margin-right:auto;color:var(--muted);font-size:9px}
+@media(max-width:900px){#mec-theme-view .mec-theme-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#mec-theme-view .mec-theme-grid{grid-template-columns:1fr}}
+`;document.head.appendChild(s)}
+function apply(id,save=true){const t=THEMES[id]||THEMES.original,r=document.documentElement;Object.entries({bg:t.bg,surface:t.surface,soft:t.soft,text:t.text,muted:t.muted,border:t.border,gold:t.gold}).forEach(([k,v])=>r.style.setProperty('--mec-'+k,v));r.style.setProperty('--mec-overlay',t.overlay||'transparent');r.style.setProperty('--mec-theme-image',t.image?`url("${t.image}")`:'none');r.dataset.mecTheme=id;if(document.body){document.body.dataset.mecTheme=id;document.body.classList.toggle('mec-has-theme-image',!!t.image)}if(save)localStorage.setItem(KEY,id);updateView()}
+async function load(){install();let id=localStorage.getItem(KEY)||'original';try{if(window.supabaseClient){const q=await window.supabaseClient.from('app_ui_settings').select('active_theme').eq('id',1).maybeSingle();if(!q.error&&THEMES[q.data?.active_theme])id=q.data.active_theme}}catch(e){}apply(id,false)}
+function updateView(){const v=document.getElementById('mec-theme-view');if(!v)return;const a=document.documentElement.dataset.mecTheme||'original';v.querySelectorAll('.mec-theme-option').forEach(x=>x.classList.toggle('active',x.dataset.theme===a))}
+function openView(){const v=document.getElementById('mec-theme-view');if(!v)return;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));v.classList.add('active');document.querySelectorAll('.side-btn').forEach(x=>x.classList.remove('active'));document.getElementById('mec-theme-menu')?.classList.add('active');window.scrollTo(0,0)}
+async function saveTheme(){const btn=document.getElementById('mec-theme-save'),st=document.getElementById('mec-theme-status'),id=document.documentElement.dataset.mecTheme||'original';btn.disabled=true;btn.textContent='Saving…';st.textContent='Saving theme for all pages…';try{let ok=false;if(window.supabaseClient){try{const r=await window.supabaseClient.rpc('admin_set_ui_theme',{p_theme:id});if(!r.error)ok=true}catch(e){}if(!ok){const r=await window.supabaseClient.from('app_ui_settings').upsert({id:1,active_theme:id,updated_at:new Date().toISOString()},{onConflict:'id'});if(r.error)throw r.error;ok=true}}if(!ok){const r=await fetch(SB_URL+'/rest/v1/app_ui_settings?id=eq.1',{method:'PATCH',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({active_theme:id,updated_at:new Date().toISOString()})});if(!r.ok)throw new Error('HTTP '+r.status)}localStorage.setItem(KEY,id);st.textContent='✓ Saved. This theme is now the site-wide theme.'}catch(e){console.error(e);st.textContent='Save failed: '+(e?.message||'Database permission denied')}finally{btn.disabled=false;btn.textContent='Save Theme'}}
+function admin(){if(!/admin\.html$/i.test(location.pathname)||document.getElementById('mec-theme-view'))return;const side=document.querySelector('.sidebar'),content=document.querySelector('.content');if(!side||!content)return;const m=document.createElement('button');m.id='mec-theme-menu';m.type='button';m.className='side-btn';m.innerHTML='✦ UI / UX';m.onclick=openView;side.appendChild(m);const v=document.createElement('section');v.id='mec-theme-view';v.className='view';v.innerHTML=`<div class="page-head"><div><div class="eyebrow">DESIGN CONTROL</div><h1>UI / UX Themes</h1><p class="subtitle">Change only the visual background and UI/UX style across the website.</p></div></div><div class="panel"><div class="panel-head"><strong>Myanmar Culture UI / UX</strong><span style="color:var(--muted);font-size:9px">11 themes</span></div><div class="mec-theme-grid"></div><div class="mec-theme-footer"><div id="mec-theme-status" class="mec-theme-status">Choose a theme and save it.</div><button type="button" class="btn" id="mec-theme-original">Original</button><button type="button" class="btn primary" id="mec-theme-save">Save Theme</button></div></div>`;content.appendChild(v);const grid=v.querySelector('.mec-theme-grid');Object.entries(THEMES).forEach(([id,t])=>{const o=document.createElement('button');o.type='button';o.className='mec-theme-option';o.dataset.theme=id;const bg=t.image?`linear-gradient(${t.overlay},${t.overlay}),url("${t.image}")`:`linear-gradient(135deg,${t.bg},${t.soft})`;o.innerHTML=`<div class="mec-theme-swatch" style="background-image:${bg}"></div><span class="mec-theme-active">ACTIVE</span><div class="mec-theme-name">${t.name}</div><div class="mec-theme-desc">${t.desc}</div>`;o.onclick=()=>{apply(id,true);v.querySelector('#mec-theme-status').textContent=t.name+' selected — press Save Theme.'};grid.appendChild(o)});v.querySelector('#mec-theme-original').onclick=()=>{apply('original',true);v.querySelector('#mec-theme-status').textContent='Original selected — press Save Theme.'};v.querySelector('#mec-theme-save').onclick=saveTheme;updateView()}
+function boot(){load();if(/admin\.html$/i.test(location.pathname)){const f=()=>admin();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(f,400),{once:true});else setTimeout(f,400)}}
+window.MEC_UI_THEMES=THEMES;window.MEC_applyTheme=apply;boot();
 })();
