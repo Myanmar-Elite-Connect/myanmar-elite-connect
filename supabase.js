@@ -87,3 +87,12 @@ window.$ = window.$ || function(id){
   s.dataset.mecAppFixes='1';
   document.head.appendChild(s);
 })();
+
+/* Own/public profile action fallback. */
+(function(){
+  if(document.querySelector('script[data-mec-profile-fix]')) return;
+  const s=document.createElement('script');
+  s.src='./mec-profile-fix.js';
+  s.dataset.mecProfileFix='1';
+  document.head.appendChild(s);
+})();
