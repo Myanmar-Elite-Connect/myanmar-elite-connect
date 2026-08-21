@@ -36,6 +36,16 @@ window.$ = window.$ || function(id){
   document.head.appendChild(s);
 })();
 
+/* Shared responsive layer — visual only, keeps desktop UI intact. */
+(function(){
+  if(document.querySelector('link[data-mec-responsive]')) return;
+  const l=document.createElement('link');
+  l.rel='stylesheet';
+  l.href='./mec-responsive.css';
+  l.dataset.mecResponsive='1';
+  document.head.appendChild(l);
+})();
+
 /* Luxury entry splash for the public landing and authentication pages. */
 (function(){
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
