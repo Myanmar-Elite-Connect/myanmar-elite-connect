@@ -1,62 +1,28 @@
-/* Myanmar Elite Connect — site-wide Myanmar culture UI themes */
+/* Myanmar Elite Connect — real site-wide Myanmar cultural UI themes */
 (function(){
-  'use strict';
-  const THEMES={
-    original:{name:'Original',image:'',overlay:'rgba(7,26,52,.00)',bg:'#f4f6fa',surface:'#ffffff',soft:'#f7f9fc',text:'#10233f',muted:'#718097',gold:'#d8b45c'},
-    shwedagon:{name:'Shwedagon Gold',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Shwedagon-Pagode.jpg?width=1800',overlay:'rgba(7,20,42,.70)',bg:'#071a34',surface:'rgba(255,255,255,.94)',soft:'rgba(248,244,231,.92)',text:'#10233f',muted:'#66758b',gold:'#d8b45c'},
-    kyaiktiyo:{name:'Kyaiktiyo Heritage',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Kyaiktiyo%20Pagoda.jpg?width=1800',overlay:'rgba(7,18,36,.72)',bg:'#081a2d',surface:'rgba(255,255,255,.94)',soft:'rgba(246,240,224,.92)',text:'#10233f',muted:'#66758b',gold:'#d9b65c'},
-    bagan:{name:'Bagan Heritage',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Bagan%20Temple.jpg?width=1800',overlay:'rgba(52,29,12,.58)',bg:'#3a2515',surface:'rgba(255,250,241,.95)',soft:'rgba(247,235,216,.92)',text:'#2a211a',muted:'#786b5d',gold:'#c99b3b'},
-    inle:{name:'Inle Serenity',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Inle%20Lake%20%28Myanmar%29.jpg?width=1800',overlay:'rgba(5,34,48,.60)',bg:'#0b3344',surface:'rgba(247,252,252,.95)',soft:'rgba(228,241,242,.92)',text:'#102f3b',muted:'#647d84',gold:'#d5b25a'},
-    mandalay:{name:'Mandalay Palace',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay%20Palace%2C%20Myanmar.jpg?width=1800',overlay:'rgba(50,13,23,.66)',bg:'#32121b',surface:'rgba(255,248,245,.95)',soft:'rgba(246,229,224,.92)',text:'#32121b',muted:'#806b6d',gold:'#d8b45c'},
-    lacquer:{name:'Myanmar Lacquer',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Bagan%20Temple.jpg?width=1800',overlay:'rgba(8,8,8,.80)',bg:'#0b0b0b',surface:'rgba(25,25,25,.94)',soft:'rgba(40,40,40,.92)',text:'#f5f1e7',muted:'#a9a193',gold:'#d8b45c'},
-    thanaka:{name:'Thanaka Heritage',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Inle%20Lake%2C%20House%20and%20water%20plants%2C%20Myanmar.jpg?width=1800',overlay:'rgba(82,61,35,.54)',bg:'#d9c8a8',surface:'rgba(255,252,244,.95)',soft:'rgba(246,239,224,.94)',text:'#3c3024',muted:'#776957',gold:'#b88a2b'},
-    textile:{name:'Myanmar Textile',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay%20Palace%2C%20Myanmar.jpg?width=1800',overlay:'rgba(16,28,49,.73)',bg:'#101c31',surface:'rgba(249,248,243,.95)',soft:'rgba(237,235,224,.92)',text:'#17233a',muted:'#6c7482',gold:'#d6b45e'},
-    goldenNight:{name:'Golden Pagoda Night',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Shwedagon%20Pagoda%2C%20Sunlight%2C%20Yangon%2C%20Myanmar.jpg?width=1800',overlay:'rgba(3,12,28,.78)',bg:'#030c1c',surface:'rgba(12,27,48,.94)',soft:'rgba(20,42,68,.92)',text:'#f5f6f8',muted:'#9aa7b7',gold:'#e0bc63'},
-    modern:{name:'Modern Myanmar',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Bagan%2C%20Myanmar%2C%20Htilominlo%20Temple%20and%20other%20Buddhist%20stupas%20in%20Bagan%20plain.jpg?width=1800',overlay:'rgba(7,26,52,.74)',bg:'#071a34',surface:'rgba(255,255,255,.95)',soft:'rgba(242,246,250,.93)',text:'#10233f',muted:'#718097',gold:'#d8b45c'}
-  };
-  const fallback='original';
-  function apply(id){
-    const t=THEMES[id]||THEMES[fallback];
-    document.documentElement.dataset.mecTheme=id in THEMES?id:fallback;
-    const root=document.documentElement;
-    Object.entries({bg:t.bg,surface:t.surface,soft:t.soft,text:t.text,muted:t.muted,gold:t.gold}).forEach(([k,v])=>root.style.setProperty('--mec-'+k,v));
-    document.body.classList.remove('mec-theme-image');
-    document.body.style.removeProperty('--mec-theme-image');
-    document.body.style.removeProperty('--mec-theme-overlay');
-    if(t.image){
-      document.body.classList.add('mec-theme-image');
-      document.body.style.setProperty('--mec-theme-image',`url("${t.image}")`);
-      document.body.style.setProperty('--mec-theme-overlay',t.overlay);
-    }
-    window.dispatchEvent(new CustomEvent('mecThemeChanged',{detail:{id,name:t.name}}));
-  }
-  function install(){
-    if(document.getElementById('mec-theme-style'))return;
-    const s=document.createElement('style');s.id='mec-theme-style';
-    s.textContent=`
-:root{--mec-bg:#f4f6fa;--mec-surface:#fff;--mec-soft:#f7f9fc;--mec-text:#10233f;--mec-muted:#718097;--mec-gold:#d8b45c}
-body.mec-theme-image::before{content:"";position:fixed;inset:0;z-index:-20;background:linear-gradient(var(--mec-theme-overlay),var(--mec-theme-overlay)),var(--mec-theme-image) center/cover no-repeat;pointer-events:none;transform:translateZ(0)}
-body.mec-theme-image::after{content:"";position:fixed;inset:0;z-index:-19;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.16));pointer-events:none}
-body{background:var(--mec-bg);color:var(--mec-text);transition:background .45s ease,color .35s ease}
-body.mec-theme-image{background:var(--mec-bg)}
-body.mec-theme-image .card,body.mec-theme-image .panel,body.mec-theme-image .surface,body.mec-theme-image .stat,body.mec-theme-image .info-card{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-`;
-    document.head.appendChild(s);
-  }
-  async function load(){
-    install();
-    let active=localStorage.getItem('mec_ui_theme')||'original';
-    try{
-      const url=window.SUPABASE_URL||'https://ikjwisfsdcupibgjiuvp.supabase.co';
-      const key=window.SUPABASE_KEY||'sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s';
-      if(window.supabase?.createClient){
-        const db=window.__mecThemeDb||window.supabase.createClient(url,key);window.__mecThemeDb=db;
-        const r=await db.from('app_ui_settings').select('active_theme').eq('id',1).maybeSingle();
-        if(!r.error&&r.data?.active_theme){active=r.data.active_theme;localStorage.setItem('mec_ui_theme',active)}
-      }
-    }catch(e){console.warn('MEC theme load:',e)}
-    apply(active);
-  }
-  window.MEC_UI_THEMES=THEMES;window.MEC_applyTheme=apply;window.MEC_loadTheme=load;
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
+'use strict';
+const THEMES={
+'original':{name:'Original',image:'',overlay:'transparent',bg:'#f5f7fb',surface:'#fff',soft:'#f7f9fc',text:'#10233f',muted:'#718097',gold:'#d8b45c'},
+'royal-myanmar':{name:'Royal Myanmar',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Shwedagon-Pagode.jpg?width=1800',overlay:'rgba(5,18,38,.72)',bg:'#071a34',surface:'rgba(14,31,53,.94)',soft:'rgba(22,45,72,.92)',text:'#f6f2e7',muted:'#aeb9c8',gold:'#d8b45c'},
+'shwedagon-gold':{name:'Shwedagon Gold',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Shwedagon-Pagode.jpg?width=1800',overlay:'rgba(7,20,42,.68)',bg:'#081a31',surface:'rgba(255,255,255,.95)',soft:'rgba(248,244,231,.93)',text:'#10233f',muted:'#66758b',gold:'#dfb95e'},
+'kyaiktiyo-heritage':{name:'Kyaiktiyo Heritage',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Kyaiktiyo%20Pagoda.jpg?width=1800',overlay:'rgba(9,21,38,.62)',bg:'#10253a',surface:'rgba(255,253,247,.95)',soft:'rgba(247,240,224,.93)',text:'#182b3c',muted:'#69788a',gold:'#d9b65c'},
+'bagan-sunset':{name:'Bagan Heritage',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Bagan%20Temple.jpg?width=1800',overlay:'rgba(48,27,12,.55)',bg:'#3a2515',surface:'rgba(255,250,241,.95)',soft:'rgba(247,235,216,.92)',text:'#2a211a',muted:'#786b5d',gold:'#c99b3b'},
+'inle-serenity':{name:'Inle Serenity',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Inle%20Lake%20%28Myanmar%29.jpg?width=1800',overlay:'rgba(5,34,48,.55)',bg:'#0b3344',surface:'rgba(247,252,252,.95)',soft:'rgba(228,241,242,.92)',text:'#102f3b',muted:'#647d84',gold:'#d5b25a'},
+'mandalay-palace':{name:'Mandalay Palace',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay%20Palace%2C%20Myanmar.jpg?width=1800',overlay:'rgba(50,13,23,.60)',bg:'#32121b',surface:'rgba(255,248,245,.95)',soft:'rgba(246,229,224,.92)',text:'#32121b',muted:'#806b6d',gold:'#d8b45c'},
+'burmese-lacquer':{name:'Burmese Lacquer',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Bagan%20Temple.jpg?width=1800',overlay:'rgba(8,8,8,.78)',bg:'#0b0b0b',surface:'rgba(25,25,25,.94)',soft:'rgba(40,40,40,.92)',text:'#f5f1e7',muted:'#a9a193',gold:'#d8b45c'},
+'thanaka-classic':{name:'Thanaka Classic',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Thanaka.jpg?width=1800',overlay:'rgba(82,61,35,.48)',bg:'#d9c8a8',surface:'rgba(255,252,244,.95)',soft:'rgba(246,239,224,.94)',text:'#3c3024',muted:'#776957',gold:'#b88a2b'},
+'myanmar-silk':{name:'Myanmar Silk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Myanmar%20silk.jpg?width=1800',overlay:'rgba(54,25,38,.42)',bg:'#f6eef0',surface:'rgba(255,250,251,.95)',soft:'rgba(247,235,240,.93)',text:'#3c2730',muted:'#856f77',gold:'#c69a50'},
+'jade-myanmar':{name:'Jade Myanmar',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Jade%20market%20Myanmar.jpg?width=1800',overlay:'rgba(8,48,36,.42)',bg:'#e8f2ed',surface:'rgba(251,255,252,.95)',soft:'rgba(231,244,237,.93)',text:'#17362c',muted:'#668176',gold:'#b99743'}
+};
+function install(){if(document.getElementById('mec-theme-style'))return;const s=document.createElement('style');s.id='mec-theme-style';s.textContent=`
+:root{--mec-bg:#f5f7fb;--mec-surface:#fff;--mec-soft:#f7f9fc;--mec-text:#10233f;--mec-muted:#718097;--mec-gold:#d8b45c;--mec-theme-image:none;--mec-overlay:transparent}
+body{background:var(--mec-bg)!important;color:var(--mec-text)!important;transition:background .4s,color .3s}
+body.mec-theme-image:before{content:"";position:fixed;inset:0;z-index:-20;background:linear-gradient(var(--mec-overlay),var(--mec-overlay)),var(--mec-theme-image) center/cover no-repeat;pointer-events:none}
+body.mec-theme-image:after{content:"";position:fixed;inset:0;z-index:-19;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.12));pointer-events:none}
+body.mec-theme-image .card,body.mec-theme-image .panel,body.mec-theme-image .surface,body.mec-theme-image .listing-card,body.mec-theme-image .info-card{backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+body.mec-theme-image .topbar,body.mec-theme-image .mobile-nav{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+`;document.head.appendChild(s)}
+function apply(id){const t=THEMES[id]||THEMES.original;document.documentElement.dataset.mecTheme=THEMES[id]?id:'original';Object.entries({bg:t.bg,surface:t.surface,soft:t.soft,text:t.text,muted:t.muted,gold:t.gold}).forEach(([k,v])=>document.documentElement.style.setProperty('--mec-'+k,v));document.body.classList.toggle('mec-theme-image',!!t.image);document.body.style.setProperty('--mec-theme-image',t.image?`url("${t.image}")`:'none');document.body.style.setProperty('--mec-overlay',t.overlay);localStorage.setItem('mec_ui_theme',THEMES[id]?id:'original');window.dispatchEvent(new CustomEvent('mecThemeChanged',{detail:{id:THEMES[id]?id:'original',name:t.name}}))}
+async function load(){install();let active=localStorage.getItem('mec_ui_theme')||'original';try{const r=await fetch('https://ikjwisfsdcupibgjiuvp.supabase.co/rest/v1/app_ui_settings?id=eq.1&select=active_theme',{headers:{apikey:'sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s',Authorization:'Bearer sb_publishable_xoh1rjwBlJhR9nB3kQD-KA_QcVY6w2s'}});if(r.ok){const rows=await r.json();if(rows[0]?.active_theme&&THEMES[rows[0].active_theme])active=rows[0].active_theme}}catch(e){console.warn('MEC theme:',e.message)}apply(active)}
+window.MEC_UI_THEMES=THEMES;window.MEC_applyTheme=apply;window.MEC_loadTheme=load;if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
