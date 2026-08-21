@@ -43,3 +43,14 @@ window.$ = window.$ || function(id){
   s.dataset.mecNav='1';
   document.head.appendChild(s);
 })();
+
+/* General page UI: compact horizontal categories + collapsible filter. */
+(function(){
+  if(document.querySelector('script[data-mec-general-ui]')) return;
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  if(current!=='general.html') return;
+  const s=document.createElement('script');
+  s.src='./general-ui.js';
+  s.dataset.mecGeneralUi='1';
+  document.head.appendChild(s);
+})();
