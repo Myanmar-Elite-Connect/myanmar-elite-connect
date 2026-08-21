@@ -78,3 +78,12 @@ window.$ = window.$ || function(id){
   s.dataset.mecGeneralUi='1';
   document.head.appendChild(s);
 })();
+
+/* Shared functional hardening: listing routing, profile actions, editing and detail contact/chat. */
+(function(){
+  if(document.querySelector('script[data-mec-app-fixes]')) return;
+  const s=document.createElement('script');
+  s.src='./mec-app-fixes.js';
+  s.dataset.mecAppFixes='1';
+  document.head.appendChild(s);
+})();
