@@ -15,23 +15,25 @@ window.$ = window.$ || function(id){
   return document.getElementById(id);
 };
 
-/* Shared logo treatment: keep every occurrence of the MEC logo in a
-   proportional rounded-square container. 18% keeps small logos subtle and
-   larger logo cards consistently rounded without becoming circular. */
+/* Shared logo treatment. */
 (function(){
   if(document.getElementById('mec-logo-style')) return;
   const style=document.createElement('style');
   style.id='mec-logo-style';
   style.textContent=`
-    :where(.logo-wrap,.brand-logo,.logo-showcase,.logo-box,.brand-mark,.brand-image):has(> img[src*="lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"]){
-      border-radius:18% !important;
-      overflow:hidden;
-    }
-    img[src*="lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"]{
-      border-radius:8%;
-    }
+    :where(.logo-wrap,.brand-logo,.logo-showcase,.logo-box,.brand-mark,.brand-image):has(> img[src*="lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"]){border-radius:18% !important;overflow:hidden}
+    img[src*="lh3.googleusercontent.com/d/1fR8TnvOjrzVbKuro9Ths1_Jt0PAxSmGd"]{border-radius:8%}
   `;
   (document.head||document.documentElement).appendChild(style);
+})();
+
+/* Global Myanmar UI/UX theme layer. Visual-only; content and page logic are untouched. */
+(function(){
+  if(document.querySelector('script[data-mec-themes]')) return;
+  const s=document.createElement('script');
+  s.src='./mec-themes.js';
+  s.dataset.mecThemes='1';
+  document.head.appendChild(s);
 })();
 
 /* Luxury entry splash for the public landing and authentication pages. */
@@ -45,8 +47,7 @@ window.$ = window.$ || function(id){
   document.head.appendChild(s);
 })();
 
-/* Shared app navigation: load it only on application pages.
-   index.html is the public landing page and must stay free of bottom navigation. */
+/* Shared app navigation: index.html is the public landing page and stays free of bottom navigation. */
 (function(){
   if(document.querySelector('script[data-mec-nav]')) return;
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
