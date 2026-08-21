@@ -1,0 +1,186 @@
+name: Patch admin theme controls
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-admin-theme.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch admin.html
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('admin.html')
+          s=p.read_text()
+          if 'id="uiThemeGrid"' not in s:
+              css='''
+.ui-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:15px}
+.ui-theme-card{position:relative;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);text-align:left;transition:.2s}
+.ui-theme-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.ui-theme-card.active{border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(215,181,91,.12)}
+.ui-theme-preview{height:52px;border-radius:10px;margin-bottom:9px;display:flex;align-items:flex-end;justify-content:space-between;padding:8px;overflow:hidden}
+.ui-theme-preview span{display:block;width:28px;height:28px;border-radius:8px;background:#d7b55b}
+.ui-theme-preview i{display:block;width:55%;height:9px;border-radius:99px;background:rgba(255,255,255,.75)}
+.ui-theme-name{font-size:10px;font-weight:950}.ui-theme-desc{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.5}
+.ui-theme-save{margin:0 15px 15px;display:flex;align-items:center;gap:8px;justify-content:flex-end}.ui-theme-status{margin-right:auto;color:var(--muted);font-size:9px}
+@media(max-width:650px){.ui-theme-grid{grid-template-columns:1fr}}
+'''
+              s=s.replace('@media(max-width:1050px){',css+'\n@media(max-width:1050px){',1)
+              side='''
+    <button class="side-btn" data-view="themes">
+      ◇ Themes
+    </button>
+'''
+              s=s.replace('''    <button class="side-btn" data-view="logs">
+      ◷ Activity
+    </button>''','''    <button class="side-btn" data-view="logs">
+      ◷ Activity
+    </button>'''+side,1)
+              view='''
+    <!-- UI THEMES -->
+    <section class="view" id="view-themes">
+      <div class="panel">
+        <div class="panel-head">
+          <strong>Myanmar UI / UX Themes</strong>
+          <span class="badge gold" id="activeThemeBadge">Loading...</span>
+        </div>
+        <div class="ui-theme-grid" id="uiThemeGrid"></div>
+        <div class="ui-theme-save">
+          <span class="ui-theme-status" id="uiThemeStatus">Choose a theme, then save it for the whole site.</span>
+          <button class="btn primary" id="saveUiThemeBtn" type="button" onclick="saveUiTheme()">Save Theme</button>
+        </div>
+      </div>
+    </section>
+'''
+              s=s.replace('''    <!-- LOGS -->''',view+'\n    <!-- LOGS -->',1)
+          js='''
+/* =========================================================
+   SITE UI THEME CONTROL
+========================================================= */
+const UI_THEMES = [
+  ['royal-myanmar','Royal Myanmar','Navy + royal gold'],
+  ['burmese-lacquer','Burmese Lacquer','Lacquer black + gold'],
+  ['shwe-palace','Shwe Palace','Warm palace gold'],
+  ['yangon-heritage','Yangon Heritage','Classic heritage'],
+  ['inle-serenity','Inle Serenity','Calm lake tones'],
+  ['bagan-sunset','Bagan Sunset','Warm sunset mood'],
+  ['thanaka-classic','Thanaka Classic','Natural Myanmar feel'],
+  ['myanmar-silk','Myanmar Silk','Elegant silk tones'],
+  ['jade-myanmar','Jade Myanmar','Jade + gold'],
+  ['modern-myanmar','Modern Myanmar','Clean modern luxury']
+];
+let selectedUiTheme = null;
+
+function renderUiThemes(active){
+  const grid=document.getElementById('uiThemeGrid');
+  if(!grid) return;
+  selectedUiTheme=active || selectedUiTheme || 'royal-myanmar';
+  grid.innerHTML=UI_THEMES.map(([id,name,desc])=>`
+    <button type="button" class="ui-theme-card ${id===selectedUiTheme?'active':''}" data-theme="${id}">
+      <div class="ui-theme-preview" data-preview="${id}"><i></i><span></span></div>
+      <div class="ui-theme-name">${name}</div>
+      <div class="ui-theme-desc">${desc}</div>
+    </button>`).join('');
+  grid.querySelectorAll('.ui-theme-card').forEach(btn=>btn.addEventListener('click',()=>{
+    selectedUiTheme=btn.dataset.theme;
+    renderUiThemes(selectedUiTheme);
+    setUiThemeStatus('Selected '+(UI_THEMES.find(x=>x[0]===selectedUiTheme)?.[1]||selectedUiTheme)+'. Press Save Theme.');
+  }));
+}
+
+function setUiThemeStatus(message,error=false){
+  const el=document.getElementById('uiThemeStatus');
+  if(!el) return;
+  el.textContent=message;
+  el.style.color=error?'var(--red)':'var(--muted)';
+}
+
+async function loadUiTheme(){
+  try{
+    const {data,error}=await supabaseClient.from('app_ui_settings').select('active_theme').eq('id',1).maybeSingle();
+    if(error) throw error;
+    const active=data?.active_theme || 'royal-myanmar';
+    selectedUiTheme=active;
+    renderUiThemes(active);
+    const label=UI_THEMES.find(x=>x[0]===active)?.[1] || active;
+    document.getElementById('activeThemeBadge').textContent=label;
+    setUiThemeStatus('Current site theme: '+label);
+  }catch(error){
+    console.error('UI theme load failed:',error);
+    renderUiThemes('royal-myanmar');
+    setUiThemeStatus('Could not read current theme: '+(error.message||'Unknown error'),true);
+  }
+}
+
+async function saveUiTheme(){
+  if(!selectedUiTheme){ setUiThemeStatus('Please select a theme first.',true); return; }
+  const btn=document.getElementById('saveUiThemeBtn');
+  const label=UI_THEMES.find(x=>x[0]===selectedUiTheme)?.[1] || selectedUiTheme;
+  btn.disabled=true; btn.textContent='Saving...';
+  setUiThemeStatus('Saving '+label+'...');
+  try{
+    const {data,error}=await supabaseClient.rpc('admin_set_ui_theme',{p_theme:selectedUiTheme});
+    if(error) throw error;
+    const saved=data?.active_theme || selectedUiTheme;
+    document.getElementById('activeThemeBadge').textContent=UI_THEMES.find(x=>x[0]===saved)?.[1] || saved;
+    renderUiThemes(saved);
+    setUiThemeStatus('Saved successfully. '+(UI_THEMES.find(x=>x[0]===saved)?.[1] || saved)+' is now active.');
+    toast('UI theme saved successfully.');
+    await logAction('change_ui_theme','Changed site UI theme to '+saved);
+  }catch(error){
+    console.error('UI theme save failed:',error);
+    setUiThemeStatus('Save failed: '+(error?.message || error?.details || error?.hint || 'Unknown Supabase error'),true);
+    toast('Theme save failed: '+(error?.message || 'Unknown error'),true);
+  }finally{
+    btn.disabled=false; btn.textContent='Save Theme';
+  }
+}
+
+'''
+              s=s.replace('''/* =========================================================
+   NAVIGATION
+========================================================= */''',js+'''/* =========================================================
+   NAVIGATION
+========================================================= */''',1)
+          s=s.replace('''    logs:[
+      "Admin Activity",
+      "Review administrator actions"
+    ]''','''    logs:[
+      "Admin Activity",
+      "Review administrator actions"
+    ],
+
+    themes:[
+      "UI / UX Themes",
+      "Choose the Myanmar-inspired visual theme used across the site"
+    ]''',1)
+          s=s.replace('''    if(currentView === "logs")
+      await loadLogs();''','''    if(currentView === "logs")
+      await loadLogs();
+
+    if(currentView === "themes")
+      await loadUiTheme();''',1)
+          s=s.replace('''  await loadBadges();
+
+  await loadDashboard();''','''  await loadBadges();
+
+  await loadUiTheme();
+
+  await loadDashboard();''',1)
+          p.write_text(s)
+          PY
+      - name: Commit patch and remove one-shot workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add admin.html
+          git commit -m "Fix admin UI theme save" || true
+          git push
+          rm -f .github/workflows/fix-admin-theme.yml
+          git add .github/workflows/fix-admin-theme.yml
+          git commit -m "Remove one-shot theme patch workflow" || true
+          git push
