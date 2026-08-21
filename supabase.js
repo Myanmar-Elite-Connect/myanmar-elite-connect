@@ -15,7 +15,9 @@ window.$ = window.$ || function(id){
   return document.getElementById(id);
 };
 
-/* Shared logo treatment. */
+/* Shared logo treatment: keep every occurrence of the MEC logo in a
+   proportional rounded-square container. 18% keeps small logos subtle and
+   larger logo cards consistently rounded without becoming circular. */
 (function(){
   if(document.getElementById('mec-logo-style')) return;
   const style=document.createElement('style');
@@ -32,22 +34,12 @@ window.$ = window.$ || function(id){
   (document.head||document.documentElement).appendChild(style);
 })();
 
-/* Shared intro logo animation for index.html and auth.html. */
-(function(){
-  if(document.getElementById('mec-intro-animation')) return;
-  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
-  if(current!=='index.html' && current!=='auth.html') return;
-  const link=document.createElement('link');
-  link.id='mec-intro-animation';
-  link.rel='stylesheet';
-  link.href='./intro-animation.css?v=1';
-  document.head.appendChild(link);
-})();
-
-/* Shared app navigation: every page that loads supabase.js gets the same
-   Home / Listing / Chat / Profile navigation without duplicating markup. */
+/* Shared app navigation: load it only on application pages.
+   index.html is the public landing page and must stay free of bottom navigation. */
 (function(){
   if(document.querySelector('script[data-mec-nav]')) return;
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  if(current==='index.html') return;
   const s=document.createElement('script');
   s.src='./site-nav.js';
   s.dataset.mecNav='1';
