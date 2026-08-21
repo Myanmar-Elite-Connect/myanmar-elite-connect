@@ -20,21 +20,29 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          nav_files = ['index.html','general.html','add-listing.html','buy.html','sell.html','listing.html','listing-detail.html','post.html','profile.html','chat.html','car.html','gem.html','property.html','feedback.html','allmarket.html','badge.html','kyc.html','MCP.html','MPC.html']
-          nav_tag = '<script src="./site-nav.js"></script>'
+          nav_files=['index.html','general.html','add-listing.html','buy.html','sell.html','listing.html','listing-detail.html','post.html','profile.html','chat.html','car.html','gem.html','property.html','feedback.html','allmarket.html','badge.html','kyc.html','MCP.html','MPC.html']
+          nav_tag='<script src="./site-nav.js"></script>'
           for name in nav_files:
               p=Path(name)
               if not p.exists(): continue
               text=p.read_text(encoding='utf-8')
               if nav_tag not in text and '</head>' in text:
-                  p.write_text(text.replace('</head>','  '+nav_tag+'\n</head>',1),encoding='utf-8')
-          feature_files=['post.html','posts.html','listing-detail.html','profile.html','chat.html']
-          feature_tags=['<script src="./post-features.js"></script>','<script src="./post-features-patch.js"></script>','<script src="./post-detail-patch.js"></script>']
-          for name in feature_files:
+                  text=text.replace('</head>','  '+nav_tag+'\n</head>',1)
+              p.write_text(text,encoding='utf-8')
+
+          feature_map={
+              'post.html':['<script src="./post-features-patch.js"></script>'],
+              'posts.html':['<script src="./post-features-patch.js"></script>'],
+              'listing-detail.html':['<script src="./post-detail-patch.js"></script>'],
+              'profile.html':['<script src="./profile-post-edit.js"></script>'],
+              'chat.html':['<script src="./post-features.js"></script>']
+          }
+          broken='<script src="./post-features.js"></script>'
+          for name,tags in feature_map.items():
               p=Path(name)
               if not p.exists(): continue
-              text=p.read_text(encoding='utf-8')
-              for tag in feature_tags:
+              text=p.read_text(encoding='utf-8').replace('  '+broken+'\n','').replace(broken+'\n','')
+              for tag in tags:
                   if tag not in text and '</head>' in text:
                       text=text.replace('</head>','  '+tag+'\n</head>',1)
               p.write_text(text,encoding='utf-8')
@@ -46,6 +54,6 @@ jobs:
           if git diff --quiet; then echo "Navigation/features already present."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html general.html add-listing.html buy.html sell.html listing.html listing-detail.html post.html posts.html profile.html chat.html car.html gem.html property.html feedback.html allmarket.html badge.html kyc.html MCP.html MPC.html post-features.js post-features-patch.js post-detail-patch.js .github/workflows/standardize-navigation.yml
+          git add index.html general.html add-listing.html buy.html sell.html listing.html listing-detail.html post.html posts.html profile.html chat.html car.html gem.html property.html feedback.html allmarket.html badge.html kyc.html MCP.html MPC.html post-features.js post-features-patch.js post-detail-patch.js profile-post-edit.js .github/workflows/standardize-navigation.yml
           git commit -m "Standardize post display, details, direct chat and owner editing [skip ci]"
           git push
