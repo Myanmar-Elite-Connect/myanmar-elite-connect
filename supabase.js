@@ -34,6 +34,17 @@ window.$ = window.$ || function(id){
   (document.head||document.documentElement).appendChild(style);
 })();
 
+/* Luxury entry splash for the public landing and authentication pages. */
+(function(){
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  if(current!=='index.html' && current!=='auth.html') return;
+  if(document.querySelector('script[data-mec-splash]')) return;
+  const s=document.createElement('script');
+  s.src='./mec-splash.js';
+  s.dataset.mecSplash='1';
+  document.head.appendChild(s);
+})();
+
 /* Shared app navigation: load it only on application pages.
    index.html is the public landing page and must stay free of bottom navigation. */
 (function(){
