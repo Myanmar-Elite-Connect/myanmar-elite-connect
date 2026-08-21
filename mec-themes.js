@@ -32,7 +32,7 @@ function apply(id,save){
  #mec-theme-admin .mec-theme-btn{color:var(--mec-text)!important;background:var(--mec-soft)!important;border-color:var(--mec-border)!important}
  #mec-theme-admin .mec-theme-btn.active{color:var(--mec-gold)!important;border-color:var(--mec-gold)!important;background:var(--mec-surface)!important}
  `;
- document.body&&document.body.setAttribute('data-mec-theme',id);
+ if(document.body)document.body.setAttribute('data-mec-theme',id);
  if(save)localStorage.setItem(KEY,id);
 }
 async function load(){
@@ -60,7 +60,21 @@ function adminUI(){
  const grid=pop.querySelector('.mec-theme-grid'),status=pop.querySelector('.mec-theme-status');let selected=document.documentElement.dataset.mecTheme||localStorage.getItem(KEY)||'modern-myanmar';
  Object.entries(THEMES).forEach(([id,t])=>{const o=document.createElement('button');o.type='button';o.className='mec-theme-option'+(id===selected?' active':'');o.innerHTML=`<div class="mec-swatch" style="background:linear-gradient(135deg,${t.bg},${t.surface});box-shadow:inset 0 0 0 2px ${t.gold}66"></div><div class="mec-theme-name">${t.name}</div><div class="mec-theme-desc">Myanmar-inspired background</div>`;o.onclick=()=>{selected=id;grid.querySelectorAll('.mec-theme-option').forEach(x=>x.classList.remove('active'));o.classList.add('active');apply(id,true);status.textContent=t.name+' selected';};grid.appendChild(o)});
  btn.onclick=()=>pop.classList.add('open');pop.querySelector('.mec-theme-close').onclick=()=>pop.classList.remove('open');pop.onclick=e=>{if(e.target===pop)pop.classList.remove('open')};
- pop.querySelector('.mec-theme-save').onclick=async()=>{status.textContent='Saving…';try{const r=await window.supabaseClient.from('app_ui_settings').update({active_theme:selected,updated_at:new Date().toISOString()}).eq('id',1);if(r.error)throw r.error;localStorage.setItem(KEY,selected);status.textContent='✓ Saved. All pages now use this theme.'}catch(e){console.error(e);status.textContent='Save failed. Check admin permission.'}};
+ pop.querySelector('.mec-theme-save').onclick=async()=>{
+   status.textContent='Saving…';
+   try{
+     if(!window.supabaseClient) throw new Error('Supabase client is not ready');
+     const {data,error}=await window.supabaseClient.rpc('admin_set_ui_theme',{p_theme:selected});
+     if(error) throw error;
+     if(!data) throw new Error('No theme record was returned');
+     localStorage.setItem(KEY,selected);
+     apply(selected,false);
+     status.textContent='✓ Saved. All pages now use this theme.';
+   }catch(e){
+     console.error('Theme save failed:',e);
+     status.textContent='Save failed: '+(e?.message||'Unknown error');
+   }
+ };
 }
 function boot(){load();setTimeout(adminUI,300)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
