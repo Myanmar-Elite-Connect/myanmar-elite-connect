@@ -15,14 +15,21 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Inject shared navigation loader
+      - name: Inject shared navigation loader into app pages
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          files = ['profile.html', 'add-listing.html']
+
+          files = [
+              'index.html', 'general.html', 'add-listing.html', 'buy.html', 'sell.html',
+              'listing.html', 'listing-detail.html', 'post.html', 'profile.html', 'chat.html',
+              'car.html', 'gem.html', 'property.html', 'feedback.html', 'allmarket.html',
+              'badge.html', 'kyc.html', 'MCP.html', 'MPC.html'
+          ]
           tag = '<script src="./site-nav.js"></script>'
           changed = False
+
           for name in files:
               p = Path(name)
               if not p.exists():
@@ -34,6 +41,7 @@ jobs:
                       text = text.replace(marker, '  ' + tag + '\n' + marker, 1)
                       p.write_text(text, encoding='utf-8')
                       changed = True
+
           raise SystemExit(0 if changed else 0)
           PY
 
@@ -46,6 +54,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile.html add-listing.html
-          git commit -m "Standardize profile and add-listing navigation [skip ci]"
+          git add index.html general.html add-listing.html buy.html sell.html listing.html listing-detail.html post.html profile.html chat.html car.html gem.html property.html feedback.html allmarket.html badge.html kyc.html MCP.html MPC.html
+          git commit -m "Apply shared bottom navigation to app pages [skip ci]"
           git push
