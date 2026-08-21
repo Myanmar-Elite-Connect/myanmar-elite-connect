@@ -96,3 +96,14 @@ window.$ = window.$ || function(id){
   s.dataset.mecProfileFix='1';
   document.head.appendChild(s);
 })();
+
+/* Admin review hardening and All Market category control. */
+(function(){
+  if(document.querySelector('script[data-mec-admin-fix]')) return;
+  const current=(location.pathname.split('/').pop()||'').toLowerCase();
+  if(current!=='admin.html') return;
+  const s=document.createElement('script');
+  s.src='./mec-admin-fix.js';
+  s.dataset.mecAdminFix='1';
+  document.head.appendChild(s);
+})();
