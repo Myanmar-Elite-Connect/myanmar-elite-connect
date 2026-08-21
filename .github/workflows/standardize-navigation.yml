@@ -1,0 +1,51 @@
+name: Standardize navigation
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  navigation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Inject shared navigation loader
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          files = ['profile.html', 'add-listing.html']
+          tag = '<script src="./site-nav.js"></script>'
+          changed = False
+          for name in files:
+              p = Path(name)
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding='utf-8')
+              if tag not in text:
+                  marker = '</head>'
+                  if marker in text:
+                      text = text.replace(marker, '  ' + tag + '\n' + marker, 1)
+                      p.write_text(text, encoding='utf-8')
+                      changed = True
+          raise SystemExit(0 if changed else 0)
+          PY
+
+      - name: Commit navigation changes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Navigation loader already present."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile.html add-listing.html
+          git commit -m "Standardize profile and add-listing navigation [skip ci]"
+          git push
