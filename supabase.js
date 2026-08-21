@@ -15,9 +15,7 @@ window.$ = window.$ || function(id){
   return document.getElementById(id);
 };
 
-/* Shared logo treatment: keep every occurrence of the MEC logo in a
-   proportional rounded-square container. 18% keeps small logos subtle and
-   larger logo cards consistently rounded without becoming circular. */
+/* Shared logo treatment. */
 (function(){
   if(document.getElementById('mec-logo-style')) return;
   const style=document.createElement('style');
@@ -32,6 +30,18 @@ window.$ = window.$ || function(id){
     }
   `;
   (document.head||document.documentElement).appendChild(style);
+})();
+
+/* Shared intro logo animation for index.html and auth.html. */
+(function(){
+  if(document.getElementById('mec-intro-animation')) return;
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  if(current!=='index.html' && current!=='auth.html') return;
+  const link=document.createElement('link');
+  link.id='mec-intro-animation';
+  link.rel='stylesheet';
+  link.href='./intro-animation.css?v=1';
+  document.head.appendChild(link);
 })();
 
 /* Shared app navigation: every page that loads supabase.js gets the same
