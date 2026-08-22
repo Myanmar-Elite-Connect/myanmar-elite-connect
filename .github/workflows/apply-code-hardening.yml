@@ -1,0 +1,55 @@
+name: Apply safe code hardening
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-code-hardening.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apply targeted non-destructive fixes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Profile listing visibility bug: normalize the allow-list to the
+          # same lowercase form used by the comparison.
+          p = Path('mec-profile-fix.js')
+          s = p.read_text(encoding='utf-8')
+          old = "['approved','Available','active','published']"
+          new = "['approved','available','active','published']"
+          if old in s:
+              s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+
+          # 2) site-nav.js and mec-profile-fix.js both installed profile
+          # Follow/Like/Chat handlers. Keep the dedicated profile hardening
+          # layer as the single owner while preserving the shared navigation.
+          p = Path('site-nav.js')
+          s = p.read_text(encoding='utf-8')
+          marker = '  /* Profile actions: Follow / Like / direct Chat are wired to Supabase. */'
+          if marker in s:
+              prefix = s.split(marker, 1)[0]
+              s = prefix + "  /* Profile actions are handled by mec-profile-fix.js. */\n})();\n"
+              p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit fixes and remove one-shot workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mec-profile-fix.js site-nav.js
+          git commit -m "Fix profile visibility and duplicate profile handlers" || true
+          git push
+          rm -f .github/workflows/apply-code-hardening.yml
+          git add .github/workflows/apply-code-hardening.yml
+          git commit -m "Remove one-shot code hardening workflow" || true
+          git push
