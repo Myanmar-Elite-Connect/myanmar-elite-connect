@@ -52,7 +52,7 @@
       rows=r.data||[];
     }
     if(r.error){console.warn('Profile listings failed:',r.error.message);return}
-    if(!isOwner)rows=rows.filter(x=>['approved','Available','active','published'].includes(String(x.status||'').toLowerCase()));
+    if(!isOwner)rows=rows.filter(x=>['approved','available','active','published'].includes(String(x.status||'').toLowerCase()));
     renderPosts(rows,isOwner);setText('postCount',rows.length);
   }
 
