@@ -1,0 +1,119 @@
+/* Myanmar Elite Connect — shared Build Specification UI layer
+   Mobile-first, deep navy + gold + white/light surfaces.
+   This layer is intentionally additive: it standardizes shared UI without
+   replacing page-specific feature styles. */
+:root{
+  --mec-navy:#071a34;
+  --mec-navy-2:#10233f;
+  --mec-gold:#d8b45c;
+  --mec-gold-soft:rgba(216,180,92,.12);
+  --mec-surface:#ffffff;
+  --mec-surface-2:#f6f8fb;
+  --mec-text:#172033;
+  --mec-muted:#718097;
+  --mec-border:rgba(16,35,63,.11);
+  --mec-danger:#c74747;
+  --mec-success:#25805a;
+  --mec-radius:16px;
+  --mec-radius-sm:11px;
+  --mec-shadow:0 10px 30px rgba(16,35,63,.08);
+}
+
+html{background:var(--mec-surface-2);}
+body.mec-standard-page{
+  background:var(--mec-surface-2);
+  color:var(--mec-text);
+  font-family:Inter,"Noto Sans Myanmar","Myanmar Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  padding-bottom:96px!important;
+}
+body.mec-standard-page a{color:inherit;}
+body.mec-standard-page button,
+body.mec-standard-page input,
+body.mec-standard-page textarea,
+body.mec-standard-page select{font:inherit;}
+
+/* Shared page rhythm */
+body.mec-standard-page main,
+body.mec-standard-page .page,
+body.mec-standard-page .container,
+body.mec-standard-page .main-container,
+body.mec-standard-page .content-wrap{
+  width:min(100% - 24px,1100px);
+  margin-left:auto;
+  margin-right:auto;
+}
+body.mec-standard-page section{scroll-margin-top:80px;}
+
+/* Cards / surfaces */
+body.mec-standard-page .card,
+body.mec-standard-page .panel,
+body.mec-standard-page .surface,
+body.mec-standard-page .post,
+body.mec-standard-page .listing-card,
+body.mec-standard-page .profile-card,
+body.mec-standard-page .chat-card{
+  border-color:var(--mec-border);
+  border-radius:var(--mec-radius);
+}
+
+/* Controls: consistent, accessible focus treatment */
+body.mec-standard-page input:focus-visible,
+body.mec-standard-page textarea:focus-visible,
+body.mec-standard-page select:focus-visible,
+body.mec-standard-page button:focus-visible,
+body.mec-standard-page a:focus-visible{
+  outline:3px solid rgba(216,180,92,.38);
+  outline-offset:2px;
+}
+body.mec-standard-page .btn-primary,
+body.mec-standard-page .primary-button,
+body.mec-standard-page button.primary{
+  background:var(--mec-gold);
+  border-color:var(--mec-gold);
+  color:var(--mec-navy);
+  font-weight:800;
+}
+body.mec-standard-page .btn-secondary,
+body.mec-standard-page .secondary-button,
+body.mec-standard-page button.secondary{
+  background:var(--mec-surface);
+  border:1px solid var(--mec-border);
+  color:var(--mec-text);
+}
+body.mec-standard-page .danger,
+body.mec-standard-page .destructive,
+body.mec-standard-page .btn-danger{color:var(--mec-danger);}
+
+/* Common state helpers used by pages and future refinements. */
+.mec-loading,.mec-empty,.mec-error,.mec-unauthorized{
+  border:1px solid var(--mec-border);
+  border-radius:var(--mec-radius);
+  background:var(--mec-surface);
+  padding:20px;
+  text-align:center;
+  color:var(--mec-muted);
+}
+.mec-error{color:var(--mec-danger);}
+.mec-success{color:var(--mec-success);}
+
+/* Mobile-first spacing and readable tap targets */
+body.mec-standard-page a,
+body.mec-standard-page button{min-height:42px;}
+@media(min-width:760px){
+  body.mec-standard-page{padding-bottom:104px!important;}
+  body.mec-standard-page main,
+  body.mec-standard-page .page,
+  body.mec-standard-page .container,
+  body.mec-standard-page .main-container,
+  body.mec-standard-page .content-wrap{width:min(100% - 40px,1100px);}
+}
+
+@media(prefers-color-scheme:dark){
+  body.mec-standard-page.mec-auto-dark{
+    --mec-surface:#0b1a30;
+    --mec-surface-2:#061326;
+    --mec-text:#f4f7fb;
+    --mec-muted:#a8b4c5;
+    --mec-border:rgba(255,255,255,.11);
+  }
+}
