@@ -15,6 +15,15 @@ window.$ = window.$ || function(id){
 };
 
 (function(){
+  if(document.querySelector('link[data-mec-spec-css]')) return;
+  const l=document.createElement('link');
+  l.rel='stylesheet';
+  l.href='./mec-spec.css';
+  l.dataset.mecSpecCss='1';
+  (document.head||document.documentElement).appendChild(l);
+})();
+
+(function(){
   if(document.getElementById('mec-logo-style')) return;
   const style=document.createElement('style');
   style.id='mec-logo-style';
@@ -27,56 +36,92 @@ window.$ = window.$ || function(id){
 
 (function(){
   if(document.querySelector('script[data-mec-themes]')) return;
-  const s=document.createElement('script');s.src='./mec-themes.js';s.dataset.mecThemes='1';document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src='./mec-themes.js';
+  s.dataset.mecThemes='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
   if(document.querySelector('link[data-mec-responsive]')) return;
-  const l=document.createElement('link');l.rel='stylesheet';l.href='./mec-responsive.css';l.dataset.mecResponsive='1';document.head.appendChild(l);
+  const l=document.createElement('link');
+  l.rel='stylesheet';
+  l.href='./mec-responsive.css';
+  l.dataset.mecResponsive='1';
+  document.head.appendChild(l);
 })();
 
 (function(){
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
   if(current!=='index.html' && current!=='auth.html') return;
-  const s=document.createElement('script');s.src='./mec-splash.js';s.dataset.mecSplash='1';document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src='./mec-splash.js';
+  s.dataset.mecSplash='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
   if(current==='index.html') return;
-  const s=document.createElement('script');s.src='./site-nav.js';s.dataset.mecNav='1';document.head.appendChild(s);
+  if(document.querySelector('script[data-mec-nav]')) return;
+  const s=document.createElement('script');
+  s.src='./site-nav.js';
+  s.dataset.mecNav='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
-  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  const current=(location.pathname.split('/').pop()||'').toLowerCase();
   if(current!=='general.html') return;
-  const s=document.createElement('script');s.src='./general-ui.js';s.dataset.mecGeneralUi='1';document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src='./general-ui.js';
+  s.dataset.mecGeneralUi='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
-  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  const current=(location.pathname.split('/').pop()||'').toLowerCase();
   if(current!=='add-listing.html') return;
-  const s=document.createElement('script');s.src='./mec-add-listing-fix.js';s.dataset.mecAddListingFix='1';document.head.appendChild(s);
+  if(document.querySelector('script[data-mec-add-listing-fix]')) return;
+  const s=document.createElement('script');
+  s.src='./mec-add-listing-fix.js';
+  s.dataset.mecAddListingFix='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
   if(document.querySelector('script[data-mec-app-fixes]')) return;
-  const s=document.createElement('script');s.src='./mec-app-fixes.js';s.dataset.mecAppFixes='1';document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src='./mec-app-fixes.js';
+  s.dataset.mecAppFixes='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
+  const current=(location.pathname.split('/').pop()||'').toLowerCase();
+  if(current!=='profile.html') return;
   if(document.querySelector('script[data-mec-profile-fix]')) return;
-  const s=document.createElement('script');s.src='./mec-profile-fix.js';s.dataset.mecProfileFix='1';document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src='./mec-profile-fix.js';
+  s.dataset.mecProfileFix='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
   const current=(location.pathname.split('/').pop()||'').toLowerCase();
   if(current!=='admin.html') return;
-  const s=document.createElement('script');s.src='./mec-admin-fix.js';s.dataset.mecAdminFix='1';document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src='./mec-admin-fix.js';
+  s.dataset.mecAdminFix='1';
+  document.head.appendChild(s);
 })();
 
 (function(){
   const current=(location.pathname.split('/').pop()||'').toLowerCase();
   if(current!=='auth.html') return;
-  const l=document.createElement('link');l.rel='stylesheet';l.href='./mec-auth-mobile.css';l.dataset.mecAuthMobile='1';document.head.appendChild(l);
+  const l=document.createElement('link');
+  l.rel='stylesheet';
+  l.href='./mec-auth-mobile.css';
+  l.dataset.mecAuthMobile='1';
+  document.head.appendChild(l);
 })();
