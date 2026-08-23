@@ -13,4 +13,12 @@
     t.dataset.mecCurtainLoader='1';
     (document.head||document.documentElement).appendChild(t);
   }
+
+  /* Email OTP signup bridge — auth.html only. */
+  if(location.pathname.split('/').pop()==='auth.html' && !document.querySelector('script[data-mec-otp-auth]')){
+    const o=document.createElement('script');
+    o.src='./mec-otp-auth.js';
+    o.dataset.mecOtpAuth='1';
+    (document.head||document.documentElement).appendChild(o);
+  }
 })();
